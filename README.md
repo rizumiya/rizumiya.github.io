@@ -1,2 +1,2 @@
 # rizumiya.github.io
-My Portfolio
+This portfolio website, developed using only HTML, CSS, and JavaScript, showcases my latest projects and artwork. With a minimalist yet captivating design, it offers a glimpse into my talents and passions. Though not yet responsive, the site presents a collection of my best works in a simple and elegant manner. Witness my journey through the realms of design, art, and innovation - all articulated through the power of HTML, CSS, and JavaScript. Stay tuned for future updates as I continue to enhance this digital showcase
