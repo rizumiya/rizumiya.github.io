@@ -1,0 +1,12 @@
+# folders
+node_modules
+
+# json files
+package-lock.json
+package.json
+
+# js files
+tailwind.config.js
+
+# css files
+css/input.css
