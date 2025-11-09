@@ -294,7 +294,7 @@ input[type="text"]:focus {
 }
 
 .letter-input input {
-    width: 80px;
+    /* width: 80px; */
     text-align: center;
     font-size: 18px;
     text-transform: uppercase;
