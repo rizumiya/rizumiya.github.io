@@ -10,7 +10,8 @@ let revealedLetters = [];
 let incorrectGuesses = 0;
 let gameActive = false;
 let questionsData = null;
-let usedWords = []; // Untuk melacak kata-kata yang sudah digunakan
+let completedQuestions = {}; // Untuk melacak soal yang telah diselesaikan per kategori dan level
+let levelAccessed = {}; // Untuk melacak level mana yang telah diakses di setiap kategori
 
 // DOM Elements
 const registrationPage = document.getElementById('registration-page');
@@ -3983,9 +3984,40 @@ document.querySelectorAll('.btn-category').forEach(button => {
 // Pemilihan level
 document.querySelectorAll('.btn-level').forEach(button => {
     button.addEventListener('click', () => {
+        const clickedLevel = button.dataset.level;
+
+        // Cek apakah level ini sudah selesai sempurna (semua soal diselesaikan)
+        if (completedQuestions[currentCategory] && completedQuestions[currentCategory][clickedLevel]) {
+            // Hitung total soal di level ini
+            const categoryWords = categories[currentCategory] || [];
+            const levelWords = categoryWords.filter(wordObj => wordObj.level === clickedLevel);
+            const completedInThisLevel = completedQuestions[currentCategory][clickedLevel] || [];
+
+            // Jika semua soal di level ini telah berhasil diselesaikan, mencegah pemilihan kembali
+            if (completedInThisLevel.length > 0 && completedInThisLevel.length >= levelWords.length && levelWords.length > 0) {
+                alert(`Anda telah menyelesaikan semua soal di level ${capitalizeFirstLetter(clickedLevel)} kategori ${capitalizeFirstLetter(currentCategory)}. Silakan pilih level yang berbeda.`);
+                return;
+            }
+        }
+
+        // Cek apakah level yang lebih tinggi telah diakses - mencegah pemilihan level yang lebih rendah
+        if (levelAccessed[currentCategory]) {
+            const levelOrder = ['mudah', 'sedang', 'sulit'];
+            const clickedLevelIndex = levelOrder.indexOf(clickedLevel);
+
+            // Jika ada level yang lebih tinggi yang telah diakses, tidak boleh memilih level yang lebih rendah
+            for (let i = clickedLevelIndex + 1; i < levelOrder.length; i++) {
+                const higherLevel = levelOrder[i];
+                if (levelAccessed[currentCategory][higherLevel]) {
+                    alert(`Anda telah mengakses level ${capitalizeFirstLetter(higherLevel)} di kategori ${capitalizeFirstLetter(currentCategory)}, silakan pilih level ${capitalizeFirstLetter(higherLevel)} atau yang lebih rendah.`);
+                    return;
+                }
+            }
+        }
+
         document.querySelectorAll('.btn-level').forEach(btn => btn.classList.remove('selected'));
         button.classList.add('selected');
-        currentLevel = button.dataset.level;
+        currentLevel = clickedLevel;
         checkStartGameEnabled();
     });
 });
@@ -4002,7 +4034,29 @@ function checkStartGameEnabled() {
 // Event listener untuk tombol mulai permainan
 startGameBtn.addEventListener('click', () => {
     if (currentCategory && currentLevel) {
-        usedWords = []; // Reset daftar soal yang digunakan saat memulai permainan baru
+        // Tandai bahwa level ini telah diakses
+        if (!levelAccessed[currentCategory]) {
+            levelAccessed[currentCategory] = {};
+        }
+        levelAccessed[currentCategory][currentLevel] = true;
+
+        // Cek apakah level ini sudah selesai sempurna (semua soal diselesaikan)
+        if (completedQuestions[currentCategory] && completedQuestions[currentCategory][currentLevel]) {
+            // Hitung total soal di level ini
+            const categoryWords = categories[currentCategory] || [];
+            const levelWords = categoryWords.filter(wordObj => wordObj.level === currentLevel);
+            const completedInThisLevel = completedQuestions[currentCategory][currentLevel] || [];
+
+            // Jika semua soal di level ini telah berhasil diselesaikan, mencegah pemilihan kembali
+            if (completedInThisLevel.length > 0 && completedInThisLevel.length >= levelWords.length && levelWords.length > 0) {
+                alert(`Anda telah menyelesaikan semua soal di level ${capitalizeFirstLetter(currentLevel)} kategori ${capitalizeFirstLetter(currentCategory)}. Silakan pilih level yang berbeda.`);
+                return;
+            }
+        }
+
+        // Reset daftar soal yang telah diselesaikan saat memulai permainan baru
+        if (!completedQuestions[currentCategory]) completedQuestions[currentCategory] = {};
+        if (!completedQuestions[currentCategory][currentLevel]) completedQuestions[currentCategory][currentLevel] = [];
         currentScoreDisplay.textContent = currentScore; // Perbarui tampilan skor sebelum memulai permainan
         startGame();
     }
@@ -4023,14 +4077,15 @@ useHintBtn.addEventListener('click', useHint);
 document.getElementById('continue-game').addEventListener('click', () => {
     resultPage.classList.add('hidden');
     currentScoreDisplay.textContent = currentScore; // Perbarui tampilan skor
-    // Jangan reset usedWords jika tingkat kesulitan tetap sama, biarkan tetap untuk variasi
+    // completedQuestions tidak direset agar soal yang sudah berhasil dijawab tidak muncul lagi
     startGame();
 });
 document.getElementById('back-to-category').addEventListener('click', () => {
     resultPage.classList.add('hidden');
     categoryPage.classList.remove('hidden');
     currentScoreDisplay.textContent = currentScore; // Perbarui tampilan skor
-    usedWords = []; // Reset daftar soal yang digunakan saat kembali ke pemilihan kategori
+    // Hanya reset daftar soal yang telah diselesaikan, tidak reset level progress
+    completedQuestions = {}; // Reset daftar soal yang telah diselesaikan saat kembali ke pemilihan kategori
 });
 
 // Tombol untuk reset skor
@@ -4045,14 +4100,17 @@ document.getElementById('reset-score').addEventListener('click', () => {
 document.getElementById('new-game').addEventListener('click', () => {
     gamePage.classList.add('hidden');
     currentScoreDisplay.textContent = currentScore; // Perbarui tampilan skor
-    usedWords = []; // Reset daftar soal yang digunakan saat memulai permainan baru dengan level yang sama
+    // Reset daftar soal yang telah diselesaikan saat memulai permainan baru dengan level yang sama
+    if (!completedQuestions[currentCategory]) completedQuestions[currentCategory] = {};
+    if (!completedQuestions[currentCategory][currentLevel]) completedQuestions[currentCategory][currentLevel] = [];
     startGame();
 });
 document.getElementById('new-category').addEventListener('click', () => {
     gamePage.classList.add('hidden');
     categoryPage.classList.remove('hidden');
     currentScoreDisplay.textContent = currentScore; // Perbarui tampilan skor
-    usedWords = []; // Reset daftar soal yang digunakan saat kembali ke pemilihan kategori
+    // Hanya reset daftar soal yang telah diselesaikan, tidak reset level progress
+    completedQuestions = {}; // Reset daftar soal yang telah diselesaikan saat kembali ke pemilihan kategori
 });
 
 // Fungsi untuk memulai permainan
@@ -4064,9 +4122,13 @@ function startGame() {
 
     // Reset status permainan
     resetGame();
-    // Reset daftar soal yang digunakan saat memulai permainan baru
-    if (usedWords.length > 10) { // Jika sudah banyak soal yang digunakan, reset
-        usedWords = [];
+
+    // Inisialisasi tracking soal yang telah selesai jika belum ada
+    if (!completedQuestions[currentCategory]) {
+        completedQuestions[currentCategory] = {};
+    }
+    if (!completedQuestions[currentCategory][currentLevel]) {
+        completedQuestions[currentCategory][currentLevel] = [];
     }
 
     // Pilih kata acak dari kategori dan level yang dipilih
@@ -4078,30 +4140,100 @@ function startGame() {
     const filteredWords = categoryWords.filter(wordObj => !wordObj.level || wordObj.level === currentLevel);
     //console.log(`Jumlah soal untuk level ${currentLevel}: ${filteredWords.length}`);
 
-    // Filter untuk menghindari soal yang sudah digunakan
-    const availableWords = filteredWords.filter(wordObj => !usedWords.includes(wordObj.word));
-    //console.log(`Jumlah soal tersedia (belum digunakan): ${availableWords.length}`);
+    // Filter untuk menghindari soal yang sudah diselesaikan
+    const availableWords = filteredWords.filter(wordObj => !completedQuestions[currentCategory][currentLevel].includes(wordObj.word));
+    //console.log(`Jumlah soal tersedia (belum diselesaikan): ${availableWords.length}`);
 
+    // Periksa apakah sudah menyelesaikan semua soal di level ini
     if (availableWords.length === 0 && filteredWords.length > 0) {
-        // Jika semua soal untuk level ini sudah digunakan, reset daftar soal yang digunakan
-        //console.log("Semua soal untuk level ini sudah digunakan, mengulang kembali");
-        usedWords = [];
-        currentWord = filteredWords[Math.floor(Math.random() * filteredWords.length)];
+        // Cek apakah semua soal dalam level ini telah dikerjakan
+        if (completedQuestions[currentCategory][currentLevel].length >= 20) {
+            // Otomatis naik ke level berikutnya di kategori yang sama
+            const levelOrder = ['mudah', 'sedang', 'sulit'];
+            const currentLevelIndex = levelOrder.indexOf(currentLevel);
+
+            if (currentLevelIndex < levelOrder.length - 1) {
+                // Naik ke level berikutnya
+                const nextLevel = levelOrder[currentLevelIndex + 1];
+
+                // Pastikan level berikutnya memiliki soal
+                const nextLevelWords = categoryWords.filter(wordObj => !wordObj.level || wordObj.level === nextLevel);
+
+                if (nextLevelWords.length > 0) {
+                    currentLevel = nextLevel;
+
+                    if (!levelAccessed[currentCategory]) {
+                        levelAccessed[currentCategory] = {};
+                    }
+                    levelAccessed[currentCategory][currentLevel] = true;
+
+                    // Tambahkan tracking untuk level baru jika belum ada
+                    if (!completedQuestions[currentCategory][currentLevel]) {
+                        completedQuestions[currentCategory][currentLevel] = [];
+                    }
+
+                    // Pilih soal dari level baru
+                    const newAvailableWords = nextLevelWords.filter(wordObj => !completedQuestions[currentCategory][currentLevel].includes(wordObj.word));
+
+                    if (newAvailableWords.length > 0) {
+                        currentWord = newAvailableWords[Math.floor(Math.random() * newAvailableWords.length)];
+                        completedQuestions[currentCategory][currentLevel].push(currentWord.word);
+                    } else {
+                        // Jika tidak ada soal tersedia di level berikutnya, pilih dari level ini
+                        // Ini hanya akan terjadi dalam keadaan ekstrem
+                        currentWord = nextLevelWords[Math.floor(Math.random() * nextLevelWords.length)];
+                        completedQuestions[currentCategory][currentLevel].push(currentWord.word);
+                    }
+
+                    // Perbarui tampilan level
+                    document.querySelectorAll('.btn-level').forEach(btn => btn.classList.remove('selected'));
+                    document.querySelector(`[data-level="${currentLevel}"]`).classList.add('selected');
+
+                    // Aktifkan tombol mulai permainan
+                    checkStartGameEnabled();
+                } else {
+                    // Jika tidak ada level berikutnya yang valid, kembali ke pemilihan kategori
+                    alert(`Anda telah menyelesaikan semua soal di kategori ${capitalizeFirstLetter(currentCategory)}! Silakan pilih kategori atau level yang berbeda.`);
+                    gamePage.classList.add('hidden');
+                    categoryPage.classList.remove('hidden');
+                    currentScoreDisplay.textContent = currentScore; // Perbarui tampilan skor
+                    return;
+                }
+            } else {
+                // Jika sudah mencapai level tertinggi, kembali ke pemilihan kategori
+                // Tandai bahwa kategori ini telah selesai semua levelnya
+                if (!levelAccessed[currentCategory]) {
+                    levelAccessed[currentCategory] = {};
+                }
+                levelAccessed[currentCategory]['mudah'] = true;
+                levelAccessed[currentCategory]['sedang'] = true;
+                levelAccessed[currentCategory]['sulit'] = true;
+                alert(`Anda telah menyelesaikan semua soal di kategori ${capitalizeFirstLetter(currentCategory)}! Silakan pilih kategori yang berbeda.`);
+                gamePage.classList.add('hidden');
+                categoryPage.classList.remove('hidden');
+                currentScoreDisplay.textContent = currentScore; // Perbarui tampilan skor
+                return;
+            }
+        } else {
+            // Ini kondisi yang seharusnya tidak terjadi secara logis
+            // Karena jika availableWords.length === 0 maka completedQuestions[currentCategory][currentLevel].length 
+            // seharusnya sama dengan filteredWords.length (semua soal sudah dikerjakan)
+            // Tapi untuk antisipasi, kita pilih soal dari soal yang belum diselesaikan
+            alert("Terjadi kesalahan logika: tidak ditemukan soal tersedia meskipun belum mencapai 20 soal yang diselesaikan.");
+            gamePage.classList.add('hidden');
+            categoryPage.classList.remove('hidden');
+            currentScoreDisplay.textContent = currentScore; // Perbarui tampilan skor
+            return;
+        }
     } else if (filteredWords.length === 0) {
         // Jika tidak ada soal untuk level ini, ambil semua soal
         //console.log("Tidak ada soal untuk level ini, mengambil dari semua soal");
         currentWord = categoryWords[Math.floor(Math.random() * categoryWords.length)];
-    } else if (availableWords.length === 0) {
-        // Jika semua soal untuk kategori dan level ini sudah digunakan, arahkan ke pemilihan kategori baru
-        alert("Semua soal untuk kategori dan level ini telah digunakan. Silakan pilih kategori atau level yang berbeda.");
-        gamePage.classList.add('hidden');
-        categoryPage.classList.remove('hidden');
-        currentScoreDisplay.textContent = currentScore; // Perbarui tampilan skor
-        return;
+        completedQuestions[currentCategory][currentLevel].push(currentWord.word);
     } else {
+        // Ambil soal yang belum diselesaikan
         currentWord = availableWords[Math.floor(Math.random() * availableWords.length)];
-        // Tambahkan kata yang dipilih ke daftar yang sudah digunakan
-        usedWords.push(currentWord.word);
+        completedQuestions[currentCategory][currentLevel].push(currentWord.word);
         //console.log(`Soal yang dipilih: ${currentWord.word}`);
     }
 
@@ -4112,7 +4244,7 @@ function startGame() {
 
     // Set nilai maksimal dan pengurangan hint
     const levelConfig = levels[currentLevel];
-    const maxScore = currentWord.maxScore // * levelConfig.hintPenaltyMultiplier;
+    const maxScore = currentWord.maxScore * levelConfig.hintPenaltyMultiplier;
     maxScoreDisplay.textContent = maxScore;
     hintPenaltyDisplay.textContent = currentWord.hintPenalty[currentLevel];
 
@@ -4200,10 +4332,10 @@ function renderErrorDisplay() {
 function makeGuess() {
     if (!gameActive) return;
 
-    const guess = guessInput.value.toUpperCase();
+    const guess = guessInput.value.trim().toUpperCase();
     guessInput.value = '';
 
-    if (!guess || guess.length !== 1 || !/^[A-Z\- ]$/.test(guess)) {
+    if (!guess || guess.length !== 1 || !/^[A-Z\-]$/.test(guess)) {
         alert('Silakan masukkan satu huruf!');
         return;
     }
@@ -4298,10 +4430,52 @@ function endGame(success) {
     } else {
         // Permainan kalah - tidak ada penambahan skor karena jawaban salah
         resultTitle.textContent = 'Permainan Berakhir';
-        // resultMessage.textContent = `Anda gagal menebak kata: ${currentWord.word}`;
-        resultMessage.textContent = ``;
+        resultMessage.textContent = `Anda gagal menebak kata: ${currentWord.word}`;
         resultPoints.textContent = '0';
         totalScore.textContent = currentScore;
+    }
+
+    // Tampilkan halaman hasil
+    gamePage.classList.add('hidden');
+    resultPage.classList.remove('hidden');
+}
+
+// Fungsi untuk mengakhiri permainan
+function endGame(success) {
+    gameActive = false;
+    guessInput.disabled = true;
+    submitGuessBtn.disabled = true;
+    useHintBtn.disabled = true;
+
+    if (success) {
+        // Karena hint sudah mengurangi skor secara langsung,
+        // saat jawaban benar, tambahkan max skor kata ke total skor
+        currentScore = currentScore + currentWord.maxScore;
+
+        resultTitle.textContent = 'Selamat!';
+        resultMessage.textContent = `Anda berhasil menebak kata: ${currentWord.word}`;
+        resultPoints.textContent = currentWord.maxScore;
+        totalScore.textContent = currentScore;
+
+    } else {
+        // Permainan kalah - tidak ada penambahan skor karena jawaban salah
+        resultTitle.textContent = 'Permainan Berakhir';
+        resultMessage.textContent = `Anda gagal menebak kata: ${currentWord.word}`;
+        resultPoints.textContent = '0';
+        totalScore.textContent = currentScore;
+    }
+
+    // Tambahkan soal ke daftar soal yang telah selesai dikerjakan - hanya jika berhasil
+    if (success && currentCategory && currentLevel && currentWord && currentWord.word) {
+        if (!completedQuestions[currentCategory]) {
+            completedQuestions[currentCategory] = {};
+        }
+        if (!completedQuestions[currentCategory][currentLevel]) {
+            completedQuestions[currentCategory][currentLevel] = [];
+        }
+        if (!completedQuestions[currentCategory][currentLevel].includes(currentWord.word)) {
+            completedQuestions[currentCategory][currentLevel].push(currentWord.word);
+        }
     }
 
     // Tampilkan halaman hasil
