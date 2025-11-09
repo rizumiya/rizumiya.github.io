@@ -4112,7 +4112,7 @@ function startGame() {
 
     // Set nilai maksimal dan pengurangan hint
     const levelConfig = levels[currentLevel];
-    const maxScore = currentWord.maxScore * levelConfig.hintPenaltyMultiplier;
+    const maxScore = currentWord.maxScore // * levelConfig.hintPenaltyMultiplier;
     maxScoreDisplay.textContent = maxScore;
     hintPenaltyDisplay.textContent = currentWord.hintPenalty[currentLevel];
 
