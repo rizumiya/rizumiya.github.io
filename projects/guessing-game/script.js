@@ -4460,7 +4460,8 @@ function endGame(success) {
     } else {
         // Permainan kalah - tidak ada penambahan skor karena jawaban salah
         resultTitle.textContent = 'Permainan Berakhir';
-        resultMessage.textContent = `Anda gagal menebak kata: ${currentWord.word}`;
+        // resultMessage.textContent = `Anda gagal menebak kata: ${currentWord.word}`;
+        resultMessage.textContent = ``;
         resultPoints.textContent = '0';
         totalScore.textContent = currentScore;
     }
