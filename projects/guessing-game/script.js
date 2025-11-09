@@ -4200,10 +4200,10 @@ function renderErrorDisplay() {
 function makeGuess() {
     if (!gameActive) return;
 
-    const guess = guessInput.value.trim().toUpperCase();
+    const guess = guessInput.value.toUpperCase();
     guessInput.value = '';
 
-    if (!guess || guess.length !== 1 || !/^[A-Z\-]$/.test(guess)) {
+    if (!guess || guess.length !== 1 || !/^[A-Z\- ]$/.test(guess)) {
         alert('Silakan masukkan satu huruf!');
         return;
     }
