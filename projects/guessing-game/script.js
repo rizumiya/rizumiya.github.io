@@ -4203,7 +4203,7 @@ function makeGuess() {
     const guess = guessInput.value.trim().toUpperCase();
     guessInput.value = '';
 
-    if (!guess || guess.length !== 1 || !/[A-Z]/.test(guess)) {
+    if (!guess || guess.length !== 1 || !/[A-Z\-]/.test(guess)) {
         alert('Silakan masukkan satu huruf!');
         return;
     }
