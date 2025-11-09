@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permainan Tebak-tebakan</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Halaman Pendaftaran -->
+        <div id="registration-page" class="page">
+            <div class="registration-card">
+                <h1>🎮 Permainan Tebak-tebakan</h1>
+                <form id="registration-form">
+                    <div class="input-group">
+                        <label for="player-name">Nama Pemain:</label>
+                        <input type="text" id="player-name" placeholder="Masukkan nama Anda" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Mulai Bermain</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Halaman Pilih Kategori dan Level -->
+        <div id="category-page" class="page hidden">
+            <div class="category-card">
+                <h1 id="welcome-message">Halo, <span id="player-name-display">Pemain</span>!</h1>
+                <h2>Pilih Kategori dan Level</h2>
+                
+                <div class="selection-container">
+                    <div class="category-selection">
+                        <h3>Kategori:</h3>
+                        <div class="category-buttons">
+                            <button class="btn-category" data-category="hewan">Hewan</button>
+                            <button class="btn-category" data-category="buah">Buah</button>
+                            <button class="btn-category" data-category="kota">Kota</button>
+                            <button class="btn-category" data-category="profesi">Profesi</button>
+                        </div>
+                    </div>
+                    
+                    <div class="level-selection">
+                        <h3>Level:</h3>
+                        <div class="level-buttons">
+                            <button class="btn-level" data-level="mudah">Mudah</button>
+                            <button class="btn-level" data-level="sedang">Sedang</button>
+                            <button class="btn-level" data-level="sulit">Sulit</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="score-display">
+                    <h3>Skor Anda: <span id="current-score">0</span></h3>
+                </div>
+                
+                <button id="start-game" class="btn-primary" disabled>Mulai Permainan</button>
+            </div>
+        </div>
+
+        <!-- Halaman Permainan -->
+        <div id="game-page" class="page hidden">
+            <div class="game-header">
+                <div class="player-info">
+                    <span id="game-player-name">Pemain</span> | 
+                    <span>Skor: <span id="game-score">0</span></span>
+                </div>
+                <div class="game-info">
+                    <span id="current-category">Kategori</span> | 
+                    <span id="current-level">Level</span>
+                </div>
+            </div>
+            
+            <div class="game-content">
+                <div class="question-area">
+                    <div class="hint-info">
+                        <p class="hint-text" id="current-hint">Klik tombol "Gunakan Hint" untuk mendapatkan petunjuk</p>
+                        <div class="hint-stats">
+                            <span>Hints Digunakan: <span id="hints-used">0</span></span> | 
+                            <span>Skor Maksimal: <span id="max-score">5</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="word-container">
+                        <div class="word-display" id="word-display">
+                            <!-- Kotak-kotak akan diisi oleh JavaScript -->
+                        </div>
+                        
+                        <div class="error-display" id="error-display">
+                            <!-- Tanda kesalahan akan diisi oleh JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="hint-display">
+                        <p>1 hint akan mengurangi <span id="hint-penalty">0</span> poin</p>
+                    </div>
+                </div>
+                
+                <div class="input-area">
+                    <div class="letter-input">
+                        <input type="text" id="guess-input" maxlength="1" placeholder="Masukkan huruf">
+                        <button id="submit-guess" class="btn-primary">Tebak</button>
+                    </div>
+                    
+                    <div class="hint-section">
+                        <button id="use-hint" class="btn-secondary">Gunakan Hint</button>
+                        <div class="hint-count">
+                            Hint tersedia: <span id="available-hints">0</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-actions">
+                    <button id="new-game" class="btn-tertiary">Mulai Ulang</button>
+                    <button id="new-category" class="btn-tertiary">Kategori & Level Baru</button>
+                    <button id="reset-score" class="btn-danger">Reset Skor</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Halaman Hasil -->
+        <div id="result-page" class="page hidden">
+            <div class="result-card">
+                <h1 id="result-title">Permainan Selesai!</h1>
+                <div class="result-content">
+                    <p id="result-message">Anda berhasil menebak kata tersebut!</p>
+                    <p>Poin yang diperoleh: <span id="result-points">0</span></p>
+                    <p>Skor total: <span id="total-score">0</span></p>
+                </div>
+                <div class="result-actions">
+                    <button id="continue-game" class="btn-primary">Lanjut Bermain</button>
+                    <button id="back-to-category" class="btn-secondary">Pilih Kategori Baru</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
