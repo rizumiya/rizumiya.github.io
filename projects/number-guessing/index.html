@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permainan Tebak Angka (Bulls and Cows)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Halaman Pendaftaran -->
+        <div id="registration-page" class="page">
+            <div class="registration-card">
+                <h1>🔢 Permainan Tebak Angka</h1>
+                <p>Tebak angka 4 digit unik (tanpa angka duplikat) - Bulls & Cows</p>
+                <form id="registration-form">
+                    <div class="input-group">
+                        <label for="player-name">Nama Pemain:</label>
+                        <input type="text" id="player-name" placeholder="Masukkan nama Anda" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Mulai Bermain</button>
+                </form>
+                <div id="error-message" class="error"></div>
+            </div>
+        </div>
+
+        <!-- Halaman Permainan -->
+        <div id="game-page" class="page hidden">
+            <div class="game-header">
+                <h1>🔢 Tebak Angka (Bulls & Cows)</h1>
+                <div class="player-info">
+                    <span id="game-player-name">Pemain</span> |
+                    <span>Coba: <span id="attempt-count">1</span>/10</span>
+                </div>
+            </div>
+
+            <div class="game-content">
+                <div class="instructions">
+                    <h3>Cara Bermain:</h3>
+                    <p><strong>A</strong>: Jumlah angka yang benar (tidak peduli posisi)</p>
+                    <p><strong>P</strong>: Jumlah posisi yang benar (angka di posisi yang benar)</p>
+                    <p>Misalnya, jawaban adalah 1234 dan tebakan Anda 1354, maka hasilnya 3 A dan 2 P</p>
+                </div>
+
+                <div class="game-sections">
+                    <div class="input-section">
+                        <div class="input-group">
+                            <label for="guess-input">Tebak 4 Digit (tanpa duplikat):</label>
+                            <input type="text" id="guess-input" maxlength="4" placeholder="Misal: 1234" autocomplete="off">
+                        </div>
+                        <button id="submit-guess" class="btn-primary">Submit Tebakan</button>
+                    </div>
+
+                    <div class="feedback-section">
+                        <div id="guess-history" class="history-container">
+                            <table class="history-table">
+                                <thead>
+                                    <tr>
+                                        <th>Angka</th>
+                                        <th>A</th>
+                                        <th>P</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="history-table-body">
+                                    <!-- Riwayat tebakan akan muncul di sini -->
+                                </tbody>
+                            </table>
+                            <div id="no-entries-message" class="no-entries-message">
+                                Belum ada tebakan. Ayo buat tebakan pertamamu!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="game-result" class="result-message hidden">
+                    <h2 id="result-title"></h2>
+                    <p id="result-text"></p>
+                    <button id="play-again" class="btn-primary">Main Lagi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
