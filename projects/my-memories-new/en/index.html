@@ -174,6 +174,19 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
 
+    .game-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .game-footer {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+    }
+
     .game-canvas {
       width: 100%;
       background: black;
@@ -196,14 +209,11 @@
     }
 
     .hud-overlay {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      right: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      z-index: 10;
+      flex: 1;
+      margin-right: 15px;
     }
 
     .hud-time {
@@ -391,20 +401,29 @@
       </div>
 
       <div class="game-container" id="gameContainer">
+        <div class="game-header">
+          <div class="hud-overlay">
+            <div class="hud-time">
+              <span class="hud-time-label"><img src="assets/gameui/text_time.png" crossorigin="anonymous"></span>
+              <span id="hud-time-value" class="hud-time-value">120</span>
+            </div>
+            <div class="hud-gauge">
+              <div class="hud-gauge-track">
+                <div id="hud-gauge-fill" class="hud-gauge-fill"></div>
+              </div>
+              <span id="hud-gauge-percent" class="hud-gauge-percent">0%</span>
+            </div>
+          </div>
+          <div class="game-controls">
+            <button id="muteBtn" class="control-btn">🔊 Suara</button>
+            <button id="replayBtn" class="control-btn">🔄 Ulangi</button>
+          </div>
+        </div>
         <div id="game-container">
           <canvas id="game" width="855" height="505"></canvas>
         </div>
-        <div class="hud-overlay">
-          <div class="hud-time">
-            <span class="hud-time-label"><img src="assets/gameui/text_time.png" crossorigin="anonymous"></span>
-            <span id="hud-time-value" class="hud-time-value">120</span>
-          </div>
-          <div class="hud-gauge">
-            <div class="hud-gauge-track">
-              <div id="hud-gauge-fill" class="hud-gauge-fill"></div>
-            </div>
-            <span id="hud-gauge-percent" class="hud-gauge-percent">0%</span>
-          </div>
+        <div class="game-footer">
+          <button id="backToMenu" class="back-btn">Kembali ke Menu</button>
         </div>
         <div id="videoPlayer" style="display: none;"></div>
         <div id="recordTimeValue" data-text="120" style="display: none;">120</div>
@@ -435,10 +454,6 @@
         <button id="btn_character_10" style="display: none;">Char 10</button>
         <button id="btn_character_11" style="display: none;">Char 11</button>
         <button id="btn_character_12" style="display: none;">Char 12</button>
-        <div class="game-controls">
-          <button id="muteBtn" class="control-btn">🔊 Suara</button>
-        </div>
-        <button id="backToMenu" class="back-btn">Kembali ke Menu</button>
       </div>
     </main>
 
@@ -579,6 +594,22 @@
         });
       }
 
+      // Setup replay button functionality
+      const replayBtn = document.getElementById('replayBtn');
+
+      if (replayBtn) {
+        replayBtn.addEventListener('click', function() {
+          console.log('Restarting game...');
+
+          // Restart the current game
+          if (typeof restartGame === 'function') {
+            restartGame();
+          } else {
+            console.error('Fungsi restartGame tidak ditemukan');
+          }
+        });
+      }
+
       // Fungsi inisialisasi permainan
       function initializeGame(memoryId) {
         console.log(`Memulai permainan untuk kenangan ${memoryId}`);
@@ -598,6 +629,12 @@
           window.Y = false;
           window.s = false;
           window.le = false;
+
+          // Ensure the correct stage is selected
+          window.selectStage = memoryId - 1; // Convert to 0-based index
+
+          // Log the stage selection for debugging
+          console.log(`Stage set to: ${window.selectStage} (Kenangan ${memoryId})`);
 
           // Initialize the game scene for the selected memory
           if (typeof Bn === 'function' && typeof ve === 'function') {
