@@ -180,6 +180,79 @@
       display: block;
     }
 
+    #game-container {
+      position: relative;
+      width: 100%;
+      max-width: 855px;
+      margin: 0 auto;
+    }
+
+    #game {
+      display: block;
+      width: 100%;
+      background: #000;
+      border-radius: 10px;
+    }
+
+    .hud-overlay {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .hud-time {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 5px 10px;
+      border-radius: 20px;
+    }
+
+    .hud-time-label img {
+      height: 20px;
+      vertical-align: middle;
+    }
+
+    .hud-time-value {
+      color: white;
+      font-weight: bold;
+      margin-left: 5px;
+    }
+
+    .hud-gauge {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 5px;
+      border-radius: 20px;
+    }
+
+    .hud-gauge-track {
+      width: 150px;
+      height: 20px;
+      background: #333;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .hud-gauge-fill {
+      height: 100%;
+      width: var(--fill-percent, 0%);
+      background: linear-gradient(to right, #4CAF50, #8BC34A);
+      transition: width 0.3s;
+    }
+
+    .hud-gauge-percent {
+      color: white;
+      font-size: 0.8em;
+      margin-top: 3px;
+      display: block;
+    }
+
     .hidden {
       display: none;
     }
@@ -258,7 +331,50 @@
       </div>
 
       <div class="game-container" id="gameContainer">
-        <canvas id="gameCanvas" class="game-canvas" width="855" height="505"></canvas>
+        <div id="game-container">
+          <canvas id="game" width="855" height="505"></canvas>
+        </div>
+        <div class="hud-overlay">
+          <div class="hud-time">
+            <span class="hud-time-label"><img src="../assets/gameui/text_time.png" crossorigin="anonymous"></span>
+            <span id="hud-time-value" class="hud-time-value">120</span>
+          </div>
+          <div class="hud-gauge">
+            <div class="hud-gauge-track">
+              <div id="hud-gauge-fill" class="hud-gauge-fill"></div>
+            </div>
+            <span id="hud-gauge-percent" class="hud-gauge-percent">0%</span>
+          </div>
+        </div>
+        <div id="videoPlayer" style="display: none;"></div>
+        <div id="recordTimeValue" data-text="120" style="display: none;">120</div>
+        <div id="bestTimeValue" data-text="99" style="display: none;">99</div>
+        <div id="failMsg" style="display: none;">Crushed!</div>
+        <div id="clear" style="display: none;"></div>
+        <div id="fail" style="display: none;"></div>
+        <div id="select" style="display: none;"></div>
+        <div id="howto" style="display: none;"></div>
+        <div id="play" style="display: none;"></div>
+        <button id="btnBgm" style="display: none;">BGM</button>
+        <button id="btnHome" style="display: none;">Home</button>
+        <button id="btn_game_start" style="display: none;">Start</button>
+        <button id="btn_howto_play" style="display: none;">How To Play</button>
+        <button id="btn_close_howto" style="display: none;">Close</button>
+        <button id="btn_clear_redo" style="display: none;">Redo</button>
+        <button id="btn_replay" style="display: none;">Replay</button>
+        <button id="btn_fail_redo" style="display: none;">Redo</button>
+        <button id="btn_character_01" style="display: none;">Char 1</button>
+        <button id="btn_character_02" style="display: none;">Char 2</button>
+        <button id="btn_character_03" style="display: none;">Char 3</button>
+        <button id="btn_character_04" style="display: none;">Char 4</button>
+        <button id="btn_character_05" style="display: none;">Char 5</button>
+        <button id="btn_character_06" style="display: none;">Char 6</button>
+        <button id="btn_character_07" style="display: none;">Char 7</button>
+        <button id="btn_character_08" style="display: none;">Char 8</button>
+        <button id="btn_character_09" style="display: none;">Char 9</button>
+        <button id="btn_character_10" style="display: none;">Char 10</button>
+        <button id="btn_character_11" style="display: none;">Char 11</button>
+        <button id="btn_character_12" style="display: none;">Char 12</button>
         <button id="backToMenu" class="back-btn">Kembali ke Menu</button>
       </div>
     </main>
@@ -267,6 +383,17 @@
       <p>Koleksi Kenangan-Ku &copy; 2026</p>
     </footer>
   </div>
+
+  <!-- Audio elements for the game -->
+  <audio id="bgm" preload="auto" loop style="display: none;">
+    <source src="../assets/audio/bg-music.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="focus" preload="auto" style="display: none;">
+    <source src="../assets/audio/btn-focus.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="press" preload="auto" style="display: none;">
+    <source src="../assets/audio/btn-press.mp3" type="audio/mpeg">
+  </audio>
 
   <!-- Include the original game scripts -->
   <script src="../assets/bd2-2nd5-scene.js"></script>
@@ -349,24 +476,60 @@
         // Stop the game when returning to menu
         if (typeof triggerGameStop === 'function') {
           triggerGameStop();
+        } else if (typeof va === 'function') {
+          // Alternative way to stop the game
+          va();
         }
+
+        // Reset game state
+        window.I = false;
+        window.E = false;
+        window.Y = false;
       });
 
       // Fungsi inisialisasi permainan
       function initializeGame(memoryId) {
         console.log(`Memulai permainan untuk kenangan ${memoryId}`);
 
-        // Initialize the game scene for the selected memory
-        if (typeof Bn === 'function' && typeof ve === 'function') {
-          Bn(ve());
-        }
+        // Wait a bit for DOM to be ready and then initialize the game
+        setTimeout(() => {
+          // Ensure the game canvas exists
+          const gameCanvas = document.getElementById('game');
+          if (!gameCanvas) {
+            console.error('Game canvas tidak ditemukan!');
+            return;
+          }
 
-        // Start the game
-        if (typeof startGame === 'function') {
-          startGame();
-        } else {
-          console.error('Fungsi startGame tidak ditemukan');
-        }
+          // Reset game state variables
+          window.I = false;
+          window.E = false;
+          window.Y = false;
+          window.s = false;
+          window.le = false;
+
+          // Initialize the game scene for the selected memory
+          if (typeof Bn === 'function' && typeof ve === 'function') {
+            try {
+              // Pass the selected stage name to Bn
+              Bn(ve());
+            } catch (error) {
+              console.error('Error saat inisialisasi Bn:', error);
+            }
+          }
+
+          // Start the game after a delay to ensure everything is initialized
+          setTimeout(() => {
+            if (typeof startGame === 'function') {
+              try {
+                startGame();
+              } catch (error) {
+                console.error('Error saat memulai permainan:', error);
+              }
+            } else {
+              console.error('Fungsi startGame tidak ditemukan');
+            }
+          }, 200);
+        }, 100);
       }
     });
   </script>
