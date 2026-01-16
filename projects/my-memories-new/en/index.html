@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -157,6 +158,7 @@
       from {
         box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
       }
+
       to {
         box-shadow: 0 0 25px rgba(76, 175, 80, 0.9);
       }
@@ -165,24 +167,27 @@
     .game-container {
       display: none;
       width: 100%;
-      max-width: 900px;
-      margin: 0 auto;
-      background: rgba(0, 0, 0, 0.3);
+      max-width: 855px;
+      /* Sesuai lebar canvas */
+      margin: 20px auto;
+      background: transparent;
       border-radius: 15px;
-      padding: 20px;
-      margin-top: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
     }
 
     .game-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      background: linear-gradient(to bottom, #2c3e50, #1a252f);
+      padding: 10px 20px;
+      border-radius: 15px 15px 0 0;
+      /* Melengkung hanya di atas */
+      border-bottom: 2px solid #34495e;
     }
 
     .game-footer {
-      margin-top: 10px;
+      margin-top: 20px;
       display: flex;
       justify-content: center;
     }
@@ -197,71 +202,83 @@
     #game-container {
       position: relative;
       width: 100%;
-      max-width: 855px;
-      margin: 0 auto;
+      background: #000;
     }
 
     #game {
       display: block;
       width: 100%;
-      background: #000;
-      border-radius: 10px;
+      border-radius: 0;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
     }
 
     .hud-overlay {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      gap: 20px;
       flex: 1;
-      margin-right: 15px;
     }
 
     .hud-time {
       display: flex;
       align-items: center;
-      gap: 5px;
-      background: rgba(0, 0, 0, 0.6);
-      padding: 5px 10px;
-      border-radius: 20px;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 5px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .hud-time-label img {
-      height: 20px;
+      height: 22px;
+      filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
       vertical-align: middle;
     }
 
     .hud-time-value {
-      color: white;
+      color: #ffd700;
+      font-family: 'Courier New', monospace;
+      font-size: 1.2rem;
       font-weight: bold;
-      margin-left: 5px;
+      text-shadow: 1px 1px 0 #000;
     }
 
     .hud-gauge {
-      background: rgba(0, 0, 0, 0.6);
-      padding: 5px;
-      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 5px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .hud-gauge-track {
-      width: 150px;
-      height: 20px;
-      background: #333;
-      border-radius: 10px;
+      width: 180px;
+      height: 12px;
+      background: #111;
+      border-radius: 6px;
       overflow: hidden;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8);
+      position: relative;
     }
 
     .hud-gauge-fill {
       height: 100%;
       width: var(--fill-percent, 0%);
-      background: linear-gradient(to right, #4CAF50, #8BC34A);
-      transition: width 0.3s;
+      background: linear-gradient(90deg, #ff5252, #fbc02d, #4CAF50);
+      /* Gradient merah ke hijau */
+      background-size: 200% 100%;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     }
 
     .hud-gauge-percent {
-      color: white;
-      font-size: 0.8em;
-      margin-top: 3px;
-      display: block;
+      color: #fff;
+      font-size: 0.9em;
+      font-weight: bold;
+      min-width: 40px;
+      text-align: right;
     }
 
     .hidden {
@@ -273,22 +290,21 @@
     }
 
     /* Game state overlays */
-    #clear, #fail {
+    #clear,
+    #fail {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.85);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       z-index: 30;
       color: white;
-      text-align: center;
-      padding: 20px;
-      box-sizing: border-box;
+      border-radius: 0 0 15px 15px;
     }
 
     .game-overlay-buttons {
@@ -308,34 +324,73 @@
     }
 
     footer {
-      margin-top: 40px;
+      margin-top: 10px;
       opacity: 0.8;
       font-size: 0.9rem;
       text-align: center;
     }
 
+    .back-btn {
+      background: transparent;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      color: white;
+      padding: 10px 30px;
+      font-size: 1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .back-btn:hover {
+      background: white;
+      color: #333;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+      transform: scale(1.05);
+    }
+
     .game-controls {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      z-index: 20;
+      position: static;
+      /* Reset absolute */
+      display: flex;
+      gap: 10px;
     }
 
     .control-btn {
-      background: rgba(0, 0, 0, 0.6);
+      background: linear-gradient(to bottom, #3498db, #2980b9);
       color: white;
       border: none;
-      padding: 8px 15px;
+      padding: 8px 16px;
       font-size: 0.9rem;
-      border-radius: 20px;
+      border-radius: 6px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
+      font-weight: 600;
+      box-shadow: 0 4px 0 #1a5276;
+      transition: all 0.1s;
+    }
+
+    .control-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 0 0 #1a5276;
+    }
+
+    .control-btn:hover {
+      filter: brightness(1.1);
     }
 
     .control-btn.muted {
-      background: rgba(200, 0, 0, 0.6);
+      background: linear-gradient(to bottom, #e74c3c, #c0392b);
+      box-shadow: 0 4px 0 #922b21;
+    }
+
+    .control-btn.muted:active {
+      box-shadow: 0 0 0 #922b21;
     }
 
     .sentimental-note {
@@ -346,22 +401,34 @@
     }
 
     @media (max-width: 768px) {
-      h1 {
-        font-size: 2rem;
+      .game-header {
+        flex-direction: column;
+        gap: 10px;
       }
 
-      .menu-item {
+      .hud-overlay {
         width: 100%;
-        max-width: 300px;
+        justify-content: space-between;
+      }
+
+      .hud-gauge-track {
+        width: 100px;
+      }
+
+      .game-controls {
+        width: 100%;
+        justify-content: center;
       }
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <header>
       <h1>Kenangan-Ku</h1>
-      <p class="subtitle">Pilih sebuah kenangan untuk dieksplorasi dan menghidupkan kembali momen-momen istimewa bersama orang-orang yang berarti dalam hidupku</p>
+      <p class="subtitle">Pilih sebuah kenangan untuk dieksplorasi dan menghidupkan kembali momen-momen istimewa bersama
+        orang-orang yang berarti dalam hidupku</p>
     </header>
 
     <main>
@@ -462,48 +529,37 @@
     </footer>
   </div>
 
-  <!-- Audio elements for the game -->
   <audio id="bgm" preload="auto" loop style="display: none;">
     <source src="assets/audio/bg-music.mp3" type="audio/mpeg">
   </audio>
-  <audio id="focus" preload="auto" style="display: none;">
-    <source src="assets/audio/btn-focus.mp3" type="audio/mpeg">
-  </audio>
-  <audio id="press" preload="auto" style="display: none;">
-    <source src="assets/audio/btn-press.mp3" type="audio/mpeg">
-  </audio>
 
-  <!-- Include the original game scripts -->
   <script src="assets/bd2-2nd5-scene.js"></script>
   <script src="assets/js/game.min.js"></script>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
+
+      const manualStageNames = ["Loen_A", "Loen_B", "Morpeah_A", "Morpeah_B", "Eclipse_A", "Eclipse_B", "Celia_A", "Celia_B", "Zenith", "Darian", "Eleaneer", "Tyr"];
+
+      window.ve = function () {
+        var e = Number.isInteger(window.selectStage) ? window.selectStage : 0;
+        return manualStageNames[e] || manualStageNames[0];
+      };
+      // -----------------------------
+
       // Fungsi pemilihan menu
       const menuItems = document.querySelectorAll('.menu-item:not(.coming-soon)');
       const memoryContents = document.querySelectorAll('.memory-content');
 
       menuItems.forEach(item => {
-        item.addEventListener('click', function() {
-          // Hapus kelas aktif dari semua item
-          menuItems.forEach(menuItem => {
-            menuItem.classList.remove('active');
-          });
-
-          // Tambahkan kelas aktif ke item yang diklik
+        item.addEventListener('click', function () {
+          menuItems.forEach(menuItem => menuItem.classList.remove('active'));
           this.classList.add('active');
+          memoryContents.forEach(content => content.classList.add('hidden'));
 
-          // Sembunyikan semua konten kenangan
-          memoryContents.forEach(content => {
-            content.classList.add('hidden');
-          });
-
-          // Tampilkan konten kenangan yang dipilih
           const targetId = this.getAttribute('data-target');
           const targetContent = document.getElementById(`${targetId}-content`);
-          if (targetContent) {
-            targetContent.classList.remove('hidden');
-          }
+          if (targetContent) targetContent.classList.remove('hidden');
         });
       });
 
@@ -519,27 +575,18 @@
           <div class="sentimental-note">Klik untuk menghidupkan kembali</div>
         `;
 
-        characterCard.addEventListener('click', function() {
-          // Hapus kelas terpilih dari semua kartu
-          document.querySelectorAll('.character-card').forEach(card => {
-            card.classList.remove('selected');
-          });
-
-          // Tambahkan kelas terpilih ke kartu yang diklik
+        characterCard.addEventListener('click', function () {
+          document.querySelectorAll('.character-card').forEach(card => card.classList.remove('selected'));
           this.classList.add('selected');
 
-          // Set the selected memory as the game stage
-          window.selectStage = i - 1; // Adjust for 0-indexing
+          // Set global variable agar fungsi override 've()' bisa membacanya
+          window.selectStage = i - 1;
 
-          // Log the stage selection for debugging
           console.log(`Selected stage: ${window.selectStage} (Kenangan ${i})`);
 
-          // Tampilkan kontainer permainan setelah jeda singkat
           setTimeout(() => {
             document.getElementById('gameContainer').classList.add('visible');
             document.getElementById('gameContainer').scrollIntoView({ behavior: 'smooth' });
-
-            // Initialize the game for the selected memory
             initializeGame(i);
           }, 300);
         });
@@ -548,21 +595,22 @@
       }
 
       // Tombol kembali ke menu
-      document.getElementById('backToMenu').addEventListener('click', function() {
+      document.getElementById('backToMenu').addEventListener('click', function () {
         document.getElementById('gameContainer').classList.remove('visible');
-        document.querySelectorAll('.character-card').forEach(card => {
-          card.classList.remove('selected');
-        });
+        document.querySelectorAll('.character-card').forEach(card => card.classList.remove('selected'));
 
-        // Stop the game when returning to menu
         if (typeof triggerGameStop === 'function') {
           triggerGameStop();
         } else if (typeof va === 'function') {
-          // Alternative way to stop the game
           va();
         }
 
-        // Reset game state
+        const allAudio = document.querySelectorAll('audio');
+        allAudio.forEach(audio => {
+          audio.pause();
+          audio.currentTime = 0;
+        });
+
         window.I = false;
         window.E = false;
         window.Y = false;
@@ -573,15 +621,15 @@
       let isMuted = false;
 
       if (muteBtn) {
-        muteBtn.addEventListener('click', function() {
+        muteBtn.addEventListener('click', function () {
           isMuted = !isMuted;
+          if (typeof setBGMusic === 'function') setBGMusic(!isMuted);
 
-          // Toggle mute state in the game
-          if (typeof setBGMusic === 'function') {
-            setBGMusic(!isMuted);
-          }
+          const allAudio = document.querySelectorAll('audio');
+          allAudio.forEach(audio => {
+            audio.muted = isMuted;
+          });
 
-          // Update button text/icon
           if (isMuted) {
             muteBtn.innerHTML = '🔇 Senyap';
             muteBtn.classList.add('muted');
@@ -589,23 +637,16 @@
             muteBtn.innerHTML = '🔊 Suara';
             muteBtn.classList.remove('muted');
           }
-
-          console.log(isMuted ? 'Suara dimatikan' : 'Suara dinyalakan');
         });
       }
 
-      // Setup replay button functionality
+      // Setup replay button
       const replayBtn = document.getElementById('replayBtn');
-
       if (replayBtn) {
-        replayBtn.addEventListener('click', function() {
+        replayBtn.addEventListener('click', function () {
           console.log('Restarting game...');
-
-          // Restart the current game
           if (typeof restartGame === 'function') {
             restartGame();
-          } else {
-            console.error('Fungsi restartGame tidak ditemukan');
           }
         });
       }
@@ -614,39 +655,30 @@
       function initializeGame(memoryId) {
         console.log(`Memulai permainan untuk kenangan ${memoryId}`);
 
-        // Wait a bit for DOM to be ready and then initialize the game
         setTimeout(() => {
-          // Ensure the game canvas exists
           const gameCanvas = document.getElementById('game');
-          if (!gameCanvas) {
-            console.error('Game canvas tidak ditemukan!');
-            return;
-          }
+          if (!gameCanvas) return;
 
-          // Reset game state variables
           window.I = false;
           window.E = false;
           window.Y = false;
           window.s = false;
           window.le = false;
 
-          // Ensure the correct stage is selected
-          window.selectStage = memoryId - 1; // Convert to 0-based index
+          // Pastikan selectStage terset di window
+          window.selectStage = memoryId - 1;
 
-          // Log the stage selection for debugging
-          console.log(`Stage set to: ${window.selectStage} (Kenangan ${memoryId})`);
-
-          // Initialize the game scene for the selected memory
-          if (typeof Bn === 'function' && typeof ve === 'function') {
+          // PENTING: Panggil Bn() dengan ve() yang sudah di-override
+          // Ini memaksa game memuat aset gambar (background/mask) yang sesuai dengan stage yang dipilih
+          if (typeof Bn === 'function') {
             try {
-              // Pass the selected stage name to Bn
-              Bn(ve());
+              // window.ve() akan mengembalikan nama stage yang benar berdasarkan window.selectStage
+              Bn(window.ve());
             } catch (error) {
               console.error('Error saat inisialisasi Bn:', error);
             }
           }
 
-          // Start the game after a delay to ensure everything is initialized
           setTimeout(() => {
             if (typeof startGame === 'function') {
               try {
@@ -654,9 +686,12 @@
               } catch (error) {
                 console.error('Error saat memulai permainan:', error);
               }
-            } else {
-              console.error('Fungsi startGame tidak ditemukan');
             }
+
+            const allAudio = document.querySelectorAll('audio');
+            allAudio.forEach(audio => {
+              audio.muted = isMuted;
+            });
           }, 200);
         }, 100);
       }
@@ -664,4 +699,5 @@
     });
   </script>
 </body>
+
 </html>
