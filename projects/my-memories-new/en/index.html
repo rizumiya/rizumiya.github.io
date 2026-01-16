@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kenangan-Ku</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      text-align: center;
+    }
+
+    header {
+      margin-bottom: 40px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      letter-spacing: 2px;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .menu-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    .menu-item {
+      background: rgba(255, 255, 255, 0.15);
+      border: 2px solid transparent;
+      border-radius: 15px;
+      padding: 30px 20px;
+      width: 250px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .menu-item:hover:not(.coming-soon) {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .menu-item.active {
+      border: 2px solid #4CAF50;
+      box-shadow: 0 0 25px rgba(76, 175, 80, 0.7);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .menu-item.coming-soon {
+      opacity: 0.7;
+      cursor: not-allowed;
+      position: relative;
+    }
+
+    .menu-item.coming-soon::after {
+      content: "Nanti";
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ff9800;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .menu-icon {
+      font-size: 3rem;
+      margin-bottom: 15px;
+    }
+
+    .menu-title {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .menu-description {
+      font-size: 1rem;
+      opacity: 0.9;
+      line-height: 1.5;
+    }
+
+    .character-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 20px;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .character-card {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      padding: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      aspect-ratio: 1/1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .character-card:hover {
+      transform: scale(1.05);
+      background: rgba(76, 175, 80, 0.3);
+    }
+
+    .character-card.selected {
+      animation: glow 1.5s infinite alternate;
+      background: rgba(76, 175, 80, 0.4);
+    }
+
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+      }
+      to {
+        box-shadow: 0 0 25px rgba(76, 175, 80, 0.9);
+      }
+    }
+
+    .game-container {
+      display: none;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .game-canvas {
+      width: 100%;
+      background: black;
+      border-radius: 10px;
+      display: block;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .visible {
+      display: block;
+    }
+
+    footer {
+      margin-top: 40px;
+      opacity: 0.8;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .sentimental-note {
+      font-style: italic;
+      margin-top: 15px;
+      opacity: 0.8;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .menu-item {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Kenangan-Ku</h1>
+      <p class="subtitle">Pilih sebuah kenangan untuk dieksplorasi dan menghidupkan kembali momen-momen istimewa bersama orang-orang yang berarti dalam hidupku</p>
+    </header>
+
+    <main>
+      <div class="menu-container" id="memoryMenu">
+        <div class="menu-item active" data-target="semestagroup" id="semestagroup-menu">
+          <div class="menu-icon">👥</div>
+          <h2 class="menu-title">SemestaGroup</h2>
+          <p class="menu-description">Kenangan bersama tim SemestaGroup</p>
+          <p class="sentimental-note">Tempat pertumbuhan dan kerja keras</p>
+        </div>
+        <div class="menu-item coming-soon" id="memory-1-menu">
+          <div class="menu-icon">🔒</div>
+          <h2 class="menu-title">Kenangan 1</h2>
+          <p class="menu-description">Segera Hadir</p>
+          <p class="sentimental-note">Masih dalam pengembangan</p>
+        </div>
+        <div class="menu-item coming-soon" id="memory-2-menu">
+          <div class="menu-icon">🔒</div>
+          <h2 class="menu-title">Kenangan 2</h2>
+          <p class="menu-description">Segera Hadir</p>
+          <p class="sentimental-note">Masih dalam pengembangan</p>
+        </div>
+        <div class="menu-item coming-soon" id="memory-3-menu">
+          <div class="menu-icon">🔒</div>
+          <h2 class="menu-title">Kenangan 3</h2>
+          <p class="menu-description">Segera Hadir</p>
+          <p class="sentimental-note">Masih dalam pengembangan</p>
+        </div>
+      </div>
+
+      <div id="semestagroup-content" class="memory-content">
+        <h2>Pilih Kenangan dari SemestaGroup</h2>
+        <p class="subtitle">Setiap kenangan menyimpan pelajaran dan kebahagiaan yang membentukku</p>
+        <div class="character-grid" id="characterGrid">
+          <!-- Kenangan akan ditambahkan secara dinamis -->
+        </div>
+      </div>
+
+      <div class="game-container" id="gameContainer">
+        <canvas id="gameCanvas" class="game-canvas" width="855" height="505"></canvas>
+        <button id="backToMenu" class="back-btn">Kembali ke Menu</button>
+      </div>
+    </main>
+
+    <footer>
+      <p>Koleksi Kenangan-Ku &copy; 2026</p>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Fungsi pemilihan menu
+      const menuItems = document.querySelectorAll('.menu-item:not(.coming-soon)');
+      const memoryContents = document.querySelectorAll('.memory-content');
+
+      menuItems.forEach(item => {
+        item.addEventListener('click', function() {
+          // Hapus kelas aktif dari semua item
+          menuItems.forEach(menuItem => {
+            menuItem.classList.remove('active');
+          });
+
+          // Tambahkan kelas aktif ke item yang diklik
+          this.classList.add('active');
+
+          // Sembunyikan semua konten kenangan
+          memoryContents.forEach(content => {
+            content.classList.add('hidden');
+          });
+
+          // Tampilkan konten kenangan yang dipilih
+          const targetId = this.getAttribute('data-target');
+          const targetContent = document.getElementById(`${targetId}-content`);
+          if (targetContent) {
+            targetContent.classList.remove('hidden');
+          }
+        });
+      });
+
+      // Generate grid kenangan
+      const characterGrid = document.getElementById('characterGrid');
+      for (let i = 1; i <= 12; i++) {
+        const characterCard = document.createElement('div');
+        characterCard.className = 'character-card';
+        characterCard.dataset.id = i;
+        characterCard.innerHTML = `
+          <div class="character-icon">📸</div>
+          <div class="character-name">Kenangan ${i}</div>
+          <div class="sentimental-note">Klik untuk menghidupkan kembali</div>
+        `;
+
+        characterCard.addEventListener('click', function() {
+          // Hapus kelas terpilih dari semua kartu
+          document.querySelectorAll('.character-card').forEach(card => {
+            card.classList.remove('selected');
+          });
+
+          // Tambahkan kelas terpilih ke kartu yang diklik
+          this.classList.add('selected');
+
+          // Tampilkan kontainer permainan setelah jeda singkat
+          setTimeout(() => {
+            document.getElementById('gameContainer').classList.add('visible');
+            document.getElementById('gameContainer').scrollIntoView({ behavior: 'smooth' });
+
+            // Di sini kamu bisa menginisialisasi permainan sesuai kenangan yang dipilih
+            initializeGame(i);
+          }, 300);
+        });
+
+        characterGrid.appendChild(characterCard);
+      }
+
+      // Tombol kembali ke menu
+      document.getElementById('backToMenu').addEventListener('click', function() {
+        document.getElementById('gameContainer').classList.remove('visible');
+        document.querySelectorAll('.character-card').forEach(card => {
+          card.classList.remove('selected');
+        });
+      });
+
+      // Fungsi inisialisasi permainan
+      function initializeGame(memoryId) {
+        console.log(`Memulai permainan untuk kenangan ${memoryId}`);
+        // Di implementasi nyata, fungsi ini akan memulai permainan sesuai kenangan yang dipilih
+        // Untuk sekarang, kita hanya mencatat pilihan
+      }
+    });
+  </script>
+</body>
+</html>
