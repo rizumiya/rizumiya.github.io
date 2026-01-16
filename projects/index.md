@@ -26,9 +26,7 @@ Welcome to my projects section! Here you can find various projects I've worked o
   - Features difficulty levels and attempts tracking
   - Includes responsive design for various devices
 
-- [Two and Half Anniv](two-and-half-anniv/)
-  - A special project celebrating a 2.5-year anniversary
-  - Features interactive elements and custom design
-  - Includes multimedia content and responsive layout
+- [My Memories](my-memories/en)
+  - Fun game to play
 
 More projects will be added soon!
