@@ -268,6 +268,10 @@
     </footer>
   </div>
 
+  <!-- Include the original game scripts -->
+  <script src="../assets/bd2-2nd5-scene.js"></script>
+  <script src="../assets/js/game.min.js"></script>
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // Fungsi pemilihan menu
@@ -319,12 +323,15 @@
           // Tambahkan kelas terpilih ke kartu yang diklik
           this.classList.add('selected');
 
+          // Set the selected memory as the game stage
+          window.selectStage = i - 1; // Adjust for 0-indexing
+
           // Tampilkan kontainer permainan setelah jeda singkat
           setTimeout(() => {
             document.getElementById('gameContainer').classList.add('visible');
             document.getElementById('gameContainer').scrollIntoView({ behavior: 'smooth' });
 
-            // Di sini kamu bisa menginisialisasi permainan sesuai kenangan yang dipilih
+            // Initialize the game for the selected memory
             initializeGame(i);
           }, 300);
         });
@@ -338,13 +345,28 @@
         document.querySelectorAll('.character-card').forEach(card => {
           card.classList.remove('selected');
         });
+
+        // Stop the game when returning to menu
+        if (typeof triggerGameStop === 'function') {
+          triggerGameStop();
+        }
       });
 
       // Fungsi inisialisasi permainan
       function initializeGame(memoryId) {
         console.log(`Memulai permainan untuk kenangan ${memoryId}`);
-        // Di implementasi nyata, fungsi ini akan memulai permainan sesuai kenangan yang dipilih
-        // Untuk sekarang, kita hanya mencatat pilihan
+
+        // Initialize the game scene for the selected memory
+        if (typeof Bn === 'function' && typeof ve === 'function') {
+          Bn(ve());
+        }
+
+        // Start the game
+        if (typeof startGame === 'function') {
+          startGame();
+        } else {
+          console.error('Fungsi startGame tidak ditemukan');
+        }
       }
     });
   </script>
