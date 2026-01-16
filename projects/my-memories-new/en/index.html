@@ -262,11 +262,70 @@
       display: block;
     }
 
+    /* Game state overlays */
+    #clear, #fail {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 30;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .game-overlay-buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .overlay-btn {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
     footer {
       margin-top: 40px;
       opacity: 0.8;
       font-size: 0.9rem;
       text-align: center;
+    }
+
+    .game-controls {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      z-index: 20;
+    }
+
+    .control-btn {
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      font-size: 0.9rem;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .control-btn.muted {
+      background: rgba(200, 0, 0, 0.6);
     }
 
     .sentimental-note {
@@ -376,6 +435,9 @@
         <button id="btn_character_10" style="display: none;">Char 10</button>
         <button id="btn_character_11" style="display: none;">Char 11</button>
         <button id="btn_character_12" style="display: none;">Char 12</button>
+        <div class="game-controls">
+          <button id="muteBtn" class="control-btn">🔊 Suara</button>
+        </div>
         <button id="backToMenu" class="back-btn">Kembali ke Menu</button>
       </div>
     </main>
@@ -454,6 +516,9 @@
           // Set the selected memory as the game stage
           window.selectStage = i - 1; // Adjust for 0-indexing
 
+          // Log the stage selection for debugging
+          console.log(`Selected stage: ${window.selectStage} (Kenangan ${i})`);
+
           // Tampilkan kontainer permainan setelah jeda singkat
           setTimeout(() => {
             document.getElementById('gameContainer').classList.add('visible');
@@ -487,6 +552,32 @@
         window.E = false;
         window.Y = false;
       });
+
+      // Setup mute button functionality
+      const muteBtn = document.getElementById('muteBtn');
+      let isMuted = false;
+
+      if (muteBtn) {
+        muteBtn.addEventListener('click', function() {
+          isMuted = !isMuted;
+
+          // Toggle mute state in the game
+          if (typeof setBGMusic === 'function') {
+            setBGMusic(!isMuted);
+          }
+
+          // Update button text/icon
+          if (isMuted) {
+            muteBtn.innerHTML = '🔇 Senyap';
+            muteBtn.classList.add('muted');
+          } else {
+            muteBtn.innerHTML = '🔊 Suara';
+            muteBtn.classList.remove('muted');
+          }
+
+          console.log(isMuted ? 'Suara dimatikan' : 'Suara dinyalakan');
+        });
+      }
 
       // Fungsi inisialisasi permainan
       function initializeGame(memoryId) {
@@ -532,6 +623,7 @@
           }, 200);
         }, 100);
       }
+
     });
   </script>
 </body>
