@@ -623,29 +623,31 @@
     }
 
 // 모바일 기기 감지 및 리다이렉트 & 파라미터 처리
-(function () {
-    let locale;
-    const scripts = document.getElementsByTagName('script');
-    const currentScript = scripts[scripts.length - 1];
-    const src = currentScript.src;
-    const url = new URL(src);
 
-    locale = url.searchParams.get('lang');
+// untuk mengarahkan ke folder m
+// (function () {
+//     let locale;
+//     const scripts = document.getElementsByTagName('script');
+//     const currentScript = scripts[scripts.length - 1];
+//     const src = currentScript.src;
+//     const url = new URL(src);
 
-    function isMobileDevice() {
-        return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-            navigator.userAgent
-        );
-    }
-    var isMobile = isMobileDevice();
+//     locale = url.searchParams.get('lang');
 
-    if (isMobile){
-        var target = (locale ? locale : '') + '/m/';
-        var query = window.location.search || '';
-        var hash = window.location.hash || '';
-        location.replace(target + query + hash);
-    }
-})();
+//     function isMobileDevice() {
+//         return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+//             navigator.userAgent
+//         );
+//     }
+//     var isMobile = isMobileDevice();
+
+//     if (isMobile){
+//         var target = (locale ? locale : '') + '/m/';
+//         var query = window.location.search || '';
+//         var hash = window.location.hash || '';
+//         location.replace(target + query + hash);
+//     }
+// })();
 
 
 const GA_SELECT_VALUE = ['loen1','loen2','morpeah1','morpeah2','eclipse1','eclipse2','celia1','celia2','zenith1','darian1','eleaneer1','tyr1'];
