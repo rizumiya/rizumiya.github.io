@@ -200,9 +200,10 @@
     }
 
     #game-container {
-      position: relative;
+      position: relative !important;
       width: 100%;
       background: #000;
+      overflow: hidden;
     }
 
     #game {
@@ -509,7 +510,7 @@
       height: 100%;
       background: rgba(0, 0, 0, 0.85);
       /* Latar gelap transparan */
-      z-index: 50;
+      z-index: 100;
       /* Pastikan di atas canvas */
 
       /* Flexbox untuk menengahkan konten */
@@ -752,7 +753,8 @@
   <script src="assets/js/game.min.js"></script>
 
   <script>
-    // Setup Mobile Controls
+    // --- 1. SETUP MOBILE CONTROLS ---
+    // --- SETUP MOBILE CONTROLS (DIPERBAIKI) ---
     const dBtns = document.querySelectorAll('.d-btn');
 
     dBtns.forEach(btn => {
@@ -760,48 +762,53 @@
 
       // Fungsi helper untuk mengirim input ke game
       const triggerDown = (e) => {
-        e.preventDefault(); // Mencegah zoom/scroll
+        // Mencegah perilaku bawaan (zoom/scroll/context menu)
+        if (e.cancelable) e.preventDefault();
+
         btn.classList.add('active');
+
+        // Pastikan gameInput tersedia
         if (window.gameInput && typeof window.gameInput.down === 'function') {
-          // Mapping "Space" ke string yang dikenali game
           let gameKey = key;
-          if (key === 'Space') gameKey = ' ';
-          window.gameInput.down({ key: gameKey });
+          if (key === 'Space') gameKey = ' '; 
+
+          window.gameInput.down(gameKey);
         }
       };
 
       const triggerUp = (e) => {
-        e.preventDefault();
+        if (e.cancelable) e.preventDefault();
+
         btn.classList.remove('active');
+
         if (window.gameInput && typeof window.gameInput.up === 'function') {
           let gameKey = key;
           if (key === 'Space') gameKey = ' ';
-          window.gameInput.up({ key: gameKey });
+
+          window.gameInput.up(gameKey); // <--- INI JUGA DIPERBAIKI
         }
       };
 
-      // Support Mouse & Touch events
-      btn.addEventListener('mousedown', triggerDown);
+      // Event Listeners untuk Touch (HP) dan Mouse (PC/Test)
+      // Gunakan { passive: false } agar e.preventDefault() bekerja
       btn.addEventListener('touchstart', triggerDown, { passive: false });
+      btn.addEventListener('touchend', triggerUp, { passive: false });
 
+      // Event Mouse (opsional, untuk testing di PC pake mouse klik)
+      btn.addEventListener('mousedown', triggerDown);
       btn.addEventListener('mouseup', triggerUp);
-      btn.addEventListener('mouseleave', triggerUp); // Jika mouse keluar dari tombol
-      btn.addEventListener('touchend', triggerUp);
+      btn.addEventListener('mouseleave', triggerUp);
     });
 
-    // end of mobile controls setup
-
+    // --- 2. LOGIKA GAME UTAMA ---
     document.addEventListener('DOMContentLoaded', function () {
-
       const manualStageNames = ["Loen_A", "Loen_B", "Morpeah_A", "Morpeah_B", "Eclipse_A", "Eclipse_B", "Celia_A", "Celia_B", "Zenith", "Darian", "Eleaneer", "Tyr"];
-
       window.ve = function () {
         var e = Number.isInteger(window.selectStage) ? window.selectStage : 0;
         return manualStageNames[e] || manualStageNames[0];
       };
-      // -----------------------------
 
-      // Fungsi pemilihan menu
+      // Navigasi Menu
       const menuItems = document.querySelectorAll('.menu-item:not(.coming-soon)');
       const memoryContents = document.querySelectorAll('.memory-content');
 
@@ -810,14 +817,13 @@
           menuItems.forEach(menuItem => menuItem.classList.remove('active'));
           this.classList.add('active');
           memoryContents.forEach(content => content.classList.add('hidden'));
-
           const targetId = this.getAttribute('data-target');
           const targetContent = document.getElementById(`${targetId}-content`);
           if (targetContent) targetContent.classList.remove('hidden');
         });
       });
 
-      // Generate grid kenangan
+      // Generate Grid
       const characterGrid = document.getElementById('characterGrid');
       for (let i = 1; i <= 12; i++) {
         const characterCard = document.createElement('div');
@@ -826,18 +832,13 @@
         characterCard.innerHTML = `
           <div class="character-icon">📸</div>
           <div class="character-name">Kenangan ${i}</div>
-          <div class="sentimental-note">Klik untuk menghidupkan kembali</div>
+          <div class="sentimental-note">Klik untuk main</div>
         `;
-
         characterCard.addEventListener('click', function () {
           document.querySelectorAll('.character-card').forEach(card => card.classList.remove('selected'));
           this.classList.add('selected');
-
-          // Set global variable agar fungsi override 've()' bisa membacanya
           window.selectStage = i - 1;
 
-          console.log(`Selected stage: ${window.selectStage} (Kenangan ${i})`);
-          // Untuk set audio on
           if (typeof unlockAudioOnce === 'function') unlockAudioOnce();
           if (typeof setBGMusic === 'function') setBGMusic(true);
 
@@ -847,118 +848,81 @@
             initializeGame(i);
           }, 300);
         });
-
         characterGrid.appendChild(characterCard);
       }
 
-      // Tombol kembali ke menu
+      // Tombol Kembali
       document.getElementById('backToMenu').addEventListener('click', function () {
         document.getElementById('gameContainer').classList.remove('visible');
         document.querySelectorAll('.character-card').forEach(card => card.classList.remove('selected'));
-
-        if (typeof triggerGameStop === 'function') {
-          triggerGameStop();
-        } else if (typeof va === 'function') {
-          va();
-        }
+        if (typeof triggerGameStop === 'function') triggerGameStop();
 
         const allAudio = document.querySelectorAll('audio');
-        allAudio.forEach(audio => {
-          audio.pause();
-          audio.currentTime = 0;
-        });
+        allAudio.forEach(audio => { audio.pause(); audio.currentTime = 0; });
 
-        window.I = false;
-        window.E = false;
-        window.Y = false;
+        // Sembunyikan Overlay jika ada
+        document.getElementById('fail').classList.remove('active');
+        document.getElementById('clear').classList.remove('active');
       });
 
-      // Setup mute button functionality
+      // Tombol Mute & Replay
       const muteBtn = document.getElementById('muteBtn');
       let isMuted = false;
-
       if (muteBtn) {
         muteBtn.addEventListener('click', function () {
           isMuted = !isMuted;
           if (typeof setBGMusic === 'function') setBGMusic(!isMuted);
-
-          const allAudio = document.querySelectorAll('audio');
-          allAudio.forEach(audio => {
-            audio.muted = isMuted;
-          });
-
-          if (isMuted) {
-            muteBtn.innerHTML = '🔇 Senyap';
-            muteBtn.classList.add('muted');
-          } else {
-            muteBtn.innerHTML = '🔊 Suara';
-            muteBtn.classList.remove('muted');
-          }
+          document.querySelectorAll('audio').forEach(audio => audio.muted = isMuted);
+          muteBtn.innerHTML = isMuted ? '🔇 Senyap' : '🔊 Suara';
+          muteBtn.classList.toggle('muted', isMuted);
         });
       }
 
-      // Setup replay button
       const replayBtn = document.getElementById('replayBtn');
       if (replayBtn) {
         replayBtn.addEventListener('click', function () {
-          console.log('Restarting game...');
-          if (typeof restartGame === 'function') {
-            restartGame();
-          }
+          if (typeof restartGame === 'function') restartGame();
         });
       }
 
-      // Fungsi inisialisasi permainan
       function initializeGame(memoryId) {
-        console.log(`Memulai permainan untuk kenangan ${memoryId}`);
-
         setTimeout(() => {
           const gameCanvas = document.getElementById('game');
           if (!gameCanvas) return;
-
-          window.I = false;
-          window.E = false;
-          window.Y = false;
-          window.s = false;
-          window.le = false;
-
-          // Pastikan selectStage terset di window
           window.selectStage = memoryId - 1;
-
-          // PENTING: Panggil Bn() dengan ve() yang sudah di-override
-          // Ini memaksa game memuat aset gambar (background/mask) yang sesuai dengan stage yang dipilih
-          if (typeof Bn === 'function') {
-            try {
-              // window.ve() akan mengembalikan nama stage yang benar berdasarkan window.selectStage
-              Bn(window.ve());
-            } catch (error) {
-              console.error('Error saat inisialisasi Bn:', error);
-            }
-          }
-
+          if (typeof Bn === 'function') Bn(window.ve());
           setTimeout(() => {
-            if (typeof startGame === 'function') {
-              try {
-                startGame();
-              } catch (error) {
-                console.error('Error saat memulai permainan:', error);
-              }
-            }
-
-            const allAudio = document.querySelectorAll('audio');
-            allAudio.forEach(audio => {
-              audio.muted = isMuted;
-            });
+            if (typeof startGame === 'function') startGame();
+            document.querySelectorAll('audio').forEach(audio => audio.muted = isMuted);
           }, 200);
         }, 100);
       }
-
     });
-  </script>
-  <script>
-    // Mencegah scrolling dengan tombol panah/spasi jika game sedang terlihat
+
+    // --- 3. AUTO SCROLL SAAT GAME OVER / MENANG (SOLUSI MASALAH KAMU) ---
+    // Script ini akan memantau jika overlay muncul, lalu otomatis scroll layar ke overlay tersebut
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          const target = mutation.target;
+          // Jika overlay mendapat class 'active' (muncul)
+          if (target.classList.contains('active')) {
+            console.log('Overlay muncul, scrolling...');
+            // Paksa scroll ke elemen overlay agar user sadar
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }
+      });
+    });
+
+    // Pasang observer ke elemen fail dan clear
+    const failEl = document.getElementById('fail');
+    const clearEl = document.getElementById('clear');
+    if (failEl) observer.observe(failEl, { attributes: true });
+    if (clearEl) observer.observe(clearEl, { attributes: true });
+
+    // --- 4. PREVENT SCROLL SAAT MAIN ---
     window.addEventListener("keydown", function (e) {
-      // Cek jika game container sedang terlihat
       const gameContainer = document.getElementById('gameContainer');
       if (gameContainer && gameContainer.classList.contains('visible')) {
         if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
