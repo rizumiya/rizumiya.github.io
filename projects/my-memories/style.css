@@ -174,7 +174,7 @@ h1 {
     width: 100%;
     max-width: 855px;
     margin: 20px auto;
-    padding-bottom: 5px;
+    padding-bottom: 1px;
     background: transparent;
     border-radius: 15px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
