@@ -229,10 +229,11 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .hud-time-label img {
-      height: 22px;
-      filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
-      vertical-align: middle;
+    .hud-time-label {
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 1px 1px 0 #000;
     }
 
     .hud-time-value {
@@ -420,6 +421,99 @@
         justify-content: center;
       }
     }
+
+    /* Mobile Controls */
+    .mobile-controls {
+      display: none;
+      /* Default hidden di PC */
+      margin-top: 20px;
+      gap: 20px;
+      justify-content: space-around;
+      align-items: center;
+      touch-action: manipulation;
+      padding-bottom: 20px;
+      touch-action: none; 
+      /* Mencegah zoom saat tap cepat */
+    }
+
+    .d-pad {
+      position: relative;
+      width: 120px;
+      height: 120px;
+    }
+
+    .d-btn {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 8px;
+      color: white;
+      font-size: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .d-btn:active,
+    .d-btn.active {
+      background: rgba(76, 175, 80, 0.6);
+    }
+
+    .d-up {
+      top: 0;
+      left: 40px;
+    }
+
+    .d-down {
+      bottom: 0;
+      left: 40px;
+    }
+
+    .d-left {
+      top: 40px;
+      left: 0;
+    }
+
+    .d-right {
+      top: 40px;
+      right: 0;
+    }
+
+    .action-btn-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .action-btn {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: rgba(255, 50, 50, 0.6);
+      /* Merah transparan */
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .action-btn:active {
+      background: rgba(255, 50, 50, 0.9);
+    }
+
+    /* Tampilkan hanya di layar kecil */
+    @media (max-width: 900px) {
+      .mobile-controls {
+        display: flex;
+      }
+    }
   </style>
 </head>
 
@@ -471,7 +565,7 @@
         <div class="game-header">
           <div class="hud-overlay">
             <div class="hud-time">
-              <span class="hud-time-label"><img src="assets/gameui/text_time.png" crossorigin="anonymous"></span>
+              <span class="hud-time-label">TIME</span>
               <span id="hud-time-value" class="hud-time-value">120</span>
             </div>
             <div class="hud-gauge">
@@ -492,6 +586,21 @@
         <div class="game-footer">
           <button id="backToMenu" class="back-btn">Kembali ke Menu</button>
         </div>
+
+        <!-- mobile controls -->
+        <div class="mobile-controls">
+          <div class="action-btn-container">
+            <div class="action-btn d-btn" data-key="Space"
+              style="display:flex; justify-content:center; align-items:center;">ACTION</div>
+          </div>
+          <div class="d-pad">
+            <div class="d-btn d-up" data-key="ArrowUp">⬆️</div>
+            <div class="d-btn d-left" data-key="ArrowLeft">⬅️</div>
+            <div class="d-btn d-right" data-key="ArrowRight">➡️</div>
+            <div class="d-btn d-down" data-key="ArrowDown">⬇️</div>
+          </div>
+        </div>
+
         <div id="videoPlayer" style="display: none;"></div>
         <div id="recordTimeValue" data-text="120" style="display: none;">120</div>
         <div id="bestTimeValue" data-text="99" style="display: none;">99</div>
@@ -537,6 +646,45 @@
   <script src="assets/js/game.min.js"></script>
 
   <script>
+    // Setup Mobile Controls
+    const dBtns = document.querySelectorAll('.d-btn');
+
+    dBtns.forEach(btn => {
+      const key = btn.getAttribute('data-key');
+
+      // Fungsi helper untuk mengirim input ke game
+      const triggerDown = (e) => {
+        e.preventDefault(); // Mencegah zoom/scroll
+        btn.classList.add('active');
+        if (window.gameInput && typeof window.gameInput.down === 'function') {
+          // Mapping "Space" ke string yang dikenali game
+          let gameKey = key;
+          if (key === 'Space') gameKey = ' ';
+          window.gameInput.down({ key: gameKey });
+        }
+      };
+
+      const triggerUp = (e) => {
+        e.preventDefault();
+        btn.classList.remove('active');
+        if (window.gameInput && typeof window.gameInput.up === 'function') {
+          let gameKey = key;
+          if (key === 'Space') gameKey = ' ';
+          window.gameInput.up({ key: gameKey });
+        }
+      };
+
+      // Support Mouse & Touch events
+      btn.addEventListener('mousedown', triggerDown);
+      btn.addEventListener('touchstart', triggerDown, { passive: false });
+
+      btn.addEventListener('mouseup', triggerUp);
+      btn.addEventListener('mouseleave', triggerUp); // Jika mouse keluar dari tombol
+      btn.addEventListener('touchend', triggerUp);
+    });
+
+    // end of mobile controls setup
+
     document.addEventListener('DOMContentLoaded', function () {
 
       const manualStageNames = ["Loen_A", "Loen_B", "Morpeah_A", "Morpeah_B", "Eclipse_A", "Eclipse_B", "Celia_A", "Celia_B", "Zenith", "Darian", "Eleaneer", "Tyr"];
@@ -583,6 +731,9 @@
           window.selectStage = i - 1;
 
           console.log(`Selected stage: ${window.selectStage} (Kenangan ${i})`);
+          // Untuk set audio on
+          if (typeof unlockAudioOnce === 'function') unlockAudioOnce();
+          if (typeof setBGMusic === 'function') setBGMusic(true);
 
           setTimeout(() => {
             document.getElementById('gameContainer').classList.add('visible');
@@ -697,6 +848,18 @@
       }
 
     });
+  </script>
+  <script>
+    // Mencegah scrolling dengan tombol panah/spasi jika game sedang terlihat
+    window.addEventListener("keydown", function (e) {
+      // Cek jika game container sedang terlihat
+      const gameContainer = document.getElementById('gameContainer');
+      if (gameContainer && gameContainer.classList.contains('visible')) {
+        if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+          e.preventDefault();
+        }
+      }
+    }, { passive: false });
   </script>
 </body>
 

@@ -51,9 +51,10 @@
                 if (!isBGM) return;
                 if (!audioUnlocked) return;
                 bgAudio.play().catch(() => {});
-            } else {
-                try { bgAudio.pause(); } catch (e) {}
-                try { bgAudio.currentTime = 0; } catch (e) {}
+                // RIZKI
+            // } else {
+            //     try { bgAudio.pause(); } catch (e) {}
+            //     try { bgAudio.currentTime = 0; } catch (e) {}
             }
         } catch (e) {
             // swallow errors to avoid breaking UI
