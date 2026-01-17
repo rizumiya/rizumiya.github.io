@@ -18,8 +18,7 @@ body {
     justify-content: center;
     padding: 20px;
     overflow-x: hidden;
-    /* Mencegah pull-to-refresh di mobile browser */
-    touch-action: none;
+    touch-action: pan-y;
 }
 
 .container {
@@ -371,10 +370,10 @@ h1 {
     display: none; /* Default hidden di Desktop */
     margin-top: 25px;
     width: 100%;
-    max-width: 500px;
-    justify-content: space-between;
+    /* max-width: 500px; */
+    justify-content: space-around;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 20px 20px;
     /* Mencegah zoom/scroll saat main */
     touch-action: none; 
 }
