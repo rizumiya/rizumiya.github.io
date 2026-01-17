@@ -1,0 +1,599 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    width: 100%;
+    text-align: center;
+}
+
+header {
+    margin-bottom: 40px;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.menu-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.menu-item {
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid transparent;
+    border-radius: 15px;
+    padding: 30px 20px;
+    width: 250px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.menu-item:hover:not(.coming-soon) {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.menu-item.active {
+    border: 2px solid #4CAF50;
+    box-shadow: 0 0 25px rgba(76, 175, 80, 0.7);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.menu-item.coming-soon {
+    opacity: 0.7;
+    cursor: not-allowed;
+    position: relative;
+}
+
+.menu-item.coming-soon::after {
+    content: "Nanti";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff9800;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.menu-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.menu-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.menu-description {
+    font-size: 1rem;
+    opacity: 0.9;
+    line-height: 1.5;
+}
+
+.character-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.character-card {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.character-card:hover {
+    transform: scale(1.05);
+    background: rgba(76, 175, 80, 0.3);
+}
+
+.character-card.selected {
+    animation: glow 1.5s infinite alternate;
+    background: rgba(76, 175, 80, 0.4);
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+    }
+
+    to {
+        box-shadow: 0 0 25px rgba(76, 175, 80, 0.9);
+    }
+}
+
+.game-container {
+    display: none;
+    width: 100%;
+    max-width: 855px;
+    /* Sesuai lebar canvas */
+    margin: 20px auto;
+    background: transparent;
+    border-radius: 15px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, #2c3e50, #1a252f);
+    padding: 10px 20px;
+    border-radius: 15px 15px 0 0;
+    /* Melengkung hanya di atas */
+    border-bottom: 2px solid #34495e;
+}
+
+.game-footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.game-canvas {
+    width: 100%;
+    background: black;
+    border-radius: 10px;
+    display: block;
+}
+
+#game-container {
+    position: relative;
+    width: 100%;
+    background: #000;
+}
+
+#game {
+    display: block;
+    width: 100%;
+    border-radius: 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.hud-overlay {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+}
+
+.hud-time {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 5px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hud-time-label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 1px 1px 0 #000;
+}
+
+.hud-time-value {
+    color: #ffd700;
+    font-family: 'Courier New', monospace;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #000;
+}
+
+.hud-gauge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 5px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hud-gauge-track {
+    width: 180px;
+    height: 12px;
+    background: #111;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8);
+    position: relative;
+}
+
+.hud-gauge-fill {
+    height: 100%;
+    width: var(--fill-percent, 0%);
+    background: linear-gradient(90deg, #ff5252, #fbc02d, #4CAF50);
+    /* Gradient merah ke hijau */
+    background-size: 200% 100%;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.hud-gauge-percent {
+    color: #fff;
+    font-size: 0.9em;
+    font-weight: bold;
+    min-width: 40px;
+    text-align: right;
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
+}
+
+/* Game state overlays */
+
+.game-overlay-buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.overlay-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+footer {
+    margin-top: 10px;
+    opacity: 0.8;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.back-btn {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    padding: 10px 30px;
+    font-size: 1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.back-btn:hover {
+    background: white;
+    color: #333;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
+}
+
+.game-controls {
+    position: static;
+    /* Reset absolute */
+    display: flex;
+    gap: 10px;
+}
+
+.control-btn {
+    background: linear-gradient(to bottom, #3498db, #2980b9);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    box-shadow: 0 4px 0 #1a5276;
+    transition: all 0.1s;
+}
+
+.control-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 #1a5276;
+}
+
+.control-btn:hover {
+    filter: brightness(1.1);
+}
+
+.control-btn.muted {
+    background: linear-gradient(to bottom, #e74c3c, #c0392b);
+    box-shadow: 0 4px 0 #922b21;
+}
+
+.control-btn.muted:active {
+    box-shadow: 0 0 0 #922b21;
+}
+
+.sentimental-note {
+    font-style: italic;
+    margin-top: 15px;
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .game-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .hud-overlay {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .hud-gauge-track {
+        width: 100px;
+    }
+
+    .game-controls {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Mobile Controls */
+.mobile-controls {
+    display: none;
+    /* Default hidden di PC */
+    margin-top: 20px;
+    gap: 20px;
+    justify-content: space-around;
+    align-items: center;
+    touch-action: manipulation;
+    padding-bottom: 20px;
+    touch-action: none;
+    /* Mencegah zoom saat tap cepat */
+}
+
+.d-pad {
+    position: relative;
+    width: 120px;
+    height: 120px;
+}
+
+.d-btn {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 8px;
+    color: white;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.d-btn:active,
+.d-btn.active {
+    background: rgba(76, 175, 80, 0.6);
+}
+
+.d-up {
+    top: 0;
+    left: 40px;
+}
+
+.d-down {
+    bottom: 0;
+    left: 40px;
+}
+
+.d-left {
+    top: 40px;
+    left: 0;
+}
+
+.d-right {
+    top: 40px;
+    right: 0;
+}
+
+.action-btn-container {
+    display: flex;
+    align-items: center;
+}
+
+.action-btn {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: rgba(255, 50, 50, 0.6);
+    /* Merah transparan */
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.action-btn:active {
+    background: rgba(255, 50, 50, 0.9);
+}
+
+/* Tampilkan hanya di layar kecil */
+@media (max-width: 900px) {
+    .mobile-controls {
+        display: flex;
+    }
+}
+
+/* --- GAME OVER & CLEAR OVERLAY STYLES --- */
+#clear,
+#fail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    /* Latar gelap transparan */
+    z-index: 50;
+    /* Pastikan di atas canvas */
+
+    /* Flexbox untuk menengahkan konten */
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 0 0 15px 15px;
+    /* Mengikuti lengkungan canvas bawah */
+    backdrop-filter: blur(5px);
+}
+
+/* Kelas .active ditambahkan oleh JS saat game berakhir */
+#clear.active,
+#fail.active {
+    display: flex !important;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.overlay-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.text-win {
+    color: #4CAF50;
+}
+
+/* Hijau untuk Menang */
+.text-fail {
+    color: #ff5252;
+}
+
+/* Merah untuk Kalah */
+
+.overlay-msg {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: #ddd;
+}
+
+.overlay-btn-group {
+    display: flex;
+    gap: 15px;
+}
+
+.overlay-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-transform: uppercase;
+}
+
+.btn-primary {
+    background: linear-gradient(to right, #4CAF50, #8BC34A);
+    color: white;
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+}
+
+.btn-danger {
+    background: linear-gradient(to right, #ff5252, #ff1744);
+    color: white;
+    box-shadow: 0 5px 15px rgba(255, 82, 82, 0.4);
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.overlay-btn:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.1);
+}
