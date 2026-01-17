@@ -26,7 +26,7 @@ Welcome to my projects section! Here you can find various projects I've worked o
   - Features difficulty levels and attempts tracking
   - Includes responsive design for various devices
 
-- [My Memories](my-memories-new/en)
+- [My Memories](my-memories/)
   - Fun game to play
 
 More projects will be added soon!
