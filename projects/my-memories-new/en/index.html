@@ -3,609 +3,18 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <base href="../">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Kenangan-Ku</title>
+  
+  <link rel="stylesheet" href="style.css">
+  
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #6a11cb, #2575fc);
-      color: #fff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      overflow-x: hidden;
-    }
-
-    .container {
-      max-width: 1200px;
-      width: 100%;
-      text-align: center;
-    }
-
-    header {
-      margin-bottom: 40px;
-    }
-
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-      letter-spacing: 2px;
-    }
-
-    .subtitle {
-      font-size: 1.2rem;
-      opacity: 0.9;
-      max-width: 600px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
-
-    .menu-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-      margin: 40px 0;
-    }
-
-    .menu-item {
-      background: rgba(255, 255, 255, 0.15);
-      border: 2px solid transparent;
-      border-radius: 15px;
-      padding: 30px 20px;
-      width: 250px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    }
-
-    .menu-item:hover:not(.coming-soon) {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-    }
-
-    .menu-item.active {
-      border: 2px solid #4CAF50;
-      box-shadow: 0 0 25px rgba(76, 175, 80, 0.7);
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    .menu-item.coming-soon {
-      opacity: 0.7;
-      cursor: not-allowed;
-      position: relative;
-    }
-
-    .menu-item.coming-soon::after {
-      content: "Nanti";
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: #ff9800;
-      color: white;
-      padding: 3px 8px;
-      border-radius: 10px;
-      font-size: 12px;
-      font-weight: bold;
-    }
-
-    .menu-icon {
-      font-size: 3rem;
-      margin-bottom: 15px;
-    }
-
-    .menu-title {
-      font-size: 1.5rem;
-      margin-bottom: 10px;
-      font-weight: 600;
-    }
-
-    .menu-description {
-      font-size: 1rem;
-      opacity: 0.9;
-      line-height: 1.5;
-    }
-
-    .character-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 20px;
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 20px;
-    }
-
-    .character-card {
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 10px;
-      padding: 15px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      aspect-ratio: 1/1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      font-size: 1.5rem;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .character-card:hover {
-      transform: scale(1.05);
-      background: rgba(76, 175, 80, 0.3);
-    }
-
-    .character-card.selected {
-      animation: glow 1.5s infinite alternate;
-      background: rgba(76, 175, 80, 0.4);
-    }
-
-    @keyframes glow {
-      from {
-        box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
-      }
-
-      to {
-        box-shadow: 0 0 25px rgba(76, 175, 80, 0.9);
-      }
-    }
-
-    .game-container {
-      display: none;
-      width: 100%;
-      max-width: 855px;
-      /* Sesuai lebar canvas */
-      margin: 20px auto;
-      background: transparent;
-      border-radius: 15px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-    }
-
-    .game-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: linear-gradient(to bottom, #2c3e50, #1a252f);
-      padding: 10px 20px;
-      border-radius: 15px 15px 0 0;
-      /* Melengkung hanya di atas */
-      border-bottom: 2px solid #34495e;
-    }
-
-    .game-footer {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-    }
-
-    .game-canvas {
-      width: 100%;
-      background: black;
-      border-radius: 10px;
-      display: block;
-    }
-
+    /* Memaksa Wrapper Canvas menjadi acuan posisi Overlay */
     #game-container {
       position: relative !important;
       width: 100%;
       background: #000;
       overflow: hidden;
-    }
-
-    #game {
-      display: block;
-      width: 100%;
-      border-radius: 0;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    }
-
-    .hud-overlay {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      flex: 1;
-    }
-
-    .hud-time {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 5px 12px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .hud-time-label {
-      font-size: 0.9rem;
-      font-weight: bold;
-      color: #fff;
-      text-shadow: 1px 1px 0 #000;
-    }
-
-    .hud-time-value {
-      color: #ffd700;
-      font-family: 'Courier New', monospace;
-      font-size: 1.2rem;
-      font-weight: bold;
-      text-shadow: 1px 1px 0 #000;
-    }
-
-    .hud-gauge {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 5px 10px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .hud-gauge-track {
-      width: 180px;
-      height: 12px;
-      background: #111;
-      border-radius: 6px;
-      overflow: hidden;
-      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8);
-      position: relative;
-    }
-
-    .hud-gauge-fill {
-      height: 100%;
-      width: var(--fill-percent, 0%);
-      background: linear-gradient(90deg, #ff5252, #fbc02d, #4CAF50);
-      /* Gradient merah ke hijau */
-      background-size: 200% 100%;
-      transition: width 0.3s ease;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    }
-
-    .hud-gauge-percent {
-      color: #fff;
-      font-size: 0.9em;
-      font-weight: bold;
-      min-width: 40px;
-      text-align: right;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .visible {
-      display: block;
-    }
-
-    /* Game state overlays */
-
-    .game-overlay-buttons {
-      margin-top: 20px;
-      display: flex;
-      gap: 10px;
-    }
-
-    .overlay-btn {
-      background: #4CAF50;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    footer {
-      margin-top: 10px;
-      opacity: 0.8;
-      font-size: 0.9rem;
-      text-align: center;
-    }
-
-    .back-btn {
-      background: transparent;
-      border: 2px solid rgba(255, 255, 255, 0.5);
-      color: white;
-      padding: 10px 30px;
-      font-size: 1rem;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 10px;
-    }
-
-    .back-btn:hover {
-      background: white;
-      color: #333;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-      transform: scale(1.05);
-    }
-
-    .game-controls {
-      position: static;
-      /* Reset absolute */
-      display: flex;
-      gap: 10px;
-    }
-
-    .control-btn {
-      background: linear-gradient(to bottom, #3498db, #2980b9);
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      font-size: 0.9rem;
-      border-radius: 6px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 600;
-      box-shadow: 0 4px 0 #1a5276;
-      transition: all 0.1s;
-    }
-
-    .control-btn:active {
-      transform: translateY(4px);
-      box-shadow: 0 0 0 #1a5276;
-    }
-
-    .control-btn:hover {
-      filter: brightness(1.1);
-    }
-
-    .control-btn.muted {
-      background: linear-gradient(to bottom, #e74c3c, #c0392b);
-      box-shadow: 0 4px 0 #922b21;
-    }
-
-    .control-btn.muted:active {
-      box-shadow: 0 0 0 #922b21;
-    }
-
-    .sentimental-note {
-      font-style: italic;
-      margin-top: 15px;
-      opacity: 0.8;
-      font-size: 0.9rem;
-    }
-
-    @media (max-width: 768px) {
-      .game-header {
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .hud-overlay {
-        width: 100%;
-        justify-content: space-between;
-      }
-
-      .hud-gauge-track {
-        width: 100px;
-      }
-
-      .game-controls {
-        width: 100%;
-        justify-content: center;
-      }
-    }
-
-    /* Mobile Controls */
-    .mobile-controls {
-      display: none;
-      /* Default hidden di PC */
-      margin-top: 20px;
-      gap: 20px;
-      justify-content: space-around;
-      align-items: center;
-      touch-action: manipulation;
-      padding-bottom: 20px;
-      touch-action: none;
-      /* Mencegah zoom saat tap cepat */
-    }
-
-    .d-pad {
-      position: relative;
-      width: 120px;
-      height: 120px;
-    }
-
-    .d-btn {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      border-radius: 8px;
-      color: white;
-      font-size: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-
-    .d-btn:active,
-    .d-btn.active {
-      background: rgba(76, 175, 80, 0.6);
-    }
-
-    .d-up {
-      top: 0;
-      left: 40px;
-    }
-
-    .d-down {
-      bottom: 0;
-      left: 40px;
-    }
-
-    .d-left {
-      top: 40px;
-      left: 0;
-    }
-
-    .d-right {
-      top: 40px;
-      right: 0;
-    }
-
-    .action-btn-container {
-      display: flex;
-      align-items: center;
-    }
-
-    .action-btn {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      background: rgba(255, 50, 50, 0.6);
-      /* Merah transparan */
-      border: 2px solid rgba(255, 255, 255, 0.4);
-      color: white;
-      font-weight: bold;
-      font-size: 14px;
-      cursor: pointer;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-
-    .action-btn:active {
-      background: rgba(255, 50, 50, 0.9);
-    }
-
-    /* Tampilkan hanya di layar kecil */
-    @media (max-width: 900px) {
-      .mobile-controls {
-        display: flex;
-      }
-    }
-
-    /* --- GAME OVER & CLEAR OVERLAY STYLES --- */
-    #clear,
-    #fail {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.85);
-      /* Latar gelap transparan */
-      z-index: 100;
-      /* Pastikan di atas canvas */
-
-      /* Flexbox untuk menengahkan konten */
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-
-      border-radius: 0 0 15px 15px;
-      /* Mengikuti lengkungan canvas bawah */
-      backdrop-filter: blur(5px);
-    }
-
-    /* Kelas .active ditambahkan oleh JS saat game berakhir */
-    #clear.active,
-    #fail.active {
-      display: flex !important;
-      animation: fadeIn 0.5s ease;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: scale(0.9);
-      }
-
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    .overlay-title {
-      font-size: 3rem;
-      font-weight: 800;
-      margin-bottom: 20px;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    }
-
-    .text-win {
-      color: #4CAF50;
-    }
-
-    /* Hijau untuk Menang */
-    .text-fail {
-      color: #ff5252;
-    }
-
-    /* Merah untuk Kalah */
-
-    .overlay-msg {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-      color: #ddd;
-    }
-
-    .overlay-btn-group {
-      display: flex;
-      gap: 15px;
-    }
-
-    .overlay-btn {
-      padding: 12px 25px;
-      border: none;
-      border-radius: 50px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      text-transform: uppercase;
-    }
-
-    .btn-primary {
-      background: linear-gradient(to right, #4CAF50, #8BC34A);
-      color: white;
-      box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
-    }
-
-    .btn-danger {
-      background: linear-gradient(to right, #ff5252, #ff1744);
-      color: white;
-      box-shadow: 0 5px 15px rgba(255, 82, 82, 0.4);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      color: white;
-    }
-
-    .overlay-btn:hover {
-      transform: translateY(-3px);
-      filter: brightness(1.1);
     }
   </style>
 </head>
@@ -614,8 +23,7 @@
   <div class="container">
     <header>
       <h1>Kenangan-Ku</h1>
-      <p class="subtitle">Pilih sebuah kenangan untuk dieksplorasi dan menghidupkan kembali momen-momen istimewa bersama
-        orang-orang yang berarti dalam hidupku</p>
+      <p class="subtitle">Pilih sebuah kenangan untuk dieksplorasi dan menghidupkan kembali momen-momen istimewa bersama orang-orang yang berarti dalam hidupku</p>
     </header>
 
     <main>
@@ -650,8 +58,7 @@
         <h2>Pilih Kenangan dari SemestaGroup</h2>
         <p class="subtitle">Setiap kenangan menyimpan pelajaran dan kebahagiaan yang membentukku</p>
         <div class="character-grid" id="characterGrid">
-          <!-- Kenangan akan ditambahkan secara dinamis -->
-        </div>
+          </div>
       </div>
 
       <div class="game-container" id="gameContainer">
@@ -673,70 +80,74 @@
             <button id="replayBtn" class="control-btn">🔄 Ulangi</button>
           </div>
         </div>
+
         <div id="game-container">
           <canvas id="game" width="855" height="505"></canvas>
+          
+          <div id="clear" class="scene">
+            <h2 class="overlay-title text-win">MISSION COMPLETE</h2>
+            <p class="overlay-msg">Hebat! Kamu berhasil mengamankan kenangan ini.</p>
+            <div class="overlay-btn-group">
+               <button id="btn_clear_redo" class="overlay-btn btn-primary">Pilih Kenangan Lain</button>
+            </div>
+            <div id="videoContainer" style="margin-top:20px; max-width: 300px;"></div>
+          </div>
+
+          <div id="fail" class="scene">
+            <h2 class="overlay-title text-fail">GAME OVER</h2>
+            <p class="overlay-msg">Jangan menyerah, coba lagi!</p>
+            <div class="overlay-btn-group">
+              <button id="btn_replay" class="overlay-btn btn-danger">🔄 Coba Lagi</button>
+              <button id="btn_fail_redo" class="overlay-btn btn-secondary">🏠 Menu Utama</button>
+            </div>
+          </div>
+
+          <div id="videoPlayer" style="display: none;"></div>
+          <div id="recordTimeValue" data-text="120" style="display: none;">120</div>
+          <div id="bestTimeValue" data-text="99" style="display: none;">99</div>
+          <div id="failMsg" style="display: none;">Crushed!</div>
+          <div id="select" style="display: none;"></div>
+          <div id="howto" style="display: none;"></div>
+          <div id="play" style="display: none;"></div>
+          
+          <button id="btnBgm" style="display: none;">BGM</button>
+          <button id="btnHome" style="display: none;">Home</button>
+          <button id="btn_game_start" style="display: none;">Start</button>
+          <button id="btn_howto_play" style="display: none;">How To Play</button>
+          <button id="btn_close_howto" style="display: none;">Close</button>
+          <button id="btn_clear_redo" style="display: none;">Redo</button>
+          <button id="btn_replay" style="display: none;">Replay</button>
+          <button id="btn_fail_redo" style="display: none;">Redo</button>
+          
+          <button id="btn_character_01" style="display: none;">Char 1</button>
+          <button id="btn_character_02" style="display: none;">Char 2</button>
+          <button id="btn_character_03" style="display: none;">Char 3</button>
+          <button id="btn_character_04" style="display: none;">Char 4</button>
+          <button id="btn_character_05" style="display: none;">Char 5</button>
+          <button id="btn_character_06" style="display: none;">Char 6</button>
+          <button id="btn_character_07" style="display: none;">Char 7</button>
+          <button id="btn_character_08" style="display: none;">Char 8</button>
+          <button id="btn_character_09" style="display: none;">Char 9</button>
+          <button id="btn_character_10" style="display: none;">Char 10</button>
+          <button id="btn_character_11" style="display: none;">Char 11</button>
+          <button id="btn_character_12" style="display: none;">Char 12</button>
         </div>
+
         <div class="game-footer">
           <button id="backToMenu" class="back-btn">Kembali ke Menu</button>
         </div>
 
-        <!-- mobile controls -->
         <div class="mobile-controls">
+          <div class="joystick-area">
+             <div id="joystick-base">
+                <div id="joystick-stick"></div>
+             </div>
+          </div>
           <div class="action-btn-container">
             <div class="action-btn d-btn" data-key="Space">ACTION</div>
           </div>
-          <div class="d-pad">
-            <div class="d-btn d-up" data-key="ArrowUp">⬆️</div>
-            <div class="d-btn d-left" data-key="ArrowLeft">⬅️</div>
-            <div class="d-btn d-right" data-key="ArrowRight">➡️</div>
-            <div class="d-btn d-down" data-key="ArrowDown">⬇️</div>
-          </div>
         </div>
 
-        <div id="videoPlayer" style="display: none;"></div>
-        <div id="recordTimeValue" data-text="120" style="display: none;">120</div>
-        <div id="bestTimeValue" data-text="99" style="display: none;">99</div>
-        <div id="failMsg" style="display: none;">Crushed!</div>
-        <div id="clear" class="scene">
-          <h2 class="overlay-title text-win">MISSION COMPLETE</h2>
-          <p class="overlay-msg">Hebat! Kamu berhasil mengamankan kenangan ini.</p>
-          <div class="overlay-btn-group">
-            <button id="btn_clear_redo" class="overlay-btn btn-primary">Pilih Kenangan Lain</button>
-          </div>
-          <div id="videoContainer" style="margin-top:20px; max-width: 300px;"></div>
-        </div>
-
-        <div id="fail" class="scene">
-          <h2 class="overlay-title text-fail">GAME OVER</h2>
-          <p class="overlay-msg">Jangan menyerah, coba lagi!</p>
-          <div class="overlay-btn-group">
-            <button id="btn_replay" class="overlay-btn btn-danger">🔄 Coba Lagi</button>
-            <button id="btn_fail_redo" class="overlay-btn btn-secondary">🏠 Menu Utama</button>
-          </div>
-        </div>
-        <div id="select" style="display: none;"></div>
-        <div id="howto" style="display: none;"></div>
-        <div id="play" style="display: none;"></div>
-        <button id="btnBgm" style="display: none;">BGM</button>
-        <button id="btnHome" style="display: none;">Home</button>
-        <button id="btn_game_start" style="display: none;">Start</button>
-        <button id="btn_howto_play" style="display: none;">How To Play</button>
-        <button id="btn_close_howto" style="display: none;">Close</button>
-        <button id="btn_clear_redo" style="display: none;">Redo</button>
-        <button id="btn_replay" style="display: none;">Replay</button>
-        <button id="btn_fail_redo" style="display: none;">Redo</button>
-        <button id="btn_character_01" style="display: none;">Char 1</button>
-        <button id="btn_character_02" style="display: none;">Char 2</button>
-        <button id="btn_character_03" style="display: none;">Char 3</button>
-        <button id="btn_character_04" style="display: none;">Char 4</button>
-        <button id="btn_character_05" style="display: none;">Char 5</button>
-        <button id="btn_character_06" style="display: none;">Char 6</button>
-        <button id="btn_character_07" style="display: none;">Char 7</button>
-        <button id="btn_character_08" style="display: none;">Char 8</button>
-        <button id="btn_character_09" style="display: none;">Char 9</button>
-        <button id="btn_character_10" style="display: none;">Char 10</button>
-        <button id="btn_character_11" style="display: none;">Char 11</button>
-        <button id="btn_character_12" style="display: none;">Char 12</button>
       </div>
     </main>
 
@@ -748,82 +159,46 @@
   <audio id="bgm" preload="auto" loop style="display: none;">
     <source src="assets/audio/bg-music.mp3" type="audio/mpeg">
   </audio>
+  <audio id="focus" preload="auto" style="display: none;"></audio>
+  <audio id="press" preload="auto" style="display: none;"></audio>
 
   <script src="assets/bd2-2nd5-scene.js"></script>
   <script src="assets/js/game.min.js"></script>
 
   <script>
-    // --- 1. SETUP MOBILE CONTROLS ---
-    // --- SETUP MOBILE CONTROLS (DIPERBAIKI) ---
-    const dBtns = document.querySelectorAll('.d-btn');
-
-    dBtns.forEach(btn => {
-      const key = btn.getAttribute('data-key');
-
-      // Fungsi helper untuk mengirim input ke game
-      const triggerDown = (e) => {
-        // Mencegah perilaku bawaan (zoom/scroll/context menu)
-        if (e.cancelable) e.preventDefault();
-
-        btn.classList.add('active');
-
-        // Pastikan gameInput tersedia
-        if (window.gameInput && typeof window.gameInput.down === 'function') {
-          let gameKey = key;
-          if (key === 'Space') gameKey = ' '; 
-
-          window.gameInput.down(gameKey);
-        }
-      };
-
-      const triggerUp = (e) => {
-        if (e.cancelable) e.preventDefault();
-
-        btn.classList.remove('active');
-
-        if (window.gameInput && typeof window.gameInput.up === 'function') {
-          let gameKey = key;
-          if (key === 'Space') gameKey = ' ';
-
-          window.gameInput.up(gameKey); // <--- INI JUGA DIPERBAIKI
-        }
-      };
-
-      // Event Listeners untuk Touch (HP) dan Mouse (PC/Test)
-      // Gunakan { passive: false } agar e.preventDefault() bekerja
-      btn.addEventListener('touchstart', triggerDown, { passive: false });
-      btn.addEventListener('touchend', triggerUp, { passive: false });
-
-      // Event Mouse (opsional, untuk testing di PC pake mouse klik)
-      btn.addEventListener('mousedown', triggerDown);
-      btn.addEventListener('mouseup', triggerUp);
-      btn.addEventListener('mouseleave', triggerUp);
-    });
-
-    // --- 2. LOGIKA GAME UTAMA ---
     document.addEventListener('DOMContentLoaded', function () {
+      
+      // ------------------------------------------------
+      // 1. KONFIGURASI STAGE GAME
+      // ------------------------------------------------
       const manualStageNames = ["Loen_A", "Loen_B", "Morpeah_A", "Morpeah_B", "Eclipse_A", "Eclipse_B", "Celia_A", "Celia_B", "Zenith", "Darian", "Eleaneer", "Tyr"];
+      
+      // Override fungsi ve() dari game engine untuk membaca stage yang benar
       window.ve = function () {
         var e = Number.isInteger(window.selectStage) ? window.selectStage : 0;
         return manualStageNames[e] || manualStageNames[0];
       };
 
-      // Navigasi Menu
+      // ------------------------------------------------
+      // 2. NAVIGASI MENU & GRID KARAKTER
+      // ------------------------------------------------
       const menuItems = document.querySelectorAll('.menu-item:not(.coming-soon)');
       const memoryContents = document.querySelectorAll('.memory-content');
 
+      // Pindah Tab Menu
       menuItems.forEach(item => {
         item.addEventListener('click', function () {
           menuItems.forEach(menuItem => menuItem.classList.remove('active'));
           this.classList.add('active');
           memoryContents.forEach(content => content.classList.add('hidden'));
+          
           const targetId = this.getAttribute('data-target');
           const targetContent = document.getElementById(`${targetId}-content`);
           if (targetContent) targetContent.classList.remove('hidden');
         });
       });
 
-      // Generate Grid
+      // Generate Grid Kenangan (1-12)
       const characterGrid = document.getElementById('characterGrid');
       for (let i = 1; i <= 12; i++) {
         const characterCard = document.createElement('div');
@@ -834,38 +209,51 @@
           <div class="character-name">Kenangan ${i}</div>
           <div class="sentimental-note">Klik untuk main</div>
         `;
+
         characterCard.addEventListener('click', function () {
           document.querySelectorAll('.character-card').forEach(card => card.classList.remove('selected'));
           this.classList.add('selected');
-          window.selectStage = i - 1;
-
+          
+          window.selectStage = i - 1; // Set Stage ID
+          
+          // Aktifkan Audio & Musik
           if (typeof unlockAudioOnce === 'function') unlockAudioOnce();
           if (typeof setBGMusic === 'function') setBGMusic(true);
 
+          // Tampilkan Game dengan animasi scroll
           setTimeout(() => {
-            document.getElementById('gameContainer').classList.add('visible');
-            document.getElementById('gameContainer').scrollIntoView({ behavior: 'smooth' });
+            const gc = document.getElementById('gameContainer');
+            gc.classList.add('visible');
+            gc.scrollIntoView({ behavior: 'smooth' });
             initializeGame(i);
           }, 300);
         });
         characterGrid.appendChild(characterCard);
       }
 
-      // Tombol Kembali
+      // ------------------------------------------------
+      // 3. FUNGSI GAME UTAMA (INIT, MUTE, REPLAY)
+      // ------------------------------------------------
+      
+      // Tombol Kembali ke Menu (Footer)
       document.getElementById('backToMenu').addEventListener('click', function () {
         document.getElementById('gameContainer').classList.remove('visible');
         document.querySelectorAll('.character-card').forEach(card => card.classList.remove('selected'));
+        
         if (typeof triggerGameStop === 'function') triggerGameStop();
+        
+        // Matikan semua suara
+        document.querySelectorAll('audio').forEach(audio => { 
+            audio.pause(); 
+            audio.currentTime = 0; 
+        });
 
-        const allAudio = document.querySelectorAll('audio');
-        allAudio.forEach(audio => { audio.pause(); audio.currentTime = 0; });
-
-        // Sembunyikan Overlay jika ada
+        // Sembunyikan Overlay jika sedang aktif
         document.getElementById('fail').classList.remove('active');
         document.getElementById('clear').classList.remove('active');
       });
 
-      // Tombol Mute & Replay
+      // Tombol Mute
       const muteBtn = document.getElementById('muteBtn');
       let isMuted = false;
       if (muteBtn) {
@@ -873,55 +261,185 @@
           isMuted = !isMuted;
           if (typeof setBGMusic === 'function') setBGMusic(!isMuted);
           document.querySelectorAll('audio').forEach(audio => audio.muted = isMuted);
+          
           muteBtn.innerHTML = isMuted ? '🔇 Senyap' : '🔊 Suara';
           muteBtn.classList.toggle('muted', isMuted);
         });
       }
 
-      const replayBtn = document.getElementById('replayBtn');
-      if (replayBtn) {
-        replayBtn.addEventListener('click', function () {
+      // Tombol Replay (Header)
+      const replayBtnHeader = document.getElementById('replayBtn');
+      if (replayBtnHeader) {
+        replayBtnHeader.addEventListener('click', function () {
           if (typeof restartGame === 'function') restartGame();
         });
       }
 
+      // Fungsi Init Game
       function initializeGame(memoryId) {
         setTimeout(() => {
           const gameCanvas = document.getElementById('game');
           if (!gameCanvas) return;
+          
           window.selectStage = memoryId - 1;
+          
+          // Load assets untuk stage ini
           if (typeof Bn === 'function') Bn(window.ve());
+          
           setTimeout(() => {
             if (typeof startGame === 'function') startGame();
+            // Terapkan status mute
             document.querySelectorAll('audio').forEach(audio => audio.muted = isMuted);
           }, 200);
         }, 100);
       }
-    });
 
-    // --- 3. AUTO SCROLL SAAT GAME OVER / MENANG (SOLUSI MASALAH KAMU) ---
-    // Script ini akan memantau jika overlay muncul, lalu otomatis scroll layar ke overlay tersebut
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-          const target = mutation.target;
-          // Jika overlay mendapat class 'active' (muncul)
-          if (target.classList.contains('active')) {
-            console.log('Overlay muncul, scrolling...');
-            // Paksa scroll ke elemen overlay agar user sadar
-            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // ------------------------------------------------
+      // 4. KONTROL MOBILE (JOYSTICK & ACTION)
+      // ------------------------------------------------
+      
+      // A. Tombol Action (Spasi)
+      const actionBtn = document.querySelector('.action-btn');
+      if (actionBtn) {
+          const triggerActionDown = (e) => {
+              if (e.cancelable) e.preventDefault();
+              actionBtn.classList.add('active');
+              if (window.gameInput) window.gameInput.down(' ');
+          };
+          const triggerActionUp = (e) => {
+              if (e.cancelable) e.preventDefault();
+              actionBtn.classList.remove('active');
+              if (window.gameInput) window.gameInput.up(' ');
+          };
+          
+          actionBtn.addEventListener('touchstart', triggerActionDown, { passive: false });
+          actionBtn.addEventListener('touchend', triggerActionUp, { passive: false });
+          actionBtn.addEventListener('mousedown', triggerActionDown);
+          actionBtn.addEventListener('mouseup', triggerActionUp);
+      }
+
+      // B. Analog Joystick
+      const joystickBase = document.getElementById('joystick-base');
+      const joystickStick = document.getElementById('joystick-stick');
+      let activeKeys = { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false };
+
+      if (joystickBase && joystickStick) {
+        const maxRadius = 40; 
+        const threshold = 15; 
+
+        const handleMove = (clientX, clientY) => {
+          const rect = joystickBase.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          let dx = clientX - centerX;
+          let dy = clientY - centerY;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          // Batasi gerakan stick
+          if (distance > maxRadius) {
+            const angle = Math.atan2(dy, dx);
+            dx = Math.cos(angle) * maxRadius;
+            dy = Math.sin(angle) * maxRadius;
+          }
+
+          // Update visual
+          joystickStick.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
+
+          // Hitung Input
+          const newKeys = {
+            ArrowUp: dy < -threshold,
+            ArrowDown: dy > threshold,
+            ArrowLeft: dx < -threshold,
+            ArrowRight: dx > threshold
+          };
+          updateGameInput(newKeys);
+        };
+
+        const handleEnd = () => {
+          joystickStick.style.transform = `translate(-50%, -50%)`;
+          updateGameInput({ ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false });
+        };
+
+        function updateGameInput(newState) {
+          if (!window.gameInput) return;
+          for (const key in newState) {
+            if (newState[key] && !activeKeys[key]) {
+              window.gameInput.down(key);
+              activeKeys[key] = true;
+            } else if (!newState[key] && activeKeys[key]) {
+              window.gameInput.up(key);
+              activeKeys[key] = false;
+            }
           }
         }
+
+        joystickBase.addEventListener('touchstart', (e) => { e.preventDefault(); handleMove(e.touches[0].clientX, e.touches[0].clientY); }, { passive: false });
+        joystickBase.addEventListener('touchmove', (e) => { e.preventDefault(); handleMove(e.touches[0].clientX, e.touches[0].clientY); }, { passive: false });
+        joystickBase.addEventListener('touchend', (e) => { e.preventDefault(); handleEnd(); });
+        
+        // Mouse support (PC Testing)
+        let isDragging = false;
+        joystickBase.addEventListener('mousedown', (e) => { isDragging = true; handleMove(e.clientX, e.clientY); });
+        document.addEventListener('mousemove', (e) => { if (isDragging) handleMove(e.clientX, e.clientY); });
+        document.addEventListener('mouseup', () => { if (isDragging) { isDragging = false; handleEnd(); } });
+      }
+
+      // ------------------------------------------------
+      // 5. AUTO SCROLL & NAVIGASI OVERLAY
+      // ------------------------------------------------
+      
+      // Auto Scroll saat Overlay Muncul
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+            const target = mutation.target;
+            if (target.classList.contains('active')) {
+              // Scroll ke tengah Game Container
+              const gameContainer = document.getElementById('gameContainer');
+              if (gameContainer) gameContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }
+        });
       });
+
+      const failEl = document.getElementById('fail');
+      const clearEl = document.getElementById('clear');
+      if(failEl) observer.observe(failEl, { attributes: true });
+      if(clearEl) observer.observe(clearEl, { attributes: true });
+
+      // Logika Tombol di dalam Overlay (Replay & Kembali ke Menu)
+      const replayBtnOverlay = document.getElementById('btn_replay');
+      if (replayBtnOverlay) {
+        replayBtnOverlay.addEventListener('click', function () {
+          // Scroll kembali ke tengah game setelah klik Try Again
+          setTimeout(() => {
+            const gc = document.getElementById('gameContainer');
+            if(gc) gc.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 100);
+        });
+      }
+
+      const backButtons = ['backToMenu', 'btn_fail_redo', 'btn_clear_redo'];
+      backButtons.forEach(btnId => {
+        const btn = document.getElementById(btnId);
+        if (btn) {
+          btn.addEventListener('click', function () {
+            // Scroll ke atas (daftar kenangan)
+            const targetSection = document.getElementById('semestagroup-content');
+            if (targetSection) {
+              setTimeout(() => {
+                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }, 200);
+            }
+          });
+        }
+      });
+
     });
 
-    // Pasang observer ke elemen fail dan clear
-    const failEl = document.getElementById('fail');
-    const clearEl = document.getElementById('clear');
-    if (failEl) observer.observe(failEl, { attributes: true });
-    if (clearEl) observer.observe(clearEl, { attributes: true });
-
-    // --- 4. PREVENT SCROLL SAAT MAIN ---
+    // ------------------------------------------------
+    // 6. PREVENT SCROLL DEFAULT SAAT MAIN
+    // ------------------------------------------------
     window.addEventListener("keydown", function (e) {
       const gameContainer = document.getElementById('gameContainer');
       if (gameContainer && gameContainer.classList.contains('visible')) {
@@ -930,7 +448,7 @@
         }
       }
     }, { passive: false });
+
   </script>
 </body>
-
 </html>
