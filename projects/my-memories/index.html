@@ -5,9 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Kenangan-Ku</title>
-  
+
   <link rel="stylesheet" href="style.css">
-  
+
   <style>
     /* Memaksa Wrapper Canvas menjadi acuan posisi Overlay */
     #game-container {
@@ -23,7 +23,8 @@
   <div class="container">
     <header>
       <h1>Kenangan-Ku</h1>
-      <p class="subtitle">Pilih sebuah kenangan untuk dieksplorasi dan menghidupkan kembali momen-momen istimewa bersama orang-orang yang berarti dalam hidupku</p>
+      <p class="subtitle">Pilih sebuah kenangan untuk dieksplorasi dan menghidupkan kembali momen-momen istimewa bersama
+        orang-orang yang berarti dalam hidupku</p>
     </header>
 
     <main>
@@ -58,7 +59,7 @@
         <h2>Pilih Kenangan dari SemestaGroup</h2>
         <p class="subtitle">Setiap kenangan menyimpan pelajaran dan kebahagiaan yang membentukku</p>
         <div class="character-grid" id="characterGrid">
-          </div>
+        </div>
       </div>
 
       <div class="game-container" id="gameContainer">
@@ -83,12 +84,12 @@
 
         <div id="game-container">
           <canvas id="game" width="855" height="505"></canvas>
-          
+
           <div id="clear" class="scene">
             <h2 class="overlay-title text-win">MISSION COMPLETE</h2>
             <p class="overlay-msg">Hebat! Kamu berhasil mengamankan kenangan ini.</p>
             <div class="overlay-btn-group">
-               <button id="btn_clear_redo" class="overlay-btn btn-primary">Pilih Kenangan Lain</button>
+              <button id="btn_clear_redo" class="overlay-btn btn-primary">Pilih Kenangan Lain</button>
             </div>
             <div id="videoContainer" style="margin-top:20px; max-width: 300px;"></div>
           </div>
@@ -109,7 +110,7 @@
           <div id="select" style="display: none;"></div>
           <div id="howto" style="display: none;"></div>
           <div id="play" style="display: none;"></div>
-          
+
           <button id="btnBgm" style="display: none;">BGM</button>
           <button id="btnHome" style="display: none;">Home</button>
           <button id="btn_game_start" style="display: none;">Start</button>
@@ -118,7 +119,7 @@
           <button id="btn_clear_redo" style="display: none;">Redo</button>
           <button id="btn_replay" style="display: none;">Replay</button>
           <button id="btn_fail_redo" style="display: none;">Redo</button>
-          
+
           <button id="btn_character_01" style="display: none;">Char 1</button>
           <button id="btn_character_02" style="display: none;">Char 2</button>
           <button id="btn_character_03" style="display: none;">Char 3</button>
@@ -137,14 +138,14 @@
           <button id="backToMenu" class="back-btn">Kembali ke Menu</button>
         </div>
 
-        <div class="mobile-controls">
+        <div class="mobile-controls" style="flex-direction: row-reverse;">
+          <div class="joystick-area">
+            <div id="joystick-base">
+              <div id="joystick-stick"></div>
+            </div>
+          </div>
           <div class="action-btn-container">
             <div class="action-btn d-btn" data-key="Space">ACTION</div>
-          </div>
-          <div class="joystick-area">
-             <div id="joystick-base">
-                <div id="joystick-stick"></div>
-             </div>
           </div>
         </div>
 
@@ -167,12 +168,12 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      
+
       // ------------------------------------------------
       // 1. KONFIGURASI STAGE GAME
       // ------------------------------------------------
       const manualStageNames = ["Loen_A", "Loen_B", "Morpeah_A", "Morpeah_B", "Eclipse_A", "Eclipse_B", "Celia_A", "Celia_B", "Zenith", "Darian", "Eleaneer", "Tyr"];
-      
+
       // Override fungsi ve() dari game engine untuk membaca stage yang benar
       window.ve = function () {
         var e = Number.isInteger(window.selectStage) ? window.selectStage : 0;
@@ -191,7 +192,7 @@
           menuItems.forEach(menuItem => menuItem.classList.remove('active'));
           this.classList.add('active');
           memoryContents.forEach(content => content.classList.add('hidden'));
-          
+
           const targetId = this.getAttribute('data-target');
           const targetContent = document.getElementById(`${targetId}-content`);
           if (targetContent) targetContent.classList.remove('hidden');
@@ -213,9 +214,9 @@
         characterCard.addEventListener('click', function () {
           document.querySelectorAll('.character-card').forEach(card => card.classList.remove('selected'));
           this.classList.add('selected');
-          
+
           window.selectStage = i - 1; // Set Stage ID
-          
+
           // Aktifkan Audio & Musik
           if (typeof unlockAudioOnce === 'function') unlockAudioOnce();
           if (typeof setBGMusic === 'function') setBGMusic(true);
@@ -234,18 +235,18 @@
       // ------------------------------------------------
       // 3. FUNGSI GAME UTAMA (INIT, MUTE, REPLAY)
       // ------------------------------------------------
-      
+
       // Tombol Kembali ke Menu (Footer)
       document.getElementById('backToMenu').addEventListener('click', function () {
         document.getElementById('gameContainer').classList.remove('visible');
         document.querySelectorAll('.character-card').forEach(card => card.classList.remove('selected'));
-        
+
         if (typeof triggerGameStop === 'function') triggerGameStop();
-        
+
         // Matikan semua suara
-        document.querySelectorAll('audio').forEach(audio => { 
-            audio.pause(); 
-            audio.currentTime = 0; 
+        document.querySelectorAll('audio').forEach(audio => {
+          audio.pause();
+          audio.currentTime = 0;
         });
 
         // Sembunyikan Overlay jika sedang aktif
@@ -253,15 +254,23 @@
         document.getElementById('clear').classList.remove('active');
       });
 
-      // Tombol Mute
+      // ------------------------------------------------
+      // FUNGSI MUTE (PERBAIKAN)
+      // ------------------------------------------------
       const muteBtn = document.getElementById('muteBtn');
       let isMuted = false;
       if (muteBtn) {
         muteBtn.addEventListener('click', function () {
           isMuted = !isMuted;
-          if (typeof setBGMusic === 'function') setBGMusic(!isMuted);
+
+          // 1. Mute Audio Game Engine (Panggil fungsi baru yang kita buat di bd2-2nd5-scene.js)
+          if (typeof window.setGlobalMute === 'function') {
+            window.setGlobalMute(isMuted);
+          }
+
+          // 2. Mute Audio HTML biasa (jika ada)
           document.querySelectorAll('audio').forEach(audio => audio.muted = isMuted);
-          
+
           muteBtn.innerHTML = isMuted ? '🔇 Senyap' : '🔊 Suara';
           muteBtn.classList.toggle('muted', isMuted);
         });
@@ -280,12 +289,12 @@
         setTimeout(() => {
           const gameCanvas = document.getElementById('game');
           if (!gameCanvas) return;
-          
+
           window.selectStage = memoryId - 1;
-          
+
           // Load assets untuk stage ini
           if (typeof Bn === 'function') Bn(window.ve());
-          
+
           setTimeout(() => {
             if (typeof startGame === 'function') startGame();
             // Terapkan status mute
@@ -295,37 +304,39 @@
       }
 
       // ------------------------------------------------
-      // 4. KONTROL MOBILE (JOYSTICK & ACTION)
+      // 4. KONTROL MOBILE (JOYSTICK MULTI-TOUCH)
       // ------------------------------------------------
-      
+
       // A. Tombol Action (Spasi)
       const actionBtn = document.querySelector('.action-btn');
       if (actionBtn) {
-          const triggerActionDown = (e) => {
-              if (e.cancelable) e.preventDefault();
-              actionBtn.classList.add('active');
-              if (window.gameInput) window.gameInput.down(' ');
-          };
-          const triggerActionUp = (e) => {
-              if (e.cancelable) e.preventDefault();
-              actionBtn.classList.remove('active');
-              if (window.gameInput) window.gameInput.up(' ');
-          };
-          
-          actionBtn.addEventListener('touchstart', triggerActionDown, { passive: false });
-          actionBtn.addEventListener('touchend', triggerActionUp, { passive: false });
-          actionBtn.addEventListener('mousedown', triggerActionDown);
-          actionBtn.addEventListener('mouseup', triggerActionUp);
+        const triggerActionDown = (e) => {
+          if (e.cancelable) e.preventDefault();
+          actionBtn.classList.add('active');
+          if (window.gameInput) window.gameInput.down(' ');
+        };
+        const triggerActionUp = (e) => {
+          if (e.cancelable) e.preventDefault();
+          actionBtn.classList.remove('active');
+          if (window.gameInput) window.gameInput.up(' ');
+        };
+
+        actionBtn.addEventListener('touchstart', triggerActionDown, { passive: false });
+        actionBtn.addEventListener('touchend', triggerActionUp, { passive: false });
+        // Mouse events untuk testing di PC
+        actionBtn.addEventListener('mousedown', triggerActionDown);
+        actionBtn.addEventListener('mouseup', triggerActionUp);
       }
 
-      // B. Analog Joystick
+      // B. Analog Joystick (FIXED LOGIC)
       const joystickBase = document.getElementById('joystick-base');
       const joystickStick = document.getElementById('joystick-stick');
       let activeKeys = { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false };
+      let joystickTouchId = null; // Variable untuk mengunci jari joystick
 
       if (joystickBase && joystickStick) {
-        const maxRadius = 40; 
-        const threshold = 15; 
+        const maxRadius = 40;
+        const threshold = 15;
 
         const handleMove = (clientX, clientY) => {
           const rect = joystickBase.getBoundingClientRect();
@@ -335,17 +346,14 @@
           let dy = clientY - centerY;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          // Batasi gerakan stick
           if (distance > maxRadius) {
             const angle = Math.atan2(dy, dx);
             dx = Math.cos(angle) * maxRadius;
             dy = Math.sin(angle) * maxRadius;
           }
 
-          // Update visual
           joystickStick.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
 
-          // Hitung Input
           const newKeys = {
             ArrowUp: dy < -threshold,
             ArrowDown: dy > threshold,
@@ -356,6 +364,7 @@
         };
 
         const handleEnd = () => {
+          joystickTouchId = null; // Lepaskan kunci jari
           joystickStick.style.transform = `translate(-50%, -50%)`;
           updateGameInput({ ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false });
         };
@@ -373,11 +382,37 @@
           }
         }
 
-        joystickBase.addEventListener('touchstart', (e) => { e.preventDefault(); handleMove(e.touches[0].clientX, e.touches[0].clientY); }, { passive: false });
-        joystickBase.addEventListener('touchmove', (e) => { e.preventDefault(); handleMove(e.touches[0].clientX, e.touches[0].clientY); }, { passive: false });
-        joystickBase.addEventListener('touchend', (e) => { e.preventDefault(); handleEnd(); });
-        
-        // Mouse support (PC Testing)
+        // Event Start: Kunci ID jari yang menyentuh Joystick
+        joystickBase.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          const touch = e.changedTouches[0];
+          joystickTouchId = touch.identifier; // SIMPAN ID JARI
+          handleMove(touch.clientX, touch.clientY);
+        }, { passive: false });
+
+        // Event Move: Hanya respons jika ID jari cocok
+        joystickBase.addEventListener('touchmove', (e) => {
+          e.preventDefault();
+          for (let i = 0; i < e.changedTouches.length; i++) {
+            if (e.changedTouches[i].identifier === joystickTouchId) {
+              handleMove(e.changedTouches[i].clientX, e.changedTouches[i].clientY);
+              break;
+            }
+          }
+        }, { passive: false });
+
+        // Event End
+        joystickBase.addEventListener('touchend', (e) => {
+          e.preventDefault();
+          for (let i = 0; i < e.changedTouches.length; i++) {
+            if (e.changedTouches[i].identifier === joystickTouchId) {
+              handleEnd();
+              break;
+            }
+          }
+        });
+
+        // Mouse support (PC)
         let isDragging = false;
         joystickBase.addEventListener('mousedown', (e) => { isDragging = true; handleMove(e.clientX, e.clientY); });
         document.addEventListener('mousemove', (e) => { if (isDragging) handleMove(e.clientX, e.clientY); });
@@ -387,7 +422,7 @@
       // ------------------------------------------------
       // 5. AUTO SCROLL & NAVIGASI OVERLAY
       // ------------------------------------------------
-      
+
       // Auto Scroll saat Overlay Muncul
       const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
@@ -404,8 +439,8 @@
 
       const failEl = document.getElementById('fail');
       const clearEl = document.getElementById('clear');
-      if(failEl) observer.observe(failEl, { attributes: true });
-      if(clearEl) observer.observe(clearEl, { attributes: true });
+      if (failEl) observer.observe(failEl, { attributes: true });
+      if (clearEl) observer.observe(clearEl, { attributes: true });
 
       // Logika Tombol di dalam Overlay (Replay & Kembali ke Menu)
       const replayBtnOverlay = document.getElementById('btn_replay');
@@ -414,7 +449,7 @@
           // Scroll kembali ke tengah game setelah klik Try Again
           setTimeout(() => {
             const gc = document.getElementById('gameContainer');
-            if(gc) gc.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (gc) gc.scrollIntoView({ behavior: 'smooth', block: 'center' });
           }, 100);
         });
       }
@@ -451,4 +486,5 @@
 
   </script>
 </body>
+
 </html>
