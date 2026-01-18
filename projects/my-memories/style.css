@@ -312,7 +312,7 @@ h1 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 0 0 15px 15px;
+    /* border-radius: 0 0 15px 15px; */
     backdrop-filter: blur(8px);
 }
 
