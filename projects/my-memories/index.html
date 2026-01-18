@@ -163,6 +163,11 @@
   <audio id="focus" preload="auto" style="display: none;"></audio>
   <audio id="press" preload="auto" style="display: none;"></audio>
 
+  <script>
+    window.gtag = function () { console.log('Google Analytics call ignored'); };
+    window.fbq = function () { console.log('Facebook Pixel call ignored'); };
+  </script>
+  
   <script src="assets/bd2-2nd5-scene.js"></script>
   <script src="assets/js/game.min.js"></script>
 
