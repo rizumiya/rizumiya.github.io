@@ -29,4 +29,10 @@ Welcome to my projects section! Here you can find various projects I've worked o
 - [My Memories](my-memories/)
   - Fun game to play
 
+- [Tebak Spy](tebak-spy/)
+  - Permainan multiplayer real-time untuk menebak siapa mata-mata (Spy) di antara pemain
+  - Fitur: AI-powered secret words (Gemini), lobby 3-8 pemain, desain dark glassmorphism responsif
+  - Seru untuk dimainkan bersama teman dalam satu jaringan atau online via host mandiri
+
+
 More projects will be added soon!
