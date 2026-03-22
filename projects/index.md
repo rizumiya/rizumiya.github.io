@@ -139,6 +139,15 @@ Welcome to my projects section! Here you can find various games and applications
     </div>
   </a>
 
+  <a href="my-memories/" class="project-card">
+    <h3 class="project-title">My Memories</h3>
+    <p class="project-desc">A fun and interactive game to play and explore memories.</p>
+    <div class="project-tags">
+      <span class="project-tag tag-game">Game</span>
+      <span class="project-tag">Fun</span>
+    </div>
+  </a>
+
   <a href="tebak-spy/" class="project-card">
     <h3 class="project-title">Tebak Spy</h3>
     <p class="project-desc">A real-time multiplayer social deduction game. Hosted via local network or online, featuring AI-generated secret words to find the hidden Spy amongst players.</p>
@@ -146,15 +155,6 @@ Welcome to my projects section! Here you can find various games and applications
       <span class="project-tag tag-game">Game</span>
       <span class="project-tag tag-multiplayer">Multiplayer</span>
       <span class="project-tag tag-ai">Gemini AI</span>
-    </div>
-  </a>
-
-  <a href="my-memories/" class="project-card">
-    <h3 class="project-title">My Memories</h3>
-    <p class="project-desc">A fun and interactive game to play and explore memories.</p>
-    <div class="project-tags">
-      <span class="project-tag tag-game">Game</span>
-      <span class="project-tag">Fun</span>
     </div>
   </a>
 </div>
