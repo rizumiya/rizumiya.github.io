@@ -157,8 +157,8 @@ Welcome to my projects section! Here you can find various games and applications
     </div>
   </a>
 
-  <a href="tebak-spy/" class="project-card">
-    <h3 class="project-title">Tebak Spy</h3>
+  <a href="one-of-us/" class="project-card">
+    <h3 class="project-title">One of Us (Tebak Spy)</h3>
     <p class="project-desc">A real-time multiplayer social deduction game. Hosted via local network or online, featuring AI-generated secret words to find the hidden Spy amongst players.</p>
     <div class="project-tags">
       <span class="project-tag tag-game">Game</span>
