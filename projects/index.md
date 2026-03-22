@@ -19,8 +19,11 @@ Welcome to my projects section! Here you can find various games and applications
   }
   
   .project-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Menggunakan gradient agar background tidak terlalu flat */
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+    backdrop-filter: blur(10px); /* Efek kaca elegan */
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
     padding: 1.5rem;
     display: flex;
@@ -30,6 +33,8 @@ Welcome to my projects section! Here you can find various games and applications
     color: inherit;
     position: relative;
     overflow: hidden;
+    /* Base shadow untuk kedalaman */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
   }
 
   /* Glassmorphism subtle glow */
@@ -37,15 +42,16 @@ Welcome to my projects section! Here you can find various games and applications
     content: '';
     position: absolute;
     top: 0; left: -100%; width: 50%; height: 100%;
-    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0) 100%);
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0) 100%);
     transform: skewX(-25deg);
     transition: all 0.75s ease;
   }
   
   .project-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    border-color: rgba(255, 255, 255, 0.2);
+    /* Shadow lebih gelap + sedikit glow biru agar elegan */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), 0 0 15px rgba(168, 199, 250, 0.15);
+    border-color: rgba(168, 199, 250, 0.4); /* Border menyala halus saat di-hover */
     text-decoration: none;
   }
 
@@ -58,45 +64,47 @@ Welcome to my projects section! Here you can find various games and applications
     font-weight: 600;
     margin-top: 0;
     margin-bottom: 0.5rem;
-    color: var(--primary-color, #a8c7fa); /* Fallback color typical for dark themes */
+    color: #f1f5f9; /* Putih solid yang tajam */
     border-bottom: none;
     padding-bottom: 0;
     transition: color 0.2s ease;
   }
 
   .project-card:hover .project-title {
-    color: var(--link-hover-color, #d2e3fc);
+    color: var(--link-hover-color, #60a5fa); /* Warna biru yang lebih kaya */
   }
 
   .project-desc {
     font-size: 0.95rem;
     line-height: 1.5;
-    opacity: 0.85;
-    margin-bottom: 1rem;
-    flex-grow: 1; /* Pushes tags to the bottom */
+    color: #94a3b8; /* Abu-abu kebiruan solid, lebih tajam daripada pakai opacity */
+    margin-bottom: 1.2rem;
+    flex-grow: 1;
   }
 
   .project-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
+    gap: 0.5rem;
     margin-top: auto;
   }
 
   .project-tag {
     font-size: 0.75rem;
-    padding: 0.2rem 0.6rem;
+    padding: 0.25rem 0.7rem;
     border-radius: 99px;
-    background: rgba(255, 255, 255, 0.1);
-    color: inherit;
-    opacity: 0.9;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15); /* Tambahan border agar tag lebih tegas */
+    color: #cbd5e1;
     font-weight: 500;
+    letter-spacing: 0.02em;
   }
 
-  .tag-game { background: rgba(255, 87, 87, 0.15); color: #ff8c8c; }
-  .tag-canvas { background: rgba(56, 189, 248, 0.15); color: #7dd3fc; }
-  .tag-ai { background: rgba(167, 139, 250, 0.15); color: #c4b5fd; }
-  .tag-multiplayer { background: rgba(74, 222, 128, 0.15); color: #86efac; }
+  /* Warna tag dibuat sedikit lebih vibrant dengan border senada */
+  .tag-game { background: rgba(248, 113, 113, 0.15); color: #fca5a5; border-color: rgba(248, 113, 113, 0.3); }
+  .tag-canvas { background: rgba(56, 189, 248, 0.15); color: #7dd3fc; border-color: rgba(56, 189, 248, 0.3); }
+  .tag-ai { background: rgba(167, 139, 250, 0.15); color: #c4b5fd; border-color: rgba(167, 139, 250, 0.3); }
+  .tag-multiplayer { background: rgba(74, 222, 128, 0.15); color: #86efac; border-color: rgba(74, 222, 128, 0.3); }
   
   /* Prevent theme markdown styles from overriding links inside cards */
   .projects-grid a:hover {
@@ -105,9 +113,10 @@ Welcome to my projects section! Here you can find various games and applications
   
   .more-projects {
       text-align: center;
-      margin-top: 2rem;
+      margin-top: 3rem;
       font-style: italic;
-      opacity: 0.7;
+      color: #64748b;
+      font-weight: 500;
   }
 </style>
 
