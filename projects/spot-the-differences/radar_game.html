@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Cari Perbedaan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #ffffff;
+            overflow: hidden; /* Mencegah scroll */
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            min-height: 100vh;
+        }
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: flex;
+        }
+        .btn {
+            @apply px-6 py-3 rounded-full font-bold text-white transition-all duration-300 transform;
+        }
+        .btn-primary {
+            background-image: linear-gradient(135deg, #00C9FF 0%, #92FE9D 100%);
+            @apply hover:scale-105;
+        }
+        .btn-secondary {
+            background-image: linear-gradient(135deg, #FFA17F 0%, #ff4d4d 100%);
+            @apply hover:scale-105;
+        }
+        .form-input {
+            @apply bg-gray-700 text-white rounded-lg px-4 py-2 border-none focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200;
+        }
+        #radar-left, #radar-right {
+            border: 2px solid #00C9FF;
+            border-radius: 50%;
+            background-color: #04080c;
+            box-shadow: 0 0 20px rgba(0, 201, 255, 0.5);
+            width: 90%;
+            height: auto;
+            aspect-ratio: 1 / 1;
+        }
+        /* Efek radar */
+        .radar-container {
+            position: relative;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .radar-sweep {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: conic-gradient(from 0deg, rgba(0,255,157,0) 0%, rgba(0,255,157,0) 90%, rgba(0,255,157,0.5) 90%, rgba(0,255,157,0.5) 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .radar-sweeper {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform-origin: bottom;
+            width: 2px;
+            height: 50%;
+            background-color: rgba(0, 255, 157, 0.7);
+            transform: rotate(var(--angle));
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white flex items-center justify-center">
+    <div class="container p-8">
+
+        <!-- Registration Page -->
+        <div id="registration-page" class="section active flex-col items-center justify-center text-center p-8">
+            <h1 class="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-400">Game Radar Cari Perbedaan</h1>
+            <p class="text-xl mb-8">Masukkan nama Anda untuk memulai.</p>
+            <form id="registration-form" class="flex flex-col items-center space-y-4">
+                <input type="text" id="player-name" placeholder="Nama Anda" class="form-input w-full max-w-sm">
+                <button type="submit" class="btn btn-primary w-full max-w-sm">Mulai Permainan</button>
+                <p id="error-message" class="text-red-400 text-sm mt-2"></p>
+            </form>
+        </div>
+
+        <!-- Game Page -->
+        <div id="game-page" class="section flex-col items-center justify-center text-center p-8">
+            <h2 class="text-4xl font-bold mb-6">Temukan Perbedaan!</h2>
+            <div class="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8 items-center justify-center w-full">
+                <div class="radar-container w-full max-w-md">
+                    <canvas id="radar-left"></canvas>
+                </div>
+                <div class="radar-container w-full max-w-md">
+                    <canvas id="radar-right"></canvas>
+                </div>
+            </div>
+            <div class="mt-8 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
+                <input type="number" id="answer-zone" placeholder="Zona (1-12)" class="form-input w-full md:w-40">
+                <button id="guess-button" class="btn btn-primary w-full md:w-auto">Tebak</button>
+            </div>
+            <p id="result-message" class="text-xl mt-4 font-bold"></p>
+            <div class="mt-8 flex space-x-4">
+                <button id="next-game" class="btn btn-primary hidden">Game Baru</button>
+                <button id="show-leaderboard" class="btn btn-secondary">Lihat Leaderboard</button>
+            </div>
+        </div>
+
+        <!-- Leaderboard Page -->
+        <div id="leaderboard-page" class="section flex-col items-center justify-center text-center p-8">
+            <h2 class="text-4xl font-bold mb-6">Leaderboard</h2>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg w-full max-w-2xl">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="text-gray-400 border-b border-gray-700">
+                            <th class="py-2 px-4">Nama</th>
+                            <th class="py-2 px-4">Game Dimainkan</th>
+                            <th class="py-2 px-4">Kemenangan</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body">
+                        <!-- Leaderboard data will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-8">
+                <button id="back-to-game" class="btn btn-secondary">Kembali ke Permainan</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Data pemain dan fungsi penyimpanan
+        let currentPlayer = null;
+        let players = JSON.parse(localStorage.getItem('radarGamePlayers')) || [];
+        let gameData = {
+            differenceZone: null,
+            isGameActive: false,
+            particles: []
+        };
+        let animationFrameId = null;
+        let radarAngle = 0;
+
+        // DOM Elements
+        const registrationPage = document.getElementById('registration-page');
+        const gamePage = document.getElementById('game-page');
+        const leaderboardPage = document.getElementById('leaderboard-page');
+        const registrationForm = document.getElementById('registration-form');
+        const playerNameInput = document.getElementById('player-name');
+        const errorMessage = document.getElementById('error-message');
+        const resultMessage = document.getElementById('result-message');
+        const nextGameButton = document.getElementById('next-game');
+        const guessButton = document.getElementById('guess-button');
+        const answerZoneInput = document.getElementById('answer-zone');
+        const showLeaderboardButton = document.getElementById('show-leaderboard');
+        const backToGameButton = document.getElementById('back-to-game');
+
+        // Canvas elements
+        const radarLeftCanvas = document.getElementById('radar-left');
+        const radarRightCanvas = document.getElementById('radar-right');
+        const ctxLeft = radarLeftCanvas.getContext('2d');
+        const ctxRight = radarRightCanvas.getContext('2d');
+
+        // Set canvas dimensions
+        function resizeCanvas() {
+            const containerWidth = radarLeftCanvas.parentElement.offsetWidth;
+            radarLeftCanvas.width = containerWidth;
+            radarLeftCanvas.height = containerWidth;
+            radarRightCanvas.width = containerWidth;
+            radarRightCanvas.height = containerWidth;
+            if (gameData.isGameActive) {
+                drawRadar();
+            }
+        }
+        window.addEventListener('resize', resizeCanvas);
+
+        // Inisialisasi permainan
+        document.addEventListener('DOMContentLoaded', () => {
+            // Event listeners
+            registrationForm.addEventListener('submit', handleRegistration);
+            guessButton.addEventListener('click', handleGuess);
+            nextGameButton.addEventListener('click', startNewGame);
+            showLeaderboardButton.addEventListener('click', showLeaderboard);
+            backToGameButton.addEventListener('click', showGamePage);
+            
+            // Periksa apakah pemain sudah terdaftar
+            const savedPlayer = localStorage.getItem('currentRadarPlayer');
+            if (savedPlayer) {
+                currentPlayer = JSON.parse(savedPlayer);
+                showGamePage();
+                resizeCanvas();
+                startNewGame();
+            } else {
+                resizeCanvas();
+            }
+        });
+
+        // Fungsi pendaftaran
+        function handleRegistration(e) {
+            e.preventDefault();
+            const name = playerNameInput.value.trim();
+            
+            if (!name) {
+                errorMessage.textContent = 'Nama tidak boleh kosong!';
+                return;
+            }
+            
+            let player = players.find(p => p.name === name);
+            if (!player) {
+                player = {
+                    name: name,
+                    gamesPlayed: 0,
+                    wins: 0
+                };
+                players.push(player);
+            }
+            
+            currentPlayer = player;
+            localStorage.setItem('currentRadarPlayer', JSON.stringify(currentPlayer));
+            localStorage.setItem('radarGamePlayers', JSON.stringify(players));
+            
+            showGamePage();
+            startNewGame();
+        }
+
+        function showPage(pageId) {
+            const pages = [registrationPage, gamePage, leaderboardPage];
+            pages.forEach(page => {
+                if (page.id === pageId) {
+                    page.classList.add('active');
+                    page.classList.remove('hidden');
+                } else {
+                    page.classList.remove('active');
+                    page.classList.add('hidden');
+                }
+            });
+        }
+
+        function showGamePage() {
+            showPage('game-page');
+            resizeCanvas();
+        }
+
+        function showLeaderboard() {
+            showPage('leaderboard-page');
+            updateLeaderboard();
+        }
+
+        function updateLeaderboard() {
+            const tbody = document.getElementById('leaderboard-body');
+            tbody.innerHTML = '';
+            
+            const sortedPlayers = [...players].sort((a, b) => b.wins - a.wins);
+            
+            sortedPlayers.forEach(player => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="py-2 px-4 rounded-l-lg">${player.name}</td>
+                    <td class="py-2 px-4">${player.gamesPlayed}</td>
+                    <td class="py-2 px-4 rounded-r-lg">${player.wins}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function startNewGame() {
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
+            resultMessage.textContent = '';
+            resultMessage.className = '';
+            nextGameButton.classList.add('hidden');
+            answerZoneInput.value = '';
+            answerZoneInput.disabled = false;
+            guessButton.disabled = false;
+
+            // Pilih zona perbedaan secara acak
+            gameData.differenceZone = Math.floor(Math.random() * 12) + 1;
+            
+            // Generate partikel, dengan satu partikel perbedaan
+            gameData.particles = generateParticles(150);
+            
+            gameData.isGameActive = true;
+            
+            radarAngle = 0;
+            animate();
+            
+            console.log('Perbedaan berada di zona:', gameData.differenceZone);
+        }
+
+        function animate() {
+            if (!gameData.isGameActive) {
+                cancelAnimationFrame(animationFrameId);
+                return;
+            }
+            
+            // Perbarui sudut radar
+            radarAngle = (radarAngle + 0.005) % (Math.PI * 2);
+            
+            drawRadar();
+            
+            animationFrameId = requestAnimationFrame(animate);
+        }
+
+        // Generate particle data
+        function generateParticles(count) {
+            const particles = [];
+            const centerX = radarLeftCanvas.width / 2;
+            const centerY = radarLeftCanvas.height / 2;
+            const radius = Math.min(centerX, centerY) - 10;
+            let differenceParticleCreated = false;
+
+            for (let i = 0; i < count; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 30 + Math.random() * (radius - 40);
+                const size = 2 + Math.random() * 3;
+                const zone = Math.floor((angle / (Math.PI * 2)) * 12) + 1;
+                
+                let isDifference = false;
+                if (!differenceParticleCreated && zone === gameData.differenceZone) {
+                    isDifference = true;
+                    differenceParticleCreated = true;
+                }
+
+                particles.push({
+                    x: centerX + Math.cos(angle) * distance,
+                    y: centerY + Math.sin(angle) * distance,
+                    size: size,
+                    zone: zone,
+                    isDifference: isDifference
+                });
+            }
+            return particles;
+        }
+
+        // Menggambar partikel yang terlihat (hanya di dalam jendela yang berputar)
+        function drawVisibleParticles(ctx, particles, hasDifference) {
+            const centerX = ctx.canvas.width / 2;
+            const centerY = ctx.canvas.height / 2;
+            const sweepAngle = Math.PI / 6; // Sudut 1/12 lingkaran
+            
+            // Atur sudut awal dan akhir jendela yang berputar
+            const angleStart = radarAngle - sweepAngle / 2;
+            const angleEnd = radarAngle + sweepAngle / 2;
+
+            particles.forEach(p => {
+                const particleAngle = Math.atan2(p.y - centerY, p.x - centerX);
+                
+                let normalizedParticleAngle = particleAngle;
+                if (normalizedParticleAngle < 0) {
+                    normalizedParticleAngle += Math.PI * 2;
+                }
+
+                let normalizedAngleStart = angleStart;
+                if (normalizedAngleStart < 0) {
+                    normalizedAngleStart += Math.PI * 2;
+                }
+                
+                let normalizedAngleEnd = angleEnd;
+                if (normalizedAngleEnd < 0) {
+                    normalizedAngleEnd += Math.PI * 2;
+                }
+
+                let isInWindow = false;
+                if (normalizedAngleStart <= normalizedAngleEnd) {
+                    isInWindow = normalizedParticleAngle >= normalizedAngleStart && normalizedParticleAngle <= normalizedAngleEnd;
+                } else { // Handle wrapping around 2*PI (0 degrees)
+                    isInWindow = normalizedParticleAngle >= normalizedAngleStart || normalizedParticleAngle <= normalizedAngleEnd;
+                }
+
+                if (isInWindow) {
+                    ctx.beginPath();
+                    let size = p.size;
+                    if (hasDifference && p.isDifference) {
+                        size = p.size * 2;
+                    }
+                    ctx.fillStyle = '#00ff9d';
+                    ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+        }
+
+        // Menggambar radar
+        function drawRadar() {
+            // Bersihkan canvas
+            ctxLeft.clearRect(0, 0, radarLeftCanvas.width, radarLeftCanvas.height);
+            ctxRight.clearRect(0, 0, radarRightCanvas.width, radarRightCanvas.height);
+            
+            const centerX = radarLeftCanvas.width / 2;
+            const centerY = radarLeftCanvas.height / 2;
+            const radius = Math.min(centerX, centerY) - 10;
+            
+            // Menggambar partikel yang terlihat
+            drawVisibleParticles(ctxLeft, gameData.particles, false);
+            drawVisibleParticles(ctxRight, gameData.particles, true);
+            
+            // Menggambar struktur radar statis (garis dan lingkaran)
+            const drawStaticGrid = (ctx) => {
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+                ctx.strokeStyle = '#00eeff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                for (let i = 0; i < 12; i++) {
+                    const angle = (i * Math.PI / 6) - Math.PI/2;
+                    const x1 = centerX + Math.cos(angle) * 20;
+                    const y1 = centerY + Math.sin(angle) * 20;
+                    const x2 = centerX + Math.cos(angle) * radius;
+                    const y2 = centerY + Math.sin(angle) * radius;
+                    ctx.beginPath();
+                    ctx.moveTo(x1, y1);
+                    ctx.lineTo(x2, y2);
+                    ctx.strokeStyle = '#00eeff';
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            };
+            drawStaticGrid(ctxLeft);
+            drawStaticGrid(ctxRight);
+
+            // Menggambar nomor zona di atas segalanya
+            const drawZoneNumbers = (ctx) => {
+                ctx.fillStyle = '#00eeff';
+                ctx.font = '16px Inter';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                for (let i = 0; i < 12; i++) {
+                    const angle = (i * Math.PI / 6) - Math.PI / 2 + Math.PI / 12;
+                    const x = centerX + Math.cos(angle) * (radius + 20);
+                    const y = centerY + Math.sin(angle) * (radius + 20);
+                    ctx.fillText(i + 1, x, y);
+                }
+            };
+            drawZoneNumbers(ctxLeft);
+            drawZoneNumbers(ctxRight);
+        }
+
+        // Menangani tebakan pemain
+        function handleGuess() {
+            if (!gameData.isGameActive) return;
+            
+            const guess = parseInt(answerZoneInput.value);
+            
+            if (isNaN(guess) || guess < 1 || guess > 12) {
+                resultMessage.textContent = 'Masukkan angka antara 1 dan 12!';
+                resultMessage.className = 'text-red-400';
+                return;
+            }
+            
+            answerZoneInput.disabled = true;
+            guessButton.disabled = true;
+            
+            if (guess === gameData.differenceZone) {
+                resultMessage.textContent = 'Benar! 🎉';
+                resultMessage.className = 'text-green-400';
+                currentPlayer.wins++;
+            } else {
+                resultMessage.textContent = `Salah. 😟 Perbedaan berada di zona ${gameData.differenceZone}`;
+                resultMessage.className = 'text-red-400';
+            }
+            
+            currentPlayer.gamesPlayed++;
+            localStorage.setItem('currentRadarPlayer', JSON.stringify(currentPlayer));
+            
+            const playerIndex = players.findIndex(p => p.name === currentPlayer.name);
+            if (playerIndex !== -1) {
+                players[playerIndex] = currentPlayer;
+                localStorage.setItem('radarGamePlayers', JSON.stringify(players));
+            }
+            
+            nextGameButton.classList.remove('hidden');
+            gameData.isGameActive = false;
+        }
+    </script>
+</body>
+</html>
