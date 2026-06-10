@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rizki Nur Rachmadi — About Me</title>
+  <meta name="description" content="Full-Stack Developer & IT Supervisor with expertise in AI systems, machine learning, and modern web development." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== DESIGN TOKENS ===== */
+    :root {
+      --transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      --transition-fast: 0.2s ease;
+      --radius: 16px;
+      --radius-sm: 8px;
+      --radius-full: 9999px;
+    }
+
+    [data-theme="dark"] {
+      --bg: #080b10;
+      --bg-2: #0d1117;
+      --bg-card: rgba(255, 255, 255, 0.035);
+      --bg-card-hover: rgba(255, 255, 255, 0.07);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.18);
+      --text: #e8edf5;
+      --text-muted: #6b7a8d;
+      --text-dim: #8896a7;
+      --accent: #5865f2;
+      --accent-2: #7c3aed;
+      --accent-glow: rgba(88, 101, 242, 0.25);
+      --accent-glow-2: rgba(124, 58, 237, 0.2);
+      --dot-color: rgba(255, 255, 255, 0.04);
+      --cursor-glow: rgba(88, 101, 242, 0.15);
+      --tag-bg: rgba(88, 101, 242, 0.12);
+      --tag-text: #a5b4fc;
+      --orb1: rgba(88, 101, 242, 0.12);
+      --orb2: rgba(124, 58, 237, 0.10);
+      --orb3: rgba(16, 185, 129, 0.07);
+      --timeline-line: rgba(88, 101, 242, 0.25);
+      --shadow: rgba(0, 0, 0, 0.5);
+    }
+
+    [data-theme="light"] {
+      --bg: #f4f6fb;
+      --bg-2: #eef1f8;
+      --bg-card: rgba(255, 255, 255, 0.85);
+      --bg-card-hover: rgba(255, 255, 255, 0.98);
+      --border: rgba(0, 0, 0, 0.07);
+      --border-hover: rgba(88, 101, 242, 0.35);
+      --text: #1a1f2e;
+      --text-muted: #6b7a8d;
+      --text-dim: #8896a7;
+      --accent: #5865f2;
+      --accent-2: #7c3aed;
+      --accent-glow: rgba(88, 101, 242, 0.15);
+      --accent-glow-2: rgba(124, 58, 237, 0.12);
+      --dot-color: rgba(0, 0, 0, 0.04);
+      --cursor-glow: rgba(88, 101, 242, 0.12);
+      --tag-bg: rgba(88, 101, 242, 0.1);
+      --tag-text: #4338ca;
+      --orb1: rgba(88, 101, 242, 0.08);
+      --orb2: rgba(124, 58, 237, 0.07);
+      --orb3: rgba(16, 185, 129, 0.06);
+      --timeline-line: rgba(88, 101, 242, 0.2);
+      --shadow: rgba(0, 0, 0, 0.08);
+    }
+
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background var(--transition), color var(--transition);
+      cursor: none;
+    }
+
+    /* ===== CUSTOM CURSOR ===== */
+    #cursor-dot {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease, opacity 0.3s ease, background var(--transition);
+      mix-blend-mode: screen;
+    }
+
+    #cursor-ring {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1.5px solid var(--accent);
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s ease, height 0.3s ease, border-color var(--transition);
+      opacity: 0.5;
+    }
+
+    #cursor-glow-el {
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--cursor-glow) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease, background var(--transition);
+    }
+
+    body:not(.has-mouse) #cursor-dot,
+    body:not(.has-mouse) #cursor-ring,
+    body:not(.has-mouse) #cursor-glow-el { display: none; }
+
+    /* ===== CANVAS BACKGROUND ===== */
+    #bg-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ===== FLOATING ORBS ===== */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      animation: orbFloat linear infinite;
+    }
+    .orb-1 { width: 500px; height: 500px; background: var(--orb1); top: -100px; left: -100px; animation-duration: 20s; }
+    .orb-2 { width: 400px; height: 400px; background: var(--orb2); bottom: 10%; right: -80px; animation-duration: 25s; animation-delay: -8s; }
+    .orb-3 { width: 300px; height: 300px; background: var(--orb3); top: 50%; left: 50%; animation-duration: 18s; animation-delay: -4s; }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(30px, -30px) scale(1.05); }
+      50% { transform: translate(-20px, 20px) scale(0.95); }
+      75% { transform: translate(20px, 30px) scale(1.02); }
+    }
+
+    /* ===== LAYOUT ===== */
+    .page-wrap {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 18px 24px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: transparent;
+      transition: background var(--transition), border-color var(--transition);
+    }
+
+    nav.scrolled {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      cursor: pointer;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      list-style: none;
+      margin-right: 12px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      transition: color var(--transition-fast), background var(--transition-fast);
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+      background: var(--bg-card);
+    }
+
+    /* ===== THEME TOGGLE ===== */
+    #theme-toggle {
+      width: 48px;
+      height: 26px;
+      border-radius: var(--radius-full);
+      border: 1.5px solid var(--border);
+      background: var(--bg-card);
+      cursor: pointer;
+      position: relative;
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5px;
+      overflow: hidden;
+    }
+
+    #theme-toggle:hover { border-color: var(--accent); }
+
+    .toggle-icon { font-size: 12px; line-height: 1; z-index: 1; transition: opacity var(--transition); }
+    .toggle-icon.moon { opacity: 1; }
+    .toggle-icon.sun { opacity: 0.4; }
+
+    [data-theme="light"] .toggle-icon.moon { opacity: 0.4; }
+    [data-theme="light"] .toggle-icon.sun { opacity: 1; }
+
+    .toggle-thumb {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      left: 3px;
+      transition: left var(--transition);
+      box-shadow: 0 2px 8px var(--accent-glow);
+    }
+
+    [data-theme="light"] .toggle-thumb { left: 25px; }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding: 140px 0 80px;
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      background: var(--tag-bg);
+      border: 1px solid rgba(88, 101, 242, 0.2);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--tag-text);
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.8); }
+    }
+
+    .hero-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+      animation: fadeUp 0.6s ease 0.1s both;
+    }
+
+    .hero-name .gradient-text {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 50%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-title {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s ease 0.2s both;
+    }
+
+    .hero-title strong {
+      color: var(--text-dim);
+      font-weight: 500;
+    }
+
+    .hero-desc {
+      max-width: 560px;
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 36px;
+      animation: fadeUp 0.6s ease 0.3s both;
+    }
+
+    .hero-contacts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      animation: fadeUp 0.6s ease 0.4s both;
+    }
+
+    .contact-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: all var(--transition-fast);
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+    }
+
+    .contact-chip:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+      color: var(--text);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--accent-glow);
+    }
+
+    .contact-chip svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+    /* ===== SECTION ===== */
+    .section {
+      padding: 64px 0;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .section-label span {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: all var(--transition-fast);
+      backdrop-filter: blur(12px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--accent-glow) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+    }
+
+    .card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 48px var(--shadow);
+    }
+
+    .card:hover::before { opacity: 1; }
+
+    /* ===== EXPERIENCE / TIMELINE ===== */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 14px;
+      bottom: 14px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent-2), transparent);
+      opacity: 0.3;
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 20px;
+      padding: 0 0 32px 32px;
+      position: relative;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 0;
+      top: 6px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border: 3px solid var(--bg);
+      box-shadow: 0 0 12px var(--accent-glow);
+      flex-shrink: 0;
+      transition: box-shadow var(--transition-fast), background var(--transition);
+      z-index: 1;
+    }
+
+    .timeline-item:hover .timeline-dot {
+      box-shadow: 0 0 20px var(--accent-glow), 0 0 40px var(--accent-glow-2);
+    }
+
+    .timeline-content { flex: 1; }
+
+    .timeline-date {
+      font-size: 0.72rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .timeline-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .timeline-company {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .timeline-body {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .timeline-body ul {
+      padding-left: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    /* ===== SKILLS GRID ===== */
+    .skills-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .skill-group {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      transition: all var(--transition-fast);
+      backdrop-filter: blur(12px);
+    }
+
+    .skill-group:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px var(--shadow);
+    }
+
+    .skill-group-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .skill-group-label::before {
+      content: '';
+      width: 20px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border-radius: var(--radius-full);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      font-size: 0.78rem;
+      font-weight: 500;
+      border: 1px solid rgba(88, 101, 242, 0.15);
+      transition: all var(--transition-fast);
+      cursor: default;
+    }
+
+    .tag:hover {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      border-color: transparent;
+      transform: scale(1.05);
+      box-shadow: 0 4px 16px var(--accent-glow);
+    }
+
+    /* ===== PROJECTS GRID ===== */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      transition: all var(--transition-fast);
+      backdrop-filter: blur(12px);
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+    }
+
+    .project-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--accent-glow) 0%, var(--accent-glow-2) 100%);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+    }
+
+    .project-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px var(--shadow);
+    }
+
+    .project-card:hover::after { opacity: 1; }
+
+    .project-card > * { position: relative; z-index: 1; }
+
+    .project-type {
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .project-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .project-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .project-date {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      margin-top: 12px;
+    }
+
+    /* ===== EDUCATION & CERTS ===== */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .edu-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      transition: all var(--transition-fast);
+      backdrop-filter: blur(12px);
+    }
+
+    .edu-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px var(--shadow);
+    }
+
+    .edu-period {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .edu-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .edu-sub {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .edu-desc {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    .cert-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .cert-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: all var(--transition-fast);
+      backdrop-filter: blur(12px);
+    }
+
+    .cert-item:hover {
+      border-color: var(--border-hover);
+      transform: translateX(4px);
+      box-shadow: 0 4px 16px var(--shadow);
+    }
+
+    .cert-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+
+    .cert-info { flex: 1; }
+
+    .cert-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .cert-issuer {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      padding: 48px 0 36px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(var(--accent), var(--accent-2));
+      border-radius: var(--radius-full);
+    }
+
+    /* ===== GRID DOT BACKGROUND ===== */
+    .dot-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle, var(--dot-color) 1px, transparent 1px);
+      background-size: 32px 32px;
+      transition: background-color var(--transition);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .edu-grid { grid-template-columns: 1fr; }
+      .hero { padding: 120px 0 60px; }
+    }
+
+    /* Highlight active nav */
+    .nav-links a.active {
+      color: var(--text);
+      background: var(--bg-card);
+    }
+  </style>
+</head>
+<body class="has-mouse">
+
+  <!-- Custom Cursor -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+  <div id="cursor-glow-el"></div>
+
+  <!-- Background layers -->
+  <div class="dot-bg"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">rznr.</div>
+      <div class="nav-actions">
+        <ul class="nav-links">
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#education">Education</a></li>
+        </ul>
+        <button id="theme-toggle" aria-label="Toggle theme" title="Toggle light/dark theme">
+          <span class="toggle-icon moon">🌙</span>
+          <span class="toggle-icon sun">☀️</span>
+          <div class="toggle-thumb"></div>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page content -->
+  <div class="page-wrap">
+    <div class="container">
+
+      <!-- HERO -->
+      <section class="hero" id="hero">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          Available for opportunities
+        </div>
+
+        <h1 class="hero-name">
+          Hi, I'm <span class="gradient-text">Rizki</span><br/>
+          Nur Rachmadi<br/>
+          Yudadiningrat
+        </h1>
+
+        <p class="hero-title">
+          <strong>Supervisor IT & Fullstack Developer</strong> — SemestaGroup, Cemani
+        </p>
+
+        <p class="hero-desc">
+          Profesional IT berpengalaman 2+ tahun dengan spesialisasi dalam pengembangan <strong style="color: var(--text-dim)">sistem cerdas (AI)</strong>, <strong style="color: var(--text-dim)">full-stack development</strong>, dan pengolahan data. Lulusan Teknik Informatika dengan IPK 3.84, berfokus pada inovasi berbasis AI di era digital.
+        </p>
+
+        <div class="hero-contacts">
+          <a class="contact-chip" href="tel:+6289508117055" id="chip-phone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.53 2.18 2 2 0 012.51 0H5.5a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.29 6.29l.87-.87a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 15.43v1.49z"/>
+            </svg>
+            +62 895 0811 7055
+          </a>
+          <a class="contact-chip" href="mailto:zeinforrell69@gmail.com" id="chip-email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            zeinforrell69@gmail.com
+          </a>
+          <a class="contact-chip" href="https://rizumiya.github.io/" target="_blank" id="chip-blog">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+            </svg>
+            rizumiya.github.io
+          </a>
+          <a class="contact-chip" id="chip-location">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            Wonogiri, Jawa Tengah
+          </a>
+        </div>
+      </section>
+
+      <!-- EXPERIENCE -->
+      <section class="section reveal" id="experience">
+        <div class="section-label">
+          <span>Experience</span>
+        </div>
+
+        <div class="timeline">
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Sep 2025 — Sep 2026 · Current</div>
+              <div class="timeline-title">Supervisor IT</div>
+              <div class="timeline-company">SemestaGroup, Cemani</div>
+              <div class="timeline-body">
+                <ul>
+                  <li>Memimpin divisi IT (Programmer & Support), memastikan proyek pengembangan software selaras dengan kebutuhan bisnis</li>
+                  <li>Mengkoordinasikan infrastruktur jaringan LAN/WLAN & CCTV untuk zero-downtime operasional</li>
+                  <li>Mengarahkan pengembangan platform internal, melakukan code review & validasi arsitektur sistem</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Mei 2024 — Sep 2025</div>
+              <div class="timeline-title">Staff IT Programmer</div>
+              <div class="timeline-company">SemestaGroup, Cemani · zonakaryamendunia.com</div>
+              <div class="timeline-body">
+                <ul>
+                  <li>Merancang platform internal terpadu: modul Inventory, Purchase Orders, Sales Metrics real-time</li>
+                  <li>Membangun CS AI Bot untuk mempercepat respons layanan pelanggan (RPA & AI)</li>
+                  <li>Menulis kode bersih dengan REST API & integrasi database relasional</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Agu 2023 — Sekarang</div>
+              <div class="timeline-title">Fullstack Developer</div>
+              <div class="timeline-company">Project Freelancer · Remote</div>
+              <div class="timeline-body">
+                <ul>
+                  <li>Mengembangkan aplikasi, software, dan website custom sesuai kebutuhan klien</li>
+                  <li>Dukungan end-to-end: dari prototipe hingga implementasi dan pemeliharaan</li>
+                  <li>Berhasil mengoptimalkan proses dan mengotomatiskan tugas, mengurangi biaya operasional klien</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Mei 2022 — Jul 2022</div>
+              <div class="timeline-title">Project Manager & Front-end Developer</div>
+              <div class="timeline-company">Lucky Seven · Kontrak / Freelance</div>
+              <div class="timeline-body">
+                <ul>
+                  <li>Memimpin desain front-end website profil perusahaan yang menarik & responsif</li>
+                  <li>Meningkatkan rata-rata waktu pengguna di situs sebesar 20% dan interaksi pelanggan sebesar 15%</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Nov 2021 — Okt 2022</div>
+              <div class="timeline-title">Back-end Engineer</div>
+              <div class="timeline-company">Universitas Ahmad Dahlan · Proyek Magang Dosen</div>
+              <div class="timeline-body">
+                <ul>
+                  <li>Mengembangkan algoritma optimasi penjadwalan e-LEV dan alokasi sumber daya</li>
+                  <li>Berhasil mengurangi 30% waktu pemrosesan e-Report melalui optimasi kinerja sistem</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SKILLS -->
+      <section class="section reveal" id="skills">
+        <div class="section-label">
+          <span>Skills & Technologies</span>
+        </div>
+
+        <div class="skills-grid">
+
+          <div class="skill-group">
+            <div class="skill-group-label">Frameworks & Languages</div>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">PHP</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">Golang</span>
+              <span class="tag">Java</span>
+              <span class="tag">Django</span>
+              <span class="tag">Laravel</span>
+              <span class="tag">CodeIgniter</span>
+              <span class="tag">NodeJS</span>
+              <span class="tag">Vue.js</span>
+              <span class="tag">Bootstrap</span>
+              <span class="tag">Flutter</span>
+              <span class="tag">FlutterFlow</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-label">AI / Data Science</div>
+            <div class="tags">
+              <span class="tag">Machine Learning</span>
+              <span class="tag">Deep Learning</span>
+              <span class="tag">Computer Vision</span>
+              <span class="tag">Image Processing</span>
+              <span class="tag">Data Analyst</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-label">Database</div>
+            <div class="tags">
+              <span class="tag">MariaDB</span>
+              <span class="tag">MySQL</span>
+              <span class="tag">PostgreSQL</span>
+              <span class="tag">SQLite</span>
+              <span class="tag">MongoDB</span>
+              <span class="tag">Oracle</span>
+              <span class="tag">XML</span>
+              <span class="tag">JSON</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-label">Tools & DevOps</div>
+            <div class="tags">
+              <span class="tag">Docker</span>
+              <span class="tag">Nginx</span>
+              <span class="tag">Cloudflare Tunnels</span>
+              <span class="tag">Git</span>
+              <span class="tag">REST API</span>
+              <span class="tag">n8n Automation</span>
+              <span class="tag">Figma</span>
+              <span class="tag">Postman</span>
+              <span class="tag">Linux Terminal</span>
+              <span class="tag">AppScript</span>
+              <span class="tag">SDLC</span>
+              <span class="tag">OOP</span>
+              <span class="tag">UML</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- PROJECTS -->
+      <section class="section reveal" id="projects">
+        <div class="section-label">
+          <span>Selected Projects</span>
+        </div>
+
+        <div class="projects-grid">
+
+          <div class="project-card">
+            <div class="project-type">Mobile Application</div>
+            <div class="project-title">Sistem POS Multi-Brand & Multi-Location</div>
+            <div class="project-desc">Implementasi arsitektur database relasional (MariaDB/SQL) kompleks untuk operasional multi-brand dan multi-lokasi, dengan kontrol akses 4 tingkatan dan monitoring inventaris real-time.</div>
+            <div class="project-date">Jan 2025 — Present</div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-type">Mobile Application</div>
+            <div class="project-title">Glow Sync — Habit Tracker</div>
+            <div class="project-desc">Aplikasi habit-tracking mobile dengan FlutterFlow & SQLite offline-first. Fitur Dashboard metrics, Daily Routine Tracking, Mood Logging, dan Laporan Mingguan otomatis.</div>
+            <div class="project-date">Jan 2025 — Mar 2025</div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-type">Web Application</div>
+            <div class="project-title">Schedule Optimizer for University</div>
+            <div class="project-desc">Aplikasi web optimasi penjadwalan kelas universitas menggunakan Algoritma Genetika, mengatasi keterbatasan penjadwalan manual dengan mempertimbangkan kapasitas dan ketersediaan instruktur.</div>
+            <div class="project-date">Sep — Nov 2024</div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-type">Web Server</div>
+            <div class="project-title">Bot House Web Server</div>
+            <div class="project-desc">Web server untuk hosting Bot Telegram otomatisasi tugas dan peningkatan produktivitas, menjamin bot selalu aktif dan dapat diakses pengguna.</div>
+            <div class="project-date">Apr — Nov 2024</div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-type">Desktop Application</div>
+            <div class="project-title">OMRay — OMR Scanner</div>
+            <div class="project-desc">Aplikasi Desktop untuk mendeteksi dan menganalisis jawaban pilihan ganda pada lembar non-komputer secara cepat dan akurat menggunakan algoritma Computer Vision.</div>
+            <div class="project-date">Jun — Agu 2023</div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-type">Android Application</div>
+            <div class="project-title">Bank Sampah Digital</div>
+            <div class="project-desc">Aplikasi Android untuk memfasilitasi pengelolaan sampah global, mendorong tanggung jawab individu terhadap lingkungan dan meningkatkan kesadaran masyarakat.</div>
+            <div class="project-date">Jan — Mar 2022</div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- EDUCATION -->
+      <section class="section reveal" id="education">
+        <div class="section-label">
+          <span>Education</span>
+        </div>
+
+        <div class="edu-grid" style="margin-bottom: 32px;">
+          <div class="edu-card">
+            <div class="edu-period">2019 — 2023</div>
+            <div class="edu-title">S.Kom. Teknik Informatika</div>
+            <div class="edu-sub">Universitas Ahmad Dahlan, Bantul</div>
+            <div class="edu-desc">Pendalaman ke arah Sistem Cerdas (AI & pengolahan data). Lulus dengan IPK <strong style="color: var(--accent)">3.84</strong>.</div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-period">2015 — 2017</div>
+            <div class="edu-title">Rekayasa Perangkat Lunak</div>
+            <div class="edu-sub">SMK Muhammadiyah 1, Sukoharjo</div>
+            <div class="edu-desc">Jurusan yang berfokus dalam pengembangan software dan website.</div>
+          </div>
+        </div>
+
+        <div class="section-label" style="margin-top: 40px;">
+          <span>Certifications</span>
+        </div>
+
+        <div class="cert-list">
+
+          <div class="cert-item">
+            <div class="cert-icon">🚀</div>
+            <div class="cert-info">
+              <div class="cert-title">Scalable Web Service with Golang</div>
+              <div class="cert-issuer">Kominfo · Apr 2024</div>
+            </div>
+          </div>
+
+          <div class="cert-item">
+            <div class="cert-icon">🏛️</div>
+            <div class="cert-info">
+              <div class="cert-title">Oracle Certified Foundations Associate - Database</div>
+              <div class="cert-issuer">Oracle · Nov 2022 · ID: 14761087ODB12COJA</div>
+            </div>
+          </div>
+
+          <div class="cert-item">
+            <div class="cert-icon">💻</div>
+            <div class="cert-info">
+              <div class="cert-title">Junior Web Developer</div>
+              <div class="cert-issuer">Kominfo · Okt 2021 · ID: 62090 2513 3 0010091 2021</div>
+            </div>
+          </div>
+
+          <div class="cert-item">
+            <div class="cert-icon">📜</div>
+            <div class="cert-info">
+              <div class="cert-title">Certificate of Competency</div>
+              <div class="cert-issuer">Magne+ · Mar 2017 · ID: 03.20.210.2072.358</div>
+            </div>
+          </div>
+
+          <div class="cert-item">
+            <div class="cert-icon">🏆</div>
+            <div class="cert-info">
+              <div class="cert-title">1st Place — Student Competition IT Software Application</div>
+              <div class="cert-issuer">Dinas Pendidikan Kab. Sukoharjo · Sep 2016</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div><!-- /container -->
+  </div><!-- /page-wrap -->
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-name">Rizki Nur Rachmadi Yudadiningrat</div>
+    <div>Fullstack Developer & IT Supervisor · Wonogiri, Jawa Tengah</div>
+    <div style="margin-top: 8px; opacity: 0.5;">Built with passion · 2026</div>
+  </footer>
+
+  <script>
+    // ===== THEME TOGGLE =====
+    const html = document.documentElement;
+    const themeToggle = document.getElementById('theme-toggle');
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    html.setAttribute('data-theme', savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
+    // ===== CUSTOM CURSOR =====
+    const dot = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    const glowEl = document.getElementById('cursor-glow-el');
+
+    let mouseX = 0, mouseY = 0;
+    let ringX = 0, ringY = 0;
+    let glowX = 0, glowY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      dot.style.left = mouseX + 'px';
+      dot.style.top = mouseY + 'px';
+    });
+
+    // Smooth ring & glow follow
+    function animateCursor() {
+      ringX += (mouseX - ringX) * 0.12;
+      ringY += (mouseY - ringY) * 0.12;
+      ring.style.left = ringX + 'px';
+      ring.style.top = ringY + 'px';
+
+      glowX += (mouseX - glowX) * 0.06;
+      glowY += (mouseY - glowY) * 0.06;
+      glowEl.style.left = glowX + 'px';
+      glowEl.style.top = glowY + 'px';
+
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    // Cursor hover effects
+    document.querySelectorAll('a, button, .tag, .project-card, .cert-item').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        ring.style.width = '60px';
+        ring.style.height = '60px';
+        dot.style.transform = 'translate(-50%, -50%) scale(1.8)';
+      });
+      el.addEventListener('mouseleave', () => {
+        ring.style.width = '40px';
+        ring.style.height = '40px';
+        dot.style.transform = 'translate(-50%, -50%) scale(1)';
+      });
+    });
+
+    // Touch device: hide cursor
+    window.addEventListener('touchstart', () => {
+      document.body.classList.remove('has-mouse');
+    }, { once: true });
+
+    // ===== NAVBAR SCROLL =====
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // ===== SCROLL REVEAL =====
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(el => observer.observe(el));
+
+    // ===== PARTICLE CANVAS =====
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let particles = [];
+    const PARTICLE_COUNT = 55;
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function createParticle() {
+      return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        size: Math.random() * 1.5 + 0.5,
+        alpha: Math.random() * 0.4 + 0.1,
+        pulse: Math.random() * Math.PI * 2,
+      };
+    }
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(createParticle());
+
+    function getAccentColor() {
+      return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#5865f2';
+    }
+
+    function drawParticles(time) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      const baseAlpha = isDark ? 1 : 0.6;
+
+      particles.forEach((p, i) => {
+        p.pulse += 0.015;
+        p.x += p.vx + Math.sin(time * 0.0003 + p.pulse) * 0.1;
+        p.y += p.vy + Math.cos(time * 0.0003 + p.pulse * 0.7) * 0.1;
+
+        // Wrap around
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+
+        const alpha = (p.alpha + Math.sin(p.pulse) * 0.15) * baseAlpha;
+
+        // Draw particle
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(88, 101, 242, ${alpha})`;
+        ctx.fill();
+
+        // Connect nearby particles
+        for (let j = i + 1; j < particles.length; j++) {
+          const q = particles[j];
+          const dx = p.x - q.x;
+          const dy = p.y - q.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const maxDist = 130;
+
+          if (dist < maxDist) {
+            const lineAlpha = (1 - dist / maxDist) * 0.12 * baseAlpha;
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(q.x, q.y);
+            ctx.strokeStyle = `rgba(88, 101, 242, ${lineAlpha})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+
+        // Mouse interaction: push particles near cursor
+        const mdx = p.x - mouseX;
+        const mdy = p.y - mouseY;
+        const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+        if (mdist < 100) {
+          const force = (100 - mdist) / 100;
+          p.x += (mdx / mdist) * force * 1.2;
+          p.y += (mdy / mdist) * force * 1.2;
+        }
+      });
+
+      requestAnimationFrame(drawParticles);
+    }
+    requestAnimationFrame(drawParticles);
+
+    // ===== ACTIVE NAV HIGHLIGHT =====
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(sec => {
+        const top = sec.offsetTop - 120;
+        if (window.scrollY >= top) current = sec.id;
+      });
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+      });
+    });
+  </script>
+</body>
+</html>
