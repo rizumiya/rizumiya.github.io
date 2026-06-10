@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Game Cari Perbedaan Radar</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -15,7 +15,7 @@
                 <form id="registration-form">
                     <div class="input-group">
                         <label for="player-name">Nama Pemain:</label>
-                        <input type="text" id="player-name" placeholder="Masukkan nama Anda" required>
+                        <input type="text" id="player-name" placeholder="Masukkan nama Anda" required autocomplete="off">
                     </div>
                     <button type="submit" class="btn-primary">Mulai Bermain</button>
                 </form>
@@ -23,82 +23,104 @@
                 <button id="leaderboard-link" class="btn-secondary">Lihat Leaderboard</button>
             </div>
         </div>
-        
+
         <!-- Halaman Permainan -->
         <div id="game-page" class="page hidden">
             <header>
                 <h1>🔍 Game Cari Perbedaan Radar</h1>
                 <div class="player-info">
-                    <span id="player-name-display">Pemain</span> | 
-                    <span id="wins-count">0</span> kemenangan dari 
+                    <span id="player-name-display">Pemain</span> |
+                    <span id="wins-count">0</span> kemenangan dari
                     <span id="games-count">0</span> permainan
                 </div>
             </header>
-            
+
             <div class="game-content">
-                <div class="radar-container">
+                <!-- Radar side-by-side -->
+                <div class="radar-container" id="radar-container">
                     <div class="radar-column">
                         <h2>Radar Kiri</h2>
-                        <div class="radar-wrapper">
-                            <canvas id="radar-left" width="400" height="400"></canvas>
-                            <canvas id="radar-left-mask" width="400" height="400"></canvas>
-                            <div class="radar-labels">
-                                <span class="radar-label" style="--angle: -105deg;">12</span>
-                                <span class="radar-label" style="--angle: -75deg;">1</span>
-                                <span class="radar-label" style="--angle: -45deg;">2</span>
-                                <span class="radar-label" style="--angle: -15deg;">3</span>
-                                <span class="radar-label" style="--angle: 15deg;">4</span>
-                                <span class="radar-label" style="--angle: 45deg;">5</span>
-                                <span class="radar-label" style="--angle: 75deg;">6</span>
-                                <span class="radar-label" style="--angle: 105deg;">7</span>
-                                <span class="radar-label" style="--angle: 135deg;">8</span>
-                                <span class="radar-label" style="--angle: 165deg;">9</span>
-                                <span class="radar-label" style="--angle: 195deg;">10</span>
-                                <span class="radar-label" style="--angle: 225deg;">11</span>
+                        <div class="radar-wrapper" id="radar-wrapper-left">
+                            <canvas id="radar-left"></canvas>
+                            <canvas id="radar-left-mask"></canvas>
+                            <div class="radar-labels" id="labels-left">
+                                <span class="radar-label" data-angle="-105">12</span>
+                                <span class="radar-label" data-angle="-75">1</span>
+                                <span class="radar-label" data-angle="-45">2</span>
+                                <span class="radar-label" data-angle="-15">3</span>
+                                <span class="radar-label" data-angle="15">4</span>
+                                <span class="radar-label" data-angle="45">5</span>
+                                <span class="radar-label" data-angle="75">6</span>
+                                <span class="radar-label" data-angle="105">7</span>
+                                <span class="radar-label" data-angle="135">8</span>
+                                <span class="radar-label" data-angle="165">9</span>
+                                <span class="radar-label" data-angle="195">10</span>
+                                <span class="radar-label" data-angle="225">11</span>
                             </div>
                         </div>
                     </div>
                     <div class="radar-column">
                         <h2>Radar Kanan</h2>
-                        <div class="radar-wrapper">
-                            <canvas id="radar-right" width="400" height="400"></canvas>
-                            <canvas id="radar-right-mask" width="400" height="400"></canvas>
-                            <div class="radar-labels">
-                                <span class="radar-label" style="--angle: -105deg;">12</span>
-                                <span class="radar-label" style="--angle: -75deg;">1</span>
-                                <span class="radar-label" style="--angle: -45deg;">2</span>
-                                <span class="radar-label" style="--angle: -15deg;">3</span>
-                                <span class="radar-label" style="--angle: 15deg;">4</span>
-                                <span class="radar-label" style="--angle: 45deg;">5</span>
-                                <span class="radar-label" style="--angle: 75deg;">6</span>
-                                <span class="radar-label" style="--angle: 105deg;">7</span>
-                                <span class="radar-label" style="--angle: 135deg;">8</span>
-                                <span class="radar-label" style="--angle: 165deg;">9</span>
-                                <span class="radar-label" style="--angle: 195deg;">10</span>
-                                <span class="radar-label" style="--angle: 225deg;">11</span>
+                        <div class="radar-wrapper" id="radar-wrapper-right">
+                            <canvas id="radar-right"></canvas>
+                            <canvas id="radar-right-mask"></canvas>
+                            <div class="radar-labels" id="labels-right">
+                                <span class="radar-label" data-angle="-105">12</span>
+                                <span class="radar-label" data-angle="-75">1</span>
+                                <span class="radar-label" data-angle="-45">2</span>
+                                <span class="radar-label" data-angle="-15">3</span>
+                                <span class="radar-label" data-angle="15">4</span>
+                                <span class="radar-label" data-angle="45">5</span>
+                                <span class="radar-label" data-angle="75">6</span>
+                                <span class="radar-label" data-angle="105">7</span>
+                                <span class="radar-label" data-angle="135">8</span>
+                                <span class="radar-label" data-angle="165">9</span>
+                                <span class="radar-label" data-angle="195">10</span>
+                                <span class="radar-label" data-angle="225">11</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
+                <!-- Answer section -->
                 <div class="answer-section">
-                    <div class="input-group">
-                        <label for="answer-zone">Tebak zona jam di mana perbedaan berada (1-12):</label>
-                        <input type="number" id="answer-zone" min="1" max="12" placeholder="Masukkan angka 1-12" required>
-                    </div>
                     <p>Perhatikan perbedaan antara radar kiri dan kanan. Di salah satu zona, terdapat partikel tambahan dengan warna berbeda.</p>
-                    <button id="guess-button" class="btn-primary">Tebak</button>
-                    <button id="next-game" class="btn-secondary hidden">Permainan Berikutnya</button>
+
+                    <!-- Quick-pick zone buttons (mobile-friendly) -->
+                    <div class="zone-picker" id="zone-picker">
+                        <button class="zone-btn" data-zone="1">1</button>
+                        <button class="zone-btn" data-zone="2">2</button>
+                        <button class="zone-btn" data-zone="3">3</button>
+                        <button class="zone-btn" data-zone="4">4</button>
+                        <button class="zone-btn" data-zone="5">5</button>
+                        <button class="zone-btn" data-zone="6">6</button>
+                        <button class="zone-btn" data-zone="7">7</button>
+                        <button class="zone-btn" data-zone="8">8</button>
+                        <button class="zone-btn" data-zone="9">9</button>
+                        <button class="zone-btn" data-zone="10">10</button>
+                        <button class="zone-btn" data-zone="11">11</button>
+                        <button class="zone-btn" data-zone="12">12</button>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="answer-zone">Atau ketik zona (1-12):</label>
+                        <input type="number" id="answer-zone" min="1" max="12" placeholder="1 – 12" inputmode="numeric">
+                    </div>
+
+                    <div class="answer-buttons">
+                        <button id="guess-button" class="btn-primary">Tebak</button>
+                        <button id="next-game" class="btn-secondary hidden">Permainan Berikutnya</button>
+                    </div>
+
+                    <div id="result-message"></div>
                 </div>
-                
-                <div id="result-message"></div>
             </div>
-            
+
             <footer>
                 <button id="back-to-menu" class="btn-secondary">Kembali ke Menu</button>
             </footer>
         </div>
-        
+
         <!-- Halaman Leaderboard -->
         <div id="leaderboard-page" class="page hidden">
             <div class="leaderboard-card">
@@ -106,21 +128,22 @@
                 <table id="leaderboard-table">
                     <thead>
                         <tr>
-                            <th>Peringkat</th>
+                            <th>#</th>
                             <th>Nama Pemain</th>
-                            <th>Permainan</th>
-                            <th>Kemenangan</th>
+                            <th>Main</th>
+                            <th>Menang</th>
                             <th>Win Rate</th>
                         </tr>
                     </thead>
-                    <tbody id="leaderboard-body">
-                    </tbody>
+                    <tbody id="leaderboard-body"></tbody>
                 </table>
-                <button id="back-to-registration" class="btn-primary">Kembali ke Menu</button>
+                <div style="text-align:center;">
+                    <button id="back-to-registration" class="btn-primary">Kembali ke Menu</button>
+                </div>
             </div>
         </div>
     </div>
-    
+
     <script src="script.js"></script>
 </body>
 </html>
