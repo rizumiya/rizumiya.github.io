@@ -96,13 +96,15 @@ function resizeCanvases() {
 function repositionLabels(containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
-    const labelRadius = RADIUS + 14; // px distance from centre
+    // Push labels just outside the radar ring
+    const labelRadius = RADIUS + Math.max(12, Math.floor(CANVAS_SIZE * 0.045));
     container.querySelectorAll('.radar-label').forEach(el => {
         const angleDeg = parseFloat(el.dataset.angle || 0);
         const rad = (angleDeg * Math.PI) / 180;
-        // Position relative to wrapper (50% × 50% = centre)
-        const left = 50 + (labelRadius / CANVAS_SIZE) * 100 * Math.sin(rad);
-        const top  = 50 - (labelRadius / CANVAS_SIZE) * 100 * Math.cos(rad);
+        // Standard CSS polar→Cartesian: 0°=right, clockwise=positive
+        // x = cx + r·cos(θ),  y = cy + r·sin(θ)
+        const left = 50 + (labelRadius / CANVAS_SIZE) * 100 * Math.cos(rad);
+        const top  = 50 + (labelRadius / CANVAS_SIZE) * 100 * Math.sin(rad);
         el.style.left      = left + '%';
         el.style.top       = top  + '%';
         el.style.transform = 'translate(-50%, -50%)';
