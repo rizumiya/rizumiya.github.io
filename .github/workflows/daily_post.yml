@@ -1,0 +1,70 @@
+name: Daily Auto Generate Blog Post
+
+on:
+  schedule:
+    # 00:00 UTC is 07:00 WIB
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  generate-post:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for proper git ops
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          if [ -f scripts/requirements.txt ]; then pip install -r scripts/requirements.txt; fi
+
+      - name: Run post generator script
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python scripts/generate_post.py
+
+      - name: Setup Node.js (for Hexo)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Hexo dependencies
+        run: |
+          # The repo seems to only contain the built files, not the source.
+          # If package.json doesn't exist, we skip hexo generation for now,
+          # and just commit the markdown file to source/_posts.
+          # In a real Hexo setup, you would install packages and run hexo generate here.
+          if [ -f package.json ]; then
+            npm install
+            npx hexo generate
+          else
+            echo "No package.json found. Skipping Hexo generate. Just committing the markdown file."
+          fi
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+          # Add all changes
+          git add .
+
+          # Commit if there are changes
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore(blog): auto-generate daily post"
+
+            git push
+          fi
