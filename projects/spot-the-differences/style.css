@@ -148,6 +148,7 @@ body {
     font-weight: 500;
     min-height: 24px;
 }
+#error-message:empty { display: none; }
 
 /* ===== GAME PAGE ===== */
 #game-page {
