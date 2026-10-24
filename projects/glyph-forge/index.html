@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#111329">
+    <meta name="description" content="Rakit simbol rahasia dari potongan kode dalam puzzle Glyph Forge.">
+    <title>Glyph Forge — Puzzle Kode</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+
+    <main class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="./" aria-label="Glyph Forge, beranda">
+                <span class="brand-mark" aria-hidden="true">G</span>
+                <span>GLYPH<span class="brand-accent">FORGE</span></span>
+            </a>
+            <a class="back-link" href="../">← Semua proyek</a>
+        </header>
+
+        <section class="intro">
+            <p class="eyebrow">PUZZLE KODE · TANPA GAMBAR</p>
+            <h1>Rakit <span>simbol rahasia.</span></h1>
+            <p class="intro-copy">Target adalah satu lambang dari empat bentuk tinggi yang bertumpuk. Pilih objek satu per satu dan putar bentuknya—setiap objek dapat menyumbang garis di beberapa bagian lambang.</p>
+        </section>
+
+        <section class="scoreboard" aria-label="Statistik permainan">
+            <div class="stat-card"><span class="stat-label">LEVEL</span><strong id="level-value">01</strong></div>
+            <div class="stat-card"><span class="stat-label">SKOR <span class="record-label">· REKOR <span id="best-score-value">0</span></span></span><strong id="score-value">0</strong></div>
+            <div class="stat-card"><span class="stat-label">RANTAI</span><strong id="streak-value">0 <span>beruntun</span></strong></div>
+            <div class="stat-card timer-card">
+                <span class="stat-label">DURASI</span>
+                <strong id="timer-value">00:00</strong>
+            </div>
+        </section>
+
+        <section class="puzzle-card" aria-label="Papan puzzle">
+            <div class="board-heading">
+                <div>
+                    <p class="eyebrow">EMPAT OBJEK · BENTUK BERTUMPUK</p>
+                    <h2 id="level-title">Ruang Simbol</h2>
+                </div>
+                <button class="hint-button" id="hint-button" type="button">✦ Petunjuk <span id="hint-cost">−60 poin</span></button>
+            </div>
+            <p class="completion-banner" id="completion-banner" role="status" aria-live="polite" hidden></p>
+
+            <div class="symbol-pair">
+                <article class="symbol-panel target-panel">
+                    <div class="panel-heading"><span class="panel-index">01</span><div><h3>Target</h3><p>Ingat lambang gabungannya</p></div></div>
+                    <div class="symbol-frame" id="target-frame"></div>
+                    <p class="panel-caption">Empat bentuk tinggi saling bertumpuk</p>
+                </article>
+                <div class="pair-connector" aria-hidden="true"><span>→</span></div>
+                <article class="symbol-panel build-panel">
+                    <div class="panel-heading"><span class="panel-index">02</span><div><h3>Rakit</h3><p>Tumpuk bentuk di area yang sama</p></div></div>
+                    <div class="symbol-frame" id="build-frame"></div>
+                    <p class="panel-caption">Tiap objek menggambar sepanjang lambang</p>
+                </article>
+            </div>
+
+            <div class="assembly-area">
+                <div class="assembly-heading">
+                    <div><p class="eyebrow">4 OBJEK · 1 LAMBANG</p><h3>Klik ↑ / ↓ pada objek untuk mengganti bentuk</h3></div>
+                    <span class="part-counter" id="part-counter">—</span>
+                </div>
+                <div class="part-navigation" id="part-navigation" aria-label="Pilih satu dari empat objek"></div>
+                <div class="active-object-status" aria-live="polite"><strong id="active-object-name">Objek 01</strong><span>Pilihan bertambah tiap 2 level, dari 4 hingga maksimal 10.</span></div>
+            </div>
+
+            <div class="game-footer">
+                <p id="game-message" class="game-message" role="status" aria-live="polite">Pilih objek dan putar bentuk tinggi sampai tumpukannya membentuk target.</p>
+                <button class="reset-button" id="reset-button" type="button">Mulai ulang ↻</button>
+            </div>
+        </section>
+
+        <section class="controls-card" aria-label="Kontrol permainan">
+            <div class="control-copy"><span class="control-icon" aria-hidden="true">⌨</span><div><strong>Kontrol permainan</strong><p>Klik kartu: pilih objek <span>·</span> ↑ / ↓ di kartu: ganti bentuk <span>·</span> Kiri / kanan: navigasi keyboard</p></div></div>
+            <div class="touch-controls">
+                <button type="button" data-action="previous" aria-label="Pilih objek sebelumnya">←</button>
+                <button type="button" data-action="next" aria-label="Pilih objek berikutnya">→</button>
+                <button type="button" data-action="change-up" aria-label="Putar ke simbol sebelumnya">↑</button>
+                <button type="button" data-action="change-down" aria-label="Putar ke simbol berikutnya">↓</button>
+            </div>
+        </section>
+        <p class="page-note">Setiap objek adalah bentuk SVG tinggi; empat bentuk ditumpuk untuk menghasilkan lambang target.</p>
+    </main>
+
+    <script src="script.js?v=visual-match-v12"></script>
+</body>
+</html>

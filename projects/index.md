@@ -13,50 +13,47 @@ Welcome to my projects section! Here you can find various games and applications
   .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1.5rem;
-    margin-bottom: 2rem;
-  }
-  
-  .project-card {
-    /* Menggunakan gradient agar background tidak terlalu flat */
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
-    backdrop-filter: blur(10px); /* Efek kaca elegan */
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 12px;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    text-decoration: none;
-    color: inherit;
-    position: relative;
-    overflow: hidden;
-    /* Base shadow untuk kedalaman */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    gap: 1.1rem;
+    margin: 1.5rem 0 2rem;
+    padding: 1.25rem;
+    border: 1px solid #ebe8f2;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #f4f6ff 0%, #fbf4f7 52%, #f3faf8 100%);
   }
 
-  /* Glassmorphism subtle glow */
+  .project-card {
+    background: #fff;
+    border: 1px solid #e8e6ef;
+    border-radius: 16px;
+    padding: 1.35rem;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    text-decoration: none;
+    color: #394258;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(53, 57, 79, 0.045);
+  }
+
   .project-card::before {
     content: '';
     position: absolute;
-    top: 0; left: -100%; width: 50%; height: 100%;
-    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0) 100%);
-    transform: skewX(-25deg);
-    transition: all 0.75s ease;
+    inset: 0 auto 0 0;
+    width: 4px;
+    background: #b9b8e8;
   }
-  
+
   .project-card:hover {
-    transform: translateY(-5px);
-    /* Shadow lebih gelap + sedikit glow biru agar elegan */
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), 0 0 15px rgba(168, 199, 250, 0.15);
-    border-color: rgba(168, 199, 250, 0.4); /* Border menyala halus saat di-hover */
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(53, 57, 79, 0.1);
+    border-color: #c9c6e5;
     text-decoration: none;
   }
 
-  .project-card:hover::before {
-    left: 200%;
+  .project-card:focus-visible {
+    outline: 3px solid #8d8acb;
+    outline-offset: 3px;
   }
 
   .project-title {
@@ -64,20 +61,15 @@ Welcome to my projects section! Here you can find various games and applications
     font-weight: 600;
     margin-top: 0;
     margin-bottom: 0.5rem;
-    color: #2570baff; /* Putih solid yang tajam */
+    color: #45466f;
     border-bottom: none;
     padding-bottom: 0;
-    transition: color 0.2s ease;
-  }
-
-  .project-card:hover .project-title {
-    color: var(--link-hover-color, #60a5fa); /* Warna biru yang lebih kaya */
   }
 
   .project-desc {
     font-size: 0.95rem;
-    line-height: 1.5;
-    color: #94a3b8; /* Abu-abu kebiruan solid, lebih tajam daripada pakai opacity */
+    line-height: 1.65;
+    color: #5f6678;
     margin-bottom: 1.2rem;
     flex-grow: 1;
   }
@@ -93,34 +85,53 @@ Welcome to my projects section! Here you can find various games and applications
     font-size: 0.75rem;
     padding: 0.25rem 0.7rem;
     border-radius: 99px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15); /* Tambahan border agar tag lebih tegas */
-    color: #cbd5e1;
+    background: #f0eff8;
+    border: 1px solid #e5e3f0;
+    color: #575775;
     font-weight: 500;
     letter-spacing: 0.02em;
   }
 
-  /* Warna tag dibuat sedikit lebih vibrant dengan border senada */
-  .tag-game { background: rgba(248, 113, 113, 0.15); color: #fca5a5; border-color: rgba(248, 113, 113, 0.3); }
-  .tag-canvas { background: rgba(56, 189, 248, 0.15); color: #7dd3fc; border-color: rgba(56, 189, 248, 0.3); }
-  .tag-ai { background: rgba(167, 139, 250, 0.15); color: #c4b5fd; border-color: rgba(167, 139, 250, 0.3); }
-  .tag-multiplayer { background: rgba(74, 222, 128, 0.15); color: #86efac; border-color: rgba(74, 222, 128, 0.3); }
-  
-  /* Prevent theme markdown styles from overriding links inside cards */
-  .projects-grid a:hover {
-    background-color: transparent;
-  }
-  
+  .tag-game { background: #fff0ed; color: #985d52; border-color: #f2ddd8; }
+  .tag-canvas { background: #edf5ff; color: #4f6f94; border-color: #dce9f7; }
+  .tag-ai { background: #f3efff; color: #6d5b96; border-color: #e7def8; }
+  .tag-multiplayer { background: #eaf6ef; color: #4f795f; border-color: #d9ebdf; }
+
   .more-projects {
-      text-align: center;
-      margin-top: 3rem;
-      font-style: italic;
-      color: #64748b;
-      font-weight: 500;
+    text-align: center;
+    margin-top: 2.5rem;
+    font-style: italic;
+    color: #73788a;
+    font-weight: 500;
+  }
+
+  @media (max-width: 600px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+      gap: 0.85rem;
+      padding: 0.75rem;
+      border-radius: 16px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-card {
+      transition: none;
+    }
   }
 </style>
 
 <div class="projects-grid">
+  <a href="glyph-forge/" class="project-card">
+    <h3 class="project-title">Glyph Forge — Puzzle Kode</h3>
+    <p class="project-desc">Rakit simbol rahasia dari bentuk SVG yang dibuat dengan kode. Pilih objek satu per satu, putar bentuknya, dan cocokkan tumpukannya dengan target.</p>
+    <div class="project-tags">
+      <span class="project-tag tag-game">Game</span>
+      <span class="project-tag tag-canvas">SVG</span>
+      <span class="project-tag">Puzzle</span>
+    </div>
+  </a>
+
   <a href="spot-the-differences/" class="project-card">
     <h3 class="project-title">Spot the Differences</h3>
     <p class="project-desc">An interactive web-based game challenging players to find differences between two dynamic radar displays. Features scoring and responsive canvas rendering.</p>
