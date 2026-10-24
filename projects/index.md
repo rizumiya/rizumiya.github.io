@@ -182,6 +182,16 @@ date: 2025-10-13
 </style>
 
 <div class="projects-grid">
+  <a href="mochi-pocket/" class="project-card">
+    <h3 class="project-title"><span data-lang-content="id">Mochi Pocket — Teman Virtual</span><span data-lang-content="en" hidden>Mochi Pocket — Virtual Pet</span></h3>
+    <p class="project-desc"><span data-lang-content="id">Konsol peliharaan virtual &amp; Tamagotchi minimalis dengan 6 wujud interaktif (Puni Mochi, Kucing Neko, Hamster, Anjing Shiba, Landak, dan Live2D), mini-game tangkap bintang, 6 tema konsol, serta penyimpanan IndexedDB.</span><span data-lang-content="en" hidden>A minimalist handheld virtual pet &amp; Tamagotchi console with 6 interactive forms (Puni Mochi, Neko Cat, Hamster, Shiba Dog, Hedgehog, and Live2D), a star-catching mini-game, 6 console themes, and IndexedDB persistence.</span></p>
+    <div class="project-tags">
+      <span class="project-tag tag-game"><span data-lang-content="id">Game</span><span data-lang-content="en" hidden>Game</span></span>
+      <span class="project-tag tag-canvas">SVG &amp; Live2D</span>
+      <span class="project-tag">Tamagotchi</span>
+    </div>
+  </a>
+
   <a href="glyph-forge/" class="project-card">
     <h3 class="project-title"><span data-lang-content="id">Glyph Forge — Puzzle Kode</span><span data-lang-content="en" hidden>Glyph Forge — Code Puzzle</span></h3>
     <p class="project-desc"><span data-lang-content="id">Rakit simbol rahasia dari bentuk SVG yang dibuat dengan kode. Pilih objek satu per satu, putar bentuknya, dan cocokkan tumpukannya dengan target.</span><span data-lang-content="en" hidden>Build a secret symbol from code-drawn SVG shapes. Select objects one at a time, rotate their shapes, and match the layered result to the target.</span></p>

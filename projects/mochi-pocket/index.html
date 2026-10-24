@@ -1,0 +1,993 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f1ea">
+  <meta name="description" content="Mochi Pocket — Konsol Virtual Pet & Tamagotchi minimalis elegan dengan 6 wujud imut (Puni Mochi, Neko, Hamster, Anjing Shiba, Landak, Live2D) dan penyimpanan IndexedDB.">
+  <title>Mochi Pocket — Teman Mungil Interaktif</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Runtime Live2D Cubism 2 (mendukung window.loadlive2d) -->
+  <script src="https://cdn.jsdelivr.net/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body class="theme-minimal">
+  <main class="console-page">
+    <!-- =========================================================
+         KONSOL HANDHELD ELEGAN MINIMALIS (MOCHI POCKET)
+         ========================================================= -->
+    <div class="gameboy-shell" id="gameboy-shell">
+      <!-- Detail Minimalis Casing Atas (Earphone/Speaker Slot Halus) -->
+      <div class="gb-top-bar" aria-hidden="true">
+        <span class="gb-top-pill"></span>
+      </div>
+
+      <!-- =======================================================
+           BINGKAI LENSA LAYAR (MINIMALIST BEZEL)
+           ======================================================= -->
+      <div class="gb-bezel">
+        <div class="bezel-header">
+          <div class="bezel-battery" id="mood-indicator" title="Indikator Mood & Status Pet">
+            <span id="status-dot" class="battery-led led-idle"></span>
+            <span id="status-label" class="battery-text">SANTAI</span>
+          </div>
+          <div class="bezel-brand">
+            <span class="brand-accent">MOCHI</span> POCKET <span class="brand-dot">&bull;</span> ERI
+          </div>
+          <div class="bezel-form-tag" id="bezel-form-name">🫧 PUNI</div>
+        </div>
+
+        <!-- =====================================================
+             LAYAR UTAMA KONSOL (OLED AURORA VIEWPORT)
+             ===================================================== -->
+        <div class="gb-screen" id="pet-stage">
+          <!-- HUD ATAS LAYAR: Nama Pet & 4 Ikon Indikator Memudar (Tanpa Bar) -->
+          <div class="screen-hud">
+            <button type="button" class="hud-pet-badge" id="btn-quick-rename" title="Klik untuk ubah nama atau pengaturan">
+              <span id="pet-name-display" class="hud-pet-name">Eri</span>
+              <span id="pet-level-badge" class="hud-pet-lvl">Lv.1</span>
+            </button>
+
+            <!-- 4 Indikator Ikon Tunggal yang Memudar dari Atas ke Bawah Sesuai Persentase -->
+            <div class="hud-gauges" aria-label="Status Pet">
+              <!-- 1. Kenyang (Onigiri) -->
+              <div class="stat-icon-gauge" id="gauge-hunger" style="--pct: 85%;" data-tooltip="Kenyang: 85%">
+                <svg class="gauge-svg gauge-bg" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 3.5C7.8 3.5 3.8 11.5 3.8 16.2C3.8 19 6 20.5 12 20.5C18 20.5 20.2 19 20.2 16.2C20.2 11.5 16.2 3.5 12 3.5Z" fill="currentColor"/>
+                  <rect x="8.8" y="14" width="6.4" height="6.5" rx="1.2" fill="rgba(59,38,36,0.2)"/>
+                </svg>
+                <div class="gauge-fill-wrap">
+                  <svg class="gauge-svg gauge-fill fill-hunger" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 3.5C7.8 3.5 3.8 11.5 3.8 16.2C3.8 19 6 20.5 12 20.5C18 20.5 20.2 19 20.2 16.2C20.2 11.5 16.2 3.5 12 3.5Z" fill="currentColor"/>
+                    <rect x="8.8" y="14" width="6.4" height="6.5" rx="1.2" fill="#3b2624"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- 2. Bahagia (Heart) -->
+              <div class="stat-icon-gauge" id="gauge-happy" style="--pct: 90%;" data-tooltip="Bahagia: 90%">
+                <svg class="gauge-svg gauge-bg" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 20.2C12 20.2 4 14.8 4 9C4 6.2 6.2 4 9 4C10.6 4 12 4.8 12 6C12 4.8 13.4 4 15 4C17.8 4 20 6.2 20 9C20 14.8 12 20.2 12 20.2Z" fill="currentColor"/>
+                </svg>
+                <div class="gauge-fill-wrap">
+                  <svg class="gauge-svg gauge-fill fill-happy" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 20.2C12 20.2 4 14.8 4 9C4 6.2 6.2 4 9 4C10.6 4 12 4.8 12 6C12 4.8 13.4 4 15 4C17.8 4 20 6.2 20 9C20 14.8 12 20.2 12 20.2Z" fill="currentColor"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- 3. Energi (Lightning Bolt) -->
+              <div class="stat-icon-gauge" id="gauge-energy" style="--pct: 95%;" data-tooltip="Energi: 95%">
+                <svg class="gauge-svg gauge-bg" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M13.2 3L6 13.2H11.8L10.6 21L18 10.8H12.2L13.2 3Z" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
+                </svg>
+                <div class="gauge-fill-wrap">
+                  <svg class="gauge-svg gauge-fill fill-energy" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M13.2 3L6 13.2H11.8L10.6 21L18 10.8H12.2L13.2 3Z" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- 4. EXP Menuju Level Berikutnya (Star) -->
+              <div class="stat-icon-gauge" id="gauge-exp" style="--pct: 15%;" data-tooltip="EXP: 15%">
+                <svg class="gauge-svg gauge-bg" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 3.2L14.6 8.5L20.5 9.3L16.2 13.5L17.2 19.4L12 16.6L6.8 19.4L7.8 13.5L3.5 9.3L9.4 8.5L12 3.2Z" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
+                </svg>
+                <div class="gauge-fill-wrap">
+                  <svg class="gauge-svg gauge-fill fill-exp" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 3.2L14.6 8.5L20.5 9.3L16.2 13.5L17.2 19.4L12 16.6L6.8 19.4L7.8 13.5L3.5 9.3L9.4 8.5L12 3.2Z" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- HUD Mini-Game Tangkap Bintang (Hanya muncul saat bermain) -->
+          <div id="minigame-hud" class="minigame-hud" hidden>
+            <span>⭐ <strong id="minigame-score">0</strong></span>
+            <span>⏱️ <strong id="minigame-timer">15</strong>d</span>
+            <button type="button" id="btn-stop-minigame" class="btn-xs-stop" title="Hentikan Mini-Game">✕</button>
+          </div>
+
+          <!-- Layer Bintang Jatuh Mini-Game -->
+          <div id="minigame-layer" class="minigame-layer" hidden></div>
+
+          <!-- Layer Partikel Hati / Makanan / Zzz -->
+          <div id="particles-container" class="particles-layer" aria-hidden="true"></div>
+
+          <!-- Balon Percakapan Autentik Hexo Aurora -->
+          <div id="Aurora-Dia--tips-wrapper" class="active" role="status" aria-live="polite">
+            <div id="Aurora-Dia--tips" class="Aurora-Dia--tips">
+              Hai, aku <span>Eri</span>, aku di sini untuk membantumu~
+            </div>
+          </div>
+
+          <!-- Efek Kilatan Transformasi Saat Berubah Wujud -->
+          <div id="transform-burst" class="transform-burst" aria-hidden="true"></div>
+
+          <!-- ===================================================
+               PANGGUNG INTERAKSI KARAKTER (Semua Wujud Hidup!)
+               =================================================== -->
+          <div id="pet-interactive" class="pet-interactive state-idle" data-active-form="orb">
+            <!-- Simbol Marah Komik (Muncul saat Klik 3x Cepat di semua wujud) -->
+            <svg class="angry-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+              <path
+                d="M 14 6 Q 18 18 6 14 M 26 6 Q 22 18 34 14 M 14 34 Q 18 22 6 26 M 26 34 Q 22 22 34 26"
+                stroke="#ef4444"
+                stroke-width="4.5"
+                stroke-linecap="round"
+              />
+            </svg>
+
+            <!-- =================================================
+                 WUJUD 1: ORB AURORA ASLI (Hexo Aurora AUDia)
+                 ================================================= -->
+            <div id="form-orb" class="pet-form form-orb">
+              <div
+                id="Aurora-Dia--body"
+                style="
+                  --aurora-dia--linear-gradient: linear-gradient(130deg, #24c6dc, #5433ff 41.07%, #ff0099 76.05%);
+                  --aurora-dia--linear-gradient-hover: linear-gradient(to bottom, #5433ff, #ff0099);
+                  --aurora-dia--platform-light: #ff0099;
+                "
+              >
+                <div id="Aurora-Dia" class="Aurora-Dia active">
+                  <div id="Aurora-Dia--eyes" class="Aurora-Dia--eyes">
+                    <div id="Aurora-Dia--left-eye" class="Aurora-Dia--eye left"></div>
+                    <div id="Aurora-Dia--right-eye" class="Aurora-Dia--eye right"></div>
+                  </div>
+                  <div class="orb-blush left"></div>
+                  <div class="orb-blush right"></div>
+                </div>
+                <div class="Aurora-Dia--platform"></div>
+              </div>
+            </div>
+
+            <!-- =================================================
+                 WUJUD 2: KUCING NEKO KAWAII
+                 ================================================= -->
+            <div id="form-cat" class="pet-form form-animal" hidden>
+              <div class="animal-stage">
+                <div class="lifelike-actor">
+                  <div class="chara-rig cat-rig">
+                    <div class="chara-squash">
+                      <!-- 1. Ekor Kucing -->
+                      <div class="tail-wrap">
+                        <svg class="svg-full" viewBox="0 0 120 150" fill="none">
+                          <defs>
+                            <clipPath id="tailInnerClip">
+                              <path d="M 102 114 C 54 118, 16 90, 26 42 C 30 22, 54 22, 54 40 C 54 50, 44 58, 46 74 C 48 90, 74 96, 102 92 Z" />
+                            </clipPath>
+                          </defs>
+                          <path
+                            d="M 102 114 C 54 118, 16 90, 26 42 C 30 22, 54 22, 54 40 C 54 50, 44 58, 46 74 C 48 90, 74 96, 102 92 Z"
+                            fill="#f9b87c"
+                            stroke="#3b2322"
+                            stroke-width="11"
+                            stroke-linejoin="round"
+                          />
+                          <g clip-path="url(#tailInnerClip)">
+                            <rect x="0" y="0" width="120" height="150" fill="#f9b87c" />
+                            <path d="M 105 116 C 52 120, 14 90, 24 40" stroke="#efa05c" stroke-width="10" fill="none" />
+                            <circle cx="40" cy="31" r="21" fill="#ffffff" />
+                          </g>
+                        </svg>
+                      </div>
+
+                      <!-- 2. Badan Duduk & Kaki Depan -->
+                      <div class="lower-body-group">
+                        <svg class="svg-full" viewBox="0 0 200 145" fill="none">
+                          <path
+                            d="M 48 15 C 24 45, 18 92, 30 116 C 40 132, 65 135, 100 135 C 135 135, 160 132, 170 116 C 182 92, 176 45, 152 15 Z"
+                            fill="#ffffff"
+                            stroke="#3b2322"
+                            stroke-width="5.5"
+                            stroke-linejoin="round"
+                          />
+                          <path
+                            d="M 33 108 C 45 128, 70 132, 100 132 C 130 132, 155 128, 167 108 C 155 120, 130 123, 100 123 C 70 123, 45 120, 33 108 Z"
+                            fill="#e9e4e2"
+                          />
+                          <g class="paw-left-group">
+                            <path d="M 55 64 C 55 102, 62 138, 80 138 C 94 138, 95 112, 91 84" fill="#ffffff" />
+                            <path d="M 60 122 C 66 135, 76 136, 86 131 C 91 126, 92 115, 91 108 C 86 122, 70 125, 60 122 Z" fill="#e9e4e2" />
+                            <path d="M 55 64 C 55 102, 62 138, 80 138 C 94 138, 95 112, 91 84" stroke="#3b2322" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" />
+                          </g>
+                          <g class="paw-right-group">
+                            <path d="M 145 64 C 145 102, 138 138, 120 138 C 106 138, 105 112, 109 84" fill="#ffffff" />
+                            <path d="M 140 122 C 134 135, 124 136, 114 131 C 109 126, 108 115, 109 108 C 114 122, 130 125, 140 122 Z" fill="#e9e4e2" />
+                            <path d="M 145 64 C 145 102, 138 138, 120 138 C 106 138, 105 112, 109 84" stroke="#3b2322" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" />
+                          </g>
+                        </svg>
+                      </div>
+
+                      <!-- 3. Kepala Kucing -->
+                      <div class="head-group parallax-head">
+                        <svg class="ear left" viewBox="0 0 90 95" fill="none">
+                          <path d="M 18 82 C 8 48, 14 12, 26 8 C 38 4, 68 24, 82 52 Z" fill="#ffffff" stroke="#3b2322" stroke-width="5.5" stroke-linejoin="round" />
+                          <path d="M 26 72 C 20 48, 24 24, 32 22 C 40 20, 60 34, 70 54 Z" fill="#f47392" stroke="#3b2322" stroke-width="4" stroke-linejoin="round" />
+                        </svg>
+                        <svg class="ear right" viewBox="0 0 90 95" fill="none">
+                          <path d="M 72 82 C 82 48, 76 12, 64 8 C 52 4, 22 24, 8 52 Z" fill="#ffffff" stroke="#3b2322" stroke-width="5.5" stroke-linejoin="round" />
+                          <path d="M 64 72 C 70 48, 66 24, 58 22 C 50 20, 30 34, 20 54 Z" fill="#f47392" stroke="#3b2322" stroke-width="4" stroke-linejoin="round" />
+                        </svg>
+
+                        <div class="whiskers-group parallax-whiskers">
+                          <svg class="whiskers-side left" viewBox="0 0 65 55" fill="none">
+                            <path d="M 58 15 Q 30 7 6 11" stroke="#3b2322" stroke-width="4.2" stroke-linecap="round" />
+                            <path d="M 60 27 Q 32 24 4 29" stroke="#3b2322" stroke-width="4.2" stroke-linecap="round" />
+                            <path d="M 58 39 Q 35 40 12 49" stroke="#3b2322" stroke-width="4.2" stroke-linecap="round" />
+                          </svg>
+                          <svg class="whiskers-side right" viewBox="0 0 65 55" fill="none">
+                            <path d="M 7 15 Q 35 7 59 11" stroke="#3b2322" stroke-width="4.2" stroke-linecap="round" />
+                            <path d="M 5 27 Q 33 24 61 29" stroke="#3b2322" stroke-width="4.2" stroke-linecap="round" />
+                            <path d="M 7 39 Q 30 40 53 49" stroke="#3b2322" stroke-width="4.2" stroke-linecap="round" />
+                          </svg>
+                        </div>
+
+                        <div class="head-shape">
+                          <div class="forehead-stripes parallax-accent">
+                            <div class="stripe left"></div>
+                            <div class="stripe center"></div>
+                            <div class="stripe right"></div>
+                          </div>
+
+                          <div class="face-features">
+                            <div class="eyes-row">
+                              <div class="eye-socket">
+                                <div class="eye-ball tracking-eye">
+                                  <div class="eye-iris tracking-iris">
+                                    <div class="shine-large"></div>
+                                    <div class="shine-small"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="eye-socket">
+                                <div class="eye-ball tracking-eye">
+                                  <div class="eye-iris tracking-iris">
+                                    <div class="shine-large"></div>
+                                    <div class="shine-small"></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="blush-row parallax-blush">
+                              <div class="blush"></div>
+                              <div class="blush"></div>
+                            </div>
+
+                            <div class="muzzle parallax-muzzle">
+                              <div class="nose"></div>
+                              <svg class="mouth-svg" viewBox="0 0 46 22" fill="none">
+                                <path d="M 8 6 Q 15.5 18 23 6 Q 30.5 18 38 6" stroke="#3b2322" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="Aurora-Dia--platform animal-platform"></div>
+              </div>
+            </div>
+
+            <!-- =================================================
+                 WUJUD 3: HAMSTER MOCHI (Siluet Utuh Gembul Sesuai Referensi + Pegang Kuaci)
+                 ================================================= -->
+            <div id="form-hamster" class="pet-form form-animal" hidden>
+              <div class="animal-stage">
+                <div class="lifelike-actor">
+                  <div class="chara-rig hamster-rig">
+                    <div class="chara-squash">
+                      <!-- Telinga Kiri & Kanan Hamster (Bisa Bergerak Halus) -->
+                      <svg class="ear hamster-ear-full left" viewBox="0 0 100 100" fill="none">
+                        <path
+                          d="M 38 86 C 14 68, 8 28, 28 14 C 48 0, 82 22, 86 58 Z"
+                          fill="#f4caa3"
+                          stroke="#3b2322"
+                          stroke-width="6.5"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M 44 76 C 28 60, 24 34, 36 24 C 48 16, 68 30, 72 54 Z"
+                          fill="#fff7f0"
+                          stroke="#3b2322"
+                          stroke-width="4.5"
+                          stroke-linejoin="round"
+                        />
+                        <path d="M 44 74 C 34 62, 34 46, 44 40 C 54 36, 64 46, 66 58 Z" fill="#f7a1b0" />
+                      </svg>
+
+                      <svg class="ear hamster-ear-full right" viewBox="0 0 100 100" fill="none">
+                        <path
+                          d="M 62 86 C 86 68, 92 28, 72 14 C 52 0, 18 22, 14 58 Z"
+                          fill="#f4caa3"
+                          stroke="#3b2322"
+                          stroke-width="6.5"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M 56 76 C 72 60, 76 34, 64 24 C 52 16, 32 30, 28 54 Z"
+                          fill="#fff7f0"
+                          stroke="#3b2322"
+                          stroke-width="4.5"
+                          stroke-linejoin="round"
+                        />
+                        <path d="M 56 74 C 66 62, 66 46, 56 40 C 46 36, 36 46, 34 58 Z" fill="#f7a1b0" />
+                      </svg>
+
+                      <!-- Siluet Tubuh & Kepala Menyatu (Kepala Bulat Mochi Penuh, Tanpa Garis Alis) -->
+                      <svg class="hamster-fullbody-svg" viewBox="0 0 320 330" fill="none">
+                        <defs>
+                          <clipPath id="hamsterBodyClip">
+                            <path
+                              d="M 92 48 C 122 14, 198 14, 228 48 C 256 76, 264 118, 252 154 C 249 163, 242 170, 238 175 C 258 198, 258 250, 232 278 C 214 294, 182 290, 160 278 C 138 290, 106 294, 88 278 C 62 250, 62 198, 82 175 C 78 170, 71 163, 68 154 C 56 118, 64 76, 92 48 Z"
+                            />
+                          </clipPath>
+                        </defs>
+
+                        <!-- Ekor Pom-Pom Putih Mungil di Kanan Bawah -->
+                        <path
+                          d="M 234 256 C 248 250, 258 260, 252 270 C 260 276, 252 288, 240 284 C 232 286, 226 274, 234 256 Z"
+                          fill="#ffffff"
+                          stroke="#3b2322"
+                          stroke-width="6"
+                          stroke-linejoin="round"
+                        />
+
+                        <!-- Kaki Bawah Mungil Kiri & Kanan -->
+                        <path
+                          d="M 94 276 C 78 282, 76 300, 94 300 C 110 300, 118 290, 118 282 Z"
+                          fill="#f4caa3"
+                          stroke="#3b2322"
+                          stroke-width="6"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M 226 276 C 242 282, 244 300, 226 300 C 210 300, 202 290, 202 282 Z"
+                          fill="#f4caa3"
+                          stroke="#3b2322"
+                          stroke-width="6"
+                          stroke-linejoin="round"
+                        />
+
+                        <!-- Isi Warna Bulu Hamster (Krem-Persik di Atas & Samping + Lengkungan Putih dari Antara Mata ke Perut) -->
+                        <g clip-path="url(#hamsterBodyClip)">
+                          <!-- Warna Dasar Bulu Krem-Persik Hangat -->
+                          <rect x="40" y="10" width="240" height="295" fill="#f4caa3" />
+                          <!-- Shading Halus di Tepi Pipi & Pinggul -->
+                          <path
+                            d="M 66 80 C 54 135, 56 240, 88 284 L 48 284 L 48 80 Z"
+                            fill="#eab98d"
+                            opacity="0.5"
+                          />
+                          <path
+                            d="M 254 80 C 266 135, 264 240, 232 284 L 272 284 L 272 80 Z"
+                            fill="#eab98d"
+                            opacity="0.5"
+                          />
+
+                          <!-- Pola Putih Khas Hamster (Melengkung Halus dari Antara Mata ke Pipi Gembul & Perut) -->
+                          <path
+                            d="M 160 104 C 145 104, 134 134, 98 138 C 78 140, 68 134, 58 144 L 58 295 L 262 295 L 262 144 C 252 134, 242 140, 222 138 C 186 134, 175 104, 160 104 Z"
+                            fill="#ffffff"
+                          />
+
+                          <!-- Shading Krem Lembut di Bawah Perut -->
+                          <path
+                            d="M 76 262 C 102 284, 136 284, 160 272 C 184 284, 218 284, 244 262 L 248 295 L 72 295 Z"
+                            fill="#f5e6d6"
+                          />
+                        </g>
+
+                        <!-- Garis Outline Utama Tubuh & Kepala Bulat Gembul Hamster -->
+                        <path
+                          d="M 92 48 C 122 14, 198 14, 228 48 C 256 76, 264 118, 252 154 C 249 163, 242 170, 238 175 C 258 198, 258 250, 232 278 C 214 294, 182 290, 160 278 C 138 290, 106 294, 88 278 C 62 250, 62 198, 82 175 C 78 170, 71 163, 68 154 C 56 118, 64 76, 92 48 Z"
+                          stroke="#3b2322"
+                          stroke-width="6.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+
+                        <!-- Jambul Bulu Pipi Kiri & Kanan (4 Helai Mencuat Keluar) -->
+                        <path d="M 63 116 Q 48 115 42 122" stroke="#3b2322" stroke-width="5.5" stroke-linecap="round" />
+                        <path d="M 63 138 Q 48 142 42 151" stroke="#3b2322" stroke-width="5.5" stroke-linecap="round" />
+                        <path d="M 257 116 Q 272 115 278 122" stroke="#3b2322" stroke-width="5.5" stroke-linecap="round" />
+                        <path d="M 257 138 Q 272 142 278 151" stroke="#3b2322" stroke-width="5.5" stroke-linecap="round" />
+
+                        <!-- Lipatan Pinggang Pipi -->
+                        <path d="M 80 174 Q 90 182 98 180" stroke="#3b2322" stroke-width="5.5" stroke-linecap="round" />
+                        <path d="M 240 174 Q 230 182 222 180" stroke="#3b2322" stroke-width="5.5" stroke-linecap="round" />
+
+                        <!-- Tangan Mungil Bentuk 'C' Memegang Camilan Biji Bunga Matahari / Biskuit -->
+                        <g class="hamster-hands-svg">
+                          <!-- Camilan Kuaci / Biji Bunga Matahari Gembul di Tengah Dada -->
+                          <path
+                            d="M 160 176 C 143 186, 144 214, 160 222 C 176 214, 177 186, 160 176 Z"
+                            fill="#5c3d28"
+                            stroke="#3b2322"
+                            stroke-width="5"
+                            stroke-linejoin="round"
+                          />
+                          <path d="M 160 182 L 160 215" stroke="#fef3c7" stroke-width="3" stroke-linecap="round" />
+                          <path d="M 153 188 Q 150 200 154 211" stroke="#fef3c7" stroke-width="2" stroke-linecap="round" opacity="0.8" />
+                          <path d="M 167 188 Q 170 200 166 211" stroke="#fef3c7" stroke-width="2" stroke-linecap="round" opacity="0.8" />
+
+                          <!-- Bayangan Lembut di Bawah Tangan -->
+                          <path d="M 114 214 Q 134 222 144 210" stroke="#f0d5be" stroke-width="6" stroke-linecap="round" />
+                          <path d="M 206 214 Q 186 222 176 210" stroke="#f0d5be" stroke-width="6" stroke-linecap="round" />
+
+                          <!-- Tangan Putih Kiri & Kanan Melengkung Memegang Kuaci -->
+                          <path
+                            d="M 114 188 C 138 182, 148 192, 148 202 C 148 212, 136 218, 118 212"
+                            fill="#ffffff"
+                            stroke="#3b2322"
+                            stroke-width="5.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                          <path
+                            d="M 206 188 C 182 182, 172 192, 172 202 C 172 212, 184 218, 202 212"
+                            fill="#ffffff"
+                            stroke="#3b2322"
+                            stroke-width="5.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </g>
+                      </svg>
+
+                      <!-- Fitur Wajah Interaktif Hamster (Mata Ikut Kursor, Pipi Berkilau, Hidung & Mulut Mungil) -->
+                      <div class="head-group hamster-face-overlay parallax-head">
+                        <div class="face-features">
+                          <div class="eyes-row hamster-eyes-row">
+                            <div class="eye-socket hamster-eye-socket">
+                              <div class="eye-ball tracking-eye">
+                                <div class="eye-iris tracking-iris">
+                                  <div class="shine-large"></div>
+                                  <div class="shine-small"></div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="eye-socket hamster-eye-socket">
+                              <div class="eye-ball tracking-eye">
+                                <div class="eye-iris tracking-iris">
+                                  <div class="shine-large"></div>
+                                  <div class="shine-small"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- Pipi Coral-Pink dengan Kilau Putih Kecil Sesuai Referensi -->
+                          <div class="blush-row hamster-blush-row parallax-blush">
+                            <div class="blush hamster-cheek"></div>
+                            <div class="blush hamster-cheek"></div>
+                          </div>
+
+                          <!-- Hidung Pink Mungil & Mulut Senyum 'ω' Imut -->
+                          <div class="muzzle hamster-muzzle parallax-muzzle">
+                            <div class="nose hamster-nose-pink"></div>
+                            <svg class="mouth-svg hamster-mouth-svg" viewBox="0 0 46 24" fill="none">
+                              <path
+                                d="M 11 6 Q 17 16 23 6 Q 29 16 35 6"
+                                stroke="#3b2322"
+                                stroke-width="4.2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="Aurora-Dia--platform animal-platform"></div>
+              </div>
+            </div>
+
+            <!-- =================================================
+                 WUJUD 4: ANJING SHIBA INU (Ilustrasi SVG Proporsional)
+                 ================================================= -->
+            <div id="form-dog" class="pet-form form-animal" hidden>
+              <div class="animal-stage">
+                <div class="lifelike-actor">
+                  <div class="chara-rig dog-rig">
+                    <div class="chara-squash">
+                      <!-- 1. Ekor Melingkar Shiba -->
+                      <div class="tail-wrap dog-tail-wrap">
+                        <svg class="svg-full" viewBox="0 0 120 150" fill="none">
+                          <path
+                            d="M 98 112 C 46 112, 18 76, 36 42 C 50 18, 86 24, 88 52 C 90 72, 68 82, 58 68"
+                            fill="#f59e42"
+                            stroke="#3b2322"
+                            stroke-width="11"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                          <circle cx="58" cy="52" r="18" fill="#fff7ed"/>
+                        </svg>
+                      </div>
+
+                      <!-- 2. Badan Duduk Shiba Inu -->
+                      <div class="lower-body-group">
+                        <svg class="svg-full" viewBox="0 0 200 145" fill="none">
+                          <path
+                            d="M 48 15 C 24 45, 18 92, 30 116 C 40 132, 65 135, 100 135 C 135 135, 160 132, 170 116 C 182 92, 176 45, 152 15 Z"
+                            fill="#f59e42"
+                            stroke="#3b2322"
+                            stroke-width="5.5"
+                            stroke-linejoin="round"
+                          />
+                          <!-- Dada Krem Urajiro -->
+                          <path d="M 58 32 C 50 65, 56 126, 100 126 C 144 126, 150 65, 142 32 Z" fill="#fff7ed"/>
+                          <!-- Kaki Depan Kiri & Kanan -->
+                          <g class="paw-left-group">
+                            <path d="M 55 64 C 55 102, 62 138, 80 138 C 94 138, 95 112, 91 84" fill="#fff7ed" stroke="#3b2322" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" />
+                          </g>
+                          <g class="paw-right-group">
+                            <path d="M 145 64 C 145 102, 138 138, 120 138 C 106 138, 105 112, 109 84" fill="#fff7ed" stroke="#3b2322" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" />
+                          </g>
+                        </svg>
+                      </div>
+
+                      <!-- 3. Kepala Shiba Inu -->
+                      <div class="head-group parallax-head">
+                        <svg class="ear left" viewBox="0 0 90 95" fill="none">
+                          <path d="M 18 82 C 8 48, 14 12, 26 8 C 38 4, 68 24, 82 52 Z" fill="#f59e42" stroke="#3b2322" stroke-width="5.5" stroke-linejoin="round" />
+                          <path d="M 26 72 C 20 48, 24 24, 32 22 C 40 20, 60 34, 70 54 Z" fill="#fff7ed" stroke="#3b2322" stroke-width="4" stroke-linejoin="round" />
+                        </svg>
+                        <svg class="ear right" viewBox="0 0 90 95" fill="none">
+                          <path d="M 72 82 C 82 48, 76 12, 64 8 C 52 4, 22 24, 8 52 Z" fill="#f59e42" stroke="#3b2322" stroke-width="5.5" stroke-linejoin="round" />
+                          <path d="M 64 72 C 70 48, 66 24, 58 22 C 50 20, 30 34, 20 54 Z" fill="#fff7ed" stroke="#3b2322" stroke-width="4" stroke-linejoin="round" />
+                        </svg>
+
+                        <div class="head-shape shiba-head-shape">
+                          <!-- Corak Pipi Krem Urajiro Khas Shiba -->
+                          <div class="shiba-urajiro-mask"></div>
+                          <!-- Alis Bulat Putih Khas Shiba (Maromayu) -->
+                          <div class="shiba-brows-row parallax-accent">
+                            <div class="shiba-brow"></div>
+                            <div class="shiba-brow"></div>
+                          </div>
+
+                          <div class="face-features">
+                            <div class="eyes-row">
+                              <div class="eye-socket">
+                                <div class="eye-ball tracking-eye">
+                                  <div class="eye-iris tracking-iris">
+                                    <div class="shine-large"></div>
+                                    <div class="shine-small"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="eye-socket">
+                                <div class="eye-ball tracking-eye">
+                                  <div class="eye-iris tracking-iris">
+                                    <div class="shine-large"></div>
+                                    <div class="shine-small"></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="blush-row parallax-blush">
+                              <div class="blush"></div>
+                              <div class="blush"></div>
+                            </div>
+
+                            <!-- Hidung Hitam & Lidah Pink Menjulur -->
+                            <div class="muzzle parallax-muzzle">
+                              <div class="nose shiba-nose"></div>
+                              <svg class="mouth-svg" viewBox="0 0 46 28" fill="none">
+                                <!-- Lidah Pink Blep di Bawah Mulut -->
+                                <path class="shiba-tongue-svg" d="M 17 9 C 17 22, 29 22, 29 9 Z" fill="#fb7185" stroke="#3b2322" stroke-width="3.5"/>
+                                <path d="M 8 6 Q 15.5 18 23 6 Q 30.5 18 38 6" stroke="#3b2322" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="Aurora-Dia--platform animal-platform"></div>
+              </div>
+            </div>
+
+            <!-- =================================================
+                 WUJUD 5: LANDAK MINI (Ilustrasi SVG Proporsional)
+                 ================================================= -->
+            <div id="form-hedgehog" class="pet-form form-animal" hidden>
+              <div class="animal-stage">
+                <div class="lifelike-actor">
+                  <div class="chara-rig hedgehog-rig">
+                    <div class="chara-squash">
+                      <!-- Mahkota Duri Cokelat di Belakang Tubuh & Kepala -->
+                      <svg class="hedgehog-quills-backdrop" viewBox="0 0 320 310" fill="none">
+                        <path
+                          d="M160 8 L186 32 L222 16 L236 50 L274 44 L272 82 L306 102 L286 138 L310 170 L280 202 L292 236 L252 258 L68 258 L28 236 L40 202 L10 170 L34 138 L14 102 L48 82 L46 44 L84 50 L98 16 L134 32 Z"
+                          fill="#5c3a28"
+                          stroke="#3b2322"
+                          stroke-width="6"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M160 26 L182 46 L212 34 L224 64 L256 60 L254 92 L282 110 L266 140 L286 168 L260 196 L268 224 L236 242 L84 242 L52 224 L60 196 L34 168 L54 140 L38 110 L66 92 L64 60 L96 64 L108 34 L138 46 Z"
+                          fill="#784c36"
+                        />
+                      </svg>
+
+                      <!-- Badan Krem & Kaki Mungil Landak -->
+                      <div class="lower-body-group">
+                        <svg class="svg-full" viewBox="0 0 200 145" fill="none">
+                          <path d="M 44 24 C 24 54, 22 98, 34 120 C 44 134, 68 136, 100 136 C 132 136, 156 134, 166 120 C 178 98, 176 54, 156 24 Z" fill="#fdf3e7" stroke="#3b2322" stroke-width="5.5" stroke-linejoin="round"/>
+                          <ellipse cx="64" cy="132" rx="20" ry="11" fill="#f9a8ba" stroke="#3b2322" stroke-width="5"/>
+                          <ellipse cx="136" cy="132" rx="20" ry="11" fill="#f9a8ba" stroke="#3b2322" stroke-width="5"/>
+                          <ellipse cx="74" cy="86" rx="14" ry="11" transform="rotate(15 74 86)" fill="#f9a8ba" stroke="#3b2322" stroke-width="5"/>
+                          <ellipse cx="126" cy="86" rx="14" ry="11" transform="rotate(-15 126 86)" fill="#f9a8ba" stroke="#3b2322" stroke-width="5"/>
+                        </svg>
+                      </div>
+
+                      <!-- Kepala Landak -->
+                      <div class="head-group parallax-head">
+                        <svg class="ear hamster-ear-svg left" viewBox="0 0 90 95" fill="none">
+                          <circle cx="48" cy="52" r="30" fill="#e5c1a3" stroke="#3b2322" stroke-width="5.5"/>
+                          <circle cx="48" cy="54" r="16" fill="#f47392" stroke="#3b2322" stroke-width="4"/>
+                        </svg>
+                        <svg class="ear hamster-ear-svg right" viewBox="0 0 90 95" fill="none">
+                          <circle cx="42" cy="52" r="30" fill="#e5c1a3" stroke="#3b2322" stroke-width="5.5"/>
+                          <circle cx="42" cy="54" r="16" fill="#f47392" stroke="#3b2322" stroke-width="4"/>
+                        </svg>
+
+                        <div class="head-shape hedgehog-head-shape">
+                          <!-- Poni Duri Cokelat di Dahi Landak -->
+                          <div class="forehead-stripes parallax-accent">
+                            <div class="stripe hedgehog-quill-stripe left"></div>
+                            <div class="stripe hedgehog-quill-stripe center"></div>
+                            <div class="stripe hedgehog-quill-stripe right"></div>
+                          </div>
+
+                          <div class="face-features">
+                            <div class="eyes-row">
+                              <div class="eye-socket">
+                                <div class="eye-ball tracking-eye">
+                                  <div class="eye-iris tracking-iris">
+                                    <div class="shine-large"></div>
+                                    <div class="shine-small"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="eye-socket">
+                                <div class="eye-ball tracking-eye">
+                                  <div class="eye-iris tracking-iris">
+                                    <div class="shine-large"></div>
+                                    <div class="shine-small"></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="blush-row parallax-blush">
+                              <div class="blush"></div>
+                              <div class="blush"></div>
+                            </div>
+
+                            <!-- Hidung Bulat Mengendus -->
+                            <div class="muzzle parallax-muzzle">
+                              <div class="nose hedgehog-snout-nose"></div>
+                              <svg class="mouth-svg" viewBox="0 0 46 22" fill="none">
+                                <path d="M 10 6 Q 16.5 17 23 6 Q 29.5 17 36 6" stroke="#3b2322" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="Aurora-Dia--platform animal-platform"></div>
+              </div>
+            </div>
+
+            <!-- =================================================
+                 WUJUD 6: LIVE2D AVATAR
+                 ================================================= -->
+            <div id="form-live2d" class="pet-form form-animal" hidden>
+              <div class="animal-stage">
+                <div class="lifelike-actor">
+                  <div class="live2d-stage-box" id="live2d-stage-box">
+                    <canvas id="live2d-canvas" width="260" height="340"></canvas>
+                    <div id="live2d-status-overlay" class="live2d-overlay" hidden>
+                      <span id="live2d-status-text">Memuat Live2D...</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="Aurora-Dia--platform animal-platform"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =======================================================
+           PANEL KONTROL FISIK GAMEBOY (D-PAD, A/B, SELECT/START)
+           ======================================================= -->
+      <div class="gb-controls">
+        <!-- Kiri: Cross D-Pad Satu Kesatuan (Tanpa Garis Putus) -->
+        <div class="dpad-wrapper">
+          <div class="gb-dpad" role="group" aria-label="D-Pad Navigasi Pet">
+            <button type="button" id="btn-talk" class="dpad-btn dpad-up" title="Ajak Ngobrol (Atas)">
+              <span class="dpad-arrow">&#x25B2;&#xFE0E;</span>
+            </button>
+            <button type="button" id="btn-prev-form" class="dpad-btn dpad-left" title="Wujud Sebelumnya (Kiri)">
+              <span class="dpad-arrow">&#x25C0;&#xFE0E;</span>
+            </button>
+            <div class="dpad-center" aria-hidden="true"></div>
+            <button type="button" id="btn-next-form" class="dpad-btn dpad-right" title="Wujud Berikutnya (Kanan)">
+              <span class="dpad-arrow">&#x25B6;&#xFE0E;</span>
+            </button>
+            <button type="button" id="btn-sleep" class="dpad-btn dpad-down" title="Tidur / Bangun (Bawah)">
+              <span class="dpad-arrow">&#x25BC;&#xFE0E;</span>
+            </button>
+          </div>
+          <div class="dpad-caption">&#x25B2;&#xFE0E;BICARA &bull; &#x25C0;&#xFE0E;&#x25B6;&#xFE0E;WUJUD &bull; &#x25BC;&#xFE0E;TIDUR</div>
+        </div>
+
+        <!-- Kanan: Tombol B & A Bergaya GameBoy Rapi -->
+        <div class="ab-wrapper">
+          <div class="gb-ab-cluster">
+            <div class="ab-item ab-b">
+              <button type="button" id="btn-play" class="gb-round-btn btn-b" title="Main Mini-Game Tangkap Bintang (Tombol B)">
+                <span class="btn-glyph">🎮</span>
+              </button>
+              <span class="ab-label">B &bull; MAIN</span>
+            </div>
+            <div class="ab-item ab-a">
+              <button type="button" id="btn-feed" class="gb-round-btn btn-a" title="Beri Makan Pet (Tombol A)">
+                <span class="btn-glyph">🍙</span>
+              </button>
+              <span class="ab-label">A &bull; MAKAN</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bawah: Tombol Pill SELECT (Panduan) & START (Pengaturan) + Speaker -->
+      <div class="gb-bottom-row">
+        <div class="gb-bottom-spacer" aria-hidden="true"></div>
+        <div class="select-start-cluster">
+          <div class="pill-btn-wrap">
+            <button type="button" id="btn-open-guide" class="gb-pill-btn" title="Buka Panduan & Cara Main"></button>
+            <span class="pill-label">PANDUAN</span>
+          </div>
+          <div class="pill-btn-wrap">
+            <button type="button" id="btn-open-settings" class="gb-pill-btn" title="Buka Pengaturan Wujud, Nama, & Database"></button>
+            <span class="pill-label">SETELAN</span>
+          </div>
+        </div>
+
+          <!-- Speaker Dots Minimalis Kanan Bawah -->
+        <div class="gb-speaker-dots" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- =========================================================
+       MODAL 1: PANDUAN & CARA MAIN (Tombol PANDUAN)
+       ========================================================= -->
+  <div id="guide-modal" class="modal-backdrop" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="guide-modal-title">
+      <div class="modal-header-badge">📖 PANDUAN BERMAIN</div>
+      <h2 id="guide-modal-title" class="modal-title">Cara Merawat Teman Mochi</h2>
+
+      <div class="info-section">
+        <h3 class="info-heading">👋 Gestur Mouse pada Layar Pet</h3>
+        <div class="info-list">
+          <div class="info-item">
+            <span class="info-icon">⚡</span>
+            <div>
+              <strong>Hover Kursor (1x Loncat)</strong>
+              <p>Arahkan kursor masuk ke pet untuk membuatnya kaget dan melompat sekali.</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">💕</span>
+            <div>
+              <strong>Tahan Klik &amp; Geser Kiri-Kanan (Elus)</strong>
+              <p>Elus kepala/badan pet untuk membuatnya senang, memunculkan hati, dan menambah EXP.</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">💢</span>
+            <div>
+              <strong>Klik 3x Cepat (Ngambek)</strong>
+              <p>Mengetuk pet 3 kali berturut-turut dengan cepat akan membuatnya kesal!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <h3 class="info-heading">🔋 Arti Indikator Ikon Memudar (Kanan Atas Layar)</h3>
+        <p class="info-subtext">
+          Setiap ikon <strong>memudar dari atas ke bawah</strong> seiring berkurangnya persentase status:
+        </p>
+        <div class="icon-legend-grid">
+          <div class="legend-chip"><span>🍙</span> Kenyang</div>
+          <div class="legend-chip"><span>💖</span> Bahagia</div>
+          <div class="legend-chip"><span>⚡</span> Energi</div>
+          <div class="legend-chip"><span>⭐</span> EXP Level</div>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <h3 class="info-heading">🕹️ Kontrol Konsol</h3>
+        <div class="controls-legend">
+          <div><strong>D-Pad &#x25C0;&#xFE0E; / &#x25B6;&#xFE0E;</strong>: Berubah Wujud (Puni Mochi, Neko, Hamster, Shiba, Landak, Live2D)</div>
+          <div><strong>D-Pad &#x25B2;&#xFE0E; / &#x25BC;&#xFE0E;</strong>: Ajak Ngobrol (&#x25B2;&#xFE0E;) &amp; Tidur/Bangun (&#x25BC;&#xFE0E;)</div>
+          <div><strong>Tombol A / B</strong>: Beri Makan (A) &amp; Main Tangkap Bintang (B)</div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" id="btn-close-guide" class="btn-primary">Mengerti!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL 2: PENGATURAN, PILIH WUJUD, LIVE2D, & DATABASE (START)
+       ========================================================= -->
+  <div id="settings-modal" class="modal-backdrop" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="settings-modal-title">
+      <div class="modal-header-badge">⚙️ SETELAN &amp; DATABASE</div>
+      <h2 id="settings-modal-title" class="modal-title">Pengaturan Pet</h2>
+
+      <form id="settings-form" class="modal-form">
+        <!-- Nama Pet -->
+        <div class="setting-group">
+          <label for="pet-name-input" class="setting-label">Nama Pet Kamu:</label>
+          <input
+            type="text"
+            id="pet-name-input"
+            class="aurora-input"
+            placeholder="Misal: Eri, Dia, Mochi..."
+            maxlength="20"
+            required
+          >
+        </div>
+
+        <!-- Pilihan 6 Wujud Pet -->
+        <div class="setting-group">
+          <span class="setting-label">Pilih Wujud Pet:</span>
+          <div class="picker-options">
+            <label class="picker-option">
+              <input type="radio" name="starter-form" value="orb" checked>
+              <span>🫧 Puni</span>
+            </label>
+            <label class="picker-option">
+              <input type="radio" name="starter-form" value="cat">
+              <span>🐱 Neko</span>
+            </label>
+            <label class="picker-option">
+              <input type="radio" name="starter-form" value="hamster">
+              <span>🐹 Hamster</span>
+            </label>
+            <label class="picker-option">
+              <input type="radio" name="starter-form" value="dog">
+              <span>🐶 Anjing</span>
+            </label>
+            <label class="picker-option">
+              <input type="radio" name="starter-form" value="hedgehog">
+              <span>🦔 Landak</span>
+            </label>
+            <label class="picker-option">
+              <input type="radio" name="starter-form" value="live2d">
+              <span>✨ Live2D</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Pilihan Tema Konsol & Background (Gelap, Teduh, Cerah) -->
+        <div class="setting-group">
+          <span class="setting-label">Tema Konsol &amp; Latar (Gelap / Teduh / Cerah):</span>
+          <div class="picker-options">
+            <label class="picker-option">
+              <input type="radio" name="console-theme" value="obsidian" checked>
+              <span>🌑 Hitam Matte</span>
+            </label>
+            <label class="picker-option">
+              <input type="radio" name="console-theme" value="twilight">
+              <span>🌆 Senja Teduh</span>
+            </label>
+            <label class="picker-option">
+              <input type="radio" name="console-theme" value="slate">
+              <span>☁️ Abu Teduh</span>
+            </label>
+            <label class="picker-option">
+              <input type="radio" name="console-theme" value="matcha">
+              <span>🍵 Matcha Teduh</span>
+            </label>
+            <label class="picker-option">
+              <input type="radio" name="console-theme" value="cream">
+              <span>🥛 Krim Cerah</span>
+            </label>
+            <label class="picker-option">
+              <input type="radio" name="console-theme" value="sakura">
+              <span>🌸 Sakura Cerah</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Pengaturan Khusus Live2D -->
+        <div class="setting-group">
+          <label for="live2d-model-select" class="setting-label">Karakter Preset Live2D:</label>
+          <select id="live2d-model-select" class="aurora-select">
+            <option value="koharu">Koharu (Chibi Anime Girl)</option>
+            <option value="wanko">Wanko (Anjing Mangkuk Live2D)</option>
+            <option value="shizuku">Shizuku (Meja Belajar)</option>
+            <option value="z16">Z16 (Gadis Anime)</option>
+            <option value="haruto">Haruto (Chibi Boy)</option>
+            <option value="chitose">Chitose (Karakter Anime)</option>
+          </select>
+          <div class="custom-url-row">
+            <input
+              type="url"
+              id="live2d-custom-url"
+              class="aurora-input-sm"
+              placeholder="Atau tempel URL .model.json kustom..."
+            >
+            <button type="button" id="btn-load-custom-live2d" class="btn-sm">Muat</button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary">Simpan Pengaturan</button>
+      </form>
+
+      <!-- Bagian Database Browser (IndexedDB) -->
+      <div class="db-divider">
+        <span>💾 Database Browser (IndexedDB)</span>
+      </div>
+      <div class="db-actions-row">
+        <button type="button" id="btn-export-save" class="btn-db">📥 Ekspor JSON</button>
+        <label class="btn-db file-label">
+          📤 Impor JSON
+          <input type="file" id="input-import-save" accept="application/json" hidden>
+        </label>
+        <button type="button" id="btn-reset-save" class="btn-db btn-db-danger">🗑️ Reset</button>
+      </div>
+
+      <div class="modal-actions" style="margin-top: 0.6rem;">
+        <button type="button" id="btn-close-settings" class="btn-secondary">Tutup</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
