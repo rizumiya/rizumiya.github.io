@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#111329">
+    <meta name="theme-color" content="#111a35">
     <meta name="description" content="Rakit simbol rahasia dari potongan kode dalam puzzle Glyph Forge.">
     <title>Glyph Forge — Puzzle Kode</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=onboarding-v1">
 </head>
-<body>
+<body class="tutorial-open">
     <div class="ambient ambient-one" aria-hidden="true"></div>
     <div class="ambient ambient-two" aria-hidden="true"></div>
 
-    <main class="app-shell">
+    <main class="app-shell" inert>
         <header class="topbar">
             <a class="brand" href="./" aria-label="Glyph Forge, beranda">
                 <span class="brand-mark" aria-hidden="true">G</span>
@@ -88,6 +88,21 @@
         <p class="page-note">Setiap objek adalah bentuk SVG tinggi; empat bentuk ditumpuk untuk menghasilkan lambang target.</p>
     </main>
 
-    <script src="script.js?v=visual-match-v12"></script>
+    <section class="tutorial-overlay" id="tutorial-overlay" role="dialog" aria-modal="true" aria-labelledby="tutorial-title">
+        <div class="tutorial-card">
+            <p class="eyebrow">PANDUAN SINGKAT · GLYPH FORGE</p>
+            <h2 id="tutorial-title">Siap merakit simbol?</h2>
+            <p class="tutorial-copy">Satukan empat bentuk menjadi lambang yang sama dengan target. Tidak perlu terburu-buru—waktu baru dihitung setelah kamu siap.</p>
+            <ol class="tutorial-steps">
+                <li><span>01</span><div><strong>Amati target</strong><p>Perhatikan garis dan bentuk yang membentuk lambang di panel kiri.</p></div></li>
+                <li><span>02</span><div><strong>Pilih satu objek</strong><p>Gunakan kartu Objek 01–04 untuk memilih bentuk yang ingin diubah.</p></div></li>
+                <li><span>03</span><div><strong>Putar dan cocokkan</strong><p>Tekan ↑ / ↓ pada kartu atau gunakan tombol panah. Empat bentuk akan bertumpuk sampai sama dengan target.</p></div></li>
+            </ol>
+            <p class="tutorial-note">Petunjuk tersedia jika kamu buntu, tetapi akan mengurangi 60 poin.</p>
+            <button class="tutorial-start" id="tutorial-start" type="button">Saya siap bermain <span aria-hidden="true">→</span></button>
+        </div>
+    </section>
+
+    <script src="script.js?v=tutorial-start-v1"></script>
 </body>
 </html>

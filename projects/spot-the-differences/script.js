@@ -351,7 +351,7 @@ function drawRadarBackground(ctx) {
     // Outer ring
     ctx.beginPath();
     ctx.arc(CENTER_X, CENTER_Y, RADIUS, 0, Math.PI * 2);
-    ctx.strokeStyle = '#bb86fc';
+    ctx.strokeStyle = '#d7ae50';
     ctx.lineWidth   = 2;
     ctx.stroke();
 
@@ -359,7 +359,7 @@ function drawRadarBackground(ctx) {
     [[0.7, 0.5], [0.4, 0.3]].forEach(([r, a]) => {
         ctx.beginPath();
         ctx.arc(CENTER_X, CENTER_Y, RADIUS * r, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(187, 134, 252, ${a})`;
+        ctx.strokeStyle = `rgba(215, 174, 80, ${a})`;
         ctx.lineWidth   = 1;
         ctx.stroke();
     });
@@ -371,7 +371,7 @@ function drawRadarBackground(ctx) {
         ctx.beginPath();
         ctx.moveTo(CENTER_X + Math.cos(angle) * inner, CENTER_Y + Math.sin(angle) * inner);
         ctx.lineTo(CENTER_X + Math.cos(angle) * RADIUS, CENTER_Y + Math.sin(angle) * RADIUS);
-        ctx.strokeStyle = 'rgba(187, 134, 252, 0.3)';
+        ctx.strokeStyle = 'rgba(215, 174, 80, 0.3)';
         ctx.lineWidth   = 1;
         ctx.stroke();
     }

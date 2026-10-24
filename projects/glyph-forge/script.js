@@ -90,7 +90,9 @@
         partNavigation: document.getElementById("part-navigation"),
         message: document.getElementById("game-message"),
         hint: document.getElementById("hint-button"),
-        reset: document.getElementById("reset-button")
+        reset: document.getElementById("reset-button"),
+        tutorial: document.getElementById("tutorial-overlay"),
+        tutorialStart: document.getElementById("tutorial-start")
     };
     const state = {
         level: 1,
@@ -105,6 +107,7 @@
         elapsedSeconds: 0,
         timerStartedAt: null,
         timerId: null,
+        hasStarted: false,
         locked: false,
         levelComplete: false,
         buildVersion: 0,
@@ -403,8 +406,13 @@
         renderLayers();
         updateSymbols();
         setMessage(state.level === 1 ? "Pilih satu dari empat objek. Putar bentuk tingginya sampai tumpukan sama dengan target." : "Lambang baru siap. Cocokkan bentuk-bentuk yang bertumpuk.", "");
-        startTimer();
-        requestCompletionCheck();
+        if (state.hasStarted) {
+            startTimer();
+            requestCompletionCheck();
+        } else {
+            state.elapsedSeconds = 0;
+            renderTimer();
+        }
     }
 
     function formatDuration(totalSeconds) {
@@ -417,7 +425,7 @@
     }
 
     function useHint() {
-        if (state.locked || state.hinted) return;
+        if (!state.hasStarted || state.locked || state.hinted) return;
         state.hinted = true;
         const mismatchedIndexes = state.target.flatMap((motifId, index) => state.build[index] !== motifId ? [index] : []);
         state.hintedIndex = mismatchedIndexes[randomIndex(mismatchedIndexes.length)];
@@ -439,6 +447,7 @@
     }
 
     function handleAction(action) {
+        if (!state.hasStarted) return;
         if (action === "previous") selectLayer(state.selectedLayer - 1);
         if (action === "next") selectLayer(state.selectedLayer + 1);
         if (action === "change-up") changeMotif(-1);
@@ -446,7 +455,7 @@
     }
 
     function handleKeydown(event) {
-        if (event.altKey || event.ctrlKey || event.metaKey) return;
+        if (!state.hasStarted || event.altKey || event.ctrlKey || event.metaKey) return;
         const keyActions = {
             ArrowLeft: "previous",
             ArrowRight: "next",
@@ -472,7 +481,17 @@
     document.addEventListener("keydown", handleKeydown);
     elements.hint.addEventListener("click", useHint);
     elements.reset.addEventListener("click", restartLevel);
+    elements.tutorialStart.addEventListener("click", () => {
+        if (state.hasStarted) return;
+        state.hasStarted = true;
+        elements.tutorial.hidden = true;
+        elements.puzzleCard.closest(".app-shell").inert = false;
+        document.body.classList.remove("tutorial-open");
+        startTimer();
+        elements.partNavigation.querySelector(".layer-tab")?.focus();
+    });
 
     loadBestScore();
     setupLevel();
+    elements.tutorialStart.focus();
 })();

@@ -1,17 +1,17 @@
-/* CSS Variables for Dark Theme */
+/* Soft coral theme */
 :root {
-    --bg-primary: #121212;
-    --bg-secondary: #1e1e1e;
-    --bg-card: #252526;
-    --text-primary: #e0e0e0;
-    --text-secondary: #a0a0a0;
-    --accent-primary: #bb86fc;
-    --accent-secondary: #03dac6;
-    --success: #00c853;
-    --warning: #ffab00;
-    --error: #cf6679;
-    --border-radius: 8px;
-    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    --bg-primary: #fbf4f1;
+    --bg-secondary: #f8e9e4;
+    --bg-card: #fffdfb;
+    --text-primary: #403b40;
+    --text-secondary: #777078;
+    --accent-primary: #c97568;
+    --accent-secondary: #73948a;
+    --success: #51856a;
+    --warning: #b47c33;
+    --error: #b65c63;
+    --border-radius: 14px;
+    --box-shadow: 0 12px 32px rgba(93, 59, 54, 0.09);
     --transition: all 0.3s ease;
 }
 
@@ -326,6 +326,56 @@ input[type="text"]:focus {
     text-align: center;
     border: 1px solid #333;
 }
+
+body {
+    background:
+        radial-gradient(ellipse at 88% 8%, rgba(241, 198, 187, 0.32), transparent 38%),
+        linear-gradient(145deg, #fffaf7, var(--bg-primary));
+}
+
+.registration-card, .category-card, .result-card, .game-header, .question-area,
+.input-area, .hint-info, .score-display, .history-container, .result-message {
+    border: 1px solid #efdfda;
+    background-color: #fffdfb;
+    box-shadow: var(--box-shadow);
+}
+
+.registration-card .intro-copy {
+    margin: -14px 0 24px;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.65;
+}
+
+.input-group input, input[type="text"] {
+    border-color: #e8d6d0;
+    background-color: #fff;
+    color: var(--text-primary);
+}
+
+.btn-primary, .btn-category.selected, .btn-level.selected {
+    background-color: var(--accent-primary);
+    color: #fff;
+}
+
+.btn-primary:hover { background-color: #b76559; }
+.btn-secondary { background-color: #e6f0eb; color: #476c5a; }
+.btn-tertiary, .btn-category, .btn-level { background-color: #f8f0ed; color: #5a5051; border-color: #eadbd6; }
+.btn-danger { background-color: #b65c63; color: #fff; }
+.btn-category.selected, .btn-level.selected { border-color: #c97568; background-color: #f2ddd7; color: #8b4d44; }
+.game-header { border-radius: var(--border-radius); }
+.letter-box { border-color: #d9a29a; background: #fff; color: #403b40; }
+.letter-box.revealed { background: #f2dfda; color: #9e5c53; }
+.error-mark { background: #fbefed; border-color: #efd8d5; }
+.hint-info { border-color: #efdfbf; background: #fff9ec; }
+.score-display { border-color: #f0ddd8; background: #fbefec; color: #a35d53; }
+.history-container { background: #fff; }
+.history-table { background: #fff; }
+.history-table th { background: #fbefec; color: #a35d53; }
+.history-table th, .history-table td, .history-item { border-color: #eee3df; }
+.history-table tr:nth-child(even) { background: #fdf9f7; }
+.history-table tr:hover { background: #f8ece8; }
+.result-message { border-color: #d9a29a; }
 
 .result-content {
     margin: 30px 0;

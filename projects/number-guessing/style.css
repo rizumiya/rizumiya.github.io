@@ -1,17 +1,17 @@
-/* CSS Variables for Dark Theme */
+/* Calm mint theme */
 :root {
-    --bg-primary: #121212;
-    --bg-secondary: #1e1e1e;
-    --bg-card: #252526;
-    --text-primary: #e0e0e0;
-    --text-secondary: #a0a0a0;
-    --accent-primary: #bb86fc;
-    --accent-secondary: #03dac6;
-    --success: #00c853;
-    --warning: #ffab00;
-    --error: #cf6679;
-    --border-radius: 8px;
-    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    --bg-primary: #eef7f2;
+    --bg-secondary: #e3f0e8;
+    --bg-card: #fcfffd;
+    --text-primary: #34443c;
+    --text-secondary: #728078;
+    --accent-primary: #4f9875;
+    --accent-secondary: #779b85;
+    --success: #438461;
+    --warning: #b58738;
+    --error: #b76168;
+    --border-radius: 14px;
+    --box-shadow: 0 12px 32px rgba(47, 92, 67, 0.1);
     --transition: all 0.3s ease;
 }
 
@@ -314,6 +314,31 @@ input[type="text"]:focus {
     color: var(--text-secondary);
     font-size: 18px;
 }
+
+body {
+    background:
+        radial-gradient(ellipse at 12% 7%, rgba(176, 220, 193, 0.34), transparent 40%),
+        linear-gradient(145deg, #f9fcf9, var(--bg-primary));
+}
+
+.registration-card, .game-content, .instructions, .history-container, .result-message {
+    border: 1px solid #dcebe1;
+    box-shadow: var(--box-shadow);
+}
+
+.registration-card, .instructions, .result-message { background: #fcfffd; }
+.game-header { border: 1px solid #dcebe1; border-radius: var(--border-radius); }
+input[type="text"] { border-color: #d6e6dc; background: #fff; color: var(--text-primary); }
+.history-container { background: #fff; }
+.history-table { background: #fff; }
+.history-table th { background: #edf6f0; color: #427c5e; }
+.history-table th, .history-table td, .history-item { border-color: #e3eee7; }
+.history-table tr:nth-child(even) { background: #f7fbf8; }
+.history-table tr:hover { background: #edf6f0; }
+.guess-number { color: #427c5e; }
+.correct-digits { color: #44815e; }
+.correct-positions { color: #a5792d; }
+.result-message { border-color: #b9d9c5; }
 
 /* Responsive Design */
 @media (max-width: 600px) {

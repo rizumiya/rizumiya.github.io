@@ -7,16 +7,16 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:          #0a0a14;
-  --surface:     rgba(255,255,255,0.06);
-  --border:      rgba(255,255,255,0.10);
-  --accent:      #7c6fff;
-  --accent-dark: #5b4fff;
-  --success:     #2dd87a;
-  --danger:      #ff4757;
-  --warning:     #ffa502;
-  --text:        #f0f0f5;
-  --text-muted:  #8888aa;
+  --bg:          #f5f3fb;
+  --surface:     #fff;
+  --border:      #e7e2f0;
+  --accent:      #7969b9;
+  --accent-dark: #6756a5;
+  --success:     #56856d;
+  --danger:      #bd626d;
+  --warning:     #aa7d3c;
+  --text:        #393646;
+  --text-muted:  #747181;
   --radius:      18px;
   --fnt:         'Space Grotesk', sans-serif;
 }
@@ -589,6 +589,41 @@ body.spy-wins-flash {
   /* Buttons */
   .btn { padding: 12px 20px; font-size: .95rem; }
   .form-group { margin-bottom: 14px; }
+}
+
+#screen-lobby, #screen-waiting, #screen-loading, #screen-playing, #screen-voting, #screen-ended {
+  background:
+    radial-gradient(ellipse at 12% 8%, rgba(204, 194, 235, .36), transparent 44%),
+    radial-gradient(ellipse at 88% 92%, rgba(230, 214, 237, .3), transparent 42%),
+    var(--bg);
+}
+.glass {
+  background: rgba(255, 255, 255, .94);
+  border-color: #e7e2f0;
+  box-shadow: 0 18px 50px rgba(65, 54, 95, .1);
+}
+.lobby-bg-orb { opacity: .35; }
+.orb1 { background: rgba(152, 132, 205, .28); }
+.orb2 { background: rgba(184, 211, 192, .25); }
+input[type="text"], .rules-toggle, .vote-btn, .badge-theme, .turn-order-item {
+  background: #faf9fd;
+  border-color: #e7e2f0;
+  color: var(--text);
+}
+input[type="text"]::placeholder { color: #9995a5; }
+.btn-gen { background: #f0edf8; border-color: #dfd8ef; }
+.btn-gen:hover { background: #e9e3f5; box-shadow: 0 6px 20px rgba(121, 105, 185, .16); }
+.rules-toggle:hover, .vote-btn:hover:not(:disabled) { background: #f4f1fa; }
+.rules-body, .player-item, .vote-progress-bar-wrap, .word-reveal-table {
+  border-color: #e7e2f0;
+}
+.badge-round, .room-code { background: #f0edf8; color: #6756a5; }
+.word-showcase, .turn-info { border-color: #e7e2f0; }
+.vote-btn.selected { background: #eee9f7; }
+.result-desc, .rules-list li, .room-label, .admin-hint, .tagline, .non-admin-hint { color: var(--text-muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
 
 /* Very small phones (≤ 360px) */

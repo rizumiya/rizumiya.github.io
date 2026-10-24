@@ -489,3 +489,49 @@ footer {
 
 /* Helper Utility */
 .hidden { display: none !important; }
+
+body {
+    background:
+        radial-gradient(ellipse at 10% 4%, rgba(174, 207, 235, 0.38), transparent 40%),
+        linear-gradient(145deg, #f9fbfd, #edf4fa);
+    color: #35485a;
+}
+
+header h1 { color: #3d5d78; text-shadow: none; }
+.subtitle { color: #687e91; opacity: 1; }
+.menu-item, .character-card {
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid #dce8f1;
+    color: #3d5368;
+    box-shadow: 0 8px 22px rgba(56, 83, 112, 0.09);
+}
+.menu-item:hover:not(.coming-soon), .character-card:hover {
+    background: #fff;
+    box-shadow: 0 12px 28px rgba(56, 83, 112, 0.14);
+}
+.menu-item.active, .character-card.selected {
+    border-color: #84aecd;
+    background: #edf5fb;
+    box-shadow: 0 8px 24px rgba(77, 125, 162, 0.18);
+}
+.menu-item.coming-soon { background: rgba(245, 247, 249, 0.8); }
+.coming-soon::after { background: #d8bd75; color: #483e24; }
+.menu-description, .sentimental-note { color: #687e91; opacity: 1; }
+.memory-content > h2 { color: #3d5d78; }
+.game-container {
+    border: 1px solid #dce8f1;
+    box-shadow: 0 18px 44px rgba(48, 76, 105, 0.14);
+}
+.game-header { background: #3f607b; border-bottom-color: #527695; }
+.hud-time, .hud-gauge {
+    background: rgba(14, 39, 26, 0.38);
+    border-color: rgba(227, 243, 231, 0.2);
+}
+.hud-time-label { color: #c4d7ca; }
+.hud-time-value { color: #edd28a; }
+.game-controls .control-btn { background: #789bb8; color: #fff; }
+.game-controls .control-btn:hover { background: #6285a3; }
+.back-btn { border-color: #9db6cb; color: #47657e; }
+.back-btn:hover { background: #edf5fb; border-color: #789bb8; }
+.game-footer { text-align: center; }
+footer { color: #718396; opacity: 1; }

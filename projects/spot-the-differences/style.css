@@ -1,17 +1,17 @@
-/* CSS Variables for Dark Theme */
+/* Warm ivory and amber theme */
 :root {
-    --bg-primary: #121212;
-    --bg-secondary: #1e1e1e;
-    --bg-card: #252526;
-    --text-primary: #e0e0e0;
-    --text-secondary: #a0a0a0;
-    --accent-primary: #bb86fc;
-    --accent-secondary: #03dac6;
-    --success: #00c853;
-    --warning: #ffab00;
-    --error: #cf6679;
-    --border-radius: 8px;
-    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    --bg-primary: #f8f5eb;
+    --bg-secondary: #fff9e9;
+    --bg-card: #fffefa;
+    --text-primary: #393a42;
+    --text-secondary: #70717a;
+    --accent-primary: #c39226;
+    --accent-secondary: #617f83;
+    --success: #4b8b67;
+    --warning: #b87922;
+    --error: #b65d64;
+    --border-radius: 14px;
+    --box-shadow: 0 12px 32px rgba(85, 72, 34, 0.09);
     --transition: all 0.3s ease;
 }
 
@@ -344,6 +344,54 @@ header h1 {
     border-color: var(--accent-primary);
     transform: scale(1.08);
 }
+
+body {
+    background:
+        radial-gradient(ellipse at 8% 4%, rgba(243, 213, 130, 0.28), transparent 38%),
+        linear-gradient(145deg, #fbf8ef, var(--bg-primary));
+}
+
+.registration-card, .leaderboard-card, .answer-section {
+    border: 1px solid #ece5d2;
+    box-shadow: var(--box-shadow);
+}
+
+.registration-card .intro-copy {
+    margin: -14px 0 24px;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.65;
+}
+
+.input-group input {
+    border-color: #e5dcc3;
+    background: #fff;
+    color: var(--text-primary);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #d7ad50, #bd8e2b);
+    color: #352b16;
+}
+
+.btn-secondary {
+    border: 1px solid #e4ddca;
+    background: #f8f5ec;
+    color: #56544a;
+}
+
+.radar-column h2 { color: #a7791b; }
+.radar-wrapper canvas:first-child {
+    background-color: #fffdf7;
+    border-color: #d7b45d;
+    box-shadow: 0 8px 24px rgba(152, 117, 30, 0.13);
+}
+.radar-label { color: #a7791b; text-shadow: 0 1px 2px #fff; }
+.zone-btn { border-color: #e7ddc4; background: #fff; color: #55514a; }
+.zone-btn:hover, .zone-btn.selected { background: #e8c66f; color: #352b16; border-color: #d4ac4d; }
+#leaderboard-table th { background: #f7f2e4; color: #8d681b; }
+#leaderboard-table th, #leaderboard-table td { border-color: #eee8d9; }
+#leaderboard-table tr:hover { background: rgba(214, 177, 86, 0.1); }
 
 #result-message {
     font-size: clamp(1rem, 3.5vw, 1.4rem);

@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#eef5fb">
   <title>Kenangan-Ku</title>
 
   <link rel="stylesheet" href="style.css">
@@ -66,7 +67,7 @@
         <div class="game-header">
           <div class="hud-overlay">
             <div class="hud-time">
-              <span class="hud-time-label">TIME</span>
+              <span class="hud-time-label">WAKTU</span>
               <span id="hud-time-value" class="hud-time-value">120</span>
             </div>
             <div class="hud-gauge">
@@ -86,7 +87,7 @@
           <canvas id="game" width="855" height="505"></canvas>
 
           <div id="clear" class="scene">
-            <h2 class="overlay-title text-win">MISSION COMPLETE</h2>
+            <h2 class="overlay-title text-win">KENANGAN TERJAGA</h2>
             <p class="overlay-msg">Hebat! Kamu berhasil mengamankan kenangan ini.</p>
             <div class="overlay-btn-group">
               <button id="btn_clear_redo" class="overlay-btn btn-primary">Pilih Kenangan Lain</button>
@@ -95,8 +96,8 @@
           </div>
 
           <div id="fail" class="scene">
-            <h2 class="overlay-title text-fail">GAME OVER</h2>
-            <p class="overlay-msg">Jangan menyerah, coba lagi!</p>
+            <h2 class="overlay-title text-fail">WAKTU HABIS</h2>
+            <p class="overlay-msg">Jangan menyerah. Coba lagi dan jelajahi kenangan ini.</p>
             <div class="overlay-btn-group">
               <button id="btn_replay" class="overlay-btn btn-danger">🔄 Coba Lagi</button>
               <button id="btn_fail_redo" class="overlay-btn btn-secondary">🏠 Menu Utama</button>
@@ -145,7 +146,7 @@
             </div>
           </div>
           <div class="action-btn-container">
-            <div class="action-btn d-btn" data-key="Space">ACTION</div>
+            <div class="action-btn d-btn" data-key="Space">AKSI</div>
           </div>
         </div>
 
