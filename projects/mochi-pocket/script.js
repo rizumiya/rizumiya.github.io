@@ -630,12 +630,15 @@ window.addEventListener(
   "touchmove",
   (e) => {
     if (e.touches.length > 0) {
+      if (isPointerDown && e.cancelable) {
+        e.preventDefault();
+      }
       const t = e.touches[0];
       handlePointerMove(t.clientX, t.clientY);
       movePetting(t.clientX, t.clientY);
     }
   },
-  { passive: true }
+  { passive: false }
 );
 
 window.addEventListener("mouseleave", () => {

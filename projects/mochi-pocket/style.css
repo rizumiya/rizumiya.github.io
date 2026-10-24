@@ -401,7 +401,9 @@ body[data-theme="sakura"] {
 html,
 body {
   width: 100%;
-  min-height: 100vh;
+  height: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
   background-color: var(--page-bg);
   background-image:
     radial-gradient(circle at 18% 15%, var(--page-glow-1), transparent 40%),
@@ -410,16 +412,22 @@ body {
   background-size: 100% 100%, 100% 100%, 26px 26px;
   font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
   color: var(--text-main);
-  overflow-x: hidden;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .console-page {
-  min-height: 100vh;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 18px 12px;
+  padding: 10px 12px;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 /* ==========================================================================
@@ -551,7 +559,7 @@ body {
 .gb-screen {
   position: relative;
   width: 100%;
-  height: 336px;
+  height: clamp(256px, 45dvh, 336px);
   background:
     radial-gradient(circle at 50% 78%, var(--screen-ambient), transparent 60%),
     linear-gradient(180deg, var(--screen-bg-top) 0%, var(--screen-bg-bottom) 100%);
@@ -559,6 +567,8 @@ body {
   border: 2px solid var(--screen-border);
   box-shadow: inset 0 3px 12px rgba(0, 0, 0, 0.14);
   overflow: hidden;
+  touch-action: none;
+  overscroll-behavior: none;
   transition: background 0.3s ease, border-color 0.3s ease;
 }
 
@@ -817,6 +827,7 @@ body {
   align-items: flex-end;
   justify-content: center;
   cursor: grab;
+  touch-action: none;
 }
 
 .pet-interactive:active {
@@ -2207,14 +2218,33 @@ body {
 .modal-card {
   width: 100%;
   max-width: 416px;
-  max-height: 90vh;
+  max-height: 88dvh;
   overflow-y: auto;
+  touch-action: pan-y;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   background: var(--modal-bg);
   border: 2px solid var(--modal-border);
   border-radius: 24px;
   padding: 20px;
   color: var(--text-main);
   box-shadow: 0 24px 50px rgba(0, 0, 0, 0.35);
+}
+
+@media (max-height: 700px) {
+  .gameboy-shell {
+    padding: 10px 16px 16px;
+    border-radius: 28px;
+  }
+  .gb-top-bar {
+    margin-bottom: 6px;
+  }
+  .gb-controls {
+    margin-top: 12px;
+  }
+  .gb-bottom-row {
+    margin-top: 12px;
+  }
 }
 
 .modal-header-badge {
