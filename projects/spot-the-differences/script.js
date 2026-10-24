@@ -378,6 +378,11 @@ function drawRadarBackground(ctx) {
 }
 
 function drawParticles(ctx, isRightRadar) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(CENTER_X, CENTER_Y, RADIUS, 0, Math.PI * 2);
+    ctx.clip();
+
     gameData.particles.forEach(particle => {
         ctx.shadowColor = particle.color;
         ctx.shadowBlur  = 10;
@@ -405,9 +410,9 @@ function drawParticles(ctx, isRightRadar) {
             ctx.arc(dp.x, dp.y, dp.size * 1.2, 0, Math.PI * 2);
             ctx.fillStyle = gameData.differenceColor;
             ctx.fill();
-            ctx.shadowBlur = 0;
         }
     }
+    ctx.restore();
 }
 
 function drawRadarMask(ctx) {
