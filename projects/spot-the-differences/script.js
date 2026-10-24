@@ -63,7 +63,7 @@ function getRadarSize() {
         return Math.min(Math.floor((vw - 60) / 2), 300);
     } else {
         // Desktop
-        return Math.min(Math.floor((vw - 120) / 2), 400);
+        return Math.min(Math.floor((vw - 120) / 2), 360);
     }
 }
 
@@ -320,7 +320,7 @@ function generateParticles() {
         });
     }
 
-    const colors = ['#00ff9d', '#00eeff', '#bb86fc', '#03dac6', '#ff6b6b', '#ffd166'];
+    const colors = ['#348477', '#4f88a5', '#8971a5', '#bb7568', '#b89754', '#66865e'];
 
     for (let i = 0; i < particleCount; i++) {
         let x, y, angle, distance, attempts = 0;
@@ -392,7 +392,7 @@ function drawParticles(ctx, isRightRadar) {
     if (isRightRadar && gameData.differenceParticleIndex !== -1) {
         const dp = gameData.particles[gameData.differenceParticleIndex];
         if (dp) {
-            const colors = ['#00ff9d', '#00eeff', '#bb86fc', '#03dac6', '#ff6b6b', '#ffd166'];
+            const colors = ['#348477', '#4f88a5', '#8971a5', '#bb7568', '#b89754', '#66865e'];
             if (!gameData.differenceColor) {
                 let nc;
                 do { nc = colors[Math.floor(Math.random() * colors.length)]; }
@@ -411,10 +411,13 @@ function drawParticles(ctx, isRightRadar) {
 }
 
 function drawRadarMask(ctx) {
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(CENTER_X, CENTER_Y, RADIUS, 0, Math.PI * 2);
+    ctx.clip();
+    ctx.fillStyle = 'rgba(61, 55, 42, 0.56)';
     ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
-    ctx.save();
     ctx.translate(CENTER_X, CENTER_Y);
     ctx.rotate(beamAngle);
     ctx.beginPath();
