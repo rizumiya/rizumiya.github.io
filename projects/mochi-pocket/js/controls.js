@@ -119,26 +119,42 @@ function openCharacterModal() {
     if (autoRadio) autoRadio.checked = true;
   }
   if (characterModal) {
-    characterModal.hidden = false;
-  }
-}
-
-// Navigasi Tab Folder Modal Karakter (Bentuk vs Latar)
-document.querySelectorAll(".char-tab").forEach((tabBtn) => {
-  tabBtn.addEventListener("click", () => {
-    const tabKey = tabBtn.dataset.tab;
-    document.querySelectorAll(".char-tab").forEach((btn) => {
-      const isActive = btn === tabBtn;
+    const activeTab = characterModal.querySelector(".char-tab.active") || characterModal.querySelector('.char-tab[data-tab="form"]');
+    const tabKey = activeTab ? activeTab.dataset.tab : "form";
+    characterModal.querySelectorAll(".char-tab").forEach((btn) => {
+      const isActive = btn.dataset.tab === tabKey;
       btn.classList.toggle("active", isActive);
       btn.setAttribute("aria-selected", isActive ? "true" : "false");
     });
-    document.querySelectorAll(".char-panel").forEach((panel) => {
+    characterModal.querySelectorAll(".char-panel").forEach((panel) => {
       const isActive = panel.dataset.panel === tabKey;
       panel.classList.toggle("active", isActive);
       panel.hidden = !isActive;
     });
+    characterModal.hidden = false;
+  }
+}
+
+// Navigasi Tab Folder Modal Karakter (Bentuk vs Latar) - Terisolasi di dalam characterModal
+if (characterModal) {
+  const charTabs = characterModal.querySelectorAll(".char-tab");
+  const charPanels = characterModal.querySelectorAll(".char-panel");
+  charTabs.forEach((tabBtn) => {
+    tabBtn.addEventListener("click", () => {
+      const tabKey = tabBtn.dataset.tab;
+      charTabs.forEach((btn) => {
+        const isActive = btn === tabBtn;
+        btn.classList.toggle("active", isActive);
+        btn.setAttribute("aria-selected", isActive ? "true" : "false");
+      });
+      charPanels.forEach((panel) => {
+        const isActive = panel.dataset.panel === tabKey;
+        panel.classList.toggle("active", isActive);
+        panel.hidden = !isActive;
+      });
+    });
   });
-});
+}
 
 // Modal Pengaturan Global (Tema Konsol, Preset Live2D, & Database IndexedDB)
 function openSettingsModal() {
@@ -148,7 +164,22 @@ function openSettingsModal() {
   if (themeRadio) themeRadio.checked = true;
   if (live2dModelSelect) live2dModelSelect.value = pet.live2dPreset || "koharu";
   if (live2dCustomUrl) live2dCustomUrl.value = pet.customLive2dUrl || "";
-  if (settingsModal) settingsModal.hidden = false;
+
+  if (settingsModal) {
+    const activeTab = settingsModal.querySelector(".settings-tab.active") || settingsModal.querySelector('.settings-tab[data-tab="theme"]');
+    const tabKey = activeTab ? activeTab.dataset.tab : "theme";
+    settingsModal.querySelectorAll(".settings-tab").forEach((btn) => {
+      const isActive = btn.dataset.tab === tabKey;
+      btn.classList.toggle("active", isActive);
+      btn.setAttribute("aria-selected", isActive ? "true" : "false");
+    });
+    settingsModal.querySelectorAll(".settings-panel").forEach((panel) => {
+      const isActive = panel.dataset.panel === tabKey;
+      panel.classList.toggle("active", isActive);
+      panel.hidden = !isActive;
+    });
+    settingsModal.hidden = false;
+  }
 }
 
 // Pratinjau langsung tema konsol saat diklik di modal pengaturan global
@@ -263,24 +294,26 @@ if (btnCloseSettingsX) {
   });
 }
 
-// Tab Switcher pada Pengaturan Global (Tema & Live2D vs Mod & Data)
-const settingsTabs = document.querySelectorAll(".settings-tab");
-const settingsPanels = document.querySelectorAll(".settings-panel");
-settingsTabs.forEach((tab) => {
-  tab.addEventListener("click", () => {
-    const targetKey = tab.dataset.tab;
-    settingsTabs.forEach((t) => {
-      const isTarget = t === tab;
-      t.classList.toggle("active", isTarget);
-      t.setAttribute("aria-selected", isTarget ? "true" : "false");
-    });
-    settingsPanels.forEach((p) => {
-      const match = p.dataset.panel === targetKey;
-      p.hidden = !match;
-      p.classList.toggle("active", match);
+// Tab Switcher pada Pengaturan Global (Tema & Live2D vs Mod & Data) - Terisolasi di dalam settingsModal
+if (settingsModal) {
+  const settingsTabs = settingsModal.querySelectorAll(".settings-tab");
+  const settingsPanels = settingsModal.querySelectorAll(".settings-panel");
+  settingsTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const targetKey = tab.dataset.tab;
+      settingsTabs.forEach((t) => {
+        const isTarget = t === tab;
+        t.classList.toggle("active", isTarget);
+        t.setAttribute("aria-selected", isTarget ? "true" : "false");
+      });
+      settingsPanels.forEach((p) => {
+        const match = p.dataset.panel === targetKey;
+        p.hidden = !match;
+        p.classList.toggle("active", match);
+      });
     });
   });
-});
+}
 
 if (characterForm) {
   characterForm.addEventListener("submit", async (e) => {

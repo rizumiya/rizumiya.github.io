@@ -165,32 +165,44 @@ function renderSceneBackground(sceneKey) {
       </div>
     `;
   } else if (safeScene === "haunted_house") {
-    // 4. Kuburan Angker (Bulan Ungu, Kelelawar Terbang di Langit, Banyak Nisan Tertata, Lilin, Hantu, Jaring Laba-laba Setengah di Pojok Bawah, & Kabut Menjalar)
+    // 4. Kuburan Angker Mencekam (Bulan Ungu Mistis, Kabut Mencekam, Hantu Bergentayangan, Mata Mengintip, Api Arwah, & Nisan Keramat)
     sceneBgLayer.innerHTML = `
+      <div class="scene-haunted-vignette"></div>
+      <div class="scene-ambient-flicker"></div>
       <div class="scene-spooky-moon"></div>
       <div class="scene-bat bat-left">🦇</div>
       <div class="scene-bat bat-right">🦇</div>
       <div class="scene-ghost-float">👻</div>
+      <div class="scene-ghost-patrol">👻</div>
 
-      <!-- Kompleks Makam Kiri (Nisan Bertingkat Depan & Belakang) -->
+      <!-- Api Arwah Melayang (Will-o'-the-Wisp) -->
+      <div class="scene-wisp wisp-1">🔮</div>
+      <div class="scene-wisp wisp-2">🕯️</div>
+
+      <!-- Sepasang Mata Mengintip di Kegelapan Makam -->
+      <div class="creepy-eyes left-bush" title="Ada yang mengintip..."><span></span><span></span></div>
+      <div class="creepy-eyes right-tomb" title="Mata di balik nisan..."><span></span><span></span></div>
+
+      <!-- Kompleks Makam Kiri (Nisan Bertingkat Depan & Belakang + Tengkorak) -->
       <div class="graveyard-cluster left">
         <span class="graveyard-tombstone back" title="Nisan Tua">🪦</span>
         <span class="graveyard-tombstone front" title="Nisan Kuno">🪦</span>
+        <span class="graveyard-skull" title="Tengkorak Makam">💀</span>
         <span class="graveyard-grass">🌾</span>
       </div>
 
-      <!-- Kompleks Makam Kanan (Nisan Bertingkat Depan & Belakang + Lilin Makam) -->
+      <!-- Kompleks Makam Kanan (Nisan Bertingkat Depan & Belakang + Lilin Makam Bergetar) -->
       <div class="graveyard-cluster right">
         <span class="graveyard-tombstone back" title="Nisan Tua">🪦</span>
         <span class="graveyard-tombstone front" title="Nisan Kuno">🪦</span>
-        <span class="graveyard-candle">🕯️</span>
+        <span class="graveyard-candle" title="Lilin Mistis">🕯️</span>
       </div>
 
       <!-- Jaring Laba-laba Setengah di Pojok Bawah -->
       <div class="scene-cobweb-corner bottom-right">🕸️</div>
       <div class="scene-cobweb-corner bottom-left">🕸️</div>
 
-      <!-- Kabut Menjalar di Tanah Kuburan -->
+      <!-- Kabut Tebal Menjalar di Tanah Kuburan -->
       <div class="scene-fog"></div>
     `;
   } else if (safeScene === "starry_night") {

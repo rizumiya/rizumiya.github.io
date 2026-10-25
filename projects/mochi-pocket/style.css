@@ -1559,7 +1559,47 @@ body {
   }
 }
 
-/* Dekorasi Khusus Rumah Angker (Bulan Ungu, Jaring Laba-laba, Roh Melayang, Kabut) */
+/* Dekorasi Khusus Rumah Angker (Bulan Ungu, Jaring Laba-laba, Roh Melayang, Kabut, Mata Mengintip) */
+.scene-haunted-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  background: radial-gradient(circle at 50% 50%, rgba(13, 6, 26, 0) 36%, rgba(5, 2, 12, 0.72) 80%, rgba(2, 0, 7, 0.94) 100%);
+  animation: hauntedVignetteBreathe 5s ease-in-out infinite alternate;
+}
+
+@keyframes hauntedVignetteBreathe {
+  0% {
+    opacity: 0.78;
+  }
+  100% {
+    opacity: 0.98;
+  }
+}
+
+.scene-ambient-flicker {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: rgba(192, 132, 252, 0.12);
+  opacity: 0;
+  animation: hauntedChillFlash 9s infinite;
+}
+
+@keyframes hauntedChillFlash {
+  0%, 88%, 94%, 100% {
+    opacity: 0;
+  }
+  90% {
+    opacity: 0.28;
+  }
+  92% {
+    opacity: 0.12;
+  }
+}
+
 .scene-spooky-moon {
   position: absolute;
   top: 40px;
@@ -1628,6 +1668,93 @@ body {
   100% {
     transform: translate3d(-3px, -12px, 0) scale(1.06);
     opacity: 0.95;
+  }
+}
+
+/* Hantu Kedua: Bergentayangan Melintasi Makam */
+.scene-ghost-patrol {
+  position: absolute;
+  bottom: 44%;
+  left: -20%;
+  font-size: 1.55rem;
+  pointer-events: none;
+  z-index: 3;
+  filter: drop-shadow(0 0 14px rgba(192, 132, 252, 0.9));
+  animation: ghostPatrolFlight 14s linear infinite;
+  opacity: 0;
+}
+
+@keyframes ghostPatrolFlight {
+  0% {
+    left: -20%;
+    transform: translateY(0) scale(0.85);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.85;
+  }
+  25% {
+    transform: translateY(-16px) scale(1.05);
+  }
+  50% {
+    transform: translateY(6px) scale(0.95);
+  }
+  75% {
+    transform: translateY(-12px) scale(1.08);
+  }
+  92% {
+    opacity: 0.85;
+  }
+  100% {
+    left: 110%;
+    transform: translateY(-4px) scale(0.85);
+    opacity: 0;
+  }
+}
+
+/* Mata Menyala Mengintip di Semak Kuburan */
+.creepy-eyes {
+  position: absolute;
+  display: flex;
+  gap: 5px;
+  pointer-events: none;
+  z-index: 3;
+  animation: creepyEyesBlink 6s infinite;
+}
+
+.creepy-eyes span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ef4444;
+  box-shadow: 0 0 6px #ef4444, 0 0 10px #dc2626;
+  display: block;
+}
+
+.creepy-eyes.left-bush {
+  bottom: 24%;
+  left: 17%;
+}
+
+.creepy-eyes.right-tomb {
+  bottom: 30%;
+  right: 21%;
+  animation-delay: -2.8s;
+}
+
+.creepy-eyes.right-tomb span {
+  background: #facc15;
+  box-shadow: 0 0 6px #facc15, 0 0 10px #eab308;
+}
+
+@keyframes creepyEyesBlink {
+  0%, 46%, 52%, 100% {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+  48%, 50% {
+    opacity: 1;
+    transform: scaleY(1);
   }
 }
 
@@ -1702,6 +1829,13 @@ body {
   margin-bottom: 2px;
 }
 
+.graveyard-skull {
+  font-size: 1.05rem;
+  margin-bottom: 2px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+  opacity: 0.85;
+}
+
 /* Jaring Laba-laba di Sudut Pojok Bawah (Tampak Setengah Saja) */
 .scene-cobweb-corner {
   position: absolute;
@@ -1738,9 +1872,25 @@ body {
 
 .scene-wisp {
   position: absolute;
-  font-size: 1.05rem;
-  filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.85));
-  animation: sceneWispFloat var(--wisp-dur, 3.2s) ease-in-out infinite alternate;
+  font-size: 1.15rem;
+  filter: drop-shadow(0 0 10px #38bdf8);
+  animation: sceneWispFloat var(--wisp-dur, 3.4s) ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.scene-wisp.wisp-1 {
+  bottom: 34%;
+  left: 22%;
+  animation-duration: 4.2s;
+}
+
+.scene-wisp.wisp-2 {
+  bottom: 40%;
+  right: 26%;
+  animation-duration: 3.4s;
+  animation-delay: -1.5s;
+  filter: drop-shadow(0 0 10px #c084fc);
 }
 
 @keyframes sceneWispFloat {
@@ -1843,7 +1993,71 @@ body {
 }
 
 /* Reaksi Khusus Karakter di Rumah Angker:
-   - Ekspresi wajah ketakutan & menciut gemetar saat hover/kaget! Gerakan idle tubuh tetap konsisten kenyal naik-turun (breathe-and-jump) */
+   - Efek menggigil ketakutan terus menerus (hauntedShiverIdle), keringat dingin menetes, mata panik melirik, telinga/sayap menciut */
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle {
+  filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.45)) saturate(0.88);
+}
+
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .lifelike-actor,
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .Aurora-Dia {
+  animation: hauntedShiverIdle 0.16s ease-in-out infinite alternate !important;
+}
+
+/* Tetesan Keringat Dingin di Samping Dahi */
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle::after {
+  content: "💧";
+  position: absolute;
+  top: 14%;
+  right: 18%;
+  font-size: 1.25rem;
+  z-index: 15;
+  pointer-events: none;
+  animation: hauntedColdSweat 1.4s ease-in-out infinite;
+  filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.75));
+}
+
+@keyframes hauntedColdSweat {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -4px, 0) scale(0.7);
+  }
+  25% {
+    opacity: 0.95;
+    transform: translate3d(1px, 0, 0) scale(1.1);
+  }
+  50% {
+    opacity: 0.95;
+    transform: translate3d(-1px, 3px, 0) scale(1);
+  }
+  80% {
+    opacity: 0.85;
+    transform: translate3d(0, 8px, 0) scale(0.9);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0) scale(0.6);
+  }
+}
+
+/* Mata Panik & Melirik Cemas */
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .eye-ball,
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .tracking-eye {
+  transform: scale(0.86) !important;
+  animation: hauntedEyeTwitch 3.2s ease-in-out infinite alternate;
+}
+
+@keyframes hauntedEyeTwitch {
+  0%, 70%, 100% {
+    transform: scale(0.86) translate(0, 0);
+  }
+  75% {
+    transform: scale(0.84) translate(-2px, -1px);
+  }
+  85% {
+    transform: scale(0.84) translate(2.5px, 0.5px);
+  }
+}
+
 .gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .head-shape::after {
   background: linear-gradient(
     180deg,
@@ -1864,34 +2078,44 @@ body {
 }
 
 .gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .ear.left {
-  transform: rotate(-36deg) translate(-3px, 6px);
+  transform: rotate(-38deg) translate(-4px, 8px) !important;
 }
 
 .gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .ear.right {
-  transform: rotate(36deg) translate(3px, 6px);
+  transform: rotate(38deg) translate(4px, 8px) !important;
+}
+
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .duck-wing.left {
+  transform: rotate(24deg) translate(3px, -2px) !important;
+}
+
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .duck-wing.right {
+  transform: rotate(-24deg) translate(-3px, -2px) !important;
 }
 
 .gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .mouth-svg {
-  transform: scaleY(-0.8) scaleX(0.86) translateY(2px);
+  transform: scaleY(-0.8) scaleX(0.86) translateY(2px) !important;
 }
 
 .gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .shiba-tongue-svg {
-  opacity: 0;
+  opacity: 0 !important;
 }
 
 @keyframes hauntedShiverIdle {
-  0%,
-  100% {
-    transform: translate3d(0, 4px, 0) scale(0.96, 0.94);
+  0% {
+    transform: translate3d(-1px, 2px, 0) rotate(-0.8deg) scale(0.96, 0.95);
   }
   25% {
-    transform: translate3d(-2.2px, 5px, 0) scale(0.95, 0.94) rotate(-1.2deg);
+    transform: translate3d(1.2px, 1px, 0) rotate(0.6deg) scale(0.96, 0.95);
   }
   50% {
-    transform: translate3d(2.2px, 4px, 0) scale(0.97, 0.93) rotate(1.2deg);
+    transform: translate3d(-1.4px, 2.5px, 0) rotate(-0.5deg) scale(0.95, 0.96);
   }
   75% {
-    transform: translate3d(-1.8px, 5px, 0) scale(0.96, 0.94) rotate(-0.8deg);
+    transform: translate3d(0.8px, 1.5px, 0) rotate(0.7deg) scale(0.96, 0.95);
+  }
+  100% {
+    transform: translate3d(-0.6px, 2px, 0) rotate(-0.6deg) scale(0.96, 0.95);
   }
 }
 
@@ -4930,7 +5154,8 @@ body {
   z-index: 2;
 }
 
-.char-tab {
+.char-tab,
+.settings-tab {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -4950,12 +5175,14 @@ body {
   transition: transform 0.18s ease, opacity 0.18s ease, filter 0.18s ease, color 0.18s ease;
 }
 
-.char-tab:hover {
+.char-tab:hover,
+.settings-tab:hover {
   opacity: 0.95;
   transform: translateY(2px);
 }
 
-.char-tab.active {
+.char-tab.active,
+.settings-tab.active {
   background: var(--modal-sec-bg);
   color: var(--text-main);
   opacity: 1;
@@ -4981,7 +5208,8 @@ body {
   overflow-x: hidden !important;
 }
 
-.char-panel {
+.char-panel,
+.settings-panel {
   max-height: min(340px, 46dvh);
   overflow-y: auto;
   overflow-x: hidden !important;
@@ -4993,16 +5221,19 @@ body {
   scrollbar-color: var(--accent-peach) transparent;
 }
 
-.char-panel::-webkit-scrollbar {
+.char-panel::-webkit-scrollbar,
+.settings-panel::-webkit-scrollbar {
   width: 6px;
 }
 
-.char-panel::-webkit-scrollbar-track {
+.char-panel::-webkit-scrollbar-track,
+.settings-panel::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.06);
   border-radius: 99px;
 }
 
-.char-panel::-webkit-scrollbar-thumb {
+.char-panel::-webkit-scrollbar-thumb,
+.settings-panel::-webkit-scrollbar-thumb {
   background: var(--accent-peach);
   border-radius: 99px;
 }
@@ -5334,7 +5565,8 @@ body {
   .pick-grid {
     gap: 8px;
   }
-  .char-tab {
+  .char-tab,
+  .settings-tab {
     padding: 8px 12px 9px;
   }
   .art-form .art-emoji {

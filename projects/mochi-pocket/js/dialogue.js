@@ -65,9 +65,10 @@ function getSceneHoverLines(sceneKey) {
   const n = petNameTag();
   if (sceneKey === "haunted_house") {
     return [
-      `Hiii!! K-kamu bikin ${n} jantungan! Kirain hantu tadi!! 😱👻`,
-      `Waaaa!! Jangan ngagetin di Kuburan dong, bulu kuduk ${n} merinding semua! 😭`,
-      `Kyaaa! Tadi ada bayangan lewat di belakangmu!! Peluk ${n} cepat! 🥶`
+      `Hiii!! K-kamu bikin ${n} jantungan! Kirain hantu tadi barusan menyentuh ${n}!! 😱👻`,
+      `Waaaa!! Jangan ngagetin di Kuburan dong, bulu kuduk ${n} merinding semua dari tadi! 😭🕯️`,
+      `Kyaaa! Tadi ada bayangan lewat di belakangmu!! Cepat dekap ${n} erat-erat! 🥶💀`,
+      `H-hiii! Suara langkah kaki siapa itu di semak makam?! Jangan tinggalkan ${n}! 😱👀`
     ];
   }
   if (sceneKey === "rainy_day") {
@@ -136,10 +137,12 @@ function getSceneIdleLines(sceneKey) {
   const n = petNameTag();
   if (sceneKey === "haunted_house") {
     return [
-      `Huuu... tempat ini gelap dan seram sekali... Jangan tinggalkan ${n} di sini sendirian ya... 🥺🕯️`,
-      `S-suara derit apa itu barusan?! Pegang tangan ${n} jangan dilepas ya... 👻`,
-      `${n} takut hantu... Ayo elus kepala ${n} biar lebih berani... 😭`,
-      `Jangan jauh-jauh dari ${n} ya, di pojok sana kayak ada yang mengintip... 🥶`
+      `Huuu... tempat ini gelap dan dingin mencekam... Jangan tinggalkan ${n} di sini sendirian ya... 🥺🕯️`,
+      `S-suara derit apa itu barusan di balik nisan?! Pegang tangan ${n} erat-erat jangan dilepas ya... 👻`,
+      `${n} gemetaran ketakutan begini... Bulu kuduk ${n} merinding semua... Tolong elus kepala ${n} biar lebih tenang... 😭`,
+      `Jangan jauh-jauh dari ${n} ya, di semak makam sebelah sana kayak ada sepasang mata menyala yang mengintip... 🥶👀`,
+      `L-lihat! Tadi ada sosok putih melayang pelan menyeberangi makam... H-hantu sungguhan... Hiiii! 😱💨`,
+      `A-aku mau pulang ke kamar yang hangat... Tempat banyak kuburan tua begini bikin ${n} takut... 🥺🕯️`
     ];
   }
   if (sceneKey === "rainy_day") {

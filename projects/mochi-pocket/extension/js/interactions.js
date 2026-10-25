@@ -354,6 +354,17 @@ petInteractive.addEventListener("click", () => {
   }
 
   if (currentState === "idle") {
+    if (activeSceneKey === "haunted_house") {
+      switchState("surprised", 1200);
+      spawnBurstParticles(["😱", "👻", "💦", "🕯️", "⚡"]);
+      const scaredLines = [
+        `K-kyaaa!! ${petNameTag()} kaget setengah mati!! Pegang ${petNameTag()} erat-erat... 😱🕯️`,
+        `H-hiii! Jangan sentuh mendadak di kuburan begini, kirain monster tadi! 😭👻`,
+        `Jantung ${petNameTag()} mau copot... Tempat ini terlalu seram... bawa ${petNameTag()} pulang yuk! 🥶💀`
+      ];
+      say(randomPick(scaredLines), 4500);
+      return;
+    }
     switchState("happy", 1100);
     spawnParticleAt(
       petInteractive.getBoundingClientRect().left + 75,
