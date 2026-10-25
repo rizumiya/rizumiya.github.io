@@ -30,6 +30,23 @@ class PetDatabase {
   }
 
   async load() {
+    // 1. Jika di Extension Environment (widget.html, popup.html), utamakan muat dari chrome.storage.local!
+    if (typeof chrome !== "undefined" && chrome.storage && chrome.storage.local) {
+      try {
+        const extPet = await new Promise((resolve) => {
+          chrome.storage.local.get(["mochi_pet"], (res) => {
+            resolve(res && res.mochi_pet ? res.mochi_pet : null);
+          });
+        });
+        if (extPet && typeof extPet === "object" && (extPet.level || extPet.name || extPet.hunger !== undefined)) {
+          return { ...DEFAULT_PET_STATE, ...extPet };
+        }
+      } catch (e) {
+        // Fallback ke IndexedDB jika gagal
+      }
+    }
+
+    // 2. Jika di Web Browser (halaman web https://...), muat dari IndexedDB / localStorage
     const database = await this.dbPromise;
     if (database) {
       return new Promise((resolve) => {
@@ -160,7 +177,7 @@ if (typeof window !== "undefined") {
       const currentLevel = pet.level || 1;
       const incomingLevel = incoming.level || 1;
       const currentTime = pet.lastUpdatedAt || 0;
-      const incomingTime = incoming.lastUpdatedAt || 0;
+      const incomingTime = incoming.lastUpdatedAt || incoming.lastUpdated || 0;
 
       // Jika data web lokal lebih maju (misal di web sudah Lv.6, sedangkan ekstensi baru Lv.1 bawaan):
       // Sinkronkan data web kita ke ekstensi agar ekstensi otomatis naik ke Lv.6!

@@ -485,8 +485,8 @@ function checkPetCondition() {
   }
 
   if (petInteractive) {
-    // Efek getaran di perut jika kenyang <= 50%
-    petInteractive.classList.toggle("stomach-rumble-active", pet.hunger <= 50);
+    // Efek getaran di perut hanya jika kenyang <= 25% (Lapar Kritis)
+    petInteractive.classList.toggle("stomach-rumble-active", pet.hunger <= 25 && !pet.isDead && !pet.isSleeping);
 
     // Efek ngambek berat jika kebahagiaan < 15%
     petInteractive.classList.toggle("unhappy-tantrum", Boolean(pet.isUnhappyTantrum));
@@ -619,11 +619,11 @@ function renderDashboard() {
 
   checkPetCondition();
 
-  petNameDisplay.textContent = pet.name || "Eri";
-  petLevelBadge.textContent = `Lv.${pet.level}`;
+  if (petNameDisplay) petNameDisplay.textContent = pet.name || "Eri";
+  if (petLevelBadge) petLevelBadge.textContent = `Lv.${pet.level}`;
 
   const meta = FORM_META[pet.activeForm] || FORM_META.orb;
-  bezelFormName.textContent = `${meta.icon} ${meta.tag}`;
+  if (bezelFormName) bezelFormName.textContent = `${meta.icon} ${meta.tag}`;
 
   const nextScene = resolveActiveScene();
   renderSceneBackground(nextScene);
@@ -631,14 +631,16 @@ function renderDashboard() {
   updateFormPickerLocks();
 
   const { levelMultiplier, totalMultiplier } = getExpMultipliers();
-  updateIconGauge(gaugeHunger, pet.hunger, "Kenyang");
-  updateIconGauge(gaugeHappy, pet.happiness, "Bahagia");
-  updateIconGauge(gaugeEnergy, pet.energy, "Energi");
-  updateIconGauge(
-    gaugeExp,
-    pet.exp,
-    `EXP Lv.${pet.level} (Usaha x${totalMultiplier.toFixed(2)}: Level x${levelMultiplier.toFixed(2)}, Bahagia ${pet.happiness}%)`
-  );
+  if (gaugeHunger) updateIconGauge(gaugeHunger, pet.hunger, "Kenyang");
+  if (gaugeHappy) updateIconGauge(gaugeHappy, pet.happiness, "Bahagia");
+  if (gaugeEnergy) updateIconGauge(gaugeEnergy, pet.energy, "Energi");
+  if (gaugeExp) {
+    updateIconGauge(
+      gaugeExp,
+      pet.exp,
+      `EXP Lv.${pet.level} (Usaha x${totalMultiplier.toFixed(2)}: Level x${levelMultiplier.toFixed(2)}, Bahagia ${pet.happiness}%)`
+    );
+  }
 
   if (live2dModelSelect && pet.live2dPreset) {
     live2dModelSelect.value = pet.live2dPreset;

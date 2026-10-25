@@ -102,8 +102,8 @@ setInterval(() => {
   if (pet.hunger <= 25) {
     say(`*Kruyuuuk~* Perut ${petNameTag()} bergetar kelaparan nih (${Math.round(pet.hunger)}%)... Tekan <span>Tombol A</span> untuk memberi makan! 🍙🥺`);
     return;
-  } else if (pet.hunger <= 50) {
-    say(`*Kruyuk...* Perut ${petNameTag()} mulai lapar (${Math.round(pet.hunger)}%), getaran lapar mulai terasa nih~ 🍙`);
+  } else if (pet.hunger <= 40) {
+    say(`Perut ${petNameTag()} mulai agak kosong nih (${Math.round(pet.hunger)}%), nanti jangan lupa beri makan ya~ 🍙`);
     return;
   }
 

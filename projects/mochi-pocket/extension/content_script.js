@@ -53,7 +53,19 @@
       if (event.data.type === "MOCHI_WEB_SYNC_SAVE") {
         const incomingPet = event.data.pet;
         if (incomingPet && typeof incomingPet === "object") {
-          chrome.storage.local.set({ mochi_pet: incomingPet, lastSyncedWeb: Date.now() });
+          chrome.storage.local.get(["mochi_pet"], (data) => {
+            const currentExtPet = data ? data.mochi_pet : null;
+            const extLevel = currentExtPet ? (currentExtPet.level || 1) : 1;
+            const incLevel = incomingPet.level || 1;
+            const extTime = currentExtPet ? (currentExtPet.lastUpdatedAt || currentExtPet.lastUpdated || 0) : 0;
+            const incTime = incomingPet.lastUpdatedAt || 0;
+
+            if (!currentExtPet || incLevel >= extLevel || incTime >= extTime) {
+              chrome.storage.local.set({ mochi_pet: incomingPet, lastSyncedWeb: Date.now() }, () => {
+                console.log(`[Mochi Sync Bridge] Data pet disinkronkan dari Web ke Ekstensi (Lv.${incLevel})`);
+              });
+            }
+          });
         }
       }
 

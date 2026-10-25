@@ -53,30 +53,31 @@ body.widget-mode {
   transform-origin: center bottom !important;
 }
 
-/* Quick Action Bar Melayang di Atas Layar */
+/* Quick Action Bar Melayang di Bagian Bawah Karakter (Tidak Menutupi Status Atas) */
 .widget-action-bar {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  bottom: 8px;
+  left: 50%;
   display: flex;
   align-items: center;
-  gap: 4px;
-  background: rgba(15, 23, 42, 0.75);
+  gap: 5px;
+  background: rgba(15, 23, 42, 0.88);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 99px;
-  padding: 3px 6px;
+  padding: 3px 8px;
   z-index: 50;
   opacity: 0;
-  transform: translateY(-4px);
+  transform: translateX(-50%) translateY(4px);
   transition: opacity 0.2s ease, transform 0.2s ease;
   pointer-events: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
 }
 
 .widget-viewport-wrap:hover .widget-action-bar {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(-50%) translateY(0);
   pointer-events: auto;
 }
 

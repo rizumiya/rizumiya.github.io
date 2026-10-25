@@ -18,7 +18,7 @@ function switchState(newState, duration = null) {
   currentState = newState;
   const hasHeadbutt = petInteractive.classList.contains("headbutt-pop");
   const isTantrum = Boolean(pet.isUnhappyTantrum);
-  const isRumble = petInteractive.classList.contains("stomach-rumble-active");
+  const isRumble = pet.hunger <= 25 && !pet.isDead && !pet.isSleeping;
   const isDrowsy = petInteractive.classList.contains("drowsy-sleep");
 
   let classes = [`pet-interactive`, `state-${newState}`];

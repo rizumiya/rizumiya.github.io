@@ -6,6 +6,11 @@
 async function initApp() {
   pet = await db.load();
 
+  // Segera sinkronkan pet yang dimuat ke ekstensi browser jika berada di Web Console
+  if (typeof window !== "undefined") {
+    window.postMessage({ type: "MOCHI_WEB_SYNC_SAVE", pet: pet }, "*");
+  }
+
   if (!FORM_ORDER.includes(pet.activeForm)) {
     pet.activeForm = "orb";
   }
