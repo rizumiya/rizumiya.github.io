@@ -405,7 +405,6 @@ function renderSceneBackground(sceneKey) {
       <div class="scene-room-window" title="Jendela Kamar">🪟</div>
       <div class="scene-room-frame" title="Lukisan Foto">🖼️</div>
       <div class="scene-room-clock" title="Jam Dinding">⏰</div>
-      <div class="scene-room-lamp" title="Lampu Hangat">💡</div>
       <div class="scene-room-plant" title="Tanaman Hias">🪴</div>
       <div class="scene-room-rug" title="Karpet Lembut"></div>
     `;
@@ -413,7 +412,7 @@ function renderSceneBackground(sceneKey) {
     sceneBgLayer.innerHTML = `
       <div class="scene-sun"></div>
       <div class="scene-cloud" style="top: 42px; left: 12%; --drift-dur: 11s;">☁️</div>
-      <div class="scene-cloud" style="top: 66px; left: 56%; --drift-dur: 15s;">⛅</div>
+      <div class="scene-cloud" style="top: 66px; left: 56%; --drift-dur: 15s;">☁️</div>
       <div class="scene-horizon-deco">
         <span>🌼</span><span>🌱</span><span>🌷</span><span>🍀</span><span>🌻</span>
       </div>
@@ -433,18 +432,47 @@ function renderSceneBackground(sceneKey) {
       <div class="scene-puddle"></div>
     `;
   } else if (safeScene === "flower_garden") {
-    const petals = ["🌸", "💮", "🌼", "🌸", "🌷", "💮", "🌸", "🌼"];
+    const petals = ["🌸", "💮", "🌼", "🌸", "🌷", "💮", "🌸", "🌼", "🌸", "💮"];
     let petalsHtml = "";
     petals.forEach((sym, idx) => {
-      const leftPct = 8 + idx * 11.5;
-      const dur = (4.6 + (idx % 3) * 0.9).toFixed(2);
-      const delay = (idx * 0.55).toFixed(2);
+      const leftPct = 5 + idx * 9.5;
+      const dur = (4.4 + (idx % 4) * 0.8).toFixed(2);
+      const delay = (idx * 0.45).toFixed(2);
       petalsHtml += `<div class="scene-petal" style="left:${leftPct.toFixed(1)}%; --petal-dur:${dur}s; --petal-delay:${delay}s;">${sym}</div>`;
     });
     sceneBgLayer.innerHTML = `
       ${petalsHtml}
-      <div class="scene-horizon-deco">
-        <span>🌸</span><span>🌷</span><span>🌺</span><span>🌼</span><span>🌻</span><span>🌷</span>
+      <!-- Kupu-kupu & Kilau Alam Taman Bunga -->
+      <div class="scene-butterfly" style="top: 56px; right: 22%; font-size: 1.85rem; --bf-dur: 4.2s;">🦋</div>
+      <div class="scene-butterfly" style="top: 86px; left: 16%; font-size: 1.35rem; animation-delay: 1.8s; opacity: 0.85;">✨</div>
+
+      <!-- Lapisan Belakang: Bunga di Garis Horizon Rumput yang Menyebar Alami -->
+      <div class="scene-flower-layer back">
+        <span class="flower-item" style="left: 3%; bottom: 31%; font-size: 1.5rem; --sway-dur: 3.2s;">🌷</span>
+        <span class="flower-item" style="left: 11%; bottom: 33%; font-size: 1.3rem; --sway-dur: 4.1s;">🌸</span>
+        <span class="flower-item" style="left: 20%; bottom: 30%; font-size: 1.45rem; --sway-dur: 3.6s;">🌼</span>
+        <span class="flower-item" style="left: 28%; bottom: 32%; font-size: 1.25rem; --sway-dur: 4.5s;">🌱</span>
+        <span class="flower-item" style="right: 28%; bottom: 32%; font-size: 1.35rem; --sway-dur: 3.8s;">🌿</span>
+        <span class="flower-item" style="right: 20%; bottom: 30%; font-size: 1.5rem; --sway-dur: 4.3s;">🌻</span>
+        <span class="flower-item" style="right: 11%; bottom: 33%; font-size: 1.4rem; --sway-dur: 3.4s;">🌺</span>
+        <span class="flower-item" style="right: 3%; bottom: 31%; font-size: 1.55rem; --sway-dur: 3.9s;">🌷</span>
+      </div>
+
+      <!-- Lapisan Tengah & Depan: Rumpun Semak Bunga Rimbun Penuh -->
+      <div class="scene-flower-layer mid-left">
+        <span class="flower-item" style="left: 1%; bottom: 21%; font-size: 1.85rem; --sway-dur: 3.5s;">🌿</span>
+        <span class="flower-item" style="left: 6%; bottom: 12%; font-size: 2.3rem; --sway-dur: 4.2s;">🌻</span>
+        <span class="flower-item" style="left: 16%; bottom: 20%; font-size: 1.9rem; --sway-dur: 3.1s;">🌷</span>
+        <span class="flower-item" style="left: 12%; bottom: 8%; font-size: 2.1rem; --sway-dur: 4.6s;">🌸</span>
+        <span class="flower-item" style="left: 22%; bottom: 14%; font-size: 1.65rem; --sway-dur: 3.8s;">🍀</span>
+      </div>
+
+      <div class="scene-flower-layer mid-right">
+        <span class="flower-item" style="right: 1%; bottom: 20%; font-size: 1.85rem; --sway-dur: 3.7s;">🌿</span>
+        <span class="flower-item" style="right: 6%; bottom: 10%; font-size: 2.4rem; --sway-dur: 4.4s;">🌺</span>
+        <span class="flower-item" style="right: 16%; bottom: 21%; font-size: 1.95rem; --sway-dur: 3.3s;">🌼</span>
+        <span class="flower-item" style="right: 13%; bottom: 7%; font-size: 2.1rem; --sway-dur: 4.8s;">🌷</span>
+        <span class="flower-item" style="right: 23%; bottom: 14%; font-size: 1.65rem; --sway-dur: 3.6s;">🌸</span>
       </div>
     `;
   } else if (safeScene === "haunted_house") {

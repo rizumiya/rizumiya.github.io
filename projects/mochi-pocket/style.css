@@ -768,20 +768,11 @@ body {
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.12));
 }
 
-.scene-room-lamp {
-  position: absolute;
-  top: 40px;
-  left: 30%;
-  font-size: 2rem;
-  line-height: 1;
-  filter: drop-shadow(0 0 16px rgba(254, 240, 138, 0.95));
-}
-
 .scene-room-plant {
   position: absolute;
-  bottom: 20px;
-  right: 20px;
-  font-size: 3.4rem;
+  bottom: 16px;
+  right: 10px;
+  font-size: 3rem;
   line-height: 1;
   filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.16));
 }
@@ -797,16 +788,41 @@ body {
 
 .scene-room-rug {
   position: absolute;
-  bottom: 10px;
+  bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
-  width: 220px;
-  height: 56px;
+  width: 195px;
+  height: 52px;
   border-radius: 50%;
   background: radial-gradient(ellipse at center, #fed7aa 0%, #fdba74 65%, #fb923c 100%);
   border: 2.5px dashed rgba(234, 88, 12, 0.45);
   box-shadow: 0 6px 14px rgba(194, 65, 12, 0.18);
   opacity: 0.9;
+}
+
+/* Taman Bunga Rimbun Alami */
+.scene-flower-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.flower-item {
+  position: absolute;
+  line-height: 1;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.12));
+  transform-origin: center bottom;
+  animation: flowerBreeze var(--sway-dur, 3.5s) ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes flowerBreeze {
+  0% {
+    transform: rotate(-3.5deg) translateY(0);
+  }
+  100% {
+    transform: rotate(3.5deg) translateY(-2px);
+  }
 }
 
 .scene-sun {
