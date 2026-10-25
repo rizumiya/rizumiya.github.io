@@ -88,31 +88,31 @@ const SCENE_META = {
   },
   rainy_day: {
     id: "rainy_day",
-    unlockLevel: 3,
+    unlockLevel: 4,
     icon: "🌧️",
     name: "Hujan",
-    label: "🌧️ Hujan (Lv.3)"
+    label: "🌧️ Hujan (Lv.4)"
   },
   flower_garden: {
     id: "flower_garden",
-    unlockLevel: 5,
+    unlockLevel: 6,
     icon: "🌸",
     name: "Bunga",
-    label: "🌸 Bunga (Lv.5)"
+    label: "🌸 Bunga (Lv.6)"
   },
   haunted_house: {
     id: "haunted_house",
-    unlockLevel: 7,
+    unlockLevel: 8,
     icon: "🪦",
     name: "Kuburan",
-    label: "🪦 Kuburan (Lv.7)"
+    label: "🪦 Kuburan (Lv.8)"
   },
   starry_night: {
     id: "starry_night",
-    unlockLevel: 11,
+    unlockLevel: 10,
     icon: "🌌",
     name: "Bintang",
-    label: "🌌 Bintang (Lv.11)"
+    label: "🌌 Bintang (Lv.10)"
   }
 };
 
@@ -423,9 +423,14 @@ function updateScenePickerLocks() {
 
   document.querySelectorAll('input[name="scene-bg"]').forEach((radioEl) => {
     const val = radioEl.value;
-    const labelWrap = radioEl.closest(".picker-option");
-    const spanEl = labelWrap && labelWrap.querySelector("span[data-scene-label]");
-    if (!spanEl || val === "auto") return;
+    const cardWrap = radioEl.closest(".pick-card") || radioEl.closest(".picker-option");
+    if (!cardWrap) return;
+
+    if (val === "auto") {
+      radioEl.disabled = false;
+      cardWrap.classList.remove("locked-scene");
+      return;
+    }
 
     const meta = SCENE_META[val];
     if (!meta) return;
@@ -436,10 +441,19 @@ function updateScenePickerLocks() {
       const autoRadio = document.querySelector('input[name="scene-bg"][value="auto"]');
       if (autoRadio) autoRadio.checked = true;
     }
-    labelWrap.classList.toggle("locked-scene", !isUnlocked);
-    spanEl.textContent = isUnlocked
-      ? `${meta.icon} ${meta.name} (Lv.${meta.unlockLevel})`
-      : `🔒 Lv.${meta.unlockLevel} ${meta.name}`;
+    cardWrap.classList.toggle("locked-scene", !isUnlocked);
+
+    // Overlay gembok pada kartu format baru
+    const lockEl = cardWrap.querySelector(".pick-card-lock");
+    if (lockEl) {
+      lockEl.textContent = isUnlocked ? "" : `🔒 Lv.${meta.unlockLevel}`;
+    }
+
+    // Nama label pemandangan
+    const spanEl = cardWrap.querySelector("span[data-scene-label]");
+    if (spanEl) {
+      spanEl.textContent = meta.name;
+    }
   });
 }
 
@@ -962,31 +976,31 @@ let animalEyesResetTimer = null;
 function resetCursorTrackingTarget() {
   targetX = 0;
   targetY = 0;
-  if (auroraLeftEye && auroraRightEye && auroraEyesEl) {
-    auroraLeftEye.style.transform = "translateY(0) translateX(0)";
-    auroraRightEye.style.transform = "translateY(0) translateX(0)";
-    auroraEyesEl.classList.remove("moving");
+  clearTimeout(animalEyesResetTimer);
+  clearTimeout(orbEyesResetTimer);
+  if (auroraEyesEl) {
+    auroraEyesEl.style.transform = "translate3d(0, 0, 0)";
   }
 }
 
 function handlePointerMove(clientX, clientY) {
   if (pet.isSleeping) return;
 
-  // Pelacakan Mata Asli Wujud Orb (Hexo Aurora)
+  // Pelacakan Mata Wujud Puni Mochi (Hexo Aurora): responsif, jangkauan mendangak luas & halus meluncur
   if (pet.activeForm === "orb" && auroraEyesEl) {
     clearTimeout(orbEyesResetTimer);
-    auroraEyesEl.classList.add("moving");
     const rect = auroraEyesEl.getBoundingClientRect();
-    const ox = -(rect.left - clientX) / 95;
-    const oy = -(rect.top - clientY) / 115;
-    auroraLeftEye.style.transform = `translateY(${oy}px) translateX(${ox}px)`;
-    auroraRightEye.style.transform = `translateY(${oy}px) translateX(${ox}px)`;
+    const ox = -(rect.left - clientX) / 80;
+    const oy = -(rect.top - clientY) / 72;
+    // Jangkauan leluasa agar bisa mendangak tinggi saat kursor di atas pet
+    const clampedOx = Math.max(-15, Math.min(15, ox));
+    const clampedOy = Math.max(-18, Math.min(12, oy));
+    auroraEyesEl.style.transform = `translate3d(${clampedOx.toFixed(2)}px, ${clampedOy.toFixed(2)}px, 0)`;
 
+    // Kembali meluncur halus ke titik semula setelah 2.2 detik kursor diam di tempat
     orbEyesResetTimer = setTimeout(() => {
-      auroraLeftEye.style.transform = "translateY(0) translateX(0)";
-      auroraRightEye.style.transform = "translateY(0) translateX(0)";
-      auroraEyesEl.classList.remove("moving");
-    }, 1800);
+      auroraEyesEl.style.transform = "translate3d(0, 0, 0)";
+    }, 2200);
     return;
   }
 
@@ -1005,12 +1019,12 @@ function handlePointerMove(clientX, clientY) {
   targetX = Math.cos(angle) * factor;
   targetY = Math.sin(angle) * factor;
 
-  // Kembalikan mata & kepala ke titik semula setelah 1.8 detik kursor diam / keluar
+  // Kembalikan mata & kepala ke titik semula setelah 2.2 detik kursor diam di tempat
   clearTimeout(animalEyesResetTimer);
   animalEyesResetTimer = setTimeout(() => {
     targetX = 0;
     targetY = 0;
-  }, 1800);
+  }, 2200);
 }
 
 window.addEventListener("mousemove", (e) => {
@@ -1051,6 +1065,11 @@ document.addEventListener("mouseleave", () => {
   endPetting();
 });
 
+document.documentElement.addEventListener("mouseleave", () => {
+  resetCursorTrackingTarget();
+  endPetting();
+});
+
 window.addEventListener("mouseout", (e) => {
   if (!e.relatedTarget && !e.toElement) {
     resetCursorTrackingTarget();
@@ -1062,8 +1081,19 @@ window.addEventListener("blur", () => {
   endPetting();
 });
 
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    resetCursorTrackingTarget();
+    endPetting();
+  }
+});
+
 function animateCursorTracking() {
   if (!pet.isSleeping && pet.activeForm !== "orb" && pet.activeForm !== "live2d") {
+    currentX += (targetX - currentX) * 0.16;
+    currentY += (targetY - currentY) * 0.16;
+    if (Math.abs(currentX) < 0.005 && targetX === 0) currentX = 0;
+    if (Math.abs(currentY) < 0.005 && targetY === 0) currentY = 0;
     currentX += (targetX - currentX) * 0.16;
     currentY += (targetY - currentY) * 0.16;
 
@@ -1907,6 +1937,10 @@ document.getElementById("btn-close-guide").addEventListener("click", () => {
 // Modal Karakter (Nama, Bentuk Wujud, & Latar Dunia Karakter)
 function openCharacterModal() {
   petNameInput.value = pet.name || "Eri";
+  const avatarEl = document.getElementById("char-name-avatar");
+  if (avatarEl && FORM_META[pet.activeForm]) {
+    avatarEl.textContent = FORM_META[pet.activeForm].icon;
+  }
   const radio = document.querySelector(`input[name="starter-form"][value="${pet.activeForm}"]`);
   if (radio) radio.checked = true;
   updateScenePickerLocks();
@@ -1923,6 +1957,23 @@ function openCharacterModal() {
     setTimeout(() => petNameInput.focus(), 50);
   }
 }
+
+// Navigasi Tab Folder Modal Karakter (Bentuk vs Latar)
+document.querySelectorAll(".char-tab").forEach((tabBtn) => {
+  tabBtn.addEventListener("click", () => {
+    const tabKey = tabBtn.dataset.tab;
+    document.querySelectorAll(".char-tab").forEach((btn) => {
+      const isActive = btn === tabBtn;
+      btn.classList.toggle("active", isActive);
+      btn.setAttribute("aria-selected", isActive ? "true" : "false");
+    });
+    document.querySelectorAll(".char-panel").forEach((panel) => {
+      const isActive = panel.dataset.panel === tabKey;
+      panel.classList.toggle("active", isActive);
+      panel.hidden = !isActive;
+    });
+  });
+});
 
 // Modal Pengaturan Global (Tema Konsol, Preset Live2D, & Database IndexedDB)
 function openSettingsModal() {
@@ -1947,21 +1998,27 @@ document.querySelectorAll('input[name="console-theme"]').forEach((radioEl) => {
 // Pratinjau langsung Bentuk/Wujud Karakter saat diklik di modal karakter
 document.querySelectorAll('input[name="starter-form"]').forEach((radioEl) => {
   radioEl.addEventListener("change", (e) => {
-    setForm(e.target.value, false);
+    const chosenVal = e.target.value;
+    setForm(chosenVal, false);
+    const avatarEl = document.getElementById("char-name-avatar");
+    if (avatarEl && FORM_META[chosenVal]) {
+      avatarEl.textContent = FORM_META[chosenVal].icon;
+    }
   });
 });
 
 // Pratinjau langsung Latar Karakter saat diklik di modal karakter (Hanya yang sudah terbuka!)
 document.querySelectorAll('input[name="scene-bg"]').forEach((radioEl) => {
-  const labelWrap = radioEl.closest(".picker-option");
-  if (labelWrap) {
-    labelWrap.addEventListener("click", (e) => {
+  const cardWrap = radioEl.closest(".pick-card") || radioEl.closest(".picker-option");
+  if (cardWrap) {
+    cardWrap.addEventListener("click", (e) => {
       const val = radioEl.value;
       const meta = SCENE_META[val];
       if (meta && (pet.level || 1) < meta.unlockLevel) {
         e.preventDefault();
+        e.stopPropagation();
         say(
-          `🔒 Latar <span>${meta.icon} ${meta.name}</span> masih terkunci! Rawat ${petNameTag()} sampai <span>Level ${meta.unlockLevel}</span> untuk membukanya~`
+          `🔒 Latar <span>${meta.name}</span> masih terkunci! Rawat ${petNameTag()} sampai <span>Level ${meta.unlockLevel}</span> untuk membukanya~`
         );
       }
     });

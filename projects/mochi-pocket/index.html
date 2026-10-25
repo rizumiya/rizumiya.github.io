@@ -923,98 +923,162 @@
 
   <!-- =========================================================
        MODAL 2: MENU KHUSUS KARAKTER (NAMA, BENTUK, & LATAR DUNIA)
+       Gaya "map berlabel": tab ikon + grid kartu bergambar yang bisa di-scroll
        ========================================================= -->
   <div id="character-modal" class="modal-backdrop" hidden>
-    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="character-modal-title">
-      <div class="modal-header-badge">🐾 PROFIL &amp; DUNIA KARAKTER</div>
-      <h2 id="character-modal-title" class="modal-title">Menu Karakter</h2>
-
-      <form id="character-form" class="modal-form">
-        <!-- Nama Pet -->
-        <div class="setting-group">
-          <label for="pet-name-input" class="setting-label">Nama Pet Kamu:</label>
-          <input
-            type="text"
-            id="pet-name-input"
-            class="aurora-input"
-            placeholder="Misal: Eri, Dia, Mochi..."
-            maxlength="20"
-            required
-          >
+    <div class="modal-card char-modal-card" role="dialog" aria-modal="true" aria-labelledby="character-modal-title">
+      <form id="character-form" class="char-form">
+        <!-- Kepala: Nama Pet yang bisa langsung diedit -->
+        <div class="char-name-row">
+          <div class="char-name-avatar" id="char-name-avatar" aria-hidden="true">🫧</div>
+          <div class="char-name-field">
+            <label for="pet-name-input" id="character-modal-title" class="char-name-label">Nama Karakter</label>
+            <input
+              type="text"
+              id="pet-name-input"
+              class="char-name-input"
+              placeholder="Misal: Eri, Dia, Mochi..."
+              maxlength="20"
+              autocomplete="off"
+              required
+            >
+          </div>
+          <span class="char-name-pencil" aria-hidden="true">✎</span>
         </div>
 
-        <!-- Pilihan 6 Bentuk / Wujud Pet -->
-        <div class="setting-group">
-          <span class="setting-label">Pilih Bentuk Karakter:</span>
-          <div class="picker-options">
-            <label class="picker-option">
-              <input type="radio" name="starter-form" value="orb" checked>
-              <span>🫧 Puni</span>
-            </label>
-            <label class="picker-option">
-              <input type="radio" name="starter-form" value="cat">
-              <span>🐱 Neko</span>
-            </label>
-            <label class="picker-option">
-              <input type="radio" name="starter-form" value="hamster">
-              <span>🐹 Hamster</span>
-            </label>
-            <label class="picker-option">
-              <input type="radio" name="starter-form" value="dog">
-              <span>🐶 Anjing</span>
-            </label>
-            <label class="picker-option">
-              <input type="radio" name="starter-form" value="hedgehog">
-              <span>🦔 Landak</span>
-            </label>
-            <label class="picker-option">
-              <input type="radio" name="starter-form" value="live2d">
-              <span>✨ Live2D</span>
-            </label>
+        <!-- Map Berlabel: Tab Bentuk & Tab Latar -->
+        <div class="char-folder">
+          <div class="char-tabs" role="tablist">
+            <button type="button" class="char-tab active" data-tab="form" role="tab" aria-selected="true" title="Bentuk Karakter">
+              <span class="char-tab-icon">🐾</span>
+              <span class="char-tab-text">Bentuk</span>
+            </button>
+            <button type="button" class="char-tab" data-tab="scene" role="tab" aria-selected="false" title="Latar Karakter">
+              <span class="char-tab-icon">🏞️</span>
+              <span class="char-tab-text">Latar</span>
+            </button>
+          </div>
+
+          <div class="char-panel-wrap">
+            <!-- Panel 1: Bentuk Karakter -->
+            <div class="char-panel active" data-panel="form" role="tabpanel">
+              <div class="pick-grid">
+                <label class="pick-card">
+                  <input type="radio" name="starter-form" value="orb" checked>
+                  <span class="pick-card-art art-form" data-art="orb"><span class="art-emoji">🫧</span></span>
+                  <span class="pick-card-name">Puni</span>
+                </label>
+                <label class="pick-card">
+                  <input type="radio" name="starter-form" value="cat">
+                  <span class="pick-card-art art-form" data-art="cat"><span class="art-emoji">🐱</span></span>
+                  <span class="pick-card-name">Neko</span>
+                </label>
+                <label class="pick-card">
+                  <input type="radio" name="starter-form" value="hamster">
+                  <span class="pick-card-art art-form" data-art="hamster"><span class="art-emoji">🐹</span></span>
+                  <span class="pick-card-name">Hamster</span>
+                </label>
+                <label class="pick-card">
+                  <input type="radio" name="starter-form" value="dog">
+                  <span class="pick-card-art art-form" data-art="dog"><span class="art-emoji">🐶</span></span>
+                  <span class="pick-card-name">Shiba</span>
+                </label>
+                <label class="pick-card">
+                  <input type="radio" name="starter-form" value="hedgehog">
+                  <span class="pick-card-art art-form" data-art="hedgehog"><span class="art-emoji">🦔</span></span>
+                  <span class="pick-card-name">Landak</span>
+                </label>
+                <label class="pick-card">
+                  <input type="radio" name="starter-form" value="live2d">
+                  <span class="pick-card-art art-form" data-art="live2d"><span class="art-emoji">✨</span></span>
+                  <span class="pick-card-name">Live2D</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Panel 2: Latar Karakter (Terbuka per Kelipatan 2 Level) -->
+            <div class="char-panel" data-panel="scene" role="tabpanel" hidden>
+              <p class="char-panel-hint">Latar baru terbuka setiap naik <strong>2 level</strong>.</p>
+              <div class="pick-grid" id="scene-picker-options">
+                <label class="pick-card">
+                  <input type="radio" name="scene-bg" value="auto" checked>
+                  <span class="pick-card-art art-scene" data-art="auto">
+                    <span class="thumb-deco" style="top: 22%; left: 50%; font-size: 1.5rem;">✨</span>
+                  </span>
+                  <span class="pick-card-name" data-scene-label="auto">Otomatis</span>
+                </label>
+                <label class="pick-card">
+                  <input type="radio" name="scene-bg" value="default">
+                  <span class="pick-card-art art-scene" data-art="default">
+                    <span class="thumb-deco" style="top: 18%; left: 26%;">🖼️</span>
+                    <span class="thumb-deco" style="bottom: 14%; left: 72%;">🪴</span>
+                    <span class="pick-card-lock"></span>
+                  </span>
+                  <span class="pick-card-name" data-scene-label="default">Kamar</span>
+                </label>
+                <label class="pick-card">
+                  <input type="radio" name="scene-bg" value="sunny_park">
+                  <span class="pick-card-art art-scene" data-art="sunny_park">
+                    <span class="thumb-sun"></span>
+                    <span class="thumb-deco" style="top: 30%; left: 30%;">☁️</span>
+                    <span class="thumb-deco" style="bottom: 8%; left: 26%; font-size: 0.8rem;">🌼</span>
+                    <span class="thumb-deco" style="bottom: 8%; left: 70%; font-size: 0.8rem;">🌷</span>
+                    <span class="pick-card-lock"></span>
+                  </span>
+                  <span class="pick-card-name" data-scene-label="sunny_park">Taman</span>
+                </label>
+                <label class="pick-card">
+                  <input type="radio" name="scene-bg" value="rainy_day">
+                  <span class="pick-card-art art-scene" data-art="rainy_day">
+                    <span class="thumb-deco" style="top: 20%; left: 34%;">🌧️</span>
+                    <span class="thumb-rain"></span>
+                    <span class="pick-card-lock"></span>
+                  </span>
+                  <span class="pick-card-name" data-scene-label="rainy_day">Hujan</span>
+                </label>
+                <label class="pick-card">
+                  <input type="radio" name="scene-bg" value="flower_garden">
+                  <span class="pick-card-art art-scene" data-art="flower_garden">
+                    <span class="thumb-deco" style="top: 20%; left: 28%; font-size: 0.75rem;">🌸</span>
+                    <span class="thumb-deco" style="top: 38%; left: 70%; font-size: 0.7rem;">💮</span>
+                    <span class="thumb-deco" style="bottom: 8%; left: 30%; font-size: 0.85rem;">🌷</span>
+                    <span class="thumb-deco" style="bottom: 8%; left: 68%; font-size: 0.85rem;">🌺</span>
+                    <span class="pick-card-lock"></span>
+                  </span>
+                  <span class="pick-card-name" data-scene-label="flower_garden">Bunga</span>
+                </label>
+                <label class="pick-card">
+                  <input type="radio" name="scene-bg" value="haunted_house">
+                  <span class="pick-card-art art-scene" data-art="haunted_house">
+                    <span class="thumb-moon"></span>
+                    <span class="thumb-deco" style="top: 40%; left: 70%; font-size: 0.85rem;">👻</span>
+                    <span class="thumb-deco" style="bottom: 8%; left: 30%; font-size: 0.9rem;">🪦</span>
+                    <span class="thumb-deco" style="bottom: 8%; left: 66%; font-size: 0.75rem;">🪦</span>
+                    <span class="pick-card-lock"></span>
+                  </span>
+                  <span class="pick-card-name" data-scene-label="haunted_house">Kuburan</span>
+                </label>
+                <label class="pick-card">
+                  <input type="radio" name="scene-bg" value="starry_night">
+                  <span class="pick-card-art art-scene" data-art="starry_night">
+                    <span class="thumb-deco" style="top: 18%; left: 74%;">🌙</span>
+                    <span class="thumb-deco star" style="top: 22%; left: 24%;">✦</span>
+                    <span class="thumb-deco star" style="top: 44%; left: 46%;">✦</span>
+                    <span class="thumb-deco star" style="top: 34%; left: 82%;">✦</span>
+                    <span class="pick-card-lock"></span>
+                  </span>
+                  <span class="pick-card-name" data-scene-label="starry_night">Bintang</span>
+                </label>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Pilihan Latar Dunia Karakter Berdasarkan Level -->
-        <div class="setting-group">
-          <span class="setting-label">Latar Karakter (Terbuka Sesuai Level):</span>
-          <div class="picker-options scene-picker-options" id="scene-picker-options">
-            <label class="picker-option">
-              <input type="radio" name="scene-bg" value="auto" checked>
-              <span data-scene-label="auto">✨ Otomatis</span>
-            </label>
-            <label class="picker-option">
-              <input type="radio" name="scene-bg" value="default">
-              <span data-scene-label="default">🏠 Kamar (Lv.1)</span>
-            </label>
-            <label class="picker-option">
-              <input type="radio" name="scene-bg" value="sunny_park">
-              <span data-scene-label="sunny_park">🌤️ Taman (Lv.2)</span>
-            </label>
-            <label class="picker-option">
-              <input type="radio" name="scene-bg" value="rainy_day">
-              <span data-scene-label="rainy_day">🌧️ Hujan (Lv.3)</span>
-            </label>
-            <label class="picker-option">
-              <input type="radio" name="scene-bg" value="flower_garden">
-              <span data-scene-label="flower_garden">🌸 Bunga (Lv.5)</span>
-            </label>
-            <label class="picker-option">
-              <input type="radio" name="scene-bg" value="haunted_house">
-              <span data-scene-label="haunted_house">🪦 Kuburan (Lv.7)</span>
-            </label>
-            <label class="picker-option">
-              <input type="radio" name="scene-bg" value="starry_night">
-              <span data-scene-label="starry_night">🌌 Bintang (Lv.11)</span>
-            </label>
-          </div>
+        <div class="char-actions">
+          <button type="button" id="btn-close-character" class="btn-secondary">Tutup</button>
+          <button type="submit" class="btn-primary">Simpan</button>
         </div>
-
-        <button type="submit" class="btn-primary">Simpan Karakter</button>
       </form>
-
-      <div class="modal-actions" style="margin-top: 0.6rem;">
-        <button type="button" id="btn-close-character" class="btn-secondary">Tutup</button>
-      </div>
     </div>
   </div>
 

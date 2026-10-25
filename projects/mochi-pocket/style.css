@@ -1353,6 +1353,8 @@ body {
   height: 50px;
   width: 100%;
   z-index: 3;
+  transition: transform 0.22s cubic-bezier(0.2, 0.9, 0.4, 1);
+  will-change: transform;
 }
 
 .Aurora-Dia--eye {
@@ -1364,7 +1366,6 @@ body {
   border-radius: 15px;
   background-color: var(--outline);
   animation: blink 4.5s infinite;
-  transition: transform 0.1s linear;
 }
 
 .Aurora-Dia--eye::after {
@@ -1381,10 +1382,6 @@ body {
 .Aurora-Dia--eye.right {
   left: auto;
   right: 16px;
-}
-
-.Aurora-Dia--eyes.moving > .Aurora-Dia--eye {
-  animation: none;
 }
 
 .orb-blush {
@@ -2942,13 +2939,13 @@ body {
   transform: rotate(16deg);
 }
 
-/* Koreksi optik vertikal halus agar ikon Gamepad (🎮) tepat di tengah lingkaran seperti Onigiri (🍙) */
+/* Koreksi optik vertikal presisi agar ikon Gamepad (🎮) tepat di tengah lingkaran sejajar Onigiri (🍙) */
 .btn-b .btn-glyph {
-  transform: rotate(16deg) translateY(-1.2px);
+  transform: rotate(16deg) translateY(0.5px);
 }
 
 .btn-a .btn-glyph {
-  transform: rotate(16deg) translateY(-0.5px);
+  transform: rotate(16deg) translateY(0.2px);
 }
 
 .btn-b {
@@ -3494,5 +3491,477 @@ body {
   8%,
   12% {
     transform: translateX(-50%) rotate(1.2deg);
+  }
+}
+
+/* ==========================================================================
+   16. MENU KARAKTER ELEGAN (GAYA MAP BERLABEL + GRID KARTU BERGAMBAR)
+   ========================================================================== */
+
+.char-modal-card {
+  max-width: 400px;
+  padding: 18px 16px 16px;
+}
+
+.char-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* --- Kepala: Nama Karakter --- */
+.char-name-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px 10px 10px;
+  border-radius: 18px;
+  background: var(--modal-sec-bg);
+  border: 1.5px solid var(--modal-border);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.char-name-row:focus-within {
+  border-color: var(--accent-rose);
+  box-shadow: 0 0 0 3px rgba(236, 107, 136, 0.14);
+}
+
+.char-name-avatar {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  background: var(--modal-input-bg);
+  border: 1.5px solid var(--modal-border);
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.05);
+}
+
+.char-name-field {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.char-name-label {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.char-name-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: 800;
+  padding: 0;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.char-name-input::placeholder {
+  color: var(--text-muted);
+  font-weight: 600;
+  opacity: 0.6;
+}
+
+.char-name-pencil {
+  font-size: 1rem;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+/* --- Map Berlabel (Tab + Panel) --- */
+.char-folder {
+  position: relative;
+}
+
+.char-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 0 14px;
+  position: relative;
+  z-index: 2;
+}
+
+.char-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px 10px;
+  border: 2px solid var(--modal-border);
+  border-bottom: none;
+  border-radius: 16px 16px 0 0;
+  background: var(--modal-input-bg);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.74rem;
+  font-weight: 800;
+  cursor: pointer;
+  opacity: 0.75;
+  transform: translateY(4px);
+  filter: saturate(0.6);
+  transition: transform 0.18s ease, opacity 0.18s ease, filter 0.18s ease, color 0.18s ease;
+}
+
+.char-tab:hover {
+  opacity: 0.95;
+  transform: translateY(2px);
+}
+
+.char-tab.active {
+  background: var(--modal-sec-bg);
+  color: var(--text-main);
+  opacity: 1;
+  filter: none;
+  transform: translateY(2px);
+  padding-top: 11px;
+  box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.05);
+}
+
+.char-tab-icon {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.char-panel-wrap {
+  position: relative;
+  z-index: 1;
+  background: var(--modal-sec-bg);
+  border: 2px solid var(--modal-border);
+  border-radius: 22px;
+  padding: 12px 8px 12px 12px;
+  box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.04);
+}
+
+.char-panel {
+  max-height: min(340px, 46dvh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+  padding-right: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-peach) transparent;
+}
+
+.char-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.char-panel::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 99px;
+}
+
+.char-panel::-webkit-scrollbar-thumb {
+  background: var(--accent-peach);
+  border-radius: 99px;
+}
+
+.char-panel-hint {
+  font-size: 0.66rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin: 0 2px 10px;
+}
+
+.char-panel-hint strong {
+  color: var(--accent-rose);
+}
+
+/* --- Grid Kartu Bergambar --- */
+.pick-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.pick-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pick-card input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pick-card-art {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  border-radius: 16px;
+  border: 2.5px solid var(--modal-border);
+  overflow: hidden;
+  background: var(--modal-input-bg);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.06);
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.pick-card:hover .pick-card-art {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.pick-card:active .pick-card-art {
+  transform: scale(0.97);
+}
+
+.pick-card input:checked + .pick-card-art {
+  border-color: var(--accent-rose);
+  box-shadow:
+    0 0 0 3px rgba(236, 107, 136, 0.2),
+    0 6px 14px rgba(236, 107, 136, 0.18);
+}
+
+/* Lencana centang pada kartu terpilih */
+.pick-card input:checked + .pick-card-art::after {
+  content: "✓";
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--cute-gradient);
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 5;
+}
+
+.pick-card-name {
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pick-card input:checked ~ .pick-card-name {
+  color: var(--accent-rose);
+}
+
+/* --- Gambar Kartu Bentuk Karakter --- */
+.art-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.art-form .art-emoji {
+  font-size: 2.3rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.15));
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.pick-card:hover .art-form .art-emoji,
+.pick-card input:checked + .art-form .art-emoji {
+  transform: scale(1.12) translateY(-2px);
+}
+
+.art-form::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 14%;
+  width: 56%;
+  height: 10%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.art-form[data-art="orb"] {
+  background: radial-gradient(circle at 50% 38%, #ffe4ee 0%, #ffd2e1 55%, #f9b9cf 100%);
+}
+.art-form[data-art="cat"] {
+  background: radial-gradient(circle at 50% 38%, #fff4e6 0%, #ffe2c2 55%, #f9c897 100%);
+}
+.art-form[data-art="hamster"] {
+  background: radial-gradient(circle at 50% 38%, #fff7ec 0%, #fbe3c8 55%, #f2c9a0 100%);
+}
+.art-form[data-art="dog"] {
+  background: radial-gradient(circle at 50% 38%, #fff3e0 0%, #fdd9a8 55%, #f5b46b 100%);
+}
+.art-form[data-art="hedgehog"] {
+  background: radial-gradient(circle at 50% 38%, #f7efe7 0%, #e6d3c2 55%, #c9a98d 100%);
+}
+.art-form[data-art="live2d"] {
+  background: radial-gradient(circle at 50% 38%, #f1ecff 0%, #ddd3ff 55%, #c3b3f7 100%);
+}
+
+/* --- Gambar Kartu Latar (Mini-Pratinjau Pemandangan) --- */
+.art-scene .thumb-deco {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 0.95rem;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.art-scene .thumb-deco[style*="bottom"] {
+  transform: translate(-50%, 0);
+}
+
+.art-scene .thumb-deco.star {
+  color: #fef08a;
+  font-size: 0.55rem;
+  text-shadow: 0 0 4px rgba(254, 240, 138, 0.8);
+}
+
+.art-scene[data-art="auto"] {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.35), transparent 60%),
+    conic-gradient(from 210deg at 50% 60%, #fbcfe8, #bae6fd, #bbf7d0, #fde68a, #c4b5fd, #fbcfe8);
+}
+
+.art-scene[data-art="default"] {
+  background:
+    linear-gradient(180deg, #fdf3e7 0%, #f6e3cf 62%, #d9b998 62%, #c9a37e 100%);
+}
+
+.art-scene[data-art="sunny_park"] {
+  background: linear-gradient(180deg, #60a5fa 0%, #bae6fd 64%, #86efac 64%, #4ade80 100%);
+}
+
+.art-scene[data-art="rainy_day"] {
+  background: linear-gradient(180deg, #1e293b 0%, #475569 64%, #334155 64%, #1e293b 100%);
+}
+
+.art-scene[data-art="flower_garden"] {
+  background: linear-gradient(180deg, #fbcfe8 0%, #fce7f3 64%, #a7f3d0 64%, #6ee7b7 100%);
+}
+
+.art-scene[data-art="haunted_house"] {
+  background:
+    radial-gradient(circle at 26% 22%, rgba(139, 92, 246, 0.35) 0%, transparent 45%),
+    linear-gradient(180deg, #0b0518 0%, #241040 64%, #160a29 64%, #07030e 100%);
+}
+
+.art-scene[data-art="starry_night"] {
+  background: linear-gradient(180deg, #060919 0%, #1e3a8a 64%, #0f172a 64%, #020617 100%);
+}
+
+.thumb-sun {
+  position: absolute;
+  top: 12%;
+  right: 14%;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fef9c3 25%, #facc15 100%);
+  box-shadow: 0 0 10px rgba(250, 204, 21, 0.85);
+}
+
+.thumb-moon {
+  position: absolute;
+  top: 12%;
+  left: 16%;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #f3e8ff 15%, #c084fc 80%);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.8);
+}
+
+.thumb-rain {
+  position: absolute;
+  inset: 34% 0 36% 0;
+  background-image: repeating-linear-gradient(
+    105deg,
+    transparent 0 7px,
+    rgba(147, 197, 253, 0.65) 7px 8.5px
+  );
+  opacity: 0.85;
+}
+
+/* Kartu Latar Terkunci */
+.pick-card-lock {
+  display: none;
+}
+
+.pick-card.locked-scene {
+  cursor: not-allowed;
+}
+
+.pick-card.locked-scene .pick-card-art {
+  filter: grayscale(0.85) brightness(0.8);
+  border-style: dashed;
+}
+
+.pick-card.locked-scene .pick-card-lock {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  background: rgba(15, 15, 25, 0.38);
+  color: #ffffff;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  z-index: 4;
+}
+
+.pick-card.locked-scene .pick-card-name {
+  color: var(--text-muted);
+}
+
+.pick-card.locked-scene:hover .pick-card-art {
+  transform: none;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* --- Tombol Aksi --- */
+.char-actions {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 8px;
+}
+
+.char-actions .btn-secondary,
+.char-actions .btn-primary {
+  padding: 11px 14px;
+  font-size: 0.82rem;
+  border-radius: 14px;
+}
+
+@media (max-width: 360px) {
+  .pick-grid {
+    gap: 8px;
+  }
+  .char-tab {
+    padding: 8px 12px 9px;
+  }
+  .art-form .art-emoji {
+    font-size: 2rem;
   }
 }
