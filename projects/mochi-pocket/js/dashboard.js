@@ -59,7 +59,7 @@ function renderSceneBackground(sceneKey) {
     sceneBgLayer.innerHTML = `
       <div class="scene-room-window" title="Jendela Kamar">🪟</div>
       <div class="scene-room-frame" title="Lukisan Foto">🖼️</div>
-      <div class="scene-room-clock" title="Jam Dinding">⏰</div>
+      <div class="scene-room-clock" title="Jam Dinding">🕧</div>
       <div class="scene-room-plant" title="Tanaman Hias">🪴</div>
       <div class="scene-room-rug" title="Karpet Lembut"></div>
     `;
@@ -169,32 +169,23 @@ function renderSceneBackground(sceneKey) {
       <div class="scene-fog"></div>
     `;
   } else if (safeScene === "starry_night") {
-    // 5. Malam Berbintang (Bulan Sabit, Bintang Gemerlap di Langit, & Padang Rumput Tenang)
+    // 5. Malam Berbintang (Bulan Sabit Emas, Bintang Gemerlap di Langit, & Awan Malam Melayang)
     let starsHtml = "";
-    for (let i = 0; i < 14; i += 1) {
+    for (let i = 0; i < 18; i += 1) {
       const leftPct = 6 + ((i * 17) % 86);
-      const topPct = 10 + ((i * 13) % 46);
-      const dur = (1.6 + (i % 4) * 0.45).toFixed(2);
+      const topPct = 8 + ((i * 13) % 48);
+      const dur = (1.5 + (i % 4) * 0.45).toFixed(2);
+      const delay = ((i * 0.28) % 1.6).toFixed(2);
       const symbol = i % 3 === 0 ? "✨" : (i % 3 === 1 ? "⭐" : "✦");
-      starsHtml += `<div class="scene-star" style="left:${leftPct}%; top:${topPct}%; --star-dur:${dur}s;">${symbol}</div>`;
+      starsHtml += `<div class="scene-star" style="left:${leftPct}%; top:${topPct}%; --star-dur:${dur}s; animation-delay:${delay}s;">${symbol}</div>`;
     }
     sceneBgLayer.innerHTML = `
-      <!-- Langit Malam: Bulan Sabit Emas & Awan Malam Melayang -->
-      <div class="scene-crescent-moon" style="top: 36px; left: 24px; font-size: 1.8rem;">🌙</div>
-      <div class="scene-cloud" style="top: 38px; right: 20px; font-size: 1.45rem; --drift-dur: 18s;">☁️</div>
+      <!-- Langit Malam: Bulan Sabit Emas & Awan Malam Melayang (Murni Langit Bintang, Tanpa Tanaman/Padi) -->
+      <div class="scene-crescent-moon">🌙</div>
+      <div class="scene-cloud" style="top: 38px; right: 20px; font-size: 1.45rem; --drift-dur: 20s; opacity: 0.75;">☁️</div>
+      <!-- Bintang Jatuh (Shooting Star) Sesekali Meluncur di Langit -->
+      <div class="scene-shooting-star"></div>
       ${starsHtml}
-
-      <!-- Hamparan Rumput Malam Alami di Tanah (Tanpa Bintang di Tanah) -->
-      <div class="scene-night-meadow">
-        <div class="meadow-grass left">
-          <span class="grass-stem" style="font-size: 1.45rem;">🌾</span>
-          <span class="grass-stem" style="font-size: 1.15rem; opacity: 0.75;">🌱</span>
-        </div>
-        <div class="meadow-grass right">
-          <span class="grass-stem" style="font-size: 1.2rem; opacity: 0.8;">🌱</span>
-          <span class="grass-stem" style="font-size: 1.5rem;">🌾</span>
-        </div>
-      </div>
     `;
   } else if (safeScene === "snowy_winter") {
     // 6. Musim Salju (Pohon Cemara, Manusia Salju, Kepingan Salju Berjatuhan)

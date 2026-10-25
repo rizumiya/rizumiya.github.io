@@ -1609,6 +1609,55 @@ body {
   }
 }
 
+/* Bulan Sabit Malam Berbintang */
+.scene-crescent-moon {
+  position: absolute;
+  top: 38px;
+  left: 20px;
+  font-size: 2.2rem;
+  line-height: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 0 14px rgba(254, 240, 138, 0.85));
+  animation: crescentMoonFloat 4.6s ease-in-out infinite alternate;
+  z-index: 3;
+}
+
+@keyframes crescentMoonFloat {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-3px) rotate(3deg); }
+}
+
+/* Bintang Jatuh Meluncur Halus di Langit Malam */
+.scene-shooting-star {
+  position: absolute;
+  top: 40px;
+  right: 15%;
+  width: 45px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(254, 240, 138, 0.9), transparent);
+  border-radius: 99px;
+  transform: rotate(-35deg);
+  opacity: 0;
+  pointer-events: none;
+  animation: shootingStarGlide 8.5s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes shootingStarGlide {
+  0%, 92%, 100% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(-35deg) scaleX(0.2);
+  }
+  94% {
+    opacity: 1;
+    transform: translate(-45px, 35px) rotate(-35deg) scaleX(1);
+  }
+  96% {
+    opacity: 0;
+    transform: translate(-90px, 70px) rotate(-35deg) scaleX(0.4);
+  }
+}
+
 .scene-star {
   position: absolute;
   color: #fef08a;
