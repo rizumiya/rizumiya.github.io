@@ -268,11 +268,23 @@ function renderSceneBackground(sceneKey) {
       <div class="scene-big-tree left" title="Pohon Rindang">🌳</div>
       <div class="scene-big-tree right" title="Pohon Cemara Kuno">🌲</div>
 
-      <!-- Jamur Hutan Menyala di Kanan & Semanggi Hutan di Kiri -->
+      <!-- Jamur Hutan Menyala di Kanan & Bebatuan serta Rerumputan Alami di Lantai -->
       <div class="scene-mushroom">🍄</div>
       <div class="forest-floor-flora">
-        <span class="flora-sprout left">🌿</span>
-        <span class="flora-sprout right">🍀</span>
+        <!-- Bebatuan Alam Hutan (Rock Stones) -->
+        <span class="forest-rock rock-left-back" title="Batu Hutan Kiri">🪨</span>
+        <span class="forest-rock rock-left-front" title="Batu Hutan Kiri Depan">🪨</span>
+        <span class="forest-rock rock-right-back" title="Batu Hutan Kanan">🪨</span>
+        <span class="forest-rock rock-right-front" title="Batu Hutan Kanan Depan">🪨</span>
+
+        <!-- Rerumputan & Flora Liar Hutan -->
+        <span class="forest-flora flora-grass-left" title="Rumput Ilalang Kiri">🌾</span>
+        <span class="forest-flora flora-fern-left" title="Pakis Hutan Kiri">🌿</span>
+        <span class="forest-flora flora-sprout-left" title="Kecambah Hutan">🌱</span>
+
+        <span class="forest-flora flora-sprout-right" title="Kecambah Hutan Kanan">🌱</span>
+        <span class="forest-flora flora-clover-right" title="Semanggi Hutan Kanan">🍀</span>
+        <span class="forest-flora flora-fern-right" title="Pakis Liar Kanan">🌿</span>
       </div>
 
       <!-- Kupu-kupu & Kilau Peri Ajaib -->

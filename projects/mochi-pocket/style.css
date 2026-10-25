@@ -1202,27 +1202,97 @@ body {
 
 .forest-floor-flora {
   position: absolute;
-  bottom: 12px;
-  left: 0;
-  right: 0;
+  inset: 0;
   pointer-events: none;
   z-index: 3;
 }
 
-.flora-sprout {
+/* Bebatuan Alami Hutan (Batu Belakang & Depan) */
+.forest-rock {
   position: absolute;
+  line-height: 1;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.35));
+  transform-origin: bottom center;
+}
+
+.forest-rock.rock-left-back {
+  left: 12%;
+  bottom: 25%;
+  font-size: 1.4rem;
+  z-index: 2;
+  opacity: 0.88;
+}
+
+.forest-rock.rock-left-front {
+  left: 8%;
+  bottom: 8%;
+  font-size: 1.7rem;
+  z-index: 3;
+}
+
+.forest-rock.rock-right-back {
+  right: 14%;
+  bottom: 25%;
   font-size: 1.35rem;
+  z-index: 2;
+  opacity: 0.88;
+}
+
+.forest-rock.rock-right-front {
+  right: 6%;
+  bottom: 8%;
+  font-size: 1.6rem;
+  z-index: 3;
+}
+
+/* Rerumputan & Tanaman Hutan Liar */
+.forest-flora {
+  position: absolute;
+  line-height: 1;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.25));
+  transform-origin: bottom center;
+}
+
+.forest-flora.flora-grass-left {
+  left: 4%;
+  bottom: 23%;
+  font-size: 1.3rem;
   opacity: 0.85;
 }
 
-.flora-sprout.left {
-  left: 36px;
-  bottom: 0;
+.forest-flora.flora-fern-left {
+  left: 17%;
+  bottom: 11%;
+  font-size: 1.45rem;
+  z-index: 3;
 }
 
-.flora-sprout.right {
-  right: 80px;
-  bottom: 0;
+.forest-flora.flora-sprout-left {
+  left: 2%;
+  bottom: 11%;
+  font-size: 1.25rem;
+  z-index: 3;
+}
+
+.forest-flora.flora-sprout-right {
+  right: 6%;
+  bottom: 23%;
+  font-size: 1.25rem;
+  opacity: 0.85;
+}
+
+.forest-flora.flora-clover-right {
+  right: 14%;
+  bottom: 9%;
+  font-size: 1.35rem;
+  z-index: 3;
+}
+
+.forest-flora.flora-fern-right {
+  right: 28%;
+  bottom: 7%;
+  font-size: 1.2rem;
+  z-index: 3;
 }
 
 .scene-butterfly {
