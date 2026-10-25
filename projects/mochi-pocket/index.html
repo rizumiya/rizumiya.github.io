@@ -345,38 +345,49 @@
                         <svg class="svg-full" viewBox="0 0 240 160" fill="none">
                           <defs>
                             <clipPath id="hamsterLowerClip">
-                              <path d="M 38 28 C 18 55, 14 102, 26 128 C 38 150, 68 154, 120 154 C 172 154, 202 150, 214 128 C 226 102, 222 55, 202 28 Z" />
+                              <path d="M 66 28 C 48 58, 44 96, 52 118 C 60 136, 84 140, 120 140 C 156 140, 180 136, 188 118 C 196 96, 192 58, 174 28 Z" />
                             </clipPath>
                           </defs>
 
                           <!-- Ekor Pom-Pom Putih Mungil di Kanan Belakang -->
                           <path
-                            d="M 194 116 C 210 110, 222 122, 216 132 C 224 138, 216 148, 202 144 C 194 144, 188 134, 194 116 Z"
+                            d="M 178 114 C 192 108, 204 118, 198 127 C 205 133, 197 142, 186 138 C 178 138, 173 130, 178 114 Z"
                             fill="#ffffff"
                             stroke="#3b2322"
-                            stroke-width="5"
+                            stroke-width="4.5"
                             stroke-linejoin="round"
                           />
 
-                          <!-- Kaki Bawah Kiri & Kanan -->
-                          <path
-                            d="M 54 136 C 38 142, 36 156, 54 156 C 70 156, 78 148, 78 140 Z"
-                            fill="#f4caa3"
-                            stroke="#3b2322"
-                            stroke-width="5"
-                            stroke-linejoin="round"
-                          />
-                          <path
-                            d="M 186 136 C 202 142, 204 156, 186 156 C 170 156, 162 148, 162 140 Z"
-                            fill="#f4caa3"
-                            stroke="#3b2322"
-                            stroke-width="5"
-                            stroke-linejoin="round"
-                          />
+                          <!-- Kaki Bawah Kiri & Kanan (Jelas Terlihat, Bertapak di Lantai) -->
+                          <g class="hamster-foot-left">
+                            <path
+                              d="M 64 126 C 46 130, 44 153, 68 154 C 88 154, 96 144, 92 130 Z"
+                              fill="#fde2cb"
+                              stroke="#3b2322"
+                              stroke-width="5"
+                              stroke-linejoin="round"
+                            />
+                            <!-- Jari-jari mungil kaki kiri -->
+                            <path d="M 60 144 C 66 149, 72 149, 76 146" stroke="#3b2322" stroke-width="2.8" stroke-linecap="round" fill="none" />
+                            <path d="M 72 147 C 77 151, 83 151, 86 145" stroke="#3b2322" stroke-width="2.8" stroke-linecap="round" fill="none" />
+                          </g>
 
-                          <!-- Siluet Badan Bawah Gembul Mochi -->
+                          <g class="hamster-foot-right">
+                            <path
+                              d="M 176 126 C 194 130, 196 153, 172 154 C 152 154, 144 144, 148 130 Z"
+                              fill="#fde2cb"
+                              stroke="#3b2322"
+                              stroke-width="5"
+                              stroke-linejoin="round"
+                            />
+                            <!-- Jari-jari mungil kaki kanan -->
+                            <path d="M 180 144 C 174 149, 168 149, 164 146" stroke="#3b2322" stroke-width="2.8" stroke-linecap="round" fill="none" />
+                            <path d="M 168 147 C 163 151, 157 151, 154 145" stroke="#3b2322" stroke-width="2.8" stroke-linecap="round" fill="none" />
+                          </g>
+
+                          <!-- Siluet Badan Bawah Chibi Imut & Proporsional (Tidak Terlalu Gembrot) -->
                           <path
-                            d="M 38 28 C 18 55, 14 102, 26 128 C 38 150, 68 154, 120 154 C 172 154, 202 150, 214 128 C 226 102, 222 55, 202 28 Z"
+                            d="M 66 28 C 48 58, 44 96, 52 118 C 60 136, 84 140, 120 140 C 156 140, 180 136, 188 118 C 196 96, 192 58, 174 28 Z"
                             fill="#ffffff"
                             stroke="#3b2322"
                             stroke-width="5.5"
@@ -385,47 +396,47 @@
 
                           <!-- Sisi Paha Krem-Peach di Kiri & Kanan -->
                           <g clip-path="url(#hamsterLowerClip)">
-                            <path d="M 14 28 C 14 70, 24 120, 65 145 L 14 154 Z" fill="#f4caa3" />
-                            <path d="M 226 28 C 226 70, 216 120, 175 145 L 226 154 Z" fill="#f4caa3" />
-                            <path d="M 26 110 C 35 130, 52 140, 65 145" stroke="#3b2322" stroke-width="4.5" stroke-linecap="round" fill="none" />
-                            <path d="M 214 110 C 205 130, 188 140, 175 145" stroke="#3b2322" stroke-width="4.5" stroke-linecap="round" fill="none" />
+                            <path d="M 40 28 C 40 68, 50 110, 80 132 L 40 142 Z" fill="#f4caa3" />
+                            <path d="M 200 28 C 200 68, 190 110, 160 132 L 200 142 Z" fill="#f4caa3" />
+                            <path d="M 52 98 C 60 116, 70 126, 80 132" stroke="#3b2322" stroke-width="4.2" stroke-linecap="round" fill="none" />
+                            <path d="M 188 98 C 180 116, 170 126, 160 132" stroke="#3b2322" stroke-width="4.2" stroke-linecap="round" fill="none" />
                           </g>
 
                           <!-- Tangan Mungil Hamster Memegang Biji Kuaci di Depan Perut (Terlihat Jelas & Imut) -->
                           <g class="hamster-hands-group">
                             <!-- Biji Kuaci Bunga Matahari Belang Cokelat-Krem Kontras -->
                             <path
-                              d="M 120 84 C 109 97, 107 116, 120 128 C 133 116, 131 97, 120 84 Z"
+                              d="M 120 78 C 110 90, 108 108, 120 120 C 132 108, 130 90, 120 78 Z"
                               fill="#452a1e"
                               stroke="#2e1910"
                               stroke-width="3"
                               stroke-linejoin="round"
                             />
-                            <path d="M 120 90 L 120 123" stroke="#fde68a" stroke-width="2.2" stroke-linecap="round" />
-                            <path d="M 115 97 Q 113 109 117 118" stroke="#fef3c7" stroke-width="1.6" fill="none" opacity="0.9" />
-                            <path d="M 125 97 Q 127 109 123 118" stroke="#fef3c7" stroke-width="1.6" fill="none" opacity="0.9" />
+                            <path d="M 120 84 L 120 115" stroke="#fde68a" stroke-width="2.2" stroke-linecap="round" />
+                            <path d="M 115 91 Q 113 102 117 110" stroke="#fef3c7" stroke-width="1.6" fill="none" opacity="0.9" />
+                            <path d="M 125 91 Q 127 102 123 110" stroke="#fef3c7" stroke-width="1.6" fill="none" opacity="0.9" />
 
                             <!-- Tangan Kiri Mungil Bulat Putih (Jelas dengan Paw Pad Pink) -->
                             <path
-                              d="M 92 98 C 92 88, 114 92, 117 104 C 117 114, 104 118, 94 113 Z"
+                              d="M 94 92 C 94 83, 114 87, 117 98 C 117 107, 105 111, 96 107 Z"
                               fill="#ffffff"
                               stroke="#3b2322"
                               stroke-width="4.8"
                               stroke-linejoin="round"
                             />
-                            <path d="M 106 101 Q 112 105 115 109" stroke="#3b2322" stroke-width="2.6" stroke-linecap="round" fill="none" />
-                            <circle cx="103" cy="106" r="3.2" fill="#fca5a5" />
+                            <path d="M 107 95 Q 112 99 115 103" stroke="#3b2322" stroke-width="2.5" stroke-linecap="round" fill="none" />
+                            <circle cx="104" cy="100" r="3" fill="#fca5a5" />
 
                             <!-- Tangan Kanan Mungil Bulat Putih (Jelas dengan Paw Pad Pink) -->
                             <path
-                              d="M 148 98 C 148 88, 126 92, 123 104 C 123 114, 136 118, 146 113 Z"
+                              d="M 146 92 C 146 83, 126 87, 123 98 C 123 107, 135 111, 144 107 Z"
                               fill="#ffffff"
                               stroke="#3b2322"
                               stroke-width="4.8"
                               stroke-linejoin="round"
                             />
-                            <path d="M 134 101 Q 128 105 125 109" stroke="#3b2322" stroke-width="2.6" stroke-linecap="round" fill="none" />
-                            <circle cx="137" cy="106" r="3.2" fill="#fca5a5" />
+                            <path d="M 133 95 Q 128 99 125 103" stroke="#3b2322" stroke-width="2.5" stroke-linecap="round" fill="none" />
+                            <circle cx="136" cy="100" r="3" fill="#fca5a5" />
                           </g>
                         </svg>
                       </div>
