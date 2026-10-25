@@ -179,7 +179,8 @@ function getSceneIdleLines(sceneKey) {
   if (sceneKey === "bakery_shop") {
     return [
       `Harum roti panggang dan kopi segar memenuhi ruangan... Bikin hati ${n} hangat! 🥖🥐`,
-      `Etalase toko roti ini penuh kue lezat~ Favoritmu yang mana? 🍰🍩`
+      `Etalase toko roti ini penuh kue lezat~ Favoritmu yang mana? 🍰🍩`,
+      `Wiii~~ rotii~ mauu~ 🍩🥖`
     ];
   }
   if (sceneKey === "tropical_beach") {

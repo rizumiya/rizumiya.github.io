@@ -169,19 +169,31 @@ function renderSceneBackground(sceneKey) {
       <div class="scene-fog"></div>
     `;
   } else if (safeScene === "starry_night") {
-    // 5. Bintang Malam (Bulan Sabit, Bintang Gemerlap, & Padang Rumput Tenang)
+    // 5. Malam Berbintang (Bulan Sabit, Bintang Gemerlap di Langit, & Padang Rumput Tenang)
     let starsHtml = "";
-    for (let i = 0; i < 12; i += 1) {
-      const leftPct = 8 + ((i * 19) % 84);
-      const topPct = 14 + ((i * 13) % 44);
-      const dur = (1.5 + (i % 4) * 0.45).toFixed(2);
-      starsHtml += `<div class="scene-star" style="left:${leftPct}%; top:${topPct}%; --star-dur:${dur}s;">✦</div>`;
+    for (let i = 0; i < 14; i += 1) {
+      const leftPct = 6 + ((i * 17) % 86);
+      const topPct = 10 + ((i * 13) % 46);
+      const dur = (1.6 + (i % 4) * 0.45).toFixed(2);
+      const symbol = i % 3 === 0 ? "✨" : (i % 3 === 1 ? "⭐" : "✦");
+      starsHtml += `<div class="scene-star" style="left:${leftPct}%; top:${topPct}%; --star-dur:${dur}s;">${symbol}</div>`;
     }
     sceneBgLayer.innerHTML = `
-      <div class="scene-cloud" style="top: 38px; right: 20px; font-size: 1.45rem; --drift-dur: 18s;">🌙</div>
+      <!-- Langit Malam: Bulan Sabit Emas & Awan Malam Melayang -->
+      <div class="scene-crescent-moon" style="top: 36px; left: 24px; font-size: 1.8rem;">🌙</div>
+      <div class="scene-cloud" style="top: 38px; right: 20px; font-size: 1.45rem; --drift-dur: 18s;">☁️</div>
       ${starsHtml}
-      <div class="scene-horizon-deco" style="opacity: 0.65;">
-        <span>✨</span><span>🌾</span><span>🌟</span><span>🌾</span><span>✨</span>
+
+      <!-- Hamparan Rumput Malam Alami di Tanah (Tanpa Bintang di Tanah) -->
+      <div class="scene-night-meadow">
+        <div class="meadow-grass left">
+          <span class="grass-stem" style="font-size: 1.45rem;">🌾</span>
+          <span class="grass-stem" style="font-size: 1.15rem; opacity: 0.75;">🌱</span>
+        </div>
+        <div class="meadow-grass right">
+          <span class="grass-stem" style="font-size: 1.2rem; opacity: 0.8;">🌱</span>
+          <span class="grass-stem" style="font-size: 1.5rem;">🌾</span>
+        </div>
       </div>
     `;
   } else if (safeScene === "snowy_winter") {
@@ -203,39 +215,81 @@ function renderSceneBackground(sceneKey) {
       </div>
     `;
   } else if (safeScene === "bakery_shop") {
-    // 7. Toko Roti (Etalase Roti Hangat, Secangkir Kopi, & Kue Manis)
+    // 7. Toko Roti (Etalase Kaca Roti Hangat & Awning Kanopi Manis)
     sceneBgLayer.innerHTML = `
-      <div class="scene-bakery-shelf">
-        <span>🥐</span><span>🥖</span><span>🍞</span>
+      <!-- Kanopi Tenda Toko Roti di Atas -->
+      <div class="bakery-awning">
+        <div class="bakery-sign">🥖 MOCHI BAKERY 🥐</div>
       </div>
-      <div class="scene-coffee">☕</div>
-      <div class="scene-cake">🍰</div>
-      <div class="scene-horizon-deco" style="bottom: 25%; opacity: 0.8;">
-        <span>🧁</span><span>🍩</span><span>🍪</span><span>🥞</span>
+
+      <!-- Lemari Kaca Etalase Toko Roti (Bakery Glass Showcase) -->
+      <div class="bakery-showcase">
+        <div class="showcase-glass-sheen"></div>
+
+        <!-- Rak Atas Etalase: Roti Hangat & Croissant -->
+        <div class="showcase-shelf shelf-top">
+          <div class="shelf-items">
+            <span class="pastry-item" title="Croissant">🥐</span>
+            <span class="pastry-item" title="Baguette">🥖</span>
+            <span class="pastry-item" title="Roti Tawar">🍞</span>
+          </div>
+          <div class="shelf-plank"></div>
+        </div>
+
+        <!-- Rak Tengah Etalase: Donat & Cupcake Manis -->
+        <div class="showcase-shelf shelf-mid">
+          <div class="shelf-items">
+            <span class="pastry-item" title="Cupcake">🧁</span>
+            <span class="pastry-item" title="Donut">🍩</span>
+            <span class="pastry-item" title="Cookie">🍪</span>
+          </div>
+          <div class="shelf-plank"></div>
+        </div>
+      </div>
+
+      <!-- Meja Konter Samping Pet: Kopi & Cake Slice -->
+      <div class="bakery-counter-decor">
+        <div class="counter-item left" title="Secangkir Kopi Hangat">☕</div>
+        <div class="counter-item right" title="Sepotong Kue Stroberi">🍰</div>
       </div>
     `;
   } else if (safeScene === "tropical_beach") {
-    // 8. Pantai Tropis (Matahari Cerah, Pohon Kelapa, Payung Pantai, & Kepiting)
+    // 8. Pantai Tropis (Matahari Cerah, Pohon Kelapa Menjulang Besar, Payung Pantai Lebar, & Kepiting)
     sceneBgLayer.innerHTML = `
       <div class="scene-sun" style="background: radial-gradient(circle, #ffe066 30%, #ff922b 100%);"></div>
-      <div class="scene-cloud" style="top: 40px; left: 24%; --drift-dur: 15s;">☁️</div>
+      <div class="scene-cloud" style="top: 36px; left: 24%; --drift-dur: 15s;">☁️</div>
       <div class="scene-palm">🌴</div>
       <div class="scene-umbrella">🏖️</div>
       <div class="scene-crab">🦀</div>
-      <div class="scene-horizon-deco" style="bottom: 22%; opacity: 0.7;">
-        <span>🐚</span><span>🌊</span><span>🐚</span>
-      </div>
+      <div class="beach-shell left">🐚</div>
+      <div class="beach-shell right">⭐</div>
     `;
   } else if (safeScene === "magic_forest") {
-    // 9. Hutan Ajaib (Pohon Rindang, Jamur Cahaya, Kupu-kupu, & Kilau Peri)
+    // 9. Hutan Rimba Ajaib (Pepohonan Rimbun Berlapis di Latar Belakang, Pohon Besar, Jamur Cahaya, & Kupu-kupu)
     sceneBgLayer.innerHTML = `
-      <div class="scene-big-tree">🌳</div>
-      <div class="scene-mushroom">🍄</div>
-      <div class="scene-butterfly" style="top: 72px; right: 28%; font-size: 2.2rem;">🦋</div>
-      <div class="scene-butterfly" style="top: 110px; left: 26%; font-size: 1.6rem; animation-delay: 1.2s;">✨</div>
-      <div class="scene-horizon-deco" style="bottom: 24%; opacity: 0.85;">
-        <span>🌿</span><span>🍀</span><span>🍄</span><span>🌱</span><span>🌿</span>
+      <!-- Kanopi Barisan Pepohonan Hutan di Latar Belakang -->
+      <div class="forest-canopy-back">
+        <span class="canopy-tree" style="left: 2%; font-size: 3.4rem;">🌲</span>
+        <span class="canopy-tree" style="left: 20%; font-size: 3.8rem;">🌳</span>
+        <span class="canopy-tree" style="left: 42%; font-size: 3.2rem;">🌲</span>
+        <span class="canopy-tree" style="left: 64%; font-size: 3.9rem;">🌳</span>
+        <span class="canopy-tree" style="left: 82%; font-size: 3.5rem;">🌲</span>
       </div>
+
+      <!-- Pepohonan Rindang Utama di Kiri & Kanan (Besar & Megah) -->
+      <div class="scene-big-tree left" title="Pohon Rindang">🌳</div>
+      <div class="scene-big-tree right" title="Pohon Cemara Kuno">🌲</div>
+
+      <!-- Jamur Hutan Menyala di Kanan & Semanggi Hutan di Kiri -->
+      <div class="scene-mushroom">🍄</div>
+      <div class="forest-floor-flora">
+        <span class="flora-sprout left">🌿</span>
+        <span class="flora-sprout right">🍀</span>
+      </div>
+
+      <!-- Kupu-kupu & Kilau Peri Ajaib -->
+      <div class="scene-butterfly" style="top: 68px; right: 26%; font-size: 2.1rem;">🦋</div>
+      <div class="scene-butterfly" style="top: 96px; left: 28%; font-size: 1.6rem; animation-delay: 1.2s;">✨</div>
     `;
   }
 }
