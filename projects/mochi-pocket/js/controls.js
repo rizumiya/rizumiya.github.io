@@ -260,7 +260,13 @@ if (btnCloseSettings) {
 if (characterForm) {
   characterForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const newName = (petNameInput ? petNameInput.value.trim() : "") || "Eri";
+    let newName = (petNameInput ? petNameInput.value.trim() : "") || "Eri";
+    if (pet.generation && pet.generation > 1) {
+      const genTag = `#${pet.generation}`;
+      newName = newName.replace(/#\d+$/, "").trim();
+      if (!newName) newName = "Eri";
+      newName = `${newName} ${genTag}`;
+    }
     const selectedRadio = document.querySelector('input[name="starter-form"]:checked');
     const chosenForm = selectedRadio ? selectedRadio.value : pet.activeForm;
     const selectedSceneRadio = document.querySelector('input[name="scene-bg"]:checked');

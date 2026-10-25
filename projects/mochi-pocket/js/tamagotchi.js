@@ -4,6 +4,7 @@
  */
 
 function feedPet() {
+  if (pet.isDead) return;
   if (pet.isSleeping) {
     say(`Zzz... ${petNameTag()} sedang tidur, tekan <span>D-Pad &#x25BC;&#xFE0E;</span> untuk membangunkanku~ 💤`);
     return;
@@ -26,6 +27,7 @@ function feedPet() {
 }
 
 function toggleSleep() {
+  if (pet.isDead) return;
   if (isPlayingMinigame) stopMinigame(false);
   if (isGameSelectorOpen) closeGameSelector();
 
@@ -46,7 +48,7 @@ function toggleSleep() {
 
 // Siklus Tamagotchi Otomatis (Tiap 25 detik)
 setInterval(() => {
-  if (!pet.isInitialized) return;
+  if (!pet.isInitialized || pet.isDead) return;
 
   if (pet.isSleeping) {
     pet.energy = clampStat(pet.energy + 5);
@@ -64,22 +66,32 @@ setInterval(() => {
     }
   }
 
+  checkPetCondition();
   renderDashboard();
   db.save(pet);
 }, 25000);
 
 // Pesan Idle Otomatis (Tiap 28 detik)
 setInterval(() => {
-  if (!pet.isInitialized || isPlayingMinigame || isGameSelectorOpen || document.hidden) return;
+  if (!pet.isInitialized || pet.isDead || isPlayingMinigame || isGameSelectorOpen || document.hidden) return;
   if (pet.isSleeping) {
     spawnBurstParticles(["💤"]);
     return;
   }
 
-  if (pet.hunger <= 25) {
-    say(`Kruyuk~ Perut ${petNameTag()} lapar nih (${pet.hunger}%)... Tekan <span>Tombol A</span> untuk memberi makan! 🍙`);
+  if (pet.isUnhappyTantrum) {
+    say(`Hmph! ${petNameTag()} lagi ngambek berat nih! Bahagiaku 0%! Elus aku dong sampai minimal 10%... 😤💢`);
     return;
   }
+
+  if (pet.hunger <= 25) {
+    say(`*Kruyuuuk~* Perut ${petNameTag()} bergetar kelaparan nih (${pet.hunger}%)... Tekan <span>Tombol A</span> untuk memberi makan! 🍙🥺`);
+    return;
+  } else if (pet.hunger <= 50) {
+    say(`*Kruyuk...* Perut ${petNameTag()} mulai lapar (${pet.hunger}%), ada rasa lapar yang bergetar nih~ 🍙`);
+    return;
+  }
+
   if (pet.energy <= 20) {
     say(`Hoaaam... Energi ${petNameTag()} tinggal ${pet.energy}%, tidurkan aku lewat <span>D-Pad &#x25BC;&#xFE0E;</span> yuk~ 💤`);
     return;

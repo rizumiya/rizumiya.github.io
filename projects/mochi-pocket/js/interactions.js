@@ -186,14 +186,14 @@ function animateCursorTracking() {
 }
 
 function startPetting(clientX) {
-  if (pet.isSleeping || isPlayingMinigame) return;
+  if (pet.isSleeping || pet.isDead || isPlayingMinigame) return;
   isPointerDown = true;
   lastDragX = clientX;
   rubDistanceAccumulated = 0;
 }
 
 function handlePettingMove(clientX, clientY) {
-  if (!isPointerDown || pet.isSleeping || isPlayingMinigame) return;
+  if (!isPointerDown || pet.isSleeping || pet.isDead || isPlayingMinigame) return;
 
   if (lastDragX !== null) {
     const deltaX = clientX - lastDragX;
@@ -213,14 +213,19 @@ function handlePettingMove(clientX, clientY) {
     if (rubDistanceAccumulated >= 130 && now - lastPetRewardTime > 2500) {
       lastPetRewardTime = now;
       rubDistanceAccumulated = 0;
+      const wasTantrum = Boolean(pet.isUnhappyTantrum);
       addExpAndStats({ exp: 5, happiness: 5 });
 
-      const happyLines = [
-        `Purrr~ Hangat dan nyaman sekali elusanmu! Makasih ya~ 💕`,
-        `Hihi geli tapi ${petNameTag()} suka banget dielus begitu! ✨`,
-        `Elusan terbaik di dunia! ${petNameTag()} sayang banget sama kamu~ 💖`
-      ];
-      say(randomPick(happyLines), 3500);
+      if (wasTantrum && !pet.isUnhappyTantrum) {
+        say(`Wah, elusanmu bikin ${petNameTag()} baikan lagi! Aku nggak ngambek lagi deh~ 🥰💖`, 4200);
+      } else {
+        const happyLines = [
+          `Purrr~ Hangat dan nyaman sekali elusanmu! Makasih ya~ 💕`,
+          `Hihi geli tapi ${petNameTag()} suka banget dielus begitu! ✨`,
+          `Elusan terbaik di dunia! ${petNameTag()} sayang banget sama kamu~ 💖`
+        ];
+        say(randomPick(happyLines), 3500);
+      }
     }
   }
   lastDragX = clientX;
@@ -255,7 +260,27 @@ function endPetting() {
 
 // Event Listeners Interaksi
 petInteractive.addEventListener("mouseenter", () => {
-  if (pet.isSleeping || isPlayingMinigame) return;
+  if (pet.isDead || pet.isSleeping || isPlayingMinigame) return;
+
+  // Efek terbangun kaget dari micro-sleep karena kelelahan
+  if (typeof isDrowsyNodding !== "undefined" && isDrowsyNodding) {
+    isDrowsyNodding = false;
+    petInteractive.classList.remove("drowsy-sleep");
+    switchState("surprised", 1300);
+    spawnBurstParticles(["💤", "💦", "✨"]);
+    say(
+      `Aah! ${petNameTag()} ketiduran... soalnya eri merasa lelah (Energi tinggal ${pet.energy}%)... Tidurkan aku lewat <span>D-Pad &#x25BC;&#xFE0E;</span> yuk~ 🥱💤`,
+      4800
+    );
+    return;
+  }
+
+  if (pet.isUnhappyTantrum) {
+    switchState("angry", 1200);
+    say(`Hmph! ${petNameTag()} lagi ngambek berat nih! Bahagiaku 0%! Elus aku atau ajak main dong sampai minimal 10%... 😤💢`, 3500);
+    return;
+  }
+
   if (currentState === "idle" && !isPointerDown) {
     const duration = activeSceneKey === "haunted_house" ? 920 : 820;
     switchState("surprised", duration);
@@ -268,7 +293,26 @@ petInteractive.addEventListener("mouseenter", () => {
 });
 
 petInteractive.addEventListener("click", () => {
-  if (pet.isSleeping || isPlayingMinigame) return;
+  if (pet.isDead || pet.isSleeping || isPlayingMinigame) return;
+
+  // Efek terbangun kaget dari micro-sleep saat di-tap/klik di HP
+  if (typeof isDrowsyNodding !== "undefined" && isDrowsyNodding) {
+    isDrowsyNodding = false;
+    petInteractive.classList.remove("drowsy-sleep");
+    switchState("surprised", 1300);
+    spawnBurstParticles(["💤", "💦", "✨"]);
+    say(
+      `Aah! ${petNameTag()} ketiduran... soalnya eri merasa lelah (Energi tinggal ${pet.energy}%)... Tidurkan aku lewat <span>D-Pad &#x25BC;&#xFE0E;</span> yuk~ 🥱💤`,
+      4800
+    );
+    return;
+  }
+
+  if (pet.isUnhappyTantrum) {
+    switchState("angry", 2200);
+    say(`Hmph! ${petNameTag()} lagi ngambek berat nih! Bahagiaku 0%! Elus aku atau ajak main dong sampai minimal 10%... 😤💢`, 3500);
+    return;
+  }
 
   const now = Date.now();
   clickTimestamps.push(now);

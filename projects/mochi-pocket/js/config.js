@@ -82,6 +82,9 @@ const DEFAULT_PET_STATE = {
   happiness: 90,
   energy: 95,
   isSleeping: false,
+  isDead: false,
+  isUnhappyTantrum: false,
+  generation: 1,
   createdAt: Date.now(),
   lastUpdatedAt: Date.now()
 };
@@ -220,4 +223,18 @@ function getGreetingByHour() {
   if (hour >= 11 && hour < 15) return "Selamat siang! Jangan lupa makan siang dan istirahat sejenak~ 🍙";
   if (hour >= 15 && hour < 18) return "Selamat sore! Hari ini menyenangkan sekali kan? 🌤️";
   return "Selamat malam! Istirahat yang cukup biar besok bugar lagi ya~ 🌙";
+}
+
+function getNextGenerationName(currentName) {
+  const raw = (currentName || "Eri").trim();
+  const match = raw.match(/^(.*?)(?:\s+#(\d+))?$/);
+  const baseName = match && match[1] && match[1].trim() ? match[1].trim() : "Eri";
+  const currentGen = match && match[2] ? parseInt(match[2], 10) : 1;
+  const nextGen = currentGen + 1;
+  return {
+    baseName,
+    currentGen,
+    nextGen,
+    nextFullName: `${baseName} #${nextGen}`
+  };
 }

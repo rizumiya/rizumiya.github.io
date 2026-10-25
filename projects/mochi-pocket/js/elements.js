@@ -53,13 +53,16 @@ const live2dStatusText = document.getElementById("live2d-status-text");
 const live2dModelSelect = document.getElementById("live2d-model-select");
 const live2dCustomUrl = document.getElementById("live2d-custom-url");
 
-// 6. Modal-Modal (Panduan, Karakter, Pengaturan)
+// 6. Modal-Modal (Panduan, Karakter, Pengaturan, Kematian)
 const guideModal = document.getElementById("guide-modal");
 const characterModal = document.getElementById("character-modal");
 const characterForm = document.getElementById("character-form");
 const settingsModal = document.getElementById("settings-modal");
 const settingsForm = document.getElementById("settings-form");
 const petNameInput = document.getElementById("pet-name-input");
+const deathModal = document.getElementById("death-modal");
+const btnAdoptNewGen = document.getElementById("btn-adopt-new-generation");
+const newGenBaseNameInput = document.getElementById("new-generation-base-name");
 
 // 7. HUD Mini-Game & Laci Game
 const minigameHud = document.getElementById("minigame-hud");

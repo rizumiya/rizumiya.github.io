@@ -1783,5 +1783,39 @@
       </div>
     </div>
   </div>
+
+  <!-- =========================================================
+       MODAL 4: KEMATIAN KARENA KELAPARAN & ADOPSI GENERASI BARU
+       ========================================================= -->
+  <div id="death-modal" class="modal-backdrop" hidden>
+    <div class="modal-card death-modal-card" role="dialog" aria-modal="true" aria-labelledby="death-modal-title">
+      <div class="modal-header death-header">
+        <h3 id="death-modal-title" class="death-title">🪦 Kenangan Terakhir</h3>
+      </div>
+      <div class="death-content">
+        <div class="death-tomb-avatar" aria-hidden="true">🪦👻</div>
+        <p class="death-message" id="death-message-text">
+          Oh tidak! Karena kelalaian dalam memberi makan hingga rasa lapar mencapai 100% (Kenyang 0%), <strong id="dead-pet-name">Eri</strong> telah berpulang ke surga Mochi... 😢
+        </p>
+        <div class="death-consequence-card">
+          <div class="consequence-label">⚠️ STEMPEL KELALAIAN PEMILIK</div>
+          <p class="consequence-desc">
+            Kamu harus mengadopsi karakter baru dengan kode nomor generasi yang <strong>tidak bisa dihapus</strong> sebagai bukti kelalaian!
+          </p>
+          <div class="death-name-input-group">
+            <label for="new-generation-base-name" class="death-input-label">Nama Karakter Baru:</label>
+            <div class="death-name-field-row">
+              <input type="text" id="new-generation-base-name" class="death-base-input" placeholder="Nama karakter baru..." maxlength="16">
+              <span id="death-gen-suffix" class="death-suffix-tag">#2</span>
+            </div>
+            <p id="death-name-error" class="death-name-error" hidden>Nama tidak boleh persis sama dengan karakter sebelumnya!</p>
+          </div>
+        </div>
+        <button type="button" id="btn-adopt-new-generation" class="death-adopt-btn">
+          🌱 Adopsi Karakter Baru (<span id="adopt-gen-label">Eri #2</span>)
+        </button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

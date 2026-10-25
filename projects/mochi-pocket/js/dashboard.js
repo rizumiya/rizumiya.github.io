@@ -404,7 +404,158 @@ function updateFormPickerLocks() {
   });
 }
 
+function getExpMultipliers() {
+  const levelMultiplier = Math.pow(1.1, Math.max(0, (pet.level || 1) - 1));
+  const happyVal = clampStat(pet.happiness);
+  // Kebahagiaan 100% -> happyPenalty = 1.0 (usaha normal sesuai level)
+  // Kebahagiaan 50%  -> happyPenalty = 1.5 (usaha setengah kali lebih berat)
+  // Kebahagiaan 0%   -> happyPenalty = 2.0 (usaha 2x lebih berat)
+  const happyPenalty = 1 + (1 - (happyVal / 100));
+  const totalMultiplier = levelMultiplier * happyPenalty;
+  return { levelMultiplier, happyPenalty, totalMultiplier };
+}
+
+let isDrowsyNodding = false;
+
+function checkPetCondition() {
+  if (pet.isDead) return;
+
+  // 1. Cek Kematian Kelaparan (Kenyang 0%)
+  if (pet.hunger <= 0) {
+    triggerPetDeath("starvation");
+    return;
+  }
+
+  // 2. Cek Marah Kebahagiaan 0% (Karakter ngambek sampai minimal 10%)
+  if (pet.happiness <= 0) {
+    pet.isUnhappyTantrum = true;
+  } else if (pet.isUnhappyTantrum && pet.happiness >= 10) {
+    pet.isUnhappyTantrum = false;
+  }
+
+  if (petInteractive) {
+    // Efek getaran di perut jika kenyang <= 50%
+    petInteractive.classList.toggle("stomach-rumble-active", pet.hunger <= 50);
+
+    // Efek ngambek berat jika kebahagiaan 0%
+    petInteractive.classList.toggle("unhappy-tantrum", Boolean(pet.isUnhappyTantrum));
+
+    // Efek tertidur mengantuk lelah jika energi <= 25% dan tidak sedang tidur resmi
+    if (pet.energy <= 25 && !pet.isSleeping && currentState === "idle") {
+      isDrowsyNodding = true;
+      petInteractive.classList.add("drowsy-sleep");
+    } else if (pet.energy > 25 || pet.isSleeping || currentState !== "idle") {
+      isDrowsyNodding = false;
+      petInteractive.classList.remove("drowsy-sleep");
+    }
+  }
+}
+
+function triggerPetDeath(cause = "starvation") {
+  pet.isDead = true;
+  pet.isSleeping = false;
+  if (typeof stopMinigame === "function" && isPlayingMinigame) stopMinigame(false);
+  if (typeof closeGameSelector === "function" && isGameSelectorOpen) closeGameSelector();
+
+  switchState("dead");
+  if (petInteractive) {
+    petInteractive.className = "pet-interactive state-dead";
+  }
+
+  db.save(pet);
+  openDeathModal();
+}
+
+function openDeathModal() {
+  const deadPetNameEl = document.getElementById("dead-pet-name");
+  const baseNameInput = document.getElementById("new-generation-base-name");
+  const suffixTag = document.getElementById("death-gen-suffix");
+  const adoptLabel = document.getElementById("adopt-gen-label");
+  const nameError = document.getElementById("death-name-error");
+
+  const { baseName, nextGen, nextFullName } = getNextGenerationName(pet.name);
+
+  if (deadPetNameEl) deadPetNameEl.textContent = pet.name || "Eri";
+  if (baseNameInput) {
+    baseNameInput.value = baseName;
+    baseNameInput.oninput = () => {
+      const cleanBase = baseNameInput.value.replace(/#\d+$/, "").trim() || baseName;
+      if (adoptLabel) adoptLabel.textContent = `${cleanBase} #${nextGen}`;
+      if (nameError) nameError.hidden = true;
+    };
+  }
+  if (suffixTag) suffixTag.textContent = `#${nextGen}`;
+  if (adoptLabel) adoptLabel.textContent = nextFullName;
+  if (nameError) nameError.hidden = true;
+
+  if (deathModal) deathModal.hidden = false;
+}
+
+async function adoptNewGenerationPet() {
+  const baseNameInput = document.getElementById("new-generation-base-name");
+  const nameError = document.getElementById("death-name-error");
+
+  const { baseName: prevBase, nextGen } = getNextGenerationName(pet.name);
+  let chosenBase = baseNameInput ? baseNameInput.value.trim() : prevBase;
+  chosenBase = chosenBase.replace(/#\d+$/, "").trim() || prevBase;
+
+  const newFullName = `${chosenBase} #${nextGen}`;
+
+  if (newFullName.toLowerCase() === (pet.name || "").toLowerCase()) {
+    if (nameError) {
+      nameError.textContent = "Nama tidak boleh persis sama dengan karakter sebelumnya!";
+      nameError.hidden = false;
+    }
+    return;
+  }
+
+  // Buat Karakter Baru Generasi Berikutnya
+  pet = {
+    ...DEFAULT_PET_STATE,
+    id: "main",
+    name: newFullName,
+    isInitialized: true,
+    activeForm: "orb",
+    theme: pet.theme || "obsidian",
+    scenePreference: pet.scenePreference || "auto",
+    level: 1,
+    exp: 0,
+    hunger: 80,
+    happiness: 80,
+    energy: 100,
+    isSleeping: false,
+    isDead: false,
+    isUnhappyTantrum: false,
+    generation: nextGen,
+    createdAt: Date.now(),
+    lastUpdatedAt: Date.now()
+  };
+
+  await db.save(pet);
+  if (deathModal) deathModal.hidden = true;
+
+  switchState("idle");
+  if (petInteractive) {
+    petInteractive.className = "pet-interactive state-idle";
+  }
+
+  renderDashboard();
+  say(`Halo dunia! Aku ${petNameTag()} (Generasi ke-${pet.generation})! Kali ini rawat aku dengan baik ya~ 🍙✨`, 6500);
+  spawnBurstParticles(["✨", "🌸", "🍙", "💖"]);
+}
+
+if (btnAdoptNewGen) {
+  btnAdoptNewGen.addEventListener("click", adoptNewGenerationPet);
+}
+
 function renderDashboard() {
+  if (pet.isDead) {
+    triggerPetDeath();
+    return;
+  }
+
+  checkPetCondition();
+
   petNameDisplay.textContent = pet.name || "Eri";
   petLevelBadge.textContent = `Lv.${pet.level}`;
 
@@ -416,14 +567,14 @@ function renderDashboard() {
   updateScenePickerLocks();
   updateFormPickerLocks();
 
-  const difficultyMultiplier = Math.pow(1.1, Math.max(0, (pet.level || 1) - 1));
+  const { levelMultiplier, totalMultiplier } = getExpMultipliers();
   updateIconGauge(gaugeHunger, pet.hunger, "Kenyang");
   updateIconGauge(gaugeHappy, pet.happiness, "Bahagia");
   updateIconGauge(gaugeEnergy, pet.energy, "Energi");
   updateIconGauge(
     gaugeExp,
     pet.exp,
-    `EXP Lv.${pet.level} (Usaha x${difficultyMultiplier.toFixed(2)})`
+    `EXP Lv.${pet.level} (Usaha x${totalMultiplier.toFixed(2)}: Level x${levelMultiplier.toFixed(2)}, Bahagia ${pet.happiness}%)`
   );
 
   if (live2dModelSelect && pet.live2dPreset) {
@@ -432,15 +583,18 @@ function renderDashboard() {
 }
 
 function addExpAndStats({ exp = 0, hunger = 0, happiness = 0, energy = 0 }) {
+  if (pet.isDead) return;
+
   pet.hunger = clampStat(pet.hunger + hunger);
   pet.happiness = clampStat(pet.happiness + happiness);
   pet.energy = clampStat(pet.energy + energy);
 
-  // Penambahan EXP dinaikkan 0.1x (+10% usaha) di setiap kenaikan level sebelumnya
-  const prevLevel = pet.level || 1;
-  const difficultyMultiplier = Math.pow(1.1, Math.max(0, prevLevel - 1));
-  const scaledExp = exp > 0 ? exp / difficultyMultiplier : exp;
+  // Penambahan EXP dipengaruhi level (+10% per level) & kebahagiaan (50% bahagia = 1.5x lebih berat)
+  const { totalMultiplier } = getExpMultipliers();
+  const scaledExp = exp > 0 ? exp / totalMultiplier : exp;
   pet.exp = Math.max(0, Number((pet.exp + scaledExp).toFixed(2)));
+
+  checkPetCondition();
 
   let leveledUp = false;
   let newlyUnlockedScene = null;
