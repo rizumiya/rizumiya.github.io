@@ -201,9 +201,6 @@ function renderSceneBackground(sceneKey) {
       <div class="scene-pine">🌲</div>
       <div class="scene-snowman">☃️</div>
       ${flakesHtml}
-      <div class="scene-horizon-deco" style="bottom: 24%; opacity: 0.75;">
-        <span>❄️</span><span>🏔️</span><span>❄️</span>
-      </div>
     `;
   } else if (safeScene === "bakery_shop") {
     // 7. Toko Roti (Etalase Kaca Roti Hangat & Awning Kanopi Manis)

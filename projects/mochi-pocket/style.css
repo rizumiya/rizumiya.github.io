@@ -865,19 +865,6 @@ body {
   }
 }
 
-.scene-horizon-deco {
-  position: absolute;
-  bottom: 27%;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-around;
-  padding: 0 14px;
-  font-size: 1.65rem;
-  opacity: 0.95;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
-}
-
 /* Dekorasi Khusus Salju (Pohon Cemara & Manusia Salju Mepet Garis Horizon di Belakang Karakter) */
 .scene-snowman {
   position: absolute;
@@ -1442,14 +1429,14 @@ body {
   }
 }
 
-/* Hantu Melayang Lembut di Langit */
+/* Hantu Melayang Lembut di Atas Lilin Makam Kanan */
 .scene-ghost-float {
   position: absolute;
-  top: 86px;
-  left: 12%;
-  font-size: 1.35rem;
+  bottom: 39%;
+  right: 7%;
+  font-size: 1.45rem;
   pointer-events: none;
-  filter: drop-shadow(0 0 10px rgba(192, 132, 252, 0.75));
+  filter: drop-shadow(0 0 12px rgba(192, 132, 252, 0.85));
   animation: sceneGhostDrift 3.6s ease-in-out infinite alternate;
   z-index: 3;
 }
@@ -1457,10 +1444,10 @@ body {
 @keyframes sceneGhostDrift {
   0% {
     transform: translate3d(0, 0, 0) scale(0.92);
-    opacity: 0.55;
+    opacity: 0.65;
   }
   100% {
-    transform: translate3d(8px, -14px, 0) scale(1.08);
+    transform: translate3d(-3px, -12px, 0) scale(1.06);
     opacity: 0.95;
   }
 }
