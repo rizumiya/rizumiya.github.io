@@ -74,45 +74,45 @@ const SCENE_ORDER = [
 const SCENE_META = {
   default: {
     id: "default",
-    unlockLevel: 1,
+    unlockLevel: 2,
     icon: "🏠",
     name: "Kamar",
-    label: "🏠 Kamar (Lv.1)"
+    label: "🏠 Kamar (Lv.2)"
   },
   sunny_park: {
     id: "sunny_park",
-    unlockLevel: 2,
+    unlockLevel: 4,
     icon: "🌤️",
     name: "Taman",
-    label: "🌤️ Taman (Lv.2)"
+    label: "🌤️ Taman (Lv.4)"
   },
   rainy_day: {
     id: "rainy_day",
-    unlockLevel: 4,
+    unlockLevel: 6,
     icon: "🌧️",
     name: "Hujan",
-    label: "🌧️ Hujan (Lv.4)"
+    label: "🌧️ Hujan (Lv.6)"
   },
   flower_garden: {
     id: "flower_garden",
-    unlockLevel: 6,
+    unlockLevel: 8,
     icon: "🌸",
     name: "Bunga",
-    label: "🌸 Bunga (Lv.6)"
+    label: "🌸 Bunga (Lv.8)"
   },
   haunted_house: {
     id: "haunted_house",
-    unlockLevel: 8,
+    unlockLevel: 10,
     icon: "🪦",
     name: "Kuburan",
-    label: "🪦 Kuburan (Lv.8)"
+    label: "🪦 Kuburan (Lv.10)"
   },
   starry_night: {
     id: "starry_night",
-    unlockLevel: 10,
+    unlockLevel: 12,
     icon: "🌌",
     name: "Bintang",
-    label: "🌌 Bintang (Lv.10)"
+    label: "🌌 Bintang (Lv.12)"
   }
 };
 
@@ -307,7 +307,7 @@ let activeSceneKey = "default";
 let renderedSceneKey = "";
 
 function getHighestUnlockedScene(level = 1) {
-  let best = "default";
+  let best = "";
   SCENE_ORDER.forEach((key) => {
     if (level >= SCENE_META[key].unlockLevel) {
       best = key;
@@ -325,24 +325,40 @@ function resolveActiveScene() {
 }
 
 function renderSceneBackground(sceneKey) {
-  const safeScene = SCENE_META[sceneKey] ? sceneKey : "default";
+  const safeScene = (sceneKey && SCENE_META[sceneKey])
+    ? sceneKey
+    : getHighestUnlockedScene(pet.level || 1);
   activeSceneKey = safeScene;
 
   if (petStageEl) {
-    petStageEl.dataset.scene = safeScene;
+    petStageEl.dataset.scene = safeScene || "none";
   }
 
-  const meta = SCENE_META[safeScene];
   if (petSceneBadge) {
-    petSceneBadge.textContent = meta.icon;
-    petSceneBadge.title = `Latar: ${meta.name} (Terbuka Lv.${meta.unlockLevel})`;
+    if (safeScene && SCENE_META[safeScene]) {
+      const meta = SCENE_META[safeScene];
+      petSceneBadge.textContent = meta.icon;
+      petSceneBadge.title = `Latar: ${meta.name} (Terbuka Lv.${meta.unlockLevel})`;
+    } else {
+      petSceneBadge.textContent = "🎮";
+      petSceneBadge.title = "Latar: Netral (Naik ke Lv.2 untuk membuka Kamar!)";
+    }
   }
 
   if (!sceneBgLayer || renderedSceneKey === safeScene) return;
   renderedSceneKey = safeScene;
   sceneBgLayer.innerHTML = "";
 
-  if (safeScene === "sunny_park") {
+  if (safeScene === "default") {
+    sceneBgLayer.innerHTML = `
+      <div class="scene-room-window" title="Jendela Kamar">🪟</div>
+      <div class="scene-room-frame" title="Lukisan Foto">🖼️</div>
+      <div class="scene-room-clock" title="Jam Dinding">⏰</div>
+      <div class="scene-room-lamp" title="Lampu Hangat">💡</div>
+      <div class="scene-room-plant" title="Tanaman Hias">🪴</div>
+      <div class="scene-room-rug" title="Karpet Lembut"></div>
+    `;
+  } else if (safeScene === "sunny_park") {
     sceneBgLayer.innerHTML = `
       <div class="scene-sun"></div>
       <div class="scene-cloud" style="top: 42px; left: 12%; --drift-dur: 11s;">☁️</div>
@@ -603,6 +619,9 @@ function renderDashboard() {
 
 function getSceneUnlockDialogue(sceneKey) {
   const n = petNameTag();
+  if (sceneKey === "default") {
+    return `🎉 Latar Baru Terbuka: <span>Kamar</span>! Hore, ${n} sekarang punya kamar sendiri yang hangat & nyaman~ 🏠`;
+  }
   if (sceneKey === "sunny_park") {
     return `🌤️ Latar Baru Terbuka: <span>Taman</span>! Wah udaranya segar banget, ayo jalan-jalan bareng ${n}~`;
   }

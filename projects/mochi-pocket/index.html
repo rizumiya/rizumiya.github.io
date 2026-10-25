@@ -333,226 +333,201 @@
             </div>
 
             <!-- =================================================
-                 WUJUD 3: HAMSTER MOCHI (Siluet Utuh Gembul Sesuai Referensi + Pegang Kuaci)
+                 WUJUD 3: HAMSTER MOCHI (Kepala & Badan Mandiri, Kepala Menoleh Luwes Sesuai Kursor)
                  ================================================= -->
             <div id="form-hamster" class="pet-form form-animal" hidden>
               <div class="animal-stage">
                 <div class="lifelike-actor">
                   <div class="chara-rig hamster-rig">
                     <div class="chara-squash">
-                      <!-- Telinga Kiri & Kanan Hamster (Bisa Bergerak Halus) -->
-                      <svg class="ear hamster-ear-full left" viewBox="0 0 100 100" fill="none">
-                        <path
-                          d="M 38 86 C 14 68, 8 28, 28 14 C 48 0, 82 22, 86 58 Z"
-                          fill="#f4caa3"
-                          stroke="#3b2322"
-                          stroke-width="6.5"
-                          stroke-linejoin="round"
-                        />
-                        <path
-                          d="M 44 76 C 28 60, 24 34, 36 24 C 48 16, 68 30, 72 54 Z"
-                          fill="#fff7f0"
-                          stroke="#3b2322"
-                          stroke-width="4.5"
-                          stroke-linejoin="round"
-                        />
-                        <path d="M 44 74 C 34 62, 34 46, 44 40 C 54 36, 64 46, 66 58 Z" fill="#f7a1b0" />
-                      </svg>
+                      <!-- 1. Badan Bawah Hamster (Duduk Gembul, Kaki & Ekor Pom-Pom, Memegang Kuaci) -->
+                      <div class="lower-body-group hamster-lower-body">
+                        <svg class="svg-full" viewBox="0 0 240 160" fill="none">
+                          <defs>
+                            <clipPath id="hamsterLowerClip">
+                              <path d="M 38 28 C 18 55, 14 102, 26 128 C 38 150, 68 154, 120 154 C 172 154, 202 150, 214 128 C 226 102, 222 55, 202 28 Z" />
+                            </clipPath>
+                          </defs>
 
-                      <svg class="ear hamster-ear-full right" viewBox="0 0 100 100" fill="none">
-                        <path
-                          d="M 62 86 C 86 68, 92 28, 72 14 C 52 0, 18 22, 14 58 Z"
-                          fill="#f4caa3"
-                          stroke="#3b2322"
-                          stroke-width="6.5"
-                          stroke-linejoin="round"
-                        />
-                        <path
-                          d="M 56 76 C 72 60, 76 34, 64 24 C 52 16, 32 30, 28 54 Z"
-                          fill="#fff7f0"
-                          stroke="#3b2322"
-                          stroke-width="4.5"
-                          stroke-linejoin="round"
-                        />
-                        <path d="M 56 74 C 66 62, 66 46, 56 40 C 46 36, 36 46, 34 58 Z" fill="#f7a1b0" />
-                      </svg>
-
-                      <!-- Siluet Tubuh & Kepala Menyatu (Kepala Bulat Mochi Penuh, Tanpa Garis Alis) -->
-                      <svg class="hamster-fullbody-svg" viewBox="0 0 320 330" fill="none">
-                        <defs>
-                          <clipPath id="hamsterBodyClip">
-                            <path
-                              d="M 92 48 C 122 14, 198 14, 228 48 C 256 76, 264 118, 252 154 C 249 163, 242 170, 238 175 C 258 198, 258 250, 232 278 C 214 294, 182 290, 160 278 C 138 290, 106 294, 88 278 C 62 250, 62 198, 82 175 C 78 170, 71 163, 68 154 C 56 118, 64 76, 92 48 Z"
-                            />
-                          </clipPath>
-                          <linearGradient id="hamsterAngryGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="#6b111b" stop-opacity="0.72" />
-                            <stop offset="52%" stop-color="#b91c1c" stop-opacity="0.34" />
-                            <stop offset="100%" stop-color="#b91c1c" stop-opacity="0" />
-                          </linearGradient>
-                        </defs>
-
-                        <!-- Ekor Pom-Pom Putih Mungil di Kanan Bawah -->
-                        <path
-                          d="M 234 256 C 248 250, 258 260, 252 270 C 260 276, 252 288, 240 284 C 232 286, 226 274, 234 256 Z"
-                          fill="#ffffff"
-                          stroke="#3b2322"
-                          stroke-width="6"
-                          stroke-linejoin="round"
-                        />
-
-                        <!-- Kaki Bawah Mungil Kiri & Kanan -->
-                        <path
-                          d="M 94 276 C 78 282, 76 300, 94 300 C 110 300, 118 290, 118 282 Z"
-                          fill="#f4caa3"
-                          stroke="#3b2322"
-                          stroke-width="6"
-                          stroke-linejoin="round"
-                        />
-                        <path
-                          d="M 226 276 C 242 282, 244 300, 226 300 C 210 300, 202 290, 202 282 Z"
-                          fill="#f4caa3"
-                          stroke="#3b2322"
-                          stroke-width="6"
-                          stroke-linejoin="round"
-                        />
-
-                        <!-- Isi Warna Bulu Hamster (Krem-Persik di Atas & Samping + Lengkungan Putih dari Antara Mata ke Perut) -->
-                        <g clip-path="url(#hamsterBodyClip)">
-                          <!-- Warna Dasar Bulu Krem-Persik Hangat -->
-                          <rect x="40" y="10" width="240" height="295" fill="#f4caa3" />
-                          <!-- Shading Halus di Tepi Pipi & Pinggul -->
+                          <!-- Ekor Pom-Pom Putih Mungil di Kanan Belakang -->
                           <path
-                            d="M 66 80 C 54 135, 56 240, 88 284 L 48 284 L 48 80 Z"
-                            fill="#eab98d"
-                            opacity="0.5"
-                          />
-                          <path
-                            d="M 254 80 C 266 135, 264 240, 232 284 L 272 284 L 272 80 Z"
-                            fill="#eab98d"
-                            opacity="0.5"
-                          />
-
-                          <!-- Pola Putih Khas Hamster (Melengkung Halus dari Antara Mata ke Pipi Gembul & Perut) -->
-                          <path
-                            d="M 160 104 C 145 104, 134 134, 98 138 C 78 140, 68 134, 58 144 L 58 295 L 262 295 L 262 144 C 252 134, 242 140, 222 138 C 186 134, 175 104, 160 104 Z"
+                            d="M 194 116 C 210 110, 222 122, 216 132 C 224 138, 216 148, 202 144 C 194 144, 188 134, 194 116 Z"
                             fill="#ffffff"
-                          />
-
-                          <!-- Shading Krem Lembut di Bawah Perut -->
-                          <path
-                            d="M 76 262 C 102 284, 136 284, 160 272 C 184 284, 218 284, 244 262 L 248 295 L 72 295 Z"
-                            fill="#f5e6d6"
-                          />
-
-                          <!-- Bayangan Wajah Gelap/Merah Padam Saat Marah -->
-                          <rect
-                            class="hamster-angry-shade"
-                            x="40"
-                            y="10"
-                            width="240"
-                            height="185"
-                            fill="url(#hamsterAngryGrad)"
-                          />
-                        </g>
-
-                        <!-- Garis Outline Utama Tubuh & Kepala Bulat Gembul Hamster -->
-                        <path
-                          d="M 92 48 C 122 14, 198 14, 228 48 C 256 76, 264 118, 252 154 C 249 163, 242 170, 238 175 C 258 198, 258 250, 232 278 C 214 294, 182 290, 160 278 C 138 290, 106 294, 88 278 C 62 250, 62 198, 82 175 C 78 170, 71 163, 68 154 C 56 118, 64 76, 92 48 Z"
-                          stroke="#3b2322"
-                          stroke-width="6.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-
-                        <!-- Jambul Bulu Pipi Kiri & Kanan (4 Helai Mencuat Keluar) -->
-                        <path d="M 63 116 Q 48 115 42 122" stroke="#3b2322" stroke-width="5.5" stroke-linecap="round" />
-                        <path d="M 63 138 Q 48 142 42 151" stroke="#3b2322" stroke-width="5.5" stroke-linecap="round" />
-                        <path d="M 257 116 Q 272 115 278 122" stroke="#3b2322" stroke-width="5.5" stroke-linecap="round" />
-                        <path d="M 257 138 Q 272 142 278 151" stroke="#3b2322" stroke-width="5.5" stroke-linecap="round" />
-
-                        <!-- Lipatan Pinggang Pipi -->
-                        <path d="M 80 174 Q 90 182 98 180" stroke="#3b2322" stroke-width="5.5" stroke-linecap="round" />
-                        <path d="M 240 174 Q 230 182 222 180" stroke="#3b2322" stroke-width="5.5" stroke-linecap="round" />
-
-                        <!-- Tangan Mungil Bentuk 'C' Memegang Camilan Biji Bunga Matahari / Biskuit -->
-                        <g class="hamster-hands-svg">
-                          <!-- Camilan Kuaci / Biji Bunga Matahari Gembul di Tengah Dada -->
-                          <path
-                            d="M 160 176 C 143 186, 144 214, 160 222 C 176 214, 177 186, 160 176 Z"
-                            fill="#5c3d28"
                             stroke="#3b2322"
                             stroke-width="5"
                             stroke-linejoin="round"
                           />
-                          <path d="M 160 182 L 160 215" stroke="#fef3c7" stroke-width="3" stroke-linecap="round" />
-                          <path d="M 153 188 Q 150 200 154 211" stroke="#fef3c7" stroke-width="2" stroke-linecap="round" opacity="0.8" />
-                          <path d="M 167 188 Q 170 200 166 211" stroke="#fef3c7" stroke-width="2" stroke-linecap="round" opacity="0.8" />
 
-                          <!-- Bayangan Lembut di Bawah Tangan -->
-                          <path d="M 114 214 Q 134 222 144 210" stroke="#f0d5be" stroke-width="6" stroke-linecap="round" />
-                          <path d="M 206 214 Q 186 222 176 210" stroke="#f0d5be" stroke-width="6" stroke-linecap="round" />
-
-                          <!-- Tangan Putih Kiri & Kanan Melengkung Memegang Kuaci -->
+                          <!-- Kaki Bawah Kiri & Kanan -->
                           <path
-                            d="M 114 188 C 138 182, 148 192, 148 202 C 148 212, 136 218, 118 212"
-                            fill="#ffffff"
+                            d="M 54 136 C 38 142, 36 156, 54 156 C 70 156, 78 148, 78 140 Z"
+                            fill="#f4caa3"
                             stroke="#3b2322"
-                            stroke-width="5.8"
-                            stroke-linecap="round"
+                            stroke-width="5"
                             stroke-linejoin="round"
                           />
                           <path
-                            d="M 206 188 C 182 182, 172 192, 172 202 C 172 212, 184 218, 202 212"
-                            fill="#ffffff"
+                            d="M 186 136 C 202 142, 204 156, 186 156 C 170 156, 162 148, 162 140 Z"
+                            fill="#f4caa3"
                             stroke="#3b2322"
-                            stroke-width="5.8"
-                            stroke-linecap="round"
+                            stroke-width="5"
                             stroke-linejoin="round"
                           />
-                        </g>
-                      </svg>
 
-                      <!-- Fitur Wajah Interaktif Hamster (Mata Ikut Kursor, Pipi Berkilau, Hidung & Mulut Mungil) -->
-                      <div class="head-group hamster-face-overlay parallax-head">
-                        <div class="face-features">
-                          <div class="eyes-row hamster-eyes-row">
-                            <div class="eye-socket hamster-eye-socket">
-                              <div class="eye-ball tracking-eye">
-                                <div class="eye-iris tracking-iris">
-                                  <div class="shine-large"></div>
-                                  <div class="shine-small"></div>
+                          <!-- Siluet Badan Bawah Gembul Mochi -->
+                          <path
+                            d="M 38 28 C 18 55, 14 102, 26 128 C 38 150, 68 154, 120 154 C 172 154, 202 150, 214 128 C 226 102, 222 55, 202 28 Z"
+                            fill="#ffffff"
+                            stroke="#3b2322"
+                            stroke-width="5.5"
+                            stroke-linejoin="round"
+                          />
+
+                          <!-- Sisi Paha Krem-Peach di Kiri & Kanan -->
+                          <g clip-path="url(#hamsterLowerClip)">
+                            <path d="M 14 28 C 14 70, 24 120, 65 145 L 14 154 Z" fill="#f4caa3" />
+                            <path d="M 226 28 C 226 70, 216 120, 175 145 L 226 154 Z" fill="#f4caa3" />
+                            <path d="M 26 110 C 35 130, 52 140, 65 145" stroke="#3b2322" stroke-width="4.5" stroke-linecap="round" fill="none" />
+                            <path d="M 214 110 C 205 130, 188 140, 175 145" stroke="#3b2322" stroke-width="4.5" stroke-linecap="round" fill="none" />
+                          </g>
+
+                          <!-- Tangan Mungil Hamster Memegang Biji Kuaci di Depan Dada -->
+                          <g class="hamster-hands-group">
+                            <!-- Biji Kuaci -->
+                            <path
+                              d="M 120 48 C 113 58, 110 74, 120 86 C 130 74, 127 58, 120 48 Z"
+                              fill="#4a3728"
+                              stroke="#2e1f14"
+                              stroke-width="2.5"
+                            />
+                            <path d="M 120 54 L 120 80" stroke="#f4caa3" stroke-width="1.5" stroke-linecap="round" />
+                            <path d="M 116 62 Q 115 72 118 78" stroke="#d5bba2" stroke-width="1.2" fill="none" />
+
+                            <!-- Tangan Kiri Mungil -->
+                            <path
+                              d="M 96 66 C 96 58, 114 62, 116 72 C 116 78, 106 82, 98 76 Z"
+                              fill="#ffffff"
+                              stroke="#3b2322"
+                              stroke-width="4.5"
+                              stroke-linejoin="round"
+                            />
+                            <!-- Tangan Kanan Mungil -->
+                            <path
+                              d="M 144 66 C 144 58, 126 62, 124 72 C 124 78, 134 82, 142 76 Z"
+                              fill="#ffffff"
+                              stroke="#3b2322"
+                              stroke-width="4.5"
+                              stroke-linejoin="round"
+                            />
+                          </g>
+                        </svg>
+                      </div>
+
+                      <!-- 2. Kepala Hamster Mandiri (Menoleh & Miring Sesuai Kursor Seperti Kucing & Shiba) -->
+                      <div class="head-group hamster-head-group parallax-head">
+                        <!-- Telinga Bundar Kiri & Kanan Hamster -->
+                        <svg class="ear hamster-ear left" viewBox="0 0 100 100" fill="none">
+                          <path
+                            d="M 38 86 C 14 68, 8 28, 28 14 C 48 0, 82 22, 86 58 Z"
+                            fill="#f4caa3"
+                            stroke="#3b2322"
+                            stroke-width="6.5"
+                            stroke-linejoin="round"
+                          />
+                          <path
+                            d="M 44 76 C 28 60, 24 34, 36 24 C 48 16, 68 30, 72 54 Z"
+                            fill="#fff7f0"
+                            stroke="#3b2322"
+                            stroke-width="4.5"
+                            stroke-linejoin="round"
+                          />
+                          <path d="M 44 74 C 34 62, 34 46, 44 40 C 54 36, 64 46, 66 58 Z" fill="#f7a1b0" />
+                        </svg>
+
+                        <svg class="ear hamster-ear right" viewBox="0 0 100 100" fill="none">
+                          <path
+                            d="M 62 86 C 86 68, 92 28, 72 14 C 52 0, 18 22, 14 58 Z"
+                            fill="#f4caa3"
+                            stroke="#3b2322"
+                            stroke-width="6.5"
+                            stroke-linejoin="round"
+                          />
+                          <path
+                            d="M 56 76 C 72 60, 76 34, 64 24 C 52 16, 32 30, 28 54 Z"
+                            fill="#fff7f0"
+                            stroke="#3b2322"
+                            stroke-width="4.5"
+                            stroke-linejoin="round"
+                          />
+                          <path d="M 56 74 C 66 62, 66 46, 56 40 C 46 36, 36 46, 34 58 Z" fill="#f7a1b0" />
+                        </svg>
+
+                        <!-- Kumis Mungil Kiri & Kanan Hamster -->
+                        <div class="whiskers-group hamster-whiskers parallax-whiskers">
+                          <svg class="whiskers-side left" viewBox="0 0 65 55" fill="none">
+                            <path d="M 58 18 Q 30 14 8 20" stroke="#3b2322" stroke-width="4" stroke-linecap="round" />
+                            <path d="M 56 32 Q 32 32 10 40" stroke="#3b2322" stroke-width="4" stroke-linecap="round" />
+                          </svg>
+                          <svg class="whiskers-side right" viewBox="0 0 65 55" fill="none">
+                            <path d="M 7 18 Q 35 14 57 20" stroke="#3b2322" stroke-width="4" stroke-linecap="round" />
+                            <path d="M 9 32 Q 33 32 55 40" stroke="#3b2322" stroke-width="4" stroke-linecap="round" />
+                          </svg>
+                        </div>
+
+                        <!-- Bentuk Kepala Bulat Gembul Mochi Hamster -->
+                        <div class="head-shape hamster-head-shape">
+                          <!-- Pola Bulu Krem-Persik & Putih Lengkung Pipi -->
+                          <svg class="svg-full hamster-head-pattern" viewBox="0 0 264 205" fill="none">
+                            <rect width="264" height="205" fill="#f4caa3" />
+                            <path
+                              d="M 132 86 C 118 86, 105 116, 72 120 C 45 122, 25 118, 0 128 L 0 205 L 264 205 L 264 128 C 239 118, 219 122, 192 120 C 159 116, 146 86, 132 86 Z"
+                              fill="#ffffff"
+                            />
+                            <!-- Jambul Bulu Pipi Halus -->
+                            <path d="M 2 135 Q 22 136 28 144" stroke="#3b2322" stroke-width="3.5" stroke-linecap="round" fill="none" opacity="0.3" />
+                            <path d="M 262 135 Q 242 136 236 144" stroke="#3b2322" stroke-width="3.5" stroke-linecap="round" fill="none" opacity="0.3" />
+                          </svg>
+
+                          <!-- Fitur Wajah Interaktif Hamster (Mata Tracking, Pipi Coral Berkilau, Hidung Pink & Mulut 'ω') -->
+                          <div class="face-features">
+                            <div class="eyes-row hamster-eyes-row">
+                              <div class="eye-socket hamster-eye-socket">
+                                <div class="eye-ball tracking-eye">
+                                  <div class="eye-iris tracking-iris">
+                                    <div class="shine-large"></div>
+                                    <div class="shine-small"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="eye-socket hamster-eye-socket">
+                                <div class="eye-ball tracking-eye">
+                                  <div class="eye-iris tracking-iris">
+                                    <div class="shine-large"></div>
+                                    <div class="shine-small"></div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                            <div class="eye-socket hamster-eye-socket">
-                              <div class="eye-ball tracking-eye">
-                                <div class="eye-iris tracking-iris">
-                                  <div class="shine-large"></div>
-                                  <div class="shine-small"></div>
-                                </div>
-                              </div>
+
+                            <!-- Pipi Coral-Pink dengan Kilau Ganda Khas Referensi -->
+                            <div class="blush-row hamster-blush-row parallax-blush">
+                              <div class="blush hamster-cheek"></div>
+                              <div class="blush hamster-cheek"></div>
                             </div>
-                          </div>
 
-                          <!-- Pipi Coral-Pink dengan Kilau Putih Kecil Sesuai Referensi -->
-                          <div class="blush-row hamster-blush-row parallax-blush">
-                            <div class="blush hamster-cheek"></div>
-                            <div class="blush hamster-cheek"></div>
-                          </div>
-
-                          <!-- Hidung Pink Mungil & Mulut Senyum 'ω' Imut -->
-                          <div class="muzzle hamster-muzzle parallax-muzzle">
-                            <div class="nose hamster-nose-pink"></div>
-                            <svg class="mouth-svg hamster-mouth-svg" viewBox="0 0 46 24" fill="none">
-                              <path
-                                d="M 11 6 Q 17 16 23 6 Q 29 16 35 6"
-                                stroke="#3b2322"
-                                stroke-width="4.2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              />
-                            </svg>
+                            <!-- Hidung Pink Mungil & Mulut Senyum 'ω' Imut -->
+                            <div class="muzzle hamster-muzzle parallax-muzzle">
+                              <div class="nose hamster-nose-pink"></div>
+                              <svg class="mouth-svg hamster-mouth-svg" viewBox="0 0 46 24" fill="none">
+                                <path
+                                  d="M 11 6 Q 17 16 23 6 Q 29 16 35 6"
+                                  stroke="#3b2322"
+                                  stroke-width="4.2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                              </svg>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -998,7 +973,7 @@
 
             <!-- Panel 2: Latar Karakter (Terbuka per Kelipatan 2 Level) -->
             <div class="char-panel" data-panel="scene" role="tabpanel" hidden>
-              <p class="char-panel-hint">Latar baru terbuka setiap naik <strong>2 level</strong>.</p>
+              <p class="char-panel-hint">Latar baru terbuka setiap naik <strong>2 level</strong> (Kamar di Lv.2, Taman di Lv.4, dst).</p>
               <div class="pick-grid" id="scene-picker-options">
                 <label class="pick-card">
                   <input type="radio" name="scene-bg" value="auto" checked>
