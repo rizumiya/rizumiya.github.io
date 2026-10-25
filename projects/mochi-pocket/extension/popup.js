@@ -105,6 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Tombol Buka Web Console
   btnOpenConsole.addEventListener("click", () => {
-    chrome.tabs.create({ url: "https://uwtab.github.io/projects/mochi-pocket/" });
+    chrome.tabs.create({ url: "https://rizumiya.github.io/projects/mochi-pocket/" });
   });
 });

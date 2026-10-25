@@ -46,10 +46,11 @@ body.widget-mode {
   cursor: grabbing;
 }
 
-/* Skala Karakter agar Pas Cantik di Resolusi Kompak */
+/* Skala Karakter agar Pas Cantik di Resolusi Kompak & Tetap Terpusat Sempurna di Tengah Layar */
 .widget-viewport-wrap .pet-interactive {
-  transform: scale(0.82);
-  transform-origin: center 88%;
+  left: 50% !important;
+  transform: translateX(-50%) scale(0.82) !important;
+  transform-origin: center bottom !important;
 }
 
 /* Quick Action Bar Melayang di Atas Layar */
