@@ -9,7 +9,18 @@
   <link rel="stylesheet" href="style.css">
   <!-- Runtime Live2D Cubism 2 (mendukung window.loadlive2d) -->
   <script src="https://cdn.jsdelivr.net/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js" defer></script>
-  <script src="script.js" defer></script>
+  <!-- Modular Scripts Mochi Pocket -->
+  <script src="js/config.js" defer></script>
+  <script src="js/db.js" defer></script>
+  <script src="js/elements.js" defer></script>
+  <script src="js/dialogue.js" defer></script>
+  <script src="js/dashboard.js" defer></script>
+  <script src="js/interactions.js" defer></script>
+  <script src="js/forms.js" defer></script>
+  <script src="js/tamagotchi.js" defer></script>
+  <script src="js/minigames.js" defer></script>
+  <script src="js/controls.js" defer></script>
+  <script src="js/app.js" defer></script>
 </head>
 <body class="theme-minimal">
   <main class="console-page">
@@ -1117,7 +1128,169 @@
             </div>
 
             <!-- =================================================
-                 WUJUD 10: LIVE2D AVATAR
+                 WUJUD 10: BABI CHIBI (Butty - Terbuka Lv.13)
+                 ================================================= -->
+            <div id="form-pig" class="pet-form form-animal" hidden>
+              <div class="animal-stage">
+                <div class="lifelike-actor">
+                  <div class="chara-rig pig-rig">
+                    <div class="chara-squash">
+                      <!-- 1. Badan Bawah Babi (Ekor Melingkar, Kaki Kecil Pink) -->
+                      <div class="lower-body-group pig-lower-body">
+                        <svg class="svg-full" viewBox="0 0 240 160" fill="none">
+                          <!-- Ekor Melingkar Lucu di Belakang Kanan -->
+                          <path d="M 196 110 C 215 105, 222 120, 212 130 C 205 138, 195 125, 208 120" stroke="#f472b6" stroke-width="4.5" stroke-linecap="round" fill="none" />
+                          <!-- 2 Kaki Babi Bawah dengan Kuku Kecil -->
+                          <rect x="70" y="130" width="22" height="20" rx="8" fill="#fbcfe8" stroke="#3b2322" stroke-width="4.5" />
+                          <line x1="81" y1="138" x2="81" y2="150" stroke="#3b2322" stroke-width="3" stroke-linecap="round" />
+                          <rect x="148" y="130" width="22" height="20" rx="8" fill="#fbcfe8" stroke="#3b2322" stroke-width="4.5" />
+                          <line x1="159" y1="138" x2="159" y2="150" stroke="#3b2322" stroke-width="3" stroke-linecap="round" />
+                          <!-- Badan Bulat Pink Lembut Babi -->
+                          <path d="M 46 28 C 22 55, 18 102, 30 128 C 42 150, 72 154, 120 154 C 168 154, 198 150, 210 128 C 222 102, 218 55, 194 28 Z" fill="#fbcfe8" stroke="#3b2322" stroke-width="5.5" stroke-linejoin="round" />
+                          <!-- Perut Pink Lebih Terang -->
+                          <ellipse cx="120" cy="100" rx="56" ry="38" fill="#fdf2f8" />
+                        </svg>
+                      </div>
+
+                      <!-- 2. Kepala Babi Mandiri (Telinga Segitiga Melengkung, Hidung Oval Pink) -->
+                      <div class="head-group pig-head-group parallax-head">
+                        <!-- Telinga Segitiga Kiri & Kanan -->
+                        <div class="pig-ears">
+                          <svg class="ear pig-ear left" viewBox="0 0 90 90" fill="none">
+                            <path d="M 20 80 C 15 50, 30 15, 60 20 C 75 25, 70 60, 65 80 Z" fill="#fbcfe8" stroke="#3b2322" stroke-width="5" stroke-linejoin="round" />
+                            <path d="M 28 72 C 26 52, 38 28, 55 32 C 65 35, 60 58, 56 72 Z" fill="#f472b6" />
+                          </svg>
+                          <svg class="ear pig-ear right" viewBox="0 0 90 90" fill="none">
+                            <path d="M 70 80 C 75 50, 60 15, 30 20 C 15 25, 20 60, 25 80 Z" fill="#fbcfe8" stroke="#3b2322" stroke-width="5" stroke-linejoin="round" />
+                            <path d="M 62 72 C 64 52, 52 28, 35 32 C 25 35, 30 58, 34 72 Z" fill="#f472b6" />
+                          </svg>
+                        </div>
+
+                        <!-- Bentuk Kepala Bulat Chubby Babi -->
+                        <div class="head-shape pig-head-shape">
+                          <div class="face-features">
+                            <div class="eyes-row pig-eyes-row">
+                              <div class="eye-socket pig-eye-socket">
+                                <div class="eye-ball tracking-eye">
+                                  <div class="eye-iris tracking-iris">
+                                    <div class="shine-large"></div>
+                                    <div class="shine-small"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="eye-socket pig-eye-socket">
+                                <div class="eye-ball tracking-eye">
+                                  <div class="eye-iris tracking-iris">
+                                    <div class="shine-large"></div>
+                                    <div class="shine-small"></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="blush-row pig-blush-row parallax-blush">
+                              <div class="blush pig-cheek"></div>
+                              <div class="blush pig-cheek"></div>
+                            </div>
+
+                            <!-- Moncong Hidung Oval Khas Babi -->
+                            <div class="muzzle pig-muzzle parallax-muzzle">
+                              <svg class="pig-snout-svg" viewBox="0 0 88 56" fill="none">
+                                <ellipse cx="44" cy="28" rx="40" ry="24" fill="#f472b6" stroke="#3b2322" stroke-width="4.5" />
+                                <ellipse cx="32" cy="28" rx="6" ry="9" fill="#9d174d" />
+                                <ellipse cx="56" cy="28" rx="6" ry="9" fill="#9d174d" />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="Aurora-Dia--platform animal-platform"></div>
+              </div>
+            </div>
+
+            <!-- =================================================
+                 WUJUD 11: PENGUIN PINGU (Terbuka Lv.15)
+                 ================================================= -->
+            <div id="form-penguin" class="pet-form form-animal" hidden>
+              <div class="animal-stage">
+                <div class="lifelike-actor">
+                  <div class="chara-rig penguin-rig">
+                    <div class="chara-squash">
+                      <!-- 1. Badan Bawah Penguin (Sayap Kepak & Kaki Webbed Oranye) -->
+                      <div class="lower-body-group penguin-lower-body">
+                        <svg class="svg-full" viewBox="0 0 240 160" fill="none">
+                          <!-- Kaki Webbed Oranye Kiri & Kanan -->
+                          <ellipse cx="78" cy="144" rx="22" ry="10" fill="#f97316" stroke="#3b2322" stroke-width="4.5" />
+                          <ellipse cx="162" cy="144" rx="22" ry="10" fill="#f97316" stroke="#3b2322" stroke-width="4.5" />
+                          <!-- Sayap Kiri (Flipper) -->
+                          <g class="penguin-flipper-left">
+                            <path d="M 44 48 C 18 65, 12 95, 26 118 C 36 122, 48 108, 48 85 Z" fill="#1e293b" stroke="#3b2322" stroke-width="4.8" stroke-linejoin="round" />
+                          </g>
+                          <!-- Sayap Kanan (Flipper) -->
+                          <g class="penguin-flipper-right">
+                            <path d="M 196 48 C 222 65, 228 95, 214 118 C 204 122, 192 108, 192 85 Z" fill="#1e293b" stroke="#3b2322" stroke-width="4.8" stroke-linejoin="round" />
+                          </g>
+                          <!-- Badan Gemoy Navy Gelap -->
+                          <path d="M 48 28 C 28 55, 24 102, 36 128 C 48 148, 76 152, 120 152 C 164 152, 192 148, 204 128 C 216 102, 212 55, 192 28 Z" fill="#1e293b" stroke="#3b2322" stroke-width="5.5" stroke-linejoin="round" />
+                          <!-- Perut Putih Bersih Salju -->
+                          <path d="M 72 35 C 58 65, 56 110, 70 135 C 82 146, 110 148, 120 148 C 130 148, 158 146, 170 135 C 184 110, 182 65, 168 35 Z" fill="#ffffff" />
+                        </svg>
+                      </div>
+
+                      <!-- 2. Kepala Penguin Mandiri (Paruh Oranye & Corak Kuning Emas) -->
+                      <div class="head-group penguin-head-group parallax-head">
+                        <!-- Bentuk Kepala Navy Chibi -->
+                        <div class="head-shape penguin-head-shape">
+                          <!-- Masker Wajah Putih Bersih -->
+                          <div class="penguin-face-mask"></div>
+
+                          <div class="face-features">
+                            <div class="eyes-row penguin-eyes-row">
+                              <div class="eye-socket penguin-eye-socket">
+                                <div class="eye-ball tracking-eye">
+                                  <div class="eye-iris tracking-iris">
+                                    <div class="shine-large"></div>
+                                    <div class="shine-small"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="eye-socket penguin-eye-socket">
+                                <div class="eye-ball tracking-eye">
+                                  <div class="eye-iris tracking-iris">
+                                    <div class="shine-large"></div>
+                                    <div class="shine-small"></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="blush-row penguin-blush-row parallax-blush">
+                              <div class="blush penguin-cheek"></div>
+                              <div class="blush penguin-cheek"></div>
+                            </div>
+
+                            <!-- Paruh Segitiga Oranye Cerah -->
+                            <div class="muzzle penguin-muzzle parallax-muzzle">
+                              <svg class="penguin-beak-svg" viewBox="0 0 60 40" fill="none">
+                                <path d="M 10 12 C 30 12, 30 12, 50 12 C 54 18, 38 36, 30 38 C 22 36, 6 18, 10 12 Z" fill="#f97316" stroke="#3b2322" stroke-width="4.5" stroke-linejoin="round" />
+                                <path d="M 12 12 Q 30 18 48 12" stroke="#ea580c" stroke-width="3" stroke-linecap="round" fill="none" />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="Aurora-Dia--platform animal-platform"></div>
+              </div>
+            </div>
+
+            <!-- =================================================
+                 WUJUD 12: LIVE2D AVATAR
                  ================================================= -->
             <div id="form-live2d" class="pet-form form-animal" hidden>
               <div class="animal-stage">
@@ -1368,6 +1541,22 @@
                     <span class="pick-card-lock"></span>
                   </span>
                   <span class="pick-card-name" data-form-label="rabbit">Kelinci</span>
+                </label>
+                <label class="pick-card">
+                  <input type="radio" name="starter-form" value="pig">
+                  <span class="pick-card-art art-form" data-art="pig">
+                    <span class="art-emoji">🐷</span>
+                    <span class="pick-card-lock"></span>
+                  </span>
+                  <span class="pick-card-name" data-form-label="pig">Babi</span>
+                </label>
+                <label class="pick-card">
+                  <input type="radio" name="starter-form" value="penguin">
+                  <span class="pick-card-art art-form" data-art="penguin">
+                    <span class="art-emoji">🐧</span>
+                    <span class="pick-card-lock"></span>
+                  </span>
+                  <span class="pick-card-name" data-form-label="penguin">Penguin</span>
                 </label>
                 <label class="pick-card">
                   <input type="radio" name="starter-form" value="live2d">

@@ -1062,6 +1062,71 @@ body {
   }
 }
 
+/* Efek Kilatan Petir Halus (Rainy Day) */
+.scene-lightning-flash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 60% 25%, rgba(255, 255, 255, 0.45) 0%, rgba(191, 219, 254, 0.18) 60%, transparent 100%);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 5;
+  animation: sceneLightningFlash 6.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.scene-lightning-bolt {
+  position: absolute;
+  top: 14px;
+  right: 28px;
+  font-size: 26px;
+  opacity: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 0 10px #fef08a);
+  z-index: 6;
+  animation: sceneLightningBolt 6.8s ease-in-out infinite;
+}
+
+@keyframes sceneLightningFlash {
+  0%, 88%, 93%, 100% { opacity: 0; }
+  89% { opacity: 0.85; }
+  90% { opacity: 0.2; }
+  91% { opacity: 0.95; }
+  92% { opacity: 0.05; }
+}
+
+@keyframes sceneLightningBolt {
+  0%, 88%, 93%, 100% { opacity: 0; transform: scale(0.6); }
+  89% { opacity: 0.9; transform: scale(1.15) rotate(-6deg); }
+  90% { opacity: 0.1; transform: scale(0.85); }
+  91% { opacity: 1; transform: scale(1.25) rotate(4deg); }
+  92% { opacity: 0; transform: scale(0.7); }
+}
+
+/* Flora Taman Asri Bertingkat Alami (Sunny Park) */
+.scene-park-flora {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.park-plant {
+  position: absolute;
+  display: inline-block;
+  transform-origin: bottom center;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
+  animation: parkPlantSway 3.8s ease-in-out infinite alternate;
+}
+
+.park-plant:nth-child(even) {
+  animation-duration: 4.6s;
+  animation-delay: -1.4s;
+}
+
+@keyframes parkPlantSway {
+  0% { transform: rotate(-3.5deg) translateY(0); }
+  100% { transform: rotate(3.5deg) translateY(-1px); }
+}
+
 .scene-petal {
   position: absolute;
   top: -20px;
@@ -2398,6 +2463,337 @@ body {
   font-size: 0.7rem;
   font-weight: 600;
   color: var(--text-muted);
+}
+
+/* ==========================================================================
+   ANATOMI & RIG HEWAN LANJUTAN: BEBEK, DOMBA, SAPI, KELINCI, BABI, PENGUIN
+   ========================================================================== */
+
+/* Aksesori Kepala: Pastikan selalu position: absolute agar tidak mendorong kepala ke bawah! */
+.duck-crest,
+.sheep-wool-hair,
+.cow-horns,
+.rabbit-ears,
+.pig-ears,
+.penguin-ear-tufts {
+  position: absolute;
+  pointer-events: none;
+  z-index: 14;
+}
+
+/* 1. BEBEK CHIBI (Piyo - Lv.5) */
+.duck-crest {
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 50px;
+  animation: duckCrestWiggle 2.8s ease-in-out infinite alternate;
+}
+
+@keyframes duckCrestWiggle {
+  0% { transform: translateX(-50%) rotate(-4deg); }
+  100% { transform: translateX(-50%) rotate(4deg); }
+}
+
+.duck-head-shape {
+  background-color: #fde047;
+  box-shadow: inset 0 -15px 0 #facc15;
+}
+
+.duck-cheek {
+  background-color: #fb7185;
+  opacity: 0.65;
+}
+
+.duck-muzzle {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+}
+
+.duck-beak-svg {
+  width: 56px;
+  height: 32px;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.12));
+}
+
+/* 2. DOMBA MOFU (Lv.7) */
+.sheep-wool-hair {
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 70px;
+}
+
+.sheep-head-shape {
+  background-color: #fff7ed;
+  box-shadow: inset 0 -15px 0 #fed7aa;
+}
+
+.sheep-ear.left {
+  left: -24px;
+  top: 18px;
+}
+
+.sheep-ear.right {
+  right: -24px;
+  top: 18px;
+}
+
+.sheep-cheek {
+  background-color: #f472b6;
+  opacity: 0.6;
+}
+
+.sheep-nose-pink {
+  background-color: #fb7185;
+  width: 14px;
+  height: 10px;
+  border-radius: 50%;
+  margin: 0 auto 3px;
+}
+
+/* 3. SAPI CHIBI (Lv.9) */
+.cow-horns {
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 60px;
+}
+
+.cow-head-shape {
+  background-color: #ffffff;
+  box-shadow: inset 0 -15px 0 #e2e8f0;
+}
+
+.cow-ear.left {
+  left: -32px;
+  top: 14px;
+}
+
+.cow-ear.right {
+  right: -32px;
+  top: 14px;
+}
+
+.cow-cheek {
+  background-color: #f472b6;
+  opacity: 0.65;
+}
+
+.cow-muzzle {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+}
+
+.cow-snout-svg {
+  width: 96px;
+  height: 52px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
+}
+
+/* 4. KELINCI USAGI (Lv.11) */
+.rabbit-ears {
+  top: -85px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 140px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.rabbit-ear {
+  width: 64px;
+  height: 130px;
+  transform-origin: bottom center;
+  animation: rabbitEarTwitch 3.4s ease-in-out infinite alternate;
+}
+
+.rabbit-ear.left {
+  animation-delay: -0.6s;
+}
+
+@keyframes rabbitEarTwitch {
+  0% { transform: rotate(-3deg); }
+  100% { transform: rotate(3deg); }
+}
+
+.rabbit-head-shape {
+  background-color: #ffffff;
+  box-shadow: inset 0 -15px 0 #f1f5f9;
+}
+
+.rabbit-cheek {
+  background-color: #f472b6;
+  opacity: 0.6;
+}
+
+.rabbit-nose-pink {
+  background-color: #fb7185;
+  width: 13px;
+  height: 9px;
+  border-radius: 50%;
+  margin: 0 auto 3px;
+}
+
+/* 5. BABI CHIBI (Butty - Lv.13) */
+.pig-rig {
+  transform-origin: center bottom;
+}
+
+.pig-head-shape {
+  background-color: #fbcfe8;
+  box-shadow: inset 0 -15px 0 #f472b6;
+}
+
+.pig-ears {
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pig-ear {
+  width: 72px;
+  height: 72px;
+}
+
+.pig-cheek {
+  background-color: #f43f5e;
+  opacity: 0.7;
+}
+
+.pig-muzzle {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+}
+
+.pig-snout-svg {
+  width: 78px;
+  height: 48px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* 6. PENGUIN PINGU (Lv.15) */
+.penguin-rig {
+  transform-origin: center bottom;
+}
+
+.penguin-head-shape {
+  background-color: #1e293b;
+  box-shadow: inset 0 -15px 0 #0f172a;
+}
+
+.penguin-face-mask {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  height: 140px;
+  background: #ffffff;
+  border-radius: 50% 50% 46% 46%;
+  z-index: 2;
+}
+
+.penguin-cheek {
+  background-color: #facc15;
+  opacity: 0.75;
+}
+
+.penguin-muzzle {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+}
+
+.penguin-beak-svg {
+  width: 52px;
+  height: 36px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
+
+.penguin-flipper-left {
+  transform-origin: 35px 70px;
+  animation: penguinFlipperFlap 2.4s ease-in-out infinite alternate;
+}
+
+.penguin-flipper-right {
+  transform-origin: 185px 70px;
+  animation: penguinFlipperFlap 2.4s ease-in-out infinite alternate -1.2s;
+}
+
+@keyframes penguinFlipperFlap {
+  0% { transform: rotate(-5deg); }
+  100% { transform: rotate(5deg); }
+}
+
+/* Dev Mode Lokal Toolbar di Modal Karakter */
+.dev-mode-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 1.5px dashed #d97706;
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin: 8px 0;
+}
+
+.dev-mode-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #92400e;
+  letter-spacing: 0.5px;
+}
+
+.dev-mode-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-dev-action {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid #b45309;
+  background: #ffffff;
+  color: #92400e;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-dev-action:hover {
+  background: #fef08a;
+  transform: translateY(-1px);
+}
+
+.btn-dev-action.dev-reset {
+  border-color: #64748b;
+  color: #475569;
+}
+
+.btn-dev-action.dev-reset:hover {
+  background: #f1f5f9;
 }
 
 /* ==========================================================================
@@ -4113,6 +4509,12 @@ body {
 }
 .art-form[data-art="rabbit"] {
   background: radial-gradient(circle at 50% 38%, #fdf2f8 0%, #fce7f3 55%, #fbcfe8 100%);
+}
+.art-form[data-art="pig"] {
+  background: radial-gradient(circle at 50% 38%, #fdf2f8 0%, #fbcfe8 55%, #f472b6 100%);
+}
+.art-form[data-art="penguin"] {
+  background: radial-gradient(circle at 50% 38%, #f8fafc 0%, #cbd5e1 55%, #1e293b 100%);
 }
 .art-form[data-art="live2d"] {
   background: radial-gradient(circle at 50% 38%, #f1ecff 0%, #ddd3ff 55%, #c3b3f7 100%);
