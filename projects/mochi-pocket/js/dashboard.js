@@ -5,7 +5,7 @@
 
 function updateIconGauge(gaugeWrapEl, value, label) {
   if (!gaugeWrapEl) return;
-  const safePct = clampStat(value);
+  const safePct = Math.round(clampStat(value));
   gaugeWrapEl.style.setProperty("--pct", `${safePct}%`);
   gaugeWrapEl.style.setProperty("--fill-pct", `${safePct}%`);
   gaugeWrapEl.dataset.tooltip = `${label}: ${safePct}%`;

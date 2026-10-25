@@ -523,13 +523,25 @@ function stopMinigame(completed = true) {
   if (completed) {
     const expGain = Math.max(12, minigameScore * 6);
     const happyGain = Math.min(25, 6 + minigameScore * 2);
-    const hungerBonus = activeMinigameType === "catcher" ? Math.min(14, minigameScore * 2) : -5;
-    addExpAndStats({ exp: expGain, happiness: happyGain, energy: -10, hunger: hungerBonus });
+
+    // Saat diajak main: Energi berkurang sedikit lebih cepat dari Kenyang (-8 vs -5),
+    // dan Kenyang (-5) berkurang lebih cepat dari pada saat didiamkan (-1.0).
+    const foodCaughtBonus = activeMinigameType === "catcher" ? Math.min(6, minigameScore * 1.2) : 0;
+    const netHungerCost = -5 + foodCaughtBonus;
+
+    addExpAndStats({
+      exp: expGain,
+      happiness: happyGain,
+      energy: -8,
+      hunger: netHungerCost
+    });
     switchState("happy", 1400);
     say(
       `🎉 Skor <span>${meta.title}: ${minigameScore} ${meta.unit}</span>! ${petNameTag()} dapat <span>+${expGain} EXP</span> &amp; <span>+${happyGain}% Bahagia</span>!`
     );
   } else {
+    // Jika game dihentikan di tengah jalan, tetap ada konsumsi energi dan kenyang proporsional
+    addExpAndStats({ energy: -4, hunger: -2.5 });
     switchState(pet.isSleeping ? "sleep" : "idle");
     say(`Permainan dihentikan. Kapan-kapan main lagi bareng ${petNameTag()} ya~`);
   }

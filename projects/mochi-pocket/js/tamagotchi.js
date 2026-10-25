@@ -9,21 +9,31 @@ function feedPet() {
     say(`Zzz... ${petNameTag()} sedang tidur, tekan <span>D-Pad &#x25BC;&#xFE0E;</span> untuk membangunkanku~ 💤`);
     return;
   }
+  // Indikator penerimaan makanan adalah kenyang (jika 100% makanan tidak diterima)
   if (pet.hunger >= 100) {
-    say(`Perut ${petNameTag()} sudah kenyang 100%! Ayo main atau elus aku saja~ 🍙`);
+    say(`Perut ${petNameTag()} sudah kenyang 100%! Makanan tidak bisa masuk lagi, ayo main atau elus aku saja~ 🍙`);
     return;
   }
 
-  switchState("happy", 1200);
+  switchState("happy", 1100);
   spawnBurstParticles(["🍙", "🌻", "🍣", "✨", "💕"]);
-  addExpAndStats({ exp: 14, hunger: 22, happiness: 6, energy: 5 });
+
+  // Urutan kenaikan: Kenyang (+5) > EXP (+2) > Bahagia (+1.5) > Energi (+0.8)
+  // - 20x klik makan untuk 0% menjadi 100% kenyang (100 / 5 = 20)
+  // - 50x klik makan di level 1 untuk naik ke level 2 (100 / 2 = 50, rentang 40-60x)
+  addExpAndStats({
+    hunger: 5,
+    exp: 2,
+    happiness: 1.5,
+    energy: 0.8
+  });
 
   const feedLines = [
-    `Nyam nyam~ Terima kasih makanannya! Perut ${petNameTag()} jadi kenyang dan hangat~ 🍙`,
-    `Wah enak sekali! ${petNameTag()} makin bersemangat menemanimu! ✨`,
+    `Nyam nyam~ Terima kasih makanannya! Perut ${petNameTag()} makin kenyang dan hangat~ 🍙`,
+    `Wah lezat sekali! ${petNameTag()} makin bersemangat menemanimu! ✨`,
     `Makanan favorit ${petNameTag()}! Makasih banyak ya~ 💖`
   ];
-  say(randomPick(feedLines));
+  say(randomPick(feedLines), 2400);
 }
 
 function toggleSleep() {
@@ -46,30 +56,35 @@ function toggleSleep() {
   }
 }
 
-// Siklus Tamagotchi Otomatis (Tiap 25 detik)
+// Siklus Tamagotchi Otomatis (Idle Decay System, Tiap 20 detik)
 setInterval(() => {
   if (!pet.isInitialized || pet.isDead) return;
 
   if (pet.isSleeping) {
+    // Saat tidur: Kenyang & Bahagia berkurang lebih lambat dibanding saat bangun
+    pet.hunger = clampStat(pet.hunger - 0.4);
+    pet.happiness = clampStat(pet.happiness - 0.5);
     pet.energy = clampStat(pet.energy + 5);
-    pet.hunger = clampStat(pet.hunger - 1);
+
     if (pet.energy >= 100) {
       pet.isSleeping = false;
       switchState("idle");
       say(`☀️ Energi ${petNameTag()} sudah penuh (100%)! Aku bangun sekarang ya~`);
     }
   } else {
-    pet.hunger = clampStat(pet.hunger - 1);
-    pet.energy = clampStat(pet.energy - 1);
-    if (pet.hunger < 30) {
-      pet.happiness = clampStat(pet.happiness - 1);
-    }
+    // Saat bangun & didiamkan tanpa interaksi:
+    // Bahagia berkurang sedikit lebih cepat dari Kenyang,
+    // Sementara Energi berkurang sedikit lebih lambat dari Kenyang.
+    // Urutan laju pengurangan: Bahagia (-1.4) > Kenyang (-1.0) > Energi (-0.7)
+    pet.happiness = clampStat(pet.happiness - 1.4);
+    pet.hunger = clampStat(pet.hunger - 1.0);
+    pet.energy = clampStat(pet.energy - 0.7);
   }
 
   checkPetCondition();
   renderDashboard();
   db.save(pet);
-}, 25000);
+}, 20000);
 
 // Pesan Idle Otomatis (Tiap 28 detik)
 setInterval(() => {
@@ -85,15 +100,15 @@ setInterval(() => {
   }
 
   if (pet.hunger <= 25) {
-    say(`*Kruyuuuk~* Perut ${petNameTag()} bergetar kelaparan nih (${pet.hunger}%)... Tekan <span>Tombol A</span> untuk memberi makan! 🍙🥺`);
+    say(`*Kruyuuuk~* Perut ${petNameTag()} bergetar kelaparan nih (${Math.round(pet.hunger)}%)... Tekan <span>Tombol A</span> untuk memberi makan! 🍙🥺`);
     return;
   } else if (pet.hunger <= 50) {
-    say(`*Kruyuk...* Perut ${petNameTag()} mulai lapar (${pet.hunger}%), ada rasa lapar yang bergetar nih~ 🍙`);
+    say(`*Kruyuk...* Perut ${petNameTag()} mulai lapar (${Math.round(pet.hunger)}%), getaran lapar mulai terasa nih~ 🍙`);
     return;
   }
 
   if (pet.energy <= 20) {
-    say(`Hoaaam... Energi ${petNameTag()} tinggal ${pet.energy}%, tidurkan aku lewat <span>D-Pad &#x25BC;&#xFE0E;</span> yuk~ 💤`);
+    say(`Hoaaam... Energi ${petNameTag()} tinggal ${Math.round(pet.energy)}%, tidurkan aku lewat <span>D-Pad &#x25BC;&#xFE0E;</span> yuk~ 💤`);
     return;
   }
 

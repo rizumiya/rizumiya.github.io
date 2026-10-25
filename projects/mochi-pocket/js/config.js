@@ -214,7 +214,7 @@ function randomPick(arr) {
 }
 
 function clampStat(val) {
-  return Math.max(0, Math.min(100, Math.round(val)));
+  return Math.max(0, Math.min(100, Math.round(val * 10) / 10));
 }
 
 function getGreetingByHour() {

@@ -219,7 +219,7 @@ function talkToPet() {
   const talkPool = [
     ...sceneLines,
     `Sekarang ${n} sudah <span>Level ${pet.level}</span> di <span>${sceneMeta.icon} ${sceneMeta.name}</span> dalam wujud <span>${meta.name}</span>!`,
-    `Status ${n}: Kenyang <span>${pet.hunger}%</span>, Bahagia <span>${pet.happiness}%</span>, Energi <span>${pet.energy}%</span>!`
+    `Status ${n}: Kenyang <span>${Math.round(pet.hunger)}%</span>, Bahagia <span>${Math.round(pet.happiness)}%</span>, Energi <span>${Math.round(pet.energy)}%</span>!`
   ];
 
   const chosen = talkPool[talkIndex % talkPool.length];
