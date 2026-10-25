@@ -6,6 +6,7 @@
 function updateIconGauge(gaugeWrapEl, value, label) {
   if (!gaugeWrapEl) return;
   const safePct = clampStat(value);
+  gaugeWrapEl.style.setProperty("--pct", `${safePct}%`);
   gaugeWrapEl.style.setProperty("--fill-pct", `${safePct}%`);
   gaugeWrapEl.dataset.tooltip = `${label}: ${safePct}%`;
   gaugeWrapEl.classList.toggle("low-stat", safePct <= 25 && !label.startsWith("EXP"));
@@ -81,7 +82,7 @@ function renderSceneBackground(sceneKey) {
       </div>
     `;
   } else if (safeScene === "rainy_day") {
-    // 2. Hari Hujan (Efek Kilatan Petir Halus, Awan Mendung, Tetesan Hujan, & Genangan Air)
+    // 2. Hari Hujan (Efek Kilatan Petir Halus, Awan Mendung, Tetesan Hujan, Genangan Air, & Percikan Air Memercik ke Tanah)
     let dropsHtml = "";
     for (let i = 0; i < 14; i += 1) {
       const leftPct = 6 + i * 6.6;
@@ -89,12 +90,36 @@ function renderSceneBackground(sceneKey) {
       const delay = ((i * 0.17) % 0.9).toFixed(2);
       dropsHtml += `<div class="scene-raindrop" style="left:${leftPct.toFixed(1)}%; --rain-dur:${dur}s; --rain-delay:${delay}s;"></div>`;
     }
+
+    // Titik Percikan & Riak Air Memercik di Lantai saat Hujan
+    const splashPoints = [
+      { left: 10, bottom: 8, dur: 0.85, delay: 0.12 },
+      { left: 22, bottom: 18, dur: 0.95, delay: 0.45 },
+      { left: 32, bottom: 6, dur: 0.78, delay: 0.28 },
+      { left: 44, bottom: 22, dur: 0.88, delay: 0.62 },
+      { left: 56, bottom: 10, dur: 0.82, delay: 0.18 },
+      { left: 68, bottom: 24, dur: 0.92, delay: 0.52 },
+      { left: 80, bottom: 14, dur: 0.86, delay: 0.35 },
+      { left: 90, bottom: 6, dur: 0.80, delay: 0.72 }
+    ];
+    let splashesHtml = "";
+    splashPoints.forEach((sp) => {
+      splashesHtml += `
+        <div class="scene-rain-splash" style="left: ${sp.left}%; bottom: ${sp.bottom}%; --splash-dur: ${sp.dur}s; --splash-delay: ${sp.delay}s;">
+          <div class="splash-ripple"></div>
+          <div class="splash-drop splash-drop-l"></div>
+          <div class="splash-drop splash-drop-r"></div>
+        </div>
+      `;
+    });
+
     sceneBgLayer.innerHTML = `
       <div class="scene-lightning-flash"></div>
       <div class="scene-lightning-bolt">⚡</div>
       <div class="scene-cloud" style="top: 36px; left: 14%; --drift-dur: 10s; opacity: 0.65;">🌧️</div>
       <div class="scene-cloud" style="top: 40px; right: 16%; --drift-dur: 13s; opacity: 0.65;">⛈️</div>
       ${dropsHtml}
+      ${splashesHtml}
       <div class="scene-puddle"></div>
     `;
   } else if (safeScene === "flower_garden") {
@@ -391,14 +416,14 @@ function renderDashboard() {
   updateScenePickerLocks();
   updateFormPickerLocks();
 
-  const difficultyMultiplier = Math.pow(1.5, Math.max(0, (pet.level || 1) - 1));
+  const difficultyMultiplier = Math.pow(1.1, Math.max(0, (pet.level || 1) - 1));
   updateIconGauge(gaugeHunger, pet.hunger, "Kenyang");
   updateIconGauge(gaugeHappy, pet.happiness, "Bahagia");
   updateIconGauge(gaugeEnergy, pet.energy, "Energi");
   updateIconGauge(
     gaugeExp,
     pet.exp,
-    `EXP Lv.${pet.level} (Usaha x${difficultyMultiplier.toFixed(1)})`
+    `EXP Lv.${pet.level} (Usaha x${difficultyMultiplier.toFixed(2)})`
   );
 
   if (live2dModelSelect && pet.live2dPreset) {
@@ -411,9 +436,9 @@ function addExpAndStats({ exp = 0, hunger = 0, happiness = 0, energy = 0 }) {
   pet.happiness = clampStat(pet.happiness + happiness);
   pet.energy = clampStat(pet.energy + energy);
 
-  // Penambahan EXP dipersulit 1.5x (+50% usaha lebih banyak) di setiap kenaikan level!
+  // Penambahan EXP dinaikkan 0.1x (+10% usaha) di setiap kenaikan level sebelumnya
   const prevLevel = pet.level || 1;
-  const difficultyMultiplier = Math.pow(1.5, Math.max(0, prevLevel - 1));
+  const difficultyMultiplier = Math.pow(1.1, Math.max(0, prevLevel - 1));
   const scaledExp = exp > 0 ? exp / difficultyMultiplier : exp;
   pet.exp = Math.max(0, Number((pet.exp + scaledExp).toFixed(2)));
 

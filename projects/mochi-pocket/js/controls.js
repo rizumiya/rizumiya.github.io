@@ -120,9 +120,6 @@ function openCharacterModal() {
   }
   if (characterModal) {
     characterModal.hidden = false;
-    setTimeout(() => {
-      if (petNameInput) petNameInput.focus();
-    }, 50);
   }
 }
 

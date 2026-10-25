@@ -1360,6 +1360,98 @@ body {
   }
 }
 
+/* Efek Percikan Hujan Membentur Lantai (Rain Splashes & Ground Ripples) */
+.scene-rain-splash {
+  position: absolute;
+  width: 18px;
+  height: 9px;
+  transform: translate(-50%, 50%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.splash-ripple {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid rgba(186, 230, 253, 0.78);
+  animation: rainRipplePulse var(--splash-dur, 0.85s) ease-out infinite;
+  animation-delay: var(--splash-delay, 0s);
+  opacity: 0;
+}
+
+@keyframes rainRipplePulse {
+  0% {
+    transform: scale(0.2);
+    opacity: 0.95;
+  }
+  60% {
+    opacity: 0.65;
+  }
+  100% {
+    transform: scale(1.65);
+    opacity: 0;
+  }
+}
+
+.splash-drop {
+  position: absolute;
+  bottom: 4px;
+  width: 2.2px;
+  height: 4.5px;
+  border-radius: 99px;
+  background: rgba(186, 230, 253, 0.92);
+  opacity: 0;
+}
+
+.splash-drop-l {
+  left: 4px;
+  animation: rainDropSplashLeft var(--splash-dur, 0.85s) ease-out infinite;
+  animation-delay: var(--splash-delay, 0s);
+}
+
+.splash-drop-r {
+  right: 4px;
+  animation: rainDropSplashRight var(--splash-dur, 0.85s) ease-out infinite;
+  animation-delay: var(--splash-delay, 0s);
+}
+
+@keyframes rainDropSplashLeft {
+  0% {
+    transform: translate(0, 0) scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.95;
+  }
+  60% {
+    transform: translate(-4.5px, -7.5px) scale(1);
+    opacity: 0.75;
+  }
+  100% {
+    transform: translate(-8px, -2px) scale(0.3);
+    opacity: 0;
+  }
+}
+
+@keyframes rainDropSplashRight {
+  0% {
+    transform: translate(0, 0) scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.95;
+  }
+  60% {
+    transform: translate(4.5px, -7.5px) scale(1);
+    opacity: 0.75;
+  }
+  100% {
+    transform: translate(8px, -2px) scale(0.3);
+    opacity: 0;
+  }
+}
+
 /* Efek Kilatan Petir Halus (Rainy Day) */
 .scene-lightning-flash {
   position: absolute;
@@ -1889,6 +1981,7 @@ body {
   position: absolute;
   inset: 0;
   color: var(--gauge-empty);
+  opacity: 0.35;
 }
 
 .gauge-fill-wrap {
@@ -1896,7 +1989,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  height: var(--pct, 100%);
+  height: var(--fill-pct, var(--pct, 100%));
   overflow: hidden;
   transition: height 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -1911,15 +2004,19 @@ body {
 
 .fill-hunger {
   color: #f59e6c;
+  filter: drop-shadow(0 0 2px rgba(245, 158, 108, 0.6));
 }
 .fill-happy {
   color: #ec6b88;
+  filter: drop-shadow(0 0 2px rgba(236, 107, 136, 0.6));
 }
 .fill-energy {
   color: #56b4e9;
+  filter: drop-shadow(0 0 2px rgba(86, 180, 233, 0.6));
 }
 .fill-exp {
   color: #f5b041;
+  filter: drop-shadow(0 0 4px rgba(245, 176, 65, 0.85));
 }
 
 .stat-icon-gauge.low-stat {
