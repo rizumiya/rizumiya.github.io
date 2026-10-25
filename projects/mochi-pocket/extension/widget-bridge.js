@@ -12,47 +12,40 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!data || typeof data !== "object") return;
 
     if (data.type === "MOCHI_MOUSE_MOVE") {
+      // Posisi mouse di layar tab pengguna
       const pageX = data.clientX;
       const pageY = data.clientY;
+
+      // Hitung posisi relatif ke widget yang berada di pojok kiri bawah
+      const screenW = data.screenW || window.innerWidth;
       const screenH = data.screenH || window.innerHeight;
 
-      // Widget berada di pojok kiri bawah (left: 20px, bottom: 20px)
-      // Pusat karakter pet di viewport sekitar x = 138px, y = screenH - 130px
-      const petCenterX = 138;
-      const petCenterY = screenH - 130;
+      // Widget berada di pojok kiri bawah: target pusat sekitar x=120, y=screenH - 120
+      const relX = pageX - 120;
+      const relY = pageY - (screenH - 120);
 
-      const dx = pageX - petCenterX;
-      const dy = pageY - petCenterY;
-      const dist = Math.hypot(dx, dy);
-      const factor = Math.min(dist / 380, 1);
-      const angle = Math.atan2(dy, dx);
+      // Gerakkan mata dan kepala karakter mengikuti kursor mouse di tab web
+      if (typeof handleTrackingEyes === "function") {
+        // Skala delta kursor agar paralaks mata terasa hidup
+        const eyeDeltaX = Math.max(-18, Math.min(18, relX * 0.035));
+        const eyeDeltaY = Math.max(-14, Math.min(14, relY * 0.035));
 
-      // Sinkronkan target koordinat ke engine tracking interaksi bawaan
-      if (typeof targetX !== "undefined") {
-        targetX = Math.cos(angle) * factor;
-        targetY = Math.sin(angle) * factor;
+        const trackingEyes = document.querySelectorAll(".tracking-eye");
+        const trackingIrises = document.querySelectorAll(".tracking-iris");
 
-        if (typeof animalEyesResetTimer !== "undefined") {
-          clearTimeout(animalEyesResetTimer);
-          animalEyesResetTimer = setTimeout(() => {
-            targetX = 0;
-            targetY = 0;
-          }, 2400);
-        }
-      }
+        trackingEyes.forEach((eye) => {
+          eye.style.transform = `translate(${eyeDeltaX.toFixed(1)}px, ${eyeDeltaY.toFixed(1)}px)`;
+        });
 
-      // Dukungan wujud Orb (Puni Aurora Dia)
-      if (typeof auroraEyesEl !== "undefined" && auroraEyesEl) {
-        if (typeof orbEyesResetTimer !== "undefined") clearTimeout(orbEyesResetTimer);
-        const clampedOx = Math.max(-15, Math.min(15, dx / 48));
-        const clampedOy = Math.max(-18, Math.min(12, dy / 48));
-        auroraEyesEl.style.transform = `translate3d(${clampedOx.toFixed(2)}px, ${clampedOy.toFixed(2)}px, 0)`;
+        trackingIrises.forEach((iris) => {
+          iris.style.transform = `translate(${(eyeDeltaX * 1.3).toFixed(1)}px, ${(eyeDeltaY * 1.3).toFixed(1)}px)`;
+        });
 
-        if (typeof orbEyesResetTimer !== "undefined") {
-          orbEyesResetTimer = setTimeout(() => {
-            auroraEyesEl.style.transform = "translate3d(0, 0, 0)";
-          }, 2400);
-        }
+        // Paralaks kepala
+        const heads = document.querySelectorAll(".parallax-head");
+        heads.forEach((h) => {
+          h.style.transform = `translate3d(${(eyeDeltaX * 0.45).toFixed(1)}px, ${(eyeDeltaY * 0.35).toFixed(1)}px, 0)`;
+        });
       }
     }
   });
@@ -106,3 +99,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+

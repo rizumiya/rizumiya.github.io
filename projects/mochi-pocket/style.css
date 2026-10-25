@@ -5697,7 +5697,6 @@ body {
 /* 16A. Bar Pendek & Ramping Tepat di Bawah Konsol (Solid, Terpusat) */
 .console-ext-bar {
   width: 100%;
-  max-width: 412px;
   margin: 10px 0 0;
   box-sizing: border-box;
 }
@@ -5707,8 +5706,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  padding: 9px 14px;
+  gap: 8px;
+  padding: 8px 12px;
   background: #181524;
   border: 1.5px solid rgba(255, 255, 255, 0.12);
   border-radius: 16px;
@@ -5733,7 +5732,7 @@ body {
 .ext-bar-left {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 8px;
   min-width: 0;
 }
 
@@ -5744,16 +5743,14 @@ body {
 }
 
 .ext-bar-title {
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 800;
   color: #ffffff;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .ext-bar-sub {
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 600;
   color: #94a3b8;
   white-space: nowrap;
