@@ -1446,14 +1446,12 @@ body {
   color: var(--bubble-text);
   font-size: 0.74rem;
   font-weight: 600;
-  line-height: 1.38;
+  line-height: 1.42;
   text-align: center;
   min-height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 2px;
+  display: block;
+  word-break: break-word;
+  white-space: normal;
 }
 
 .Aurora-Dia--tips span {

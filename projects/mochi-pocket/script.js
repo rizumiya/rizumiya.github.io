@@ -787,38 +787,9 @@ function renderDashboard() {
 }
 
 function getSceneUnlockDialogue(sceneKey) {
-  const n = petNameTag();
-  if (sceneKey === "default") {
-    return `🎉 Latar Baru Terbuka: <span>Kamar</span>! Hore, ${n} sekarang punya kamar sendiri yang hangat & nyaman~ 🏠`;
-  }
-  if (sceneKey === "sunny_park") {
-    return `🌤️ Latar Baru Terbuka: <span>Taman</span>! Wah udaranya segar banget, ayo jalan-jalan bareng ${n}~`;
-  }
-  if (sceneKey === "rainy_day") {
-    return `🌧️ Latar Baru Terbuka: <span>Hujan</span>! Brrr... rintik hujannya dingin, jangan lupa hangatkan ${n} ya~ ☔`;
-  }
-  if (sceneKey === "flower_garden") {
-    return `🌸 Latar Baru Terbuka: <span>Bunga</span>! Kelopak bunganya harum dan indah sekali~ 💐`;
-  }
-  if (sceneKey === "haunted_house") {
-    return `🪦 Latar Baru Terbuka: <span>Kuburan</span>! Hiii... tempat apa ini?! Gelap dan seram, jangan tinggalkan ${n} sendirian!! 😱👻`;
-  }
-  if (sceneKey === "starry_night") {
-    return `🌌 Latar Baru Terbuka: <span>Bintang</span>! Langit malamnya indah sekali bersama ${n}~ ✨`;
-  }
-  if (sceneKey === "snowy_winter") {
-    return `❄️ Latar Baru Terbuka: <span>Salju</span>! Dingin tapi seru, ayo buat manusia salju bareng ${n}~ ☃️`;
-  }
-  if (sceneKey === "bakery_shop") {
-    return `🥖 Latar Baru Terbuka: <span>Roti</span>! Wangi roti hangat dan kue manis bikin ${n} lapar lagi nih~ 🥐🍰`;
-  }
-  if (sceneKey === "tropical_beach") {
-    return `🏖️ Latar Baru Terbuka: <span>Pantai</span>! Deburan ombak dan pohon kelapanya asyik banget~ 🌴🦀`;
-  }
-  if (sceneKey === "magic_forest") {
-    return `🍄 Latar Baru Terbuka: <span>Hutan</span>! Udara pohon rindang dan kupu-kupunya ajaib sekali~ 🌳✨`;
-  }
-  return "";
+  const meta = SCENE_META[sceneKey];
+  if (!meta) return "";
+  return `✨ Latar <span>${meta.icon} ${meta.name}</span> kini terbuka di Menu Karakter!`;
 }
 
 function addExpAndStats({ exp = 0, hunger = 0, happiness = 0, energy = 0 }) {
@@ -866,7 +837,7 @@ function addExpAndStats({ exp = 0, hunger = 0, happiness = 0, energy = 0 }) {
       newlyUnlockedForms.forEach((fk) => {
         const meta = FORM_META[fk];
         announcements.push(
-          `✨ Wujud Baru Terbuka: <span>${meta.icon} ${meta.name}</span>! Sekarang bisa dipilih di Menu Karakter atau lewat D-Pad!`
+          `✨ Wujud <span>${meta.icon} ${meta.name}</span> kini terbuka!`
         );
       });
     }
@@ -876,7 +847,7 @@ function addExpAndStats({ exp = 0, hunger = 0, happiness = 0, energy = 0 }) {
       if (newlyUnlockedScene) burstIcons.push(SCENE_META[newlyUnlockedScene].icon);
       newlyUnlockedForms.forEach((fk) => burstIcons.push(FORM_META[fk].icon));
       spawnBurstParticles(burstIcons);
-      say(`🎉 Naik ke <span>Level ${pet.level}</span>!<br>${announcements.join("<br>")}`, 7000);
+      say(`🎉 Hore! ${petNameTag()} naik ke <span>Level ${pet.level}</span>!<br>${announcements.join("<br>")}`, 6500);
     } else {
       spawnBurstParticles(["🎉", "⭐", "✨", "💖"]);
       say(
