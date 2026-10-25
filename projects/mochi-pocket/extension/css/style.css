@@ -1,0 +1,6141 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap");
+
+/* ==========================================================================
+   SISTEM TEMA KONSOL & BACKGROUND (GELAP MATTE, TEDUH, & CERAH)
+   ========================================================================== */
+
+:root,
+body[data-theme="obsidian"] {
+  /* 1. HITAM MATTE ELEGAN (Gelap Tanpa Neon) */
+  --accent-rose: #f27894;
+  --accent-peach: #f7a878;
+  --cute-gradient: linear-gradient(135deg, #ec6b88 0%, #f59e6c 100%);
+
+  --page-bg: #12131a;
+  --page-dot: rgba(255, 255, 255, 0.055);
+  --page-glow-1: rgba(242, 120, 148, 0.06);
+  --page-glow-2: rgba(247, 168, 120, 0.05);
+
+  --shell-bg-top: #232634;
+  --shell-bg-bottom: #181a24;
+  --shell-border: #32364a;
+  --shell-lip: #0d0e14;
+  --shell-top-pill: #14161f;
+
+  --bezel-bg: #14161f;
+  --bezel-border: #272a3a;
+
+  --screen-bg-top: #1b1e2b;
+  --screen-bg-bottom: #141620;
+  --screen-border: #0d0f17;
+  --screen-dot: rgba(255, 255, 255, 0.05);
+  --screen-ambient: rgba(255, 214, 194, 0.06);
+
+  --hud-bg: rgba(24, 26, 38, 0.88);
+  --hud-border: rgba(255, 255, 255, 0.1);
+  --gauge-empty: rgba(255, 255, 255, 0.16);
+
+  --bubble-bg: #222534;
+  --bubble-border: #383d54;
+  --bubble-text: #f3f4f6;
+
+  --platform-outer: rgba(0, 0, 0, 0.36);
+  --platform-inner: rgba(8, 9, 15, 0.68);
+  --chara-drop-shadow: drop-shadow(0 0 10px rgba(255, 245, 238, 0.12));
+
+  --dpad-top: #32364a;
+  --dpad-bottom: #232636;
+  --dpad-lip: #0f111a;
+  --dpad-arrow: #d5dae6;
+
+  --btn-b-bg: linear-gradient(145deg, #6794f0, #4b74cc);
+  --btn-a-bg: linear-gradient(145deg, #f07490, #d6506f);
+  --btn-socket: #10121b;
+
+  --pill-top: #32364a;
+  --pill-bottom: #232636;
+  --pill-border: #41465e;
+  --pill-lip: #0f111a;
+  --speaker-dot: #12141d;
+
+  --modal-bg: #1c1f2b;
+  --modal-border: #32364a;
+  --modal-sec-bg: #151722;
+  --modal-input-bg: #11131c;
+
+  --text-main: #f3f4f6;
+  --text-muted: #949cb0;
+
+  /* Variabel Ilustrasi Hewan Kawaii */
+  --outline: #3b2322;
+  --coat-white: #ffffff;
+  --coat-shade: #e9e4e2;
+  --orange-patch: #f9b87c;
+  --ear-pink: #f47392;
+  --blush-pink: #f67896;
+  --nose-brown: #964b00;
+}
+
+body[data-theme="twilight"] {
+  /* 2. SENJA TEDUH (Muted Dusk Plum / Lavender Sore) */
+  --accent-rose: #f48fb1;
+  --accent-peach: #f6b27a;
+  --cute-gradient: linear-gradient(135deg, #ec7a9a 0%, #f0a36a 100%);
+
+  --page-bg: #211e2e;
+  --page-dot: rgba(255, 255, 255, 0.06);
+  --page-glow-1: rgba(244, 143, 177, 0.08);
+  --page-glow-2: rgba(246, 178, 122, 0.07);
+
+  --shell-bg-top: #37324a;
+  --shell-bg-bottom: #292539;
+  --shell-border: #4a4462;
+  --shell-lip: #181523;
+  --shell-top-pill: #221f30;
+
+  --bezel-bg: #232032;
+  --bezel-border: #38334c;
+
+  --screen-bg-top: #2c283e;
+  --screen-bg-bottom: #221f30;
+  --screen-border: #191624;
+  --screen-dot: rgba(255, 255, 255, 0.055);
+  --screen-ambient: rgba(244, 143, 177, 0.08);
+
+  --hud-bg: rgba(36, 32, 52, 0.88);
+  --hud-border: rgba(255, 255, 255, 0.12);
+  --gauge-empty: rgba(255, 255, 255, 0.18);
+
+  --bubble-bg: #342f49;
+  --bubble-border: #4d4669;
+  --bubble-text: #f5f3f9;
+
+  --platform-outer: rgba(12, 10, 20, 0.38);
+  --platform-inner: rgba(16, 13, 26, 0.65);
+  --chara-drop-shadow: drop-shadow(0 0 10px rgba(255, 240, 248, 0.12));
+
+  --dpad-top: #4b4463;
+  --dpad-bottom: #38324c;
+  --dpad-lip: #1d1a29;
+  --dpad-arrow: #e9e4f5;
+
+  --btn-b-bg: linear-gradient(145deg, #f3a971, #de884e);
+  --btn-a-bg: linear-gradient(145deg, #f07e9e, #d85a7f);
+  --btn-socket: #1d1a29;
+
+  --pill-top: #4b4463;
+  --pill-bottom: #38324c;
+  --pill-border: #5b5375;
+  --pill-lip: #1d1a29;
+  --speaker-dot: #1f1c2d;
+
+  --modal-bg: #2c283e;
+  --modal-border: #4a4462;
+  --modal-sec-bg: #221f30;
+  --modal-input-bg: #1b1827;
+
+  --text-main: #f5f3f9;
+  --text-muted: #b1a8c7;
+}
+
+body[data-theme="slate"] {
+  /* 3. ABU TEDUH (Nordic Cool Slate / Muted Stone) */
+  --accent-rose: #e0637e;
+  --accent-peach: #e89565;
+  --cute-gradient: linear-gradient(135deg, #e0637e 0%, #e89565 100%);
+
+  --page-bg: #cfd6df;
+  --page-dot: #bcc5d1;
+  --page-glow-1: rgba(224, 99, 126, 0.08);
+  --page-glow-2: rgba(86, 180, 233, 0.08);
+
+  --shell-bg-top: #e4e9ef;
+  --shell-bg-bottom: #d3dbe4;
+  --shell-border: #b9c3cf;
+  --shell-lip: #9aa6b5;
+  --shell-top-pill: #c1cbd7;
+
+  --bezel-bg: #c6d0dc;
+  --bezel-border: #b2bdcb;
+
+  --screen-bg-top: #edf1f5;
+  --screen-bg-bottom: #e2e8ef;
+  --screen-border: #b8c2ce;
+  --screen-dot: rgba(71, 85, 105, 0.13);
+  --screen-ambient: rgba(255, 255, 255, 0.4);
+
+  --hud-bg: rgba(255, 255, 255, 0.85);
+  --hud-border: #cbd5e1;
+  --gauge-empty: #cbd5e1;
+
+  --bubble-bg: #ffffff;
+  --bubble-border: #c5d0dc;
+  --bubble-text: #27303f;
+
+  --platform-outer: rgba(148, 163, 184, 0.42);
+  --platform-inner: #b8c4d4;
+  --chara-drop-shadow: none;
+
+  --dpad-top: #475569;
+  --dpad-bottom: #334155;
+  --dpad-lip: #1e293b;
+  --dpad-arrow: #f1f5f9;
+
+  --btn-b-bg: linear-gradient(145deg, #64b5f6, #4294d6);
+  --btn-a-bg: linear-gradient(145deg, #f07892, #dc5674);
+  --btn-socket: #aeb9c7;
+
+  --pill-top: #ccd5e0;
+  --pill-bottom: #b8c3d1;
+  --pill-border: #9fb0c2;
+  --pill-lip: #8c9cb0;
+  --speaker-dot: #a8b4c4;
+
+  --modal-bg: #f1f5f9;
+  --modal-border: #cbd5e1;
+  --modal-sec-bg: #e2e8f0;
+  --modal-input-bg: #ffffff;
+
+  --text-main: #27303f;
+  --text-muted: #5b687a;
+}
+
+body[data-theme="matcha"] {
+  /* 4. MATCHA SAGE TEDUH (Earthy Cozy Green) */
+  --accent-rose: #d9667b;
+  --accent-peach: #e59363;
+  --cute-gradient: linear-gradient(135deg, #d9667b 0%, #e59363 100%);
+
+  --page-bg: #d8e1d7;
+  --page-dot: #c3cfc1;
+  --page-glow-1: rgba(217, 102, 123, 0.07);
+  --page-glow-2: rgba(229, 147, 99, 0.08);
+
+  --shell-bg-top: #ebf1ea;
+  --shell-bg-bottom: #dae4d8;
+  --shell-border: #bfd0bc;
+  --shell-lip: #9eb39b;
+  --shell-top-pill: #c6d4c3;
+
+  --bezel-bg: #cbd8c8;
+  --bezel-border: #b6c7b3;
+
+  --screen-bg-top: #f5f8f4;
+  --screen-bg-bottom: #eaf0e8;
+  --screen-border: #bfd0bc;
+  --screen-dot: rgba(78, 102, 82, 0.14);
+  --screen-ambient: rgba(255, 236, 209, 0.35);
+
+  --hud-bg: rgba(255, 255, 255, 0.86);
+  --hud-border: #cddbc9;
+  --gauge-empty: #d5e0d2;
+
+  --bubble-bg: #ffffff;
+  --bubble-border: #c8d7c5;
+  --bubble-text: #2c3a2e;
+
+  --platform-outer: rgba(158, 179, 155, 0.42);
+  --platform-inner: #bdccb9;
+  --chara-drop-shadow: none;
+
+  --dpad-top: #465949;
+  --dpad-bottom: #344437;
+  --dpad-lip: #222e24;
+  --dpad-arrow: #eef4ed;
+
+  --btn-b-bg: linear-gradient(145deg, #f2ab77, #de8c53);
+  --btn-a-bg: linear-gradient(145deg, #ec7b91, #d45871);
+  --btn-socket: #b2c4af;
+
+  --pill-top: #d4e0d1;
+  --pill-bottom: #c0d0bc;
+  --pill-border: #a7bba3;
+  --pill-lip: #8fa68b;
+  --speaker-dot: #aec0aa;
+
+  --modal-bg: #f4f7f3;
+  --modal-border: #c8d7c5;
+  --modal-sec-bg: #e6eee4;
+  --modal-input-bg: #ffffff;
+
+  --text-main: #2c3a2e;
+  --text-muted: #5c705f;
+}
+
+body[data-theme="cream"] {
+  /* 5. KRIM MOCHI HANGAT (Cerah Minimalis) */
+  --accent-rose: #ec6b88;
+  --accent-peach: #f59e6c;
+  --cute-gradient: linear-gradient(135deg, #f27894 0%, #f7a878 100%);
+
+  --page-bg: #f5efe6;
+  --page-dot: #e6dccf;
+  --page-glow-1: rgba(242, 120, 148, 0.1);
+  --page-glow-2: rgba(247, 168, 120, 0.12);
+
+  --shell-bg-top: #fcfaf7;
+  --shell-bg-bottom: #f2ebe0;
+  --shell-border: #dfd5c5;
+  --shell-lip: #d2c5b2;
+  --shell-top-pill: #e2d8c7;
+
+  --bezel-bg: #ede4d6;
+  --bezel-border: #dcd0be;
+
+  --screen-bg-top: #fffdf9;
+  --screen-bg-bottom: #fcf5ec;
+  --screen-border: #dfd3c2;
+  --screen-dot: rgba(168, 138, 120, 0.16);
+  --screen-ambient: rgba(255, 214, 194, 0.35);
+
+  --hud-bg: rgba(255, 255, 255, 0.88);
+  --hud-border: #e6d9c8;
+  --gauge-empty: #e6dcd0;
+
+  --bubble-bg: #ffffff;
+  --bubble-border: #e2d4c3;
+  --bubble-text: #3b2624;
+
+  --platform-outer: rgba(214, 188, 170, 0.45);
+  --platform-inner: #dcc7b6;
+  --chara-drop-shadow: none;
+
+  --dpad-top: #523d3a;
+  --dpad-bottom: #3f2d2b;
+  --dpad-lip: #2e201e;
+  --dpad-arrow: #f3e9de;
+
+  --btn-b-bg: linear-gradient(145deg, #f9b87c, #f08c5b);
+  --btn-a-bg: linear-gradient(145deg, #f68ca6, #e55b7d);
+  --btn-socket: #cbbca9;
+
+  --pill-top: #e5dac9;
+  --pill-bottom: #d6c8b4;
+  --pill-border: #c5b59f;
+  --pill-lip: #b8a790;
+  --speaker-dot: #cfc1ae;
+
+  --modal-bg: #fffcf8;
+  --modal-border: #e5d9c8;
+  --modal-sec-bg: #f9f3eb;
+  --modal-input-bg: #ffffff;
+
+  --text-main: #3b2624;
+  --text-muted: #846d68;
+}
+
+body[data-theme="sakura"] {
+  /* 6. SAKURA PASTEL CERAH (Cerah Imut) */
+  --accent-rose: #e35478;
+  --accent-peach: #f29668;
+  --cute-gradient: linear-gradient(135deg, #ef688a 0%, #f79d74 100%);
+
+  --page-bg: #faedf0;
+  --page-dot: #edd8de;
+  --page-glow-1: rgba(239, 104, 138, 0.12);
+  --page-glow-2: rgba(247, 157, 116, 0.1);
+
+  --shell-bg-top: #fff8fa;
+  --shell-bg-bottom: #fae6ec;
+  --shell-border: #eecbd5;
+  --shell-lip: #deb4c1;
+  --shell-top-pill: #efd0d9;
+
+  --bezel-bg: #f4dae2;
+  --bezel-border: #e6c2cd;
+
+  --screen-bg-top: #fffbfc;
+  --screen-bg-bottom: #fef2f6;
+  --screen-border: #ebd0d8;
+  --screen-dot: rgba(196, 140, 156, 0.16);
+  --screen-ambient: rgba(255, 198, 214, 0.35);
+
+  --hud-bg: rgba(255, 255, 255, 0.9);
+  --hud-border: #efd3dc;
+  --gauge-empty: #f0dce2;
+
+  --bubble-bg: #ffffff;
+  --bubble-border: #eccdd7;
+  --bubble-text: #452630;
+
+  --platform-outer: rgba(232, 188, 201, 0.45);
+  --platform-inner: #e6c1cc;
+  --chara-drop-shadow: none;
+
+  --dpad-top: #613b47;
+  --dpad-bottom: #4a2b35;
+  --dpad-lip: #331c24;
+  --dpad-arrow: #fceef2;
+
+  --btn-b-bg: linear-gradient(145deg, #76c8d6, #52aebf);
+  --btn-a-bg: linear-gradient(145deg, #f57696, #e05276);
+  --btn-socket: #deb8c4;
+
+  --pill-top: #f2d5de;
+  --pill-bottom: #e6c2cd;
+  --pill-border: #d6aeb9;
+  --pill-lip: #c498a5;
+  --speaker-dot: #ddb5c1;
+
+  --modal-bg: #fff9fb;
+  --modal-border: #eed2db;
+  --modal-sec-bg: #fcf0f4;
+  --modal-input-bg: #ffffff;
+
+  --text-main: #452630;
+  --text-muted: #8c6470;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
+  background-color: var(--page-bg);
+  background-image:
+    radial-gradient(circle at 18% 15%, var(--page-glow-1), transparent 40%),
+    radial-gradient(circle at 82% 85%, var(--page-glow-2), transparent 42%),
+    radial-gradient(var(--page-dot) 1.4px, transparent 1.4px);
+  background-size: 100% 100%, 100% 100%, 26px 26px;
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-main);
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.console-page {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 12px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  box-sizing: border-box;
+}
+
+.console-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 412px;
+  margin: auto;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   1. CASING KONSOL HANDHELD ELEGAN MINIMALIS (MOCHI POCKET)
+   ========================================================================== */
+
+.gameboy-shell {
+  position: relative;
+  width: 100%;
+  max-width: 412px;
+  background: linear-gradient(180deg, var(--shell-bg-top) 0%, var(--shell-bg-bottom) 100%);
+  border-radius: 34px;
+  padding: 14px 20px 22px;
+  border: 2px solid var(--shell-border);
+  box-shadow:
+    0 8px 0 var(--shell-lip),
+    0 26px 54px rgba(0, 0, 0, 0.28),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.14);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gb-top-bar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.gb-top-pill {
+  width: 56px;
+  height: 5px;
+  border-radius: 99px;
+  background: var(--shell-top-pill);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* ==========================================================================
+   2. BINGKAI LENSA LAYAR (MINIMALIST BEZEL) & VIEWPORT
+   ========================================================================== */
+
+.gb-bezel {
+  background: var(--bezel-bg);
+  border-radius: 22px;
+  padding: 10px 12px 13px;
+  border: 1.5px solid var(--bezel-border);
+  box-shadow:
+    inset 0 2px 5px rgba(0, 0, 0, 0.12),
+    0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.bezel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding: 0 4px;
+}
+
+.bezel-battery {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 68px;
+}
+
+.battery-led {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.led-idle {
+  background-color: #34d399;
+  box-shadow: 0 0 0 2.5px rgba(52, 211, 153, 0.22);
+}
+.led-surprised {
+  background-color: #f59e0b;
+  box-shadow: 0 0 0 2.5px rgba(245, 158, 11, 0.24);
+}
+.led-happy {
+  background-color: #ec6b88;
+  box-shadow: 0 0 0 2.5px rgba(236, 107, 136, 0.25);
+}
+.led-angry {
+  background-color: #ef4444;
+  box-shadow: 0 0 0 2.5px rgba(239, 68, 68, 0.25);
+}
+.led-sleep {
+  background-color: #8b80f9;
+  box-shadow: 0 0 0 2.5px rgba(139, 128, 249, 0.24);
+}
+
+.battery-text {
+  font-size: 0.62rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+.bezel-brand {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  color: var(--text-muted);
+}
+
+.brand-accent {
+  color: var(--accent-rose);
+}
+
+.brand-dot {
+  color: var(--accent-peach);
+}
+
+.bezel-form-tag {
+  font-size: 0.62rem;
+  font-weight: 800;
+  color: var(--text-main);
+  background: var(--hud-bg);
+  padding: 2px 8px;
+  border-radius: 99px;
+  border: 1px solid var(--hud-border);
+  min-width: 64px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.12s ease;
+}
+
+.bezel-form-tag:hover {
+  border-color: var(--accent-rose);
+  transform: translateY(-1px);
+}
+
+/* Layar Utama Konsol */
+.gb-screen {
+  position: relative;
+  width: 100%;
+  height: clamp(256px, 45dvh, 336px);
+  background:
+    radial-gradient(circle at 50% 78%, var(--screen-ambient), transparent 60%),
+    linear-gradient(180deg, var(--screen-bg-top) 0%, var(--screen-bg-bottom) 100%);
+  border-radius: 16px;
+  border: 2px solid var(--screen-border);
+  box-shadow: inset 0 3px 12px rgba(0, 0, 0, 0.14);
+  overflow: hidden;
+  touch-action: none;
+  overscroll-behavior: none;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.gb-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--screen-dot) 1.2px, transparent 1.2px);
+  background-size: 18px 18px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   3. HUD LAYAR ATAS & 4 IKON INDIKATOR MEMUDAR (TANPA BAR!)
+   ========================================================================== */
+
+.screen-hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 44;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 10px;
+  pointer-events: none;
+}
+
+.hud-pet-badge,
+.hud-gauges {
+  pointer-events: auto;
+}
+
+.hud-pet-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--hud-bg);
+  border: 1.5px solid var(--hud-border);
+  border-radius: 99px;
+  padding: 3px 10px;
+  color: var(--text-main);
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: border-color 0.2s ease, transform 0.15s ease;
+}
+
+.hud-pet-badge:hover {
+  border-color: var(--accent-rose);
+  transform: translateY(-1px);
+}
+
+.hud-pet-name {
+  font-size: 0.78rem;
+  font-weight: 800;
+  max-width: 92px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hud-pet-lvl {
+  font-size: 0.64rem;
+  font-weight: 800;
+  padding: 1px 7px;
+  border-radius: 99px;
+  background: var(--cute-gradient);
+  color: #ffffff;
+}
+
+.hud-scene-icon {
+  font-size: 0.78rem;
+  line-height: 1;
+  margin-left: 1px;
+}
+
+/* ==========================================================================
+   3B. LATAR DUNIA KARAKTER BERDASARKAN LEVEL (TAMAN, HUJAN, BUNGA, ANGKER, BINTANG)
+   ========================================================================== */
+
+.scene-bg-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* 0. Lv.2: Kamar Tamu / Kamar Pet Hangat (Default Room) */
+.gb-screen[data-scene="default"] {
+  background:
+    radial-gradient(circle at 50% 28%, rgba(255, 247, 237, 0.85) 0%, transparent 60%),
+    linear-gradient(180deg, #fdf6ec 0%, #f7e6d4 62%, #dfc3a5 62%, #c9a580 100%);
+}
+
+/* 1. Lv.4: Taman Cerah (Sunny Park) */
+.gb-screen[data-scene="sunny_park"] {
+  background:
+    radial-gradient(circle at 84% 18%, rgba(254, 240, 138, 0.85) 0%, rgba(253, 224, 71, 0.25) 28%, transparent 54%),
+    linear-gradient(180deg, #60a5fa 0%, #bae6fd 66%, #86efac 66%, #4ade80 100%);
+}
+
+/* 2. Lv.6: Hari Hujan (Rainy Day) */
+.gb-screen[data-scene="rainy_day"] {
+  background:
+    radial-gradient(circle at 50% 12%, rgba(148, 163, 184, 0.22), transparent 55%),
+    linear-gradient(180deg, #1e293b 0%, #334155 66%, #1e293b 66%, #0f172a 100%);
+}
+
+/* 3. Lv.8: Taman Bunga (Flower Garden) */
+.gb-screen[data-scene="flower_garden"] {
+  background:
+    radial-gradient(circle at 50% 24%, rgba(255, 255, 255, 0.6), transparent 60%),
+    linear-gradient(180deg, #fbcfe8 0%, #fce7f3 65%, #a7f3d0 65%, #6ee7b7 100%);
+}
+
+/* 4. Lv.10: Rumah Kuburan (Haunted Graveyard) */
+.gb-screen[data-scene="haunted_house"] {
+  background:
+    radial-gradient(circle at 22% 22%, rgba(139, 92, 246, 0.25) 0%, transparent 45%),
+    linear-gradient(180deg, #090414 0%, #1b0c30 66%, #120721 66%, #07030e 100%);
+}
+
+/* 5. Lv.12: Malam Berbintang (Starry Night) */
+.gb-screen[data-scene="starry_night"] {
+  background:
+    radial-gradient(circle at 82% 20%, rgba(254, 249, 195, 0.24), transparent 42%),
+    linear-gradient(180deg, #060919 0%, #172554 66%, #0f172a 66%, #020617 100%);
+}
+
+/* 6. Lv.14: Musim Salju (Snowy Winter) */
+.gb-screen[data-scene="snowy_winter"] {
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.65) 0%, transparent 60%),
+    linear-gradient(180deg, #93c5fd 0%, #dbeafe 64%, #f1f5f9 64%, #e2e8f0 100%);
+}
+
+/* 7. Lv.16: Toko Roti Manis (Bakery Shop) */
+.gb-screen[data-scene="bakery_shop"] {
+  background:
+    radial-gradient(circle at 50% 26%, rgba(254, 243, 199, 0.85) 0%, transparent 58%),
+    linear-gradient(180deg, #fffbeb 0%, #fed7aa 62%, #b45309 62%, #78350f 100%);
+}
+
+/* 8. Lv.18: Pantai Tropis (Tropical Beach) */
+.gb-screen[data-scene="tropical_beach"] {
+  background:
+    radial-gradient(circle at 80% 18%, rgba(254, 240, 138, 0.8) 0%, transparent 45%),
+    linear-gradient(180deg, #38bdf8 0%, #06b6d4 58%, #fef08a 58%, #fde047 100%);
+}
+
+/* 9. Lv.20: Hutan Ajaib (Magic Forest) */
+.gb-screen[data-scene="magic_forest"] {
+  background:
+    radial-gradient(circle at 50% 22%, rgba(52, 211, 153, 0.35) 0%, transparent 60%),
+    linear-gradient(180deg, #064e3b 0%, #047857 62%, #14532d 62%, #052e16 100%);
+}
+
+/* Elemen Dekorasi di Dalam #scene-bg-layer */
+
+/* Dekorasi Latar Kamar (Lv.2) - Proporsional, Lega & Tidak Menabrak HUD */
+.scene-room-window {
+  position: absolute;
+  top: 68px;
+  left: 22px;
+  font-size: 3.4rem;
+  line-height: 1;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.14));
+}
+
+.scene-room-frame {
+  position: absolute;
+  top: 72px;
+  right: 24px;
+  font-size: 2.8rem;
+  line-height: 1;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.14));
+}
+
+.scene-room-clock {
+  position: absolute;
+  top: 62px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.2rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.12));
+}
+
+.scene-room-plant {
+  position: absolute;
+  bottom: 16px;
+  right: 10px;
+  font-size: 3rem;
+  line-height: 1;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.16));
+}
+
+.scene-room-books {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  font-size: 2.2rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.14));
+}
+
+.scene-room-rug {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 195px;
+  height: 52px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, #fed7aa 0%, #fdba74 65%, #fb923c 100%);
+  border: 2.5px dashed rgba(234, 88, 12, 0.45);
+  box-shadow: 0 6px 14px rgba(194, 65, 12, 0.18);
+  opacity: 0.9;
+}
+
+/* Taman Bunga Rimbun Alami */
+.scene-flower-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.flower-item {
+  position: absolute;
+  line-height: 1;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.12));
+  transform-origin: center bottom;
+  animation: flowerBreeze var(--sway-dur, 3.5s) ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes flowerBreeze {
+  0% {
+    transform: rotate(-3.5deg) translateY(0);
+  }
+  100% {
+    transform: rotate(3.5deg) translateY(-2px);
+  }
+}
+
+.scene-sun {
+  position: absolute;
+  top: 46px;
+  right: 22px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fef9c3 25%, #facc15 100%);
+  box-shadow: 0 0 30px rgba(250, 204, 21, 0.92);
+  animation: sceneSunPulse 3.2s ease-in-out infinite alternate;
+}
+
+@keyframes sceneSunPulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 18px rgba(250, 204, 21, 0.75);
+  }
+  100% {
+    transform: scale(1.08);
+    box-shadow: 0 0 36px rgba(250, 204, 21, 0.98);
+  }
+}
+
+.scene-cloud {
+  position: absolute;
+  font-size: 2.6rem;
+  opacity: 0.88;
+  filter: drop-shadow(0 4px 8px rgba(255, 255, 255, 0.35));
+  animation: sceneCloudDrift var(--drift-dur, 14s) ease-in-out infinite alternate;
+}
+
+@keyframes sceneCloudDrift {
+  0% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(18px);
+  }
+}
+
+/* Dekorasi Khusus Salju (Pohon Cemara & Manusia Salju Mepet Garis Horizon di Belakang Karakter) */
+.scene-snowman {
+  position: absolute;
+  bottom: 34%;
+  right: 9%;
+  font-size: 4.4rem;
+  line-height: 1;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.18));
+  transform-origin: bottom center;
+  animation: snowmanWobble 4s ease-in-out infinite alternate;
+  z-index: 2;
+}
+
+.scene-pine {
+  position: absolute;
+  bottom: 34%;
+  left: 8%;
+  font-size: 5.2rem;
+  line-height: 1;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.18));
+  transform-origin: bottom center;
+  animation: pineSway 4.8s ease-in-out infinite alternate;
+  z-index: 2;
+}
+
+@keyframes snowmanWobble {
+  0% { transform: rotate(-2deg); }
+  100% { transform: rotate(2deg); }
+}
+
+@keyframes pineSway {
+  0% { transform: rotate(-1.5deg); }
+  100% { transform: rotate(1.5deg); }
+}
+
+.scene-snowflake {
+  position: absolute;
+  top: -20px;
+  font-size: 1.25rem;
+  color: #ffffff;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.95);
+  animation: sceneSnowFall var(--snow-dur, 4.5s) linear infinite;
+  animation-delay: var(--snow-delay, 0s);
+  pointer-events: none;
+}
+
+@keyframes sceneSnowFall {
+  0% {
+    transform: translate3d(0, -10px, 0) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.95;
+  }
+  90% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate3d(24px, 320px, 0) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* --- ETALASE TOKO ROTI (BAKERY SHOWCASE & AWNING) --- */
+.bakery-awning {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 42px;
+  background: repeating-linear-gradient(
+    90deg,
+    #92400e 0px,
+    #92400e 20px,
+    #fef3c7 20px,
+    #fef3c7 40px
+  );
+  border-bottom: 3.5px solid #78350f;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.22);
+  z-index: 6;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 2px;
+}
+
+.bakery-sign {
+  background: #451a03;
+  color: #fef08a;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  padding: 1px 10px;
+  border-radius: 4px;
+  border: 1px solid #78350f;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transform: translateY(6px);
+}
+
+.bakery-showcase {
+  position: absolute;
+  top: 50px;
+  left: 12px;
+  right: 12px;
+  bottom: 28px;
+  background: rgba(255, 255, 255, 0.3);
+  border: 3.5px solid #854d0e;
+  border-radius: 12px 12px 6px 6px;
+  box-shadow:
+    inset 0 0 16px rgba(254, 243, 199, 0.45),
+    0 6px 14px rgba(0, 0, 0, 0.16);
+  z-index: 2;
+  overflow: hidden;
+}
+
+.showcase-glass-sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.38) 0%,
+    rgba(255, 255, 255, 0.08) 38%,
+    transparent 55%
+  );
+  pointer-events: none;
+  z-index: 5;
+}
+
+.showcase-shelf {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  display: flex;
+  flex-direction: column;
+}
+
+.showcase-shelf.shelf-top {
+  top: 14px;
+}
+
+.showcase-shelf.shelf-mid {
+  top: 76px;
+}
+
+.shelf-items {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 2.15rem;
+  line-height: 1;
+  padding: 0 8px 4px;
+  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.22));
+}
+
+.shelf-plank {
+  height: 5px;
+  background: linear-gradient(180deg, #d97706, #78350f);
+  border-radius: 3px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.pastry-item {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.pastry-item:hover {
+  transform: scale(1.15) translateY(-2px);
+}
+
+.bakery-counter-decor {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.counter-item {
+  position: absolute;
+  font-size: 2.6rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.counter-item.left {
+  left: 14px;
+  bottom: 4px;
+}
+
+.counter-item.right {
+  right: 14px;
+  bottom: 4px;
+}
+
+/* --- PANTAI TROPIS (POHON KELAPA & PAYUNG MEPET GARIS PANTAI DI BELAKANG KARAKTER) --- */
+.scene-palm {
+  position: absolute;
+  bottom: 38%;
+  left: 5%;
+  font-size: 5.6rem;
+  line-height: 1;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.22));
+  transform-origin: bottom left;
+  animation: palmBreeze 4.4s ease-in-out infinite alternate;
+  z-index: 2;
+}
+
+@keyframes palmBreeze {
+  0% { transform: rotate(-2deg); }
+  100% { transform: rotate(2deg); }
+}
+
+.scene-umbrella {
+  position: absolute;
+  bottom: 38%;
+  right: 7%;
+  font-size: 5.0rem;
+  line-height: 1;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.22));
+  transform-origin: bottom center;
+  animation: umbrellaBreeze 5s ease-in-out infinite alternate;
+  z-index: 2;
+}
+
+@keyframes umbrellaBreeze {
+  0% { transform: rotate(-1.5deg); }
+  100% { transform: rotate(1.5deg); }
+}
+
+.scene-crab {
+  position: absolute;
+  bottom: 10%;
+  left: 22%;
+  font-size: 1.85rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+  animation: crabScuttle 3.6s ease-in-out infinite alternate;
+  z-index: 3;
+}
+
+@keyframes crabScuttle {
+  0% { transform: translateX(0) scaleX(1); }
+  50% { transform: translateX(8px) scaleX(1); }
+  51% { transform: translateX(8px) scaleX(-1); }
+  100% { transform: translateX(0) scaleX(-1); }
+}
+
+.beach-shell {
+  position: absolute;
+  font-size: 1.25rem;
+  line-height: 1;
+  opacity: 0.85;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.15));
+  z-index: 2;
+}
+
+.beach-shell.left {
+  bottom: 6px;
+  left: 18%;
+}
+
+.beach-shell.right {
+  bottom: 6px;
+  right: 22%;
+}
+
+/* --- HUTAN RIMBA AJAIB (PEPOHONAN SOLID RIMBUN MEPET HORIZON & JAMUR DI LANTAI DEPAN) --- */
+.forest-canopy-back {
+  position: absolute;
+  bottom: 38%;
+  left: 0;
+  right: 0;
+  height: 54px;
+  pointer-events: none;
+  opacity: 1;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.4));
+  z-index: 1;
+}
+
+.canopy-tree {
+  position: absolute;
+  bottom: 0;
+  line-height: 1;
+  transform-origin: bottom center;
+  animation: forestCanopyBreathe 4.5s ease-in-out infinite alternate;
+}
+
+.canopy-tree:nth-child(even) {
+  animation-duration: 5.2s;
+  animation-delay: -1.8s;
+}
+
+@keyframes forestCanopyBreathe {
+  0% { transform: scaleY(0.96); }
+  100% { transform: scaleY(1.03); }
+}
+
+.scene-big-tree {
+  position: absolute;
+  bottom: 36%;
+  line-height: 1;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.3));
+  transform-origin: bottom center;
+  animation: bigTreeGentleSway 4.8s ease-in-out infinite alternate;
+  z-index: 2;
+}
+
+.scene-big-tree.left {
+  left: 5%;
+  font-size: 5.6rem;
+}
+
+.scene-big-tree.right {
+  right: 5%;
+  font-size: 5.2rem;
+  animation-delay: -2s;
+}
+
+@keyframes bigTreeGentleSway {
+  0% { transform: rotate(-1.5deg); }
+  100% { transform: rotate(1.5deg); }
+}
+
+.scene-mushroom {
+  position: absolute;
+  bottom: 14%;
+  right: 22%;
+  font-size: 2.2rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
+  z-index: 4;
+}
+
+.forest-floor-flora {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Bebatuan Alami Hutan (Batu Belakang & Depan) */
+.forest-rock {
+  position: absolute;
+  line-height: 1;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.35));
+  transform-origin: bottom center;
+}
+
+.forest-rock.rock-left-back {
+  left: 12%;
+  bottom: 25%;
+  font-size: 1.4rem;
+  z-index: 2;
+  opacity: 0.88;
+}
+
+.forest-rock.rock-left-front {
+  left: 8%;
+  bottom: 8%;
+  font-size: 1.7rem;
+  z-index: 3;
+}
+
+.forest-rock.rock-right-back {
+  right: 14%;
+  bottom: 25%;
+  font-size: 1.35rem;
+  z-index: 2;
+  opacity: 0.88;
+}
+
+.forest-rock.rock-right-front {
+  right: 6%;
+  bottom: 8%;
+  font-size: 1.6rem;
+  z-index: 3;
+}
+
+/* Rerumputan & Tanaman Hutan Liar */
+.forest-flora {
+  position: absolute;
+  line-height: 1;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.25));
+  transform-origin: bottom center;
+}
+
+.forest-flora.flora-grass-left {
+  left: 4%;
+  bottom: 23%;
+  font-size: 1.3rem;
+  opacity: 0.85;
+}
+
+.forest-flora.flora-fern-left {
+  left: 17%;
+  bottom: 11%;
+  font-size: 1.45rem;
+  z-index: 3;
+}
+
+.forest-flora.flora-sprout-left {
+  left: 2%;
+  bottom: 11%;
+  font-size: 1.25rem;
+  z-index: 3;
+}
+
+.forest-flora.flora-sprout-right {
+  right: 6%;
+  bottom: 23%;
+  font-size: 1.25rem;
+  opacity: 0.85;
+}
+
+.forest-flora.flora-clover-right {
+  right: 14%;
+  bottom: 9%;
+  font-size: 1.35rem;
+  z-index: 3;
+}
+
+.forest-flora.flora-fern-right {
+  right: 28%;
+  bottom: 7%;
+  font-size: 1.2rem;
+  z-index: 3;
+}
+
+.scene-butterfly {
+  position: absolute;
+  top: 76px;
+  right: 28px;
+  font-size: 2rem;
+  animation: butterflyFlutter 3s ease-in-out infinite alternate;
+}
+
+@keyframes butterflyFlutter {
+  0% {
+    transform: translate(0, 0) rotate(-6deg);
+  }
+  100% {
+    transform: translate(-15px, -12px) rotate(8deg);
+  }
+}
+
+.scene-raindrop {
+  position: absolute;
+  top: -24px;
+  width: 2px;
+  height: 18px;
+  border-radius: 99px;
+  background: linear-gradient(180deg, transparent, rgba(147, 197, 253, 0.82));
+  animation: sceneRainFall var(--rain-dur, 0.75s) linear infinite;
+  animation-delay: var(--rain-delay, 0s);
+}
+
+@keyframes sceneRainFall {
+  0% {
+    transform: translate3d(8px, -10px, 0) rotate(12deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate3d(-24px, 340px, 0) rotate(12deg);
+    opacity: 0.15;
+  }
+}
+
+.scene-puddle {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  width: 136px;
+  height: 22px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  border: 1.5px solid rgba(147, 197, 253, 0.42);
+  animation: scenePuddleRipple 2.2s ease-out infinite;
+}
+
+@keyframes scenePuddleRipple {
+  0% {
+    transform: translateX(-50%) scale(0.75);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateX(-50%) scale(1.22);
+    opacity: 0;
+  }
+}
+
+/* Efek Percikan Hujan Membentur Lantai (Rain Splashes & Ground Ripples) */
+.scene-rain-splash {
+  position: absolute;
+  width: 18px;
+  height: 9px;
+  transform: translate(-50%, 50%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.splash-ripple {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid rgba(186, 230, 253, 0.78);
+  animation: rainRipplePulse var(--splash-dur, 0.85s) ease-out infinite;
+  animation-delay: var(--splash-delay, 0s);
+  opacity: 0;
+}
+
+@keyframes rainRipplePulse {
+  0% {
+    transform: scale(0.2);
+    opacity: 0.95;
+  }
+  60% {
+    opacity: 0.65;
+  }
+  100% {
+    transform: scale(1.65);
+    opacity: 0;
+  }
+}
+
+.splash-drop {
+  position: absolute;
+  bottom: 4px;
+  width: 2.2px;
+  height: 4.5px;
+  border-radius: 99px;
+  background: rgba(186, 230, 253, 0.92);
+  opacity: 0;
+}
+
+.splash-drop-l {
+  left: 4px;
+  animation: rainDropSplashLeft var(--splash-dur, 0.85s) ease-out infinite;
+  animation-delay: var(--splash-delay, 0s);
+}
+
+.splash-drop-r {
+  right: 4px;
+  animation: rainDropSplashRight var(--splash-dur, 0.85s) ease-out infinite;
+  animation-delay: var(--splash-delay, 0s);
+}
+
+@keyframes rainDropSplashLeft {
+  0% {
+    transform: translate(0, 0) scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.95;
+  }
+  60% {
+    transform: translate(-4.5px, -7.5px) scale(1);
+    opacity: 0.75;
+  }
+  100% {
+    transform: translate(-8px, -2px) scale(0.3);
+    opacity: 0;
+  }
+}
+
+@keyframes rainDropSplashRight {
+  0% {
+    transform: translate(0, 0) scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.95;
+  }
+  60% {
+    transform: translate(4.5px, -7.5px) scale(1);
+    opacity: 0.75;
+  }
+  100% {
+    transform: translate(8px, -2px) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* Efek Kilatan Petir Halus (Rainy Day) */
+.scene-lightning-flash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 60% 25%, rgba(255, 255, 255, 0.45) 0%, rgba(191, 219, 254, 0.18) 60%, transparent 100%);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 5;
+  animation: sceneLightningFlash 6.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.scene-lightning-bolt {
+  position: absolute;
+  top: 14px;
+  right: 28px;
+  font-size: 26px;
+  opacity: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 0 10px #fef08a);
+  z-index: 6;
+  animation: sceneLightningBolt 6.8s ease-in-out infinite;
+}
+
+@keyframes sceneLightningFlash {
+  0%, 88%, 93%, 100% { opacity: 0; }
+  89% { opacity: 0.85; }
+  90% { opacity: 0.2; }
+  91% { opacity: 0.95; }
+  92% { opacity: 0.05; }
+}
+
+@keyframes sceneLightningBolt {
+  0%, 88%, 93%, 100% { opacity: 0; transform: scale(0.6); }
+  89% { opacity: 0.9; transform: scale(1.15) rotate(-6deg); }
+  90% { opacity: 0.1; transform: scale(0.85); }
+  91% { opacity: 1; transform: scale(1.25) rotate(4deg); }
+  92% { opacity: 0; transform: scale(0.7); }
+}
+
+/* Flora Taman Asri Bertingkat Alami (Sunny Park) */
+.scene-park-flora {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.park-plant {
+  position: absolute;
+  display: inline-block;
+  transform-origin: bottom center;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
+  animation: parkPlantSway 3.8s ease-in-out infinite alternate;
+}
+
+.park-plant:nth-child(even) {
+  animation-duration: 4.6s;
+  animation-delay: -1.4s;
+}
+
+@keyframes parkPlantSway {
+  0% { transform: rotate(-3.5deg) translateY(0); }
+  100% { transform: rotate(3.5deg) translateY(-1px); }
+}
+
+.scene-petal {
+  position: absolute;
+  top: -20px;
+  font-size: 0.88rem;
+  animation: scenePetalFall var(--petal-dur, 5.5s) linear infinite;
+  animation-delay: var(--petal-delay, 0s);
+}
+
+@keyframes scenePetalFall {
+  0% {
+    transform: translate3d(0, -10px, 0) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.92;
+  }
+  50% {
+    transform: translate3d(18px, 160px, 0) rotate(140deg);
+  }
+  100% {
+    transform: translate3d(-12px, 330px, 0) rotate(290deg);
+    opacity: 0;
+  }
+}
+
+/* Dekorasi Khusus Rumah Angker (Bulan Ungu, Jaring Laba-laba, Roh Melayang, Kabut) */
+.scene-spooky-moon {
+  position: absolute;
+  top: 40px;
+  left: 20px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #f3e8ff 10%, #c084fc 65%, rgba(126, 34, 206, 0) 100%);
+  box-shadow: 0 0 22px rgba(168, 85, 247, 0.72);
+  opacity: 0.88;
+}
+
+/* Kelelawar Terbang di Langit Malam */
+.scene-bat {
+  position: absolute;
+  font-size: 1.35rem;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
+  animation: sceneBatFlutter 3.4s ease-in-out infinite alternate;
+  z-index: 3;
+}
+
+.scene-bat.bat-left {
+  top: 36px;
+  left: 28%;
+  animation-delay: -0.4s;
+}
+
+.scene-bat.bat-right {
+  top: 52px;
+  right: 20%;
+  font-size: 1.15rem;
+  animation-duration: 2.8s;
+  animation-delay: -1.6s;
+}
+
+@keyframes sceneBatFlutter {
+  0% {
+    transform: translate(0, 0) rotate(-6deg) scale(0.96);
+  }
+  50% {
+    transform: translate(6px, -7px) rotate(5deg) scale(1.04);
+  }
+  100% {
+    transform: translate(-5px, 5px) rotate(-4deg) scale(1);
+  }
+}
+
+/* Hantu Melayang Lembut di Atas Lilin Makam Kanan */
+.scene-ghost-float {
+  position: absolute;
+  bottom: 39%;
+  right: 7%;
+  font-size: 1.45rem;
+  pointer-events: none;
+  filter: drop-shadow(0 0 12px rgba(192, 132, 252, 0.85));
+  animation: sceneGhostDrift 3.6s ease-in-out infinite alternate;
+  z-index: 3;
+}
+
+@keyframes sceneGhostDrift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.92);
+    opacity: 0.65;
+  }
+  100% {
+    transform: translate3d(-3px, -12px, 0) scale(1.06);
+    opacity: 0.95;
+  }
+}
+
+/* Kompleks Pemakaman Kiri & Kanan (Teratur & Bertingkat Alami) */
+.graveyard-cluster {
+  position: absolute;
+  pointer-events: none;
+  z-index: 3;
+  display: flex;
+  align-items: flex-end;
+}
+
+.graveyard-cluster.left {
+  bottom: 25%;
+  left: 6%;
+  gap: 4px;
+}
+
+.graveyard-cluster.right {
+  bottom: 25%;
+  right: 6%;
+  gap: 4px;
+}
+
+.graveyard-tombstone {
+  display: inline-block;
+  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.45));
+  transform-origin: bottom center;
+}
+
+.graveyard-tombstone.front {
+  font-size: 1.7rem;
+  z-index: 4;
+}
+
+.graveyard-tombstone.back {
+  font-size: 1.25rem;
+  opacity: 0.72;
+  margin-bottom: 8px;
+  z-index: 2;
+}
+
+.graveyard-cluster.left .graveyard-tombstone.back {
+  transform: rotate(-6deg);
+}
+
+.graveyard-cluster.right .graveyard-tombstone.back {
+  transform: rotate(5deg);
+}
+
+.graveyard-candle {
+  font-size: 1.15rem;
+  margin-bottom: 2px;
+  filter: drop-shadow(0 0 8px #fde047);
+  animation: graveyardCandleFlicker 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes graveyardCandleFlicker {
+  0%, 100% {
+    opacity: 0.85;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+.graveyard-grass {
+  font-size: 0.95rem;
+  opacity: 0.5;
+  margin-bottom: 2px;
+}
+
+/* Jaring Laba-laba di Sudut Pojok Bawah (Tampak Setengah Saja) */
+.scene-cobweb-corner {
+  position: absolute;
+  font-size: 2.85rem;
+  line-height: 1;
+  pointer-events: none;
+  opacity: 0.45;
+  user-select: none;
+  z-index: 4;
+  filter: drop-shadow(0 0 6px rgba(192, 132, 252, 0.35));
+  transition: opacity 0.2s ease;
+}
+
+.scene-cobweb-corner.bottom-right {
+  bottom: -16px;
+  right: -16px;
+  transform: rotate(0deg);
+}
+
+.scene-cobweb-corner.bottom-left {
+  bottom: -16px;
+  left: -16px;
+  transform: scaleX(-1);
+}
+
+.scene-cobweb {
+  position: absolute;
+  top: 34px;
+  right: 8px;
+  font-size: 1.5rem;
+  opacity: 0.42;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.25));
+}
+
+.scene-wisp {
+  position: absolute;
+  font-size: 1.05rem;
+  filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.85));
+  animation: sceneWispFloat var(--wisp-dur, 3.2s) ease-in-out infinite alternate;
+}
+
+@keyframes sceneWispFloat {
+  0% {
+    transform: translate3d(-6px, 6px, 0) scale(0.9);
+    opacity: 0.45;
+  }
+  100% {
+    transform: translate3d(8px, -12px, 0) scale(1.1);
+    opacity: 0.92;
+  }
+}
+
+.scene-fog {
+  position: absolute;
+  bottom: 0;
+  left: -15%;
+  right: -15%;
+  height: 68px;
+  background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.26) 0%, rgba(15, 7, 30, 0) 72%);
+  animation: sceneFogCreep 5s ease-in-out infinite alternate;
+}
+
+@keyframes sceneFogCreep {
+  0% {
+    transform: translateX(-14px) scaleY(0.92);
+    opacity: 0.55;
+  }
+  100% {
+    transform: translateX(14px) scaleY(1.12);
+    opacity: 0.9;
+  }
+}
+
+/* Bulan Sabit Malam Berbintang */
+.scene-crescent-moon {
+  position: absolute;
+  top: 38px;
+  left: 20px;
+  font-size: 2.2rem;
+  line-height: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 0 14px rgba(254, 240, 138, 0.85));
+  animation: crescentMoonFloat 4.6s ease-in-out infinite alternate;
+  z-index: 3;
+}
+
+@keyframes crescentMoonFloat {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-3px) rotate(3deg); }
+}
+
+/* Bintang Jatuh Meluncur Halus di Langit Malam */
+.scene-shooting-star {
+  position: absolute;
+  top: 40px;
+  right: 15%;
+  width: 45px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(254, 240, 138, 0.9), transparent);
+  border-radius: 99px;
+  transform: rotate(-35deg);
+  opacity: 0;
+  pointer-events: none;
+  animation: shootingStarGlide 8.5s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes shootingStarGlide {
+  0%, 92%, 100% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(-35deg) scaleX(0.2);
+  }
+  94% {
+    opacity: 1;
+    transform: translate(-45px, 35px) rotate(-35deg) scaleX(1);
+  }
+  96% {
+    opacity: 0;
+    transform: translate(-90px, 70px) rotate(-35deg) scaleX(0.4);
+  }
+}
+
+.scene-star {
+  position: absolute;
+  color: #fef08a;
+  font-size: 0.72rem;
+  animation: sceneStarTwinkle var(--star-dur, 2s) ease-in-out infinite alternate;
+}
+
+@keyframes sceneStarTwinkle {
+  0% {
+    opacity: 0.25;
+    transform: scale(0.75);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Reaksi Khusus Karakter di Rumah Angker:
+   - Ekspresi wajah ketakutan & menciut gemetar saat hover/kaget! Gerakan idle tubuh tetap konsisten kenyal naik-turun (breathe-and-jump) */
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .head-shape::after {
+  background: linear-gradient(
+    180deg,
+    rgba(49, 46, 129, 0.58) 0%,
+    rgba(88, 28, 135, 0.22) 52%,
+    transparent 85%
+  );
+  opacity: 0.85;
+}
+
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .hamster-angry-shade {
+  opacity: 0.48;
+  filter: hue-rotate(245deg);
+}
+
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .hamster-hands-svg {
+  animation: none;
+}
+
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .ear.left {
+  transform: rotate(-36deg) translate(-3px, 6px);
+}
+
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .ear.right {
+  transform: rotate(36deg) translate(3px, 6px);
+}
+
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .mouth-svg {
+  transform: scaleY(-0.8) scaleX(0.86) translateY(2px);
+}
+
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .shiba-tongue-svg {
+  opacity: 0;
+}
+
+@keyframes hauntedShiverIdle {
+  0%,
+  100% {
+    transform: translate3d(0, 4px, 0) scale(0.96, 0.94);
+  }
+  25% {
+    transform: translate3d(-2.2px, 5px, 0) scale(0.95, 0.94) rotate(-1.2deg);
+  }
+  50% {
+    transform: translate3d(2.2px, 4px, 0) scale(0.97, 0.93) rotate(1.2deg);
+  }
+  75% {
+    transform: translate3d(-1.8px, 5px, 0) scale(0.96, 0.94) rotate(-0.8deg);
+  }
+}
+
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-surprised .Aurora-Dia,
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-surprised .lifelike-actor {
+  animation: hauntedTerrifiedShock 0.85s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards !important;
+}
+
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-surprised .eye-ball {
+  transform: scale(0.84) !important;
+}
+
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-surprised .mouth-svg {
+  transform: scaleY(-1.1) scaleX(0.82) translateY(3px);
+}
+
+@keyframes hauntedTerrifiedShock {
+  0% {
+    transform: translateY(4px) scale(0.96, 0.94);
+  }
+  20% {
+    transform: translateY(-9px) scale(0.88, 1.12);
+  }
+  38% {
+    transform: translate(-3.5px, 5px) scale(1.06, 0.88);
+  }
+  52% {
+    transform: translate(3.5px, 6px) scale(0.93, 0.92);
+  }
+  68% {
+    transform: translate(-3px, 5px) scale(0.95, 0.93);
+  }
+  84% {
+    transform: translate(2.5px, 5px) scale(0.96, 0.94);
+  }
+  100% {
+    transform: translateY(4px) scale(0.96, 0.94);
+  }
+}
+
+.hud-gauges {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--hud-bg);
+  border: 1.5px solid var(--hud-border);
+  border-radius: 99px;
+  padding: 4px 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.stat-icon-gauge {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  cursor: help;
+}
+
+.gauge-svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.gauge-bg {
+  position: absolute;
+  inset: 0;
+  color: var(--gauge-empty);
+  opacity: 0.35;
+}
+
+.gauge-fill-wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--fill-pct, var(--pct, 100%));
+  overflow: hidden;
+  transition: height 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gauge-fill {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.fill-hunger {
+  color: #f59e6c;
+  filter: drop-shadow(0 0 2px rgba(245, 158, 108, 0.6));
+}
+.fill-happy {
+  color: #ec6b88;
+  filter: drop-shadow(0 0 2px rgba(236, 107, 136, 0.6));
+}
+.fill-energy {
+  color: #56b4e9;
+  filter: drop-shadow(0 0 2px rgba(86, 180, 233, 0.6));
+}
+.fill-exp {
+  color: #f5b041;
+  filter: drop-shadow(0 0 4px rgba(245, 176, 65, 0.85));
+}
+
+.stat-icon-gauge.low-stat {
+  animation: gaugeLowPulse 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes gaugeLowPulse {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.65;
+  }
+  100% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+}
+
+.stat-icon-gauge::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: calc(100% + 7px);
+  right: -4px;
+  background: var(--bubble-bg);
+  color: var(--bubble-text);
+  border: 1px solid var(--bubble-border);
+  font-size: 0.64rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 7px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-3px);
+  pointer-events: none;
+  transition: all 0.16s ease;
+  z-index: 50;
+}
+
+.stat-icon-gauge:hover::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   4. BALON PERCAKAPAN MINIMALIS & IMUT
+   ========================================================================== */
+
+#Aurora-Dia--tips-wrapper {
+  position: absolute;
+  top: 44px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(88%, 278px);
+  z-index: 30;
+  border-radius: 14px;
+  background: var(--bubble-bg);
+  border: 1.5px solid var(--bubble-border);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: top 0.25s ease, opacity 0.28s ease, transform 0.28s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+}
+
+#Aurora-Dia--tips-wrapper::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background: var(--bubble-bg);
+  border-right: 1.5px solid var(--bubble-border);
+  border-bottom: 1.5px solid var(--bubble-border);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.gb-screen.minigame-active #Aurora-Dia--tips-wrapper {
+  top: 78px;
+}
+
+#Aurora-Dia--tips-wrapper.active {
+  opacity: 1;
+  visibility: visible;
+  animation: shake-tips 50s ease-in-out 5s infinite;
+}
+
+.Aurora-Dia--tips {
+  background: transparent;
+  border-radius: 12px;
+  padding: 8px 12px;
+  color: var(--bubble-text);
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1.42;
+  text-align: center;
+  min-height: 36px;
+  display: block;
+  word-break: break-word;
+  white-space: normal;
+}
+
+.Aurora-Dia--tips span {
+  color: var(--accent-rose);
+  font-weight: 800;
+  padding: 0 2px;
+}
+
+/* ==========================================================================
+   5. PANGGUNG KARAKTER & ANIMASI BERNAPAS HIDUP (SEMUA WUJUD!)
+   ========================================================================== */
+
+.pet-interactive {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 176px;
+  height: 168px;
+  z-index: 20;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  cursor: grab;
+  touch-action: none;
+}
+
+.pet-interactive:active {
+  cursor: grabbing;
+}
+
+.pet-form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: relative;
+}
+
+.angry-mark {
+  position: absolute;
+  top: 6px;
+  right: 16px;
+  width: 28px;
+  height: 28px;
+  z-index: 40;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.state-angry .angry-mark {
+  opacity: 1;
+  transform: scale(1);
+  animation: angryMarkPulse 0.35s ease-in-out infinite alternate;
+}
+
+@keyframes angryMarkPulse {
+  0% {
+    transform: scale(0.9) rotate(-6deg);
+  }
+  100% {
+    transform: scale(1.14) rotate(6deg);
+  }
+}
+
+.transform-burst {
+  position: absolute;
+  bottom: 34px;
+  left: 50%;
+  width: 130px;
+  height: 130px;
+  transform: translateX(-50%) scale(0);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(242, 120, 148, 0.45) 45%,
+    rgba(247, 168, 120, 0) 72%
+  );
+  pointer-events: none;
+  z-index: 28;
+  opacity: 0;
+}
+
+.transform-burst.burst-active {
+  animation: burstFlash 0.52s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes burstFlash {
+  0% {
+    transform: translateX(-50%) scale(0.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) scale(1.65);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   6. WUJUD 1: PUNI MOCHI (Jelly Mochi Pastel Imut)
+   ========================================================================== */
+
+.form-orb {
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 6px;
+}
+
+#Aurora-Dia--body {
+  position: relative;
+  width: 82px;
+  height: 86px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+}
+
+.Aurora-Dia {
+  position: relative;
+  left: 0;
+  top: 0;
+  height: 58px;
+  width: 70px;
+  border-radius: 48% 48% 44% 44% / 54% 54% 44% 44%;
+  background: linear-gradient(145deg, #ffadc5 0%, #ffc29b 55%, #f48fb1 100%);
+  border: 3.5px solid var(--outline);
+  box-shadow:
+    inset 0 6px 10px rgba(255, 255, 255, 0.65),
+    inset 0 -8px 0 rgba(219, 108, 138, 0.28);
+  filter: var(--chara-drop-shadow);
+  z-index: 2;
+  flex-shrink: 0;
+  transform-origin: 50% 100%;
+  animation: breathe-and-jump 3s linear infinite;
+  transition: transform 0.15s ease-out;
+}
+
+.Aurora-Dia.active {
+  animation:
+    bounce-then-breathe 1.05s linear 3,
+    breathe-and-jump 3s linear 3.15s infinite;
+}
+
+.Aurora-Dia::before,
+.Aurora-Dia::after {
+  display: none;
+}
+
+.Aurora-Dia--eyes {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  z-index: 3;
+  transition: transform 0.22s cubic-bezier(0.2, 0.9, 0.4, 1);
+  will-change: transform;
+}
+
+.Aurora-Dia--eye {
+  position: absolute;
+  left: 16px;
+  top: 17px;
+  height: 15px;
+  width: 8px;
+  border-radius: 15px;
+  background-color: var(--outline);
+  animation: blink 4.5s infinite;
+}
+
+.Aurora-Dia--eye::after {
+  content: "";
+  position: absolute;
+  top: 2.5px;
+  left: 1.5px;
+  width: 3.5px;
+  height: 3.5px;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.Aurora-Dia--eye.right {
+  left: auto;
+  right: 16px;
+}
+
+.orb-blush {
+  position: absolute;
+  top: 31px;
+  width: 11px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f45b84;
+  opacity: 0.55;
+  z-index: 4;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.orb-blush.left {
+  left: 8px;
+}
+.orb-blush.right {
+  right: 8px;
+}
+
+.state-happy .orb-blush {
+  opacity: 0.95;
+  transform: scale(1.2);
+}
+
+/* Bayangan Lantai Lembut (Tanpa Neon!) */
+.Aurora-Dia--platform {
+  position: relative;
+  top: -24px;
+  width: 74px;
+  height: 52px;
+  flex-shrink: 0;
+  transform: rotateX(70deg);
+  z-index: 1;
+  pointer-events: none;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.Aurora-Dia--platform::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--platform-outer);
+}
+
+.Aurora-Dia--platform::after {
+  content: "";
+  position: absolute;
+  bottom: 12%;
+  left: 14%;
+  width: 72%;
+  height: 72%;
+  border-radius: 50%;
+  background: var(--platform-inner);
+  opacity: 0.88;
+  animation: platform-Float 3s linear infinite;
+}
+
+/* ==========================================================================
+   7. KERANGKA HIDUP UNIFIKASI UNTUK HEWAN & LIVE2D
+   ========================================================================== */
+
+.animal-stage {
+  position: relative;
+  width: 176px;
+  height: 168px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.lifelike-actor {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  transform-origin: center bottom;
+  animation: breathe-and-jump 3s linear infinite;
+}
+
+.lifelike-actor.talking {
+  animation:
+    bounce-then-breathe 1.05s linear 3,
+    breathe-and-jump 3s linear 3.15s infinite;
+}
+
+.Aurora-Dia--platform.animal-platform {
+  position: absolute;
+  top: auto;
+  bottom: -18px;
+  left: 50%;
+  width: 118px;
+  height: 64px;
+  transform: translateX(-50%) rotateX(72deg);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.chara-rig {
+  position: absolute;
+  left: 50%;
+  bottom: 2px;
+  width: 320px;
+  height: 330px;
+  transform: translateX(-50%) scale(0.45);
+  transform-origin: center bottom;
+  filter: var(--chara-drop-shadow);
+  z-index: 10;
+}
+
+.chara-squash {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-origin: center bottom;
+  transition: transform 0.14s ease-out;
+}
+
+.svg-full {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  display: block;
+}
+
+/* ==========================================================================
+   8. KOMPONEN ANATOMI BERSAMA (NEKO, HAMSTER, SHIBA, LANDAK)
+   ========================================================================== */
+
+.tail-wrap {
+  position: absolute;
+  left: 8px;
+  bottom: 42px;
+  width: 120px;
+  height: 150px;
+  z-index: 3;
+  transform-origin: 96px 112px;
+  animation: idleTailSway 3.2s ease-in-out infinite;
+}
+
+.dog-tail-wrap {
+  left: 10px;
+  bottom: 54px;
+  animation: dogTailWag 1.1s ease-in-out infinite alternate;
+}
+
+@keyframes dogTailWag {
+  0% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(22deg);
+  }
+}
+
+.lower-body-group {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 145px;
+  z-index: 6;
+  transform-origin: center bottom;
+}
+
+.paw-left-group {
+  transform-origin: 72px 75px;
+  transition: transform 0.15s ease;
+}
+
+.paw-right-group {
+  transform-origin: 128px 75px;
+  transition: transform 0.15s ease;
+}
+
+.head-group {
+  position: absolute;
+  top: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 264px;
+  height: 205px;
+  z-index: 12;
+  transform-origin: center 85%;
+}
+
+.ear {
+  position: absolute;
+  top: -18px;
+  width: 88px;
+  height: 96px;
+  z-index: 5;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ear.left {
+  left: 6px;
+  transform: rotate(-14deg);
+  transform-origin: 70% 80%;
+  animation: idleEarLeft 6s ease-in-out infinite;
+}
+
+.ear.right {
+  right: 6px;
+  transform: rotate(14deg);
+  transform-origin: 30% 80%;
+  animation: idleEarRight 7s ease-in-out infinite;
+}
+
+.hamster-ear-svg.left {
+  top: -16px;
+  left: 2px;
+}
+
+.hamster-ear-svg.right {
+  top: -16px;
+  right: 2px;
+}
+
+.head-shape {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 49% 49% 46% 46% / 54% 54% 46% 46%;
+  background-color: var(--coat-white);
+  border: 5.5px solid var(--outline);
+  box-shadow: inset 0 -15px 0 var(--coat-shade);
+  overflow: hidden;
+  z-index: 10;
+}
+
+/* Bayangan Dahi Merah Padam / Suram Saat Marah (Agar Wajah Tidak Terlihat Berseri) */
+.head-shape::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(105, 14, 24, 0.76) 0%,
+    rgba(185, 28, 28, 0.36) 50%,
+    rgba(185, 28, 28, 0) 88%
+  );
+  opacity: 0;
+  pointer-events: none;
+  z-index: 12;
+  transition: opacity 0.2s ease;
+}
+
+.hamster-angry-shade {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.forehead-stripes {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  z-index: 11;
+  pointer-events: none;
+}
+
+.stripe {
+  width: 34px;
+  height: 38px;
+  background-color: var(--orange-patch);
+  border-radius: 0 0 99px 99px;
+}
+
+.stripe.center {
+  width: 40px;
+  height: 46px;
+}
+.stripe.left {
+  transform: rotate(16deg) translateY(-2px);
+}
+.stripe.right {
+  transform: rotate(-16deg) translateY(-2px);
+}
+
+.face-features {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  pointer-events: none;
+}
+
+.eyes-row {
+  position: absolute;
+  top: 68px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+}
+
+.eye-socket {
+  width: 44px;
+  height: 46px;
+  position: relative;
+  transform-origin: center center;
+  animation: naturalBlink 5.2s infinite;
+}
+
+/* Garis Kelopak / Alis Menukik Tajam Saat Marah (\ /) */
+.eye-socket::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: -5px;
+  right: -5px;
+  height: 6px;
+  border-radius: 99px;
+  background: var(--outline);
+  z-index: 26;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.18s ease;
+}
+
+.eye-socket:first-child::after {
+  transform: translateY(-6px) rotate(22deg);
+}
+
+.eye-socket:last-child::after {
+  transform: translateY(-6px) rotate(-22deg);
+}
+
+.eye-ball {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: var(--outline);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.06s linear;
+}
+
+.eye-iris {
+  position: absolute;
+  inset: 0;
+}
+
+.shine-large {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  width: 16px;
+  height: 16px;
+  background: #ffffff;
+  border-radius: 50%;
+}
+
+.shine-small {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 8.5px;
+  height: 8.5px;
+  background: #ffffff;
+  border-radius: 50%;
+}
+
+.blush-row {
+  position: absolute;
+  top: 110px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.blush {
+  width: 38px;
+  height: 20px;
+  background-color: var(--blush-pink);
+  border-radius: 50%;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.muzzle {
+  position: absolute;
+  top: 102px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 56px;
+  height: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nose {
+  width: 14px;
+  height: 10px;
+  background-color: var(--nose-brown);
+  border-radius: 40% 40% 60% 60% / 30% 30% 70% 70%;
+  z-index: 2;
+}
+
+.mouth-svg {
+  width: 44px;
+  height: 22px;
+  margin-top: -2px;
+  overflow: visible;
+}
+
+.whiskers-group {
+  position: absolute;
+  top: 94px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 332px;
+  height: 60px;
+  z-index: 16;
+  pointer-events: none;
+}
+
+.whiskers-side {
+  position: absolute;
+  top: 0;
+  width: 62px;
+  height: 55px;
+  overflow: visible;
+}
+
+.whiskers-side.left {
+  left: 0;
+  transform-origin: right center;
+}
+.whiskers-side.right {
+  right: 0;
+  transform-origin: left center;
+}
+
+/* ==========================================================================
+   9. DETAIL SPESIFIK: HAMSTER MOCHI (KEPALA & BADAN MANDIRI, KEPALA MENOLEH LUWES)
+   ========================================================================== */
+
+.hamster-lower-body {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  height: 160px;
+  z-index: 6;
+  transform-origin: center bottom;
+}
+
+.hamster-head-group {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 264px;
+  height: 205px;
+  z-index: 12;
+  transform-origin: center 85%;
+}
+
+.hamster-head-shape {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50% 50% 46% 46% / 54% 54% 46% 46%;
+  background-color: #f4caa3;
+  border: 5.5px solid var(--outline);
+  box-shadow: inset 0 -14px 0 #eab98d;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.hamster-head-pattern {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hamster-ear {
+  position: absolute;
+  top: -20px;
+  width: 80px;
+  height: 80px;
+  z-index: 5;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hamster-ear.left {
+  left: 16px;
+  transform: rotate(-14deg);
+  transform-origin: 70% 80%;
+  animation: idleEarLeft 6s ease-in-out infinite;
+}
+
+.hamster-ear.right {
+  right: 16px;
+  transform: rotate(14deg);
+  transform-origin: 30% 80%;
+  animation: idleEarRight 7s ease-in-out infinite;
+}
+
+.hamster-whiskers {
+  top: 86px;
+  width: 310px;
+  z-index: 14;
+}
+
+.hamster-eyes-row {
+  top: 52px;
+  gap: 50px;
+  z-index: 5;
+}
+
+.hamster-eye-socket {
+  width: 36px;
+  height: 39px;
+}
+
+.hamster-eye-socket .shine-large {
+  top: 6px;
+  left: 6px;
+  width: 13px;
+  height: 14px;
+}
+
+.hamster-eye-socket .shine-small {
+  bottom: 6px;
+  right: 6px;
+  width: 7px;
+  height: 7px;
+}
+
+.hamster-blush-row {
+  top: 90px;
+  padding: 0 22px;
+  z-index: 5;
+}
+
+.hamster-cheek {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  background: #f08b8b;
+  border-radius: 50%;
+  animation: hamsterChew 1.6s ease-in-out infinite alternate;
+}
+
+/* Titik Kilau Putih Kembar di Pipi Hamster Sesuai Referensi Kanan */
+.hamster-cheek::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 8px;
+  width: 6px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 9px 1px 0 -0.5px rgba(255, 255, 255, 0.85);
+}
+
+.hamster-muzzle {
+  top: 84px;
+  z-index: 6;
+}
+
+.hamster-nose-pink {
+  background-color: #f48b98;
+  border: 2.8px solid var(--outline);
+  width: 15px;
+  height: 11px;
+  border-radius: 45% 45% 60% 60%;
+}
+
+.hamster-mouth-svg {
+  width: 44px;
+  height: 24px;
+  margin-top: -3px;
+}
+
+.hamster-hands-group {
+  transform-origin: 120px 105px;
+  animation: hamsterNibbleHands 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes hamsterChew {
+  0% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes hamsterNibbleHands {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-3.5px);
+  }
+}
+
+.shiba-head-shape {
+  background-color: #f59e42;
+  box-shadow: inset 0 -15px 0 #d97724;
+}
+
+.shiba-urajiro-mask {
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 236px;
+  height: 118px;
+  background: #fff7ed;
+  border-radius: 50% 50% 45% 45%;
+  z-index: 3;
+}
+
+.shiba-brows-row {
+  position: absolute;
+  top: 38px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 78px;
+  z-index: 12;
+}
+
+.shiba-brow {
+  width: 26px;
+  height: 15px;
+  background: #fff7ed;
+  border: 3px solid var(--outline);
+  border-radius: 50%;
+}
+
+.shiba-nose {
+  background-color: #271918;
+  width: 17px;
+  height: 12px;
+}
+
+.shiba-tongue-svg {
+  transform-origin: 23px 9px;
+  animation: shibaPant 0.85s ease-in-out infinite alternate;
+}
+
+@keyframes shibaPant {
+  0% {
+    transform: scaleY(0.88);
+  }
+  100% {
+    transform: scaleY(1.12);
+  }
+}
+
+.hedgehog-quills-backdrop {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 316px;
+  height: 300px;
+  z-index: 2;
+  overflow: visible;
+  transform-origin: center 65%;
+  animation: quillsBreathe 3s ease-in-out infinite alternate;
+}
+
+@keyframes quillsBreathe {
+  0% {
+    transform: translateX(-50%) scale(0.98);
+  }
+  100% {
+    transform: translateX(-50%) scale(1.03);
+  }
+}
+
+.hedgehog-head-shape {
+  background-color: #fdf3e7;
+  box-shadow: inset 0 -15px 0 #ead5be;
+}
+
+.hedgehog-quill-stripe {
+  background-color: #6b422e;
+}
+
+.hedgehog-snout-nose {
+  width: 18px;
+  height: 13px;
+  background-color: #271918;
+  border-radius: 50%;
+  animation: hedgehogSniff 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes hedgehogSniff {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    transform: translateY(-2.5px) scale(1.1);
+  }
+}
+
+/* ==========================================================================
+   10. WUJUD 6: LIVE2D AVATAR (PRIORITAS BAGIAN ATAS UTUH, POTONG DI BAWAH!)
+   ========================================================================== */
+
+.live2d-stage-box {
+  position: relative;
+  width: 176px;
+  height: 156px;
+  display: flex;
+  align-items: flex-start; /* Prioritaskan kepala/topi di atas utuh 100%! */
+  justify-content: center;
+  overflow: hidden; /* Bagian yang berlebih terpotong rapi di batas bawah pijakan */
+  border-radius: 0 0 28px 28px;
+  z-index: 10;
+  transition: transform 0.15s ease-out;
+}
+
+#live2d-canvas {
+  width: 162px;
+  height: 212px; /* Rasio potret (260:340) agar atas kepala tidak pernah terpotong WebGL */
+  margin-top: -2px;
+  flex-shrink: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.16));
+}
+
+.live2d-overlay {
+  position: absolute;
+  inset: 14px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: var(--bubble-bg);
+  border: 1.5px dashed var(--bubble-border);
+  border-radius: 12px;
+  padding: 8px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   ANATOMI & RIG HEWAN LANJUTAN: BEBEK, DOMBA, SAPI, KELINCI, BABI, PENGUIN
+   ========================================================================== */
+
+/* Aksesori Kepala: Pastikan selalu position: absolute agar tidak mendorong kepala ke bawah! */
+.duck-crest,
+.sheep-wool-hair,
+.cow-horns,
+.penguin-ear-tufts {
+  position: absolute;
+  pointer-events: none;
+  z-index: 14;
+}
+
+/* Telinga yang tumbuh di belakang kepala (Kelinci & Babi) */
+.rabbit-ears,
+.pig-ears {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2; /* Posisi di belakang kepala */
+}
+
+/* 1. BEBEK CHIBI (Piyo - Lv.5) */
+.duck-crest {
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 50px;
+  animation: duckCrestWiggle 2.8s ease-in-out infinite alternate;
+}
+
+@keyframes duckCrestWiggle {
+  0% { transform: translateX(-50%) rotate(-4deg); }
+  100% { transform: translateX(-50%) rotate(4deg); }
+}
+
+.duck-head-shape {
+  background-color: #fde047;
+  box-shadow: inset 0 -15px 0 #facc15;
+}
+
+.duck-cheek {
+  background-color: #fb7185;
+  opacity: 0.65;
+}
+
+.duck-muzzle {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+}
+
+.duck-beak-svg {
+  width: 56px;
+  height: 32px;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.12));
+}
+
+/* 2. DOMBA MOFU (Lv.7) */
+.sheep-wool-hair {
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 70px;
+}
+
+.sheep-head-shape {
+  background-color: #fff7ed;
+  box-shadow: inset 0 -15px 0 #fed7aa;
+}
+
+.sheep-ear.left {
+  left: -24px;
+  top: 18px;
+}
+
+.sheep-ear.right {
+  right: -24px;
+  top: 18px;
+}
+
+.sheep-cheek {
+  background-color: #f472b6;
+  opacity: 0.6;
+}
+
+.sheep-nose-pink {
+  background-color: #fb7185;
+  width: 14px;
+  height: 10px;
+  border-radius: 50%;
+  margin: 0 auto 3px;
+}
+
+/* 3. SAPI CHIBI (Lv.9) */
+.cow-horns {
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 60px;
+}
+
+.cow-head-shape {
+  background-color: #ffffff;
+  box-shadow: inset 0 -15px 0 #e2e8f0;
+}
+
+.cow-ear.left {
+  left: -32px;
+  top: 14px;
+}
+
+.cow-ear.right {
+  right: -32px;
+  top: 14px;
+}
+
+.cow-cheek {
+  background-color: #f472b6;
+  opacity: 0.65;
+}
+
+.cow-muzzle {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+}
+
+.cow-snout-svg {
+  width: 96px;
+  height: 52px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
+}
+
+/* 4. KELINCI USAGI (Lv.11) - Telinga Simetris & Proporsional Sesuai Kepala */
+.rabbit-ears {
+  top: -96px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 140px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 2; /* Di belakang kepala */
+  pointer-events: none;
+}
+
+.rabbit-ear {
+  position: relative; /* Jangan absolute agar flexbox bekerja simetris sempurna */
+  top: 0;
+  width: 74px;
+  height: 138px;
+  transform-origin: bottom center;
+}
+
+.rabbit-ear.left {
+  transform: rotate(-10deg);
+  animation: rabbitEarTwitchLeft 3.6s ease-in-out infinite alternate;
+}
+
+.rabbit-ear.right {
+  transform: rotate(10deg);
+  animation: rabbitEarTwitchRight 3.6s ease-in-out infinite alternate -1.8s;
+}
+
+@keyframes rabbitEarTwitchLeft {
+  0% { transform: rotate(-12deg); }
+  100% { transform: rotate(-7deg); }
+}
+
+@keyframes rabbitEarTwitchRight {
+  0% { transform: rotate(12deg); }
+  100% { transform: rotate(7deg); }
+}
+
+.rabbit-head-shape {
+  background-color: #ffffff;
+  box-shadow: inset 0 -15px 0 #f1f5f9;
+}
+
+.rabbit-cheek {
+  background-color: #f472b6;
+  opacity: 0.6;
+}
+
+.rabbit-nose-pink {
+  background-color: #fb7185;
+  width: 13px;
+  height: 9px;
+  border-radius: 50%;
+  margin: 0 auto 3px;
+}
+
+/* 5. BABI CHIBI (Butty - Lv.13) - Telinga di Belakang Kepala */
+.pig-rig {
+  transform-origin: center bottom;
+}
+
+.pig-head-shape {
+  background-color: #fbcfe8;
+  box-shadow: inset 0 -15px 0 #f472b6;
+}
+
+.pig-ears {
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 216px;
+  height: 76px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 2; /* Di belakang kepala */
+  pointer-events: none;
+}
+
+.pig-ear {
+  position: relative; /* Supaya simetris di flexbox */
+  top: 0;
+  width: 66px;
+  height: 74px;
+  transform-origin: bottom center;
+}
+
+.pig-ear.left {
+  transform: rotate(-12deg);
+  animation: pigEarTwitchLeft 3.8s ease-in-out infinite alternate;
+}
+
+.pig-ear.right {
+  transform: rotate(12deg);
+  animation: pigEarTwitchRight 3.8s ease-in-out infinite alternate -1.9s;
+}
+
+@keyframes pigEarTwitchLeft {
+  0% { transform: rotate(-14deg); }
+  100% { transform: rotate(-8deg); }
+}
+
+@keyframes pigEarTwitchRight {
+  0% { transform: rotate(14deg); }
+  100% { transform: rotate(8deg); }
+}
+
+.pig-cheek {
+  background-color: #f43f5e;
+  opacity: 0.7;
+}
+
+.pig-muzzle {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+}
+
+.pig-snout-svg {
+  width: 78px;
+  height: 48px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* 6. PENGUIN PINGU (Lv.15) - Baby Penguin Imut Sesuai Referensi */
+.penguin-rig {
+  transform-origin: center bottom;
+}
+
+.penguin-head-shape {
+  background-color: #384152;
+  box-shadow: inset 0 -15px 0 #1e2430;
+}
+
+.penguin-face-mask-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.penguin-cheek {
+  background-color: #fb7185;
+  opacity: 0.75;
+}
+
+.penguin-muzzle {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+}
+
+.penguin-beak-svg {
+  width: 52px;
+  height: 40px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.penguin-flipper-left {
+  transform-origin: 35px 70px;
+  animation: penguinFlipperFlap 2.4s ease-in-out infinite alternate;
+}
+
+.penguin-flipper-right {
+  transform-origin: 185px 70px;
+  animation: penguinFlipperFlap 2.4s ease-in-out infinite alternate -1.2s;
+}
+
+@keyframes penguinFlipperFlap {
+  0% { transform: rotate(-5deg); }
+  100% { transform: rotate(5deg); }
+}
+
+/* Dev Mode Lokal Toolbar di Modal Karakter */
+.dev-mode-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 1.5px dashed #d97706;
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin: 8px 0;
+}
+
+.dev-mode-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #92400e;
+  letter-spacing: 0.5px;
+}
+
+.dev-mode-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-dev-action {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid #b45309;
+  background: #ffffff;
+  color: #92400e;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-dev-action:hover {
+  background: #fef08a;
+  transform: translateY(-1px);
+}
+
+.btn-dev-action.dev-reset {
+  border-color: #64748b;
+  color: #475569;
+}
+
+.btn-dev-action.dev-reset:hover {
+  background: #f1f5f9;
+}
+
+/* ==========================================================================
+   11. REAKSI STATE INTERAKSI (LOMPATAN TERKEJUT LEBIH RENDAH & HALUS!)
+   ========================================================================== */
+
+.state-surprised .Aurora-Dia,
+.state-surprised .lifelike-actor {
+  animation: surprisedJumpOnce 0.72s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards !important;
+}
+
+@keyframes surprisedJumpOnce {
+  0% {
+    transform: translateY(0) scale(1, 1);
+  }
+  15% {
+    transform: translateY(3px) scale(1.06, 0.94);
+  }
+  40% {
+    transform: translateY(-12px) scale(0.95, 1.05);
+  }
+  48% {
+    transform: translateY(-13px) scale(0.97, 1.03);
+  }
+  75% {
+    transform: translateY(2px) scale(1.04, 0.96);
+  }
+  100% {
+    transform: translateY(0) scale(1, 1);
+  }
+}
+
+.state-angry .Aurora-Dia,
+.state-angry .lifelike-actor {
+  animation: angryTremble 0.42s linear infinite !important;
+}
+
+/* Wajah & Mata Puni Mochi Saat Marah / Ngambek (< 15% Bahagia): Merah Padam & Mata Menukik Tajam */
+.state-angry .Aurora-Dia,
+.pet-interactive.unhappy-tantrum .Aurora-Dia {
+  background: linear-gradient(165deg, #7f1d1d 0%, #dc2626 52%, #991b1b 100%) !important;
+  box-shadow:
+    inset 0 10px 14px rgba(45, 6, 12, 0.72),
+    inset 0 -8px 0 rgba(69, 10, 10, 0.5) !important;
+}
+
+.state-angry .Aurora-Dia--eye,
+.pet-interactive.unhappy-tantrum .Aurora-Dia--eye {
+  animation: none !important;
+  background-color: #26080c !important;
+}
+
+.state-angry .Aurora-Dia--eye.left,
+.pet-interactive.unhappy-tantrum .Aurora-Dia--eye.left {
+  transform: rotate(24deg) scaleY(0.76) !important;
+  border-radius: 2px 9px 12px 12px;
+}
+
+.state-angry .Aurora-Dia--eye.right,
+.pet-interactive.unhappy-tantrum .Aurora-Dia--eye.right {
+  transform: rotate(-24deg) scaleY(0.76) !important;
+  border-radius: 9px 2px 12px 12px;
+}
+
+.state-angry .Aurora-Dia--eye::after,
+.pet-interactive.unhappy-tantrum .Aurora-Dia--eye::after {
+  opacity: 0 !important;
+}
+
+.state-angry .orb-blush,
+.pet-interactive.unhappy-tantrum .orb-blush {
+  background: #450a0a !important;
+  opacity: 0.75 !important;
+  transform: scale(1.18);
+}
+
+/* Wajah & Mata Hewan (Neko, Hamster, Shiba, Babi, Naga) Saat Marah / Ngambek:
+   - Bayangan dahi merah tua/suram agar tidak tampak berseri
+   - Mata terpotong miring tajam (\ /) tanpa kilau imut bawah
+   - Mulut terbalik cemberut (︵) */
+.state-angry .chara-rig,
+.pet-interactive.unhappy-tantrum .chara-rig {
+  filter: saturate(1.16) brightness(0.9) contrast(1.06);
+}
+
+.state-angry .head-shape::after,
+.state-angry .hamster-angry-shade,
+.pet-interactive.unhappy-tantrum .head-shape::after,
+.pet-interactive.unhappy-tantrum .hamster-angry-shade {
+  opacity: 1;
+}
+
+.state-angry .eye-socket,
+.pet-interactive.unhappy-tantrum .eye-socket {
+  animation: none !important;
+}
+
+.state-angry .eye-socket:first-child::after,
+.pet-interactive.unhappy-tantrum .eye-socket:first-child::after {
+  opacity: 1;
+  transform: translateY(1px) rotate(22deg);
+}
+
+.state-angry .eye-socket:last-child::after,
+.pet-interactive.unhappy-tantrum .eye-socket:last-child::after {
+  opacity: 1;
+  transform: translateY(1px) rotate(-22deg);
+}
+
+.state-angry .eye-socket:first-child .eye-ball,
+.pet-interactive.unhappy-tantrum .eye-socket:first-child .eye-ball {
+  clip-path: polygon(0% 8%, 100% 42%, 100% 100%, 0% 100%);
+}
+
+.state-angry .eye-socket:last-child .eye-ball,
+.pet-interactive.unhappy-tantrum .eye-socket:last-child .eye-ball {
+  clip-path: polygon(0% 42%, 100% 8%, 100% 100%, 0% 100%);
+}
+
+.state-angry .shine-small,
+.pet-interactive.unhappy-tantrum .shine-small {
+  opacity: 0 !important;
+}
+
+.state-angry .shine-large,
+.pet-interactive.unhappy-tantrum .shine-large {
+  transform: scale(0.55) translate(4px, 8px);
+  opacity: 0.82;
+}
+
+.state-angry .blush,
+.state-angry .hamster-cheek,
+.pet-interactive.unhappy-tantrum .blush,
+.pet-interactive.unhappy-tantrum .hamster-cheek {
+  background: #991b1b !important;
+  opacity: 0.78 !important;
+  transform: scale(1.16);
+  animation: none !important;
+  box-shadow: 0 0 8px rgba(185, 28, 28, 0.45);
+}
+
+.state-angry .hamster-cheek::after,
+.pet-interactive.unhappy-tantrum .hamster-cheek::after {
+  opacity: 0 !important;
+}
+
+.state-angry .hamster-hands-svg,
+.pet-interactive.unhappy-tantrum .hamster-hands-svg {
+  animation: none !important;
+}
+
+.state-angry .mouth-svg,
+.pet-interactive.unhappy-tantrum .mouth-svg {
+  transform: scaleY(-1) translateY(3px) !important;
+}
+
+.state-angry .shiba-tongue-svg,
+.pet-interactive.unhappy-tantrum .shiba-tongue-svg {
+  opacity: 0 !important;
+  animation: none !important;
+}
+
+.state-angry .shiba-brow:first-child,
+.pet-interactive.unhappy-tantrum .shiba-brow:first-child {
+  transform: rotate(25deg) translateY(6px);
+  background: #fca5a5;
+}
+
+.state-angry .shiba-brow:last-child,
+.pet-interactive.unhappy-tantrum .shiba-brow:last-child {
+  transform: rotate(-25deg) translateY(6px);
+  background: #fca5a5;
+}
+
+.state-angry .ear.left,
+.pet-interactive.unhappy-tantrum .ear.left {
+  transform: rotate(-48deg) translate(-6px, 10px) !important;
+}
+
+.state-angry .ear.right,
+.pet-interactive.unhappy-tantrum .ear.right {
+  transform: rotate(48deg) translate(6px, 10px) !important;
+}
+  transform: rotate(48deg) translate(6px, 10px) !important;
+}
+
+@keyframes angryTremble {
+  0%,
+  100% {
+    transform: translate(0, 3px) rotate(0deg);
+  }
+  25% {
+    transform: translate(-4px, 4px) rotate(-2deg);
+  }
+  50% {
+    transform: translate(4px, 1px) rotate(2deg);
+  }
+  75% {
+    transform: translate(-3px, 4px) rotate(-1.5deg);
+  }
+}
+
+.state-happy .blush {
+  transform: scale(1.22);
+}
+
+.state-happy .paw-left-group {
+  animation: happyTapLeft 0.24s ease-in-out infinite alternate;
+}
+
+.state-happy .paw-right-group {
+  animation: happyTapRight 0.24s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes happyTapLeft {
+  0% {
+    transform: translateY(-8px) rotate(-4deg);
+  }
+  100% {
+    transform: translateY(2px) rotate(2deg);
+  }
+}
+
+@keyframes happyTapRight {
+  0% {
+    transform: translateY(-8px) rotate(4deg);
+  }
+  100% {
+    transform: translateY(2px) rotate(-2deg);
+  }
+}
+
+.state-sleep .Aurora-Dia--eye,
+.state-sleep .eye-socket {
+  transform: scaleY(0.1) !important;
+  animation: none !important;
+}
+
+.state-sleep .Aurora-Dia,
+.state-sleep .lifelike-actor {
+  animation: sleepBreathing 4.2s ease-in-out infinite !important;
+  filter: brightness(0.95);
+}
+
+@keyframes sleepBreathing {
+  0%,
+  100% {
+    transform: translateY(4px) scale(1.03, 0.96);
+  }
+  50% {
+    transform: translateY(6px) scale(1.08, 0.91);
+  }
+}
+
+.particles-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 38;
+}
+
+.heart-particle {
+  position: absolute;
+  font-size: 18px;
+  pointer-events: none;
+  animation: floatUpHeart 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes floatUpHeart {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0) scale(0.4);
+  }
+  25% {
+    opacity: 1;
+    transform: translate(-50%, -14px) scale(1.12);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -54px) scale(0.85);
+  }
+}
+
+/* ==========================================================================
+   12. LACI PILIHAN GAME (SCROLL KANAN-KIRI) & 3 MINI-GAME DI DALAM LAYAR
+   ========================================================================== */
+
+/* Saat Laci Pilihan Game terbuka, naikkan sedikit posisi karakter agar tidak tertutup */
+.gb-screen.game-selector-open .pet-interactive {
+  bottom: 92px;
+  transform: translateX(-50%) scale(0.74);
+  transform-origin: center bottom;
+  transition: bottom 0.25s cubic-bezier(0.22, 1, 0.36, 1), transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gb-screen.game-selector-open #Aurora-Dia--tips-wrapper {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Laci Pilihan Game di Bawah Karakter */
+.game-selector-drawer {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 7px;
+  z-index: 48;
+  background: var(--hud-bg);
+  backdrop-filter: blur(8px);
+  border: 1.5px solid var(--bubble-border);
+  border-radius: 14px;
+  padding: 6px 7px 7px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24);
+  animation: drawerSlideUp 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes drawerSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.game-selector-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  padding: 0 3px;
+}
+
+.game-selector-title {
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--text-main);
+}
+
+.game-selector-title small {
+  font-weight: 700;
+  color: var(--accent-rose);
+  margin-left: 3px;
+}
+
+.game-carousel-wrap {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.game-nav-arrow {
+  width: 22px;
+  height: 46px;
+  border-radius: 9px;
+  border: 1.5px solid var(--bubble-border);
+  background: var(--bubble-bg);
+  color: var(--text-main);
+  font-size: 0.68rem;
+  font-family: "JetBrains Mono", monospace;
+  font-variant-emoji: text;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+.game-nav-arrow:hover {
+  border-color: var(--accent-rose);
+  color: var(--accent-rose);
+}
+
+.game-nav-arrow:active {
+  transform: scale(0.92);
+}
+
+.game-cards-track {
+  display: flex;
+  align-items: stretch;
+  gap: 7px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  touch-action: pan-x;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 2px;
+  flex: 1;
+  cursor: grab;
+}
+
+.game-cards-track::-webkit-scrollbar {
+  display: none;
+}
+
+.game-card-option {
+  flex: 0 0 136px;
+  scroll-snap-align: center;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 9px;
+  border-radius: 11px;
+  background: var(--bubble-bg);
+  border: 1.5px solid var(--bubble-border);
+  color: var(--bubble-text);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.16s ease, background-color 0.16s ease, transform 0.12s ease;
+}
+
+.game-card-option:hover,
+.game-card-option.active {
+  border-color: var(--accent-rose);
+  background: rgba(236, 107, 136, 0.15);
+}
+
+.game-card-option:active {
+  transform: scale(0.96);
+}
+
+.game-card-icon {
+  font-size: 1.32rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.game-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.game-card-info strong {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--text-main);
+  white-space: nowrap;
+}
+
+.game-card-info span {
+  font-size: 0.59rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* HUD Mini-Game */
+.minigame-hud {
+  position: absolute;
+  top: 42px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 46;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bubble-bg);
+  border: 1.5px solid var(--bubble-border);
+  border-radius: 99px;
+  padding: 4px 12px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--bubble-text);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);
+}
+
+.btn-xs-stop {
+  background: rgba(239, 68, 68, 0.18);
+  border: 1px solid rgba(239, 68, 68, 0.45);
+  color: #ef4444;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.minigame-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 42;
+  overflow: hidden;
+}
+
+/* Mode Karakter Bergerak Kiri-Kanan (Game Tangkap Makan & Sundul Bola) */
+.gb-screen.minigame-player-mode .pet-interactive {
+  bottom: 6px;
+  left: var(--player-x, 50%);
+  transform: translateX(-50%) scale(0.66);
+  transform-origin: center bottom;
+  transition: none;
+  z-index: 43;
+}
+
+.gb-screen.minigame-player-mode .pet-interactive.headbutt-pop {
+  animation: headbuttBounce 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes headbuttBounce {
+  0% {
+    transform: translateX(-50%) translateY(0) scale(0.66, 0.66);
+  }
+  45% {
+    transform: translateX(-50%) translateY(-14px) scale(0.63, 0.72);
+  }
+  100% {
+    transform: translateX(-50%) translateY(0) scale(0.66, 0.66);
+  }
+}
+
+/* Tombol Sentuh Kiri/Kanan Transparan di Sudut Bawah Layar saat Game Gerak Karakter */
+.minigame-move-btn {
+  position: absolute;
+  bottom: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--hud-bg);
+  border: 1.5px solid var(--hud-border);
+  color: var(--text-main);
+  font-family: "JetBrains Mono", monospace;
+  font-variant-emoji: text;
+  font-size: 0.75rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 45;
+  opacity: 0.72;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.16);
+  transition: opacity 0.15s ease, transform 0.1s ease;
+}
+
+.minigame-move-btn:hover,
+.minigame-move-btn:active {
+  opacity: 1;
+  border-color: var(--accent-rose);
+  transform: scale(0.92);
+}
+
+.minigame-move-btn.left {
+  left: 8px;
+}
+
+.minigame-move-btn.right {
+  right: 8px;
+}
+
+/* Game 1: Koin & Bintang Jatuh */
+.falling-star {
+  position: absolute;
+  top: -42px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 55%, #ec6b88 100%);
+  color: #ffffff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  touch-action: manipulation;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.38);
+  animation: fallDownStar var(--fall-duration, 3.8s) linear forwards;
+}
+
+.falling-star:hover {
+  filter: brightness(1.08);
+}
+
+.falling-star.star-caught {
+  pointer-events: none;
+  animation: starCaughtPop 0.22s ease-out forwards !important;
+}
+
+@keyframes fallDownStar {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    transform: translateY(385px) rotate(240deg);
+  }
+}
+
+@keyframes starCaughtPop {
+  0% {
+    transform: scale(1.25);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+/* Game 2: Item Makanan vs Racun */
+.catcher-item {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  will-change: left, top;
+}
+
+.catcher-item.food-item {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.94) 0%, rgba(254, 215, 170, 0.88) 100%);
+  border: 2px solid #f59e6c;
+  box-shadow: 0 4px 10px rgba(245, 158, 108, 0.32);
+}
+
+.catcher-item.poison-item {
+  background: radial-gradient(circle, #4c1d95 0%, #7f1d1d 100%);
+  border: 2px solid #ef4444;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.65);
+  animation: poisonPulse 0.45s ease-in-out infinite alternate;
+}
+
+@keyframes poisonPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.94);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+}
+
+/* Game 3: Bola Sundul */
+.soccer-ball-el {
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.55rem;
+  line-height: 1;
+  filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.3));
+  pointer-events: none;
+  will-change: left, top, transform;
+}
+
+/* ==========================================================================
+   13. KONTROL MINIMALIS ELEGAN (D-PAD, TOMBOL B/A, PILL, SPEAKER DOTS)
+   ========================================================================== */
+
+.gb-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding: 0 8px;
+}
+
+.dpad-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.gb-dpad {
+  position: relative;
+  width: 98px;
+  height: 98px;
+  filter: drop-shadow(0 4px 0 var(--dpad-lip)) drop-shadow(0 6px 10px rgba(0, 0, 0, 0.22));
+}
+
+.gb-dpad::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--dpad-top) 0%, var(--dpad-bottom) 100%);
+  clip-path: polygon(
+    33.33% 0%,
+    66.67% 0%,
+    66.67% 33.33%,
+    100% 33.33%,
+    100% 66.67%,
+    66.67% 66.67%,
+    66.67% 100%,
+    33.33% 100%,
+    33.33% 66.67%,
+    0% 66.67%,
+    0% 33.33%,
+    33.33% 33.33%
+  );
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.gb-dpad::after {
+  display: none;
+}
+
+.dpad-btn {
+  position: absolute;
+  width: 32.6px;
+  height: 32.6px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--dpad-arrow);
+  font-size: 0.72rem;
+  font-family: "JetBrains Mono", monospace;
+  font-variant-emoji: text;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3;
+  transition: color 0.12s ease, transform 0.08s ease;
+}
+
+.dpad-btn:focus,
+.dpad-btn:focus-visible {
+  outline: none;
+}
+
+.dpad-arrow {
+  font-variant-emoji: text;
+  line-height: 1;
+}
+
+.dpad-btn:hover {
+  color: var(--accent-rose);
+}
+
+.dpad-btn:active {
+  transform: scale(0.88);
+}
+
+.dpad-up {
+  top: 0;
+  left: 32.7px;
+}
+.dpad-down {
+  bottom: 0;
+  left: 32.7px;
+}
+.dpad-left {
+  top: 32.7px;
+  left: 0;
+}
+.dpad-right {
+  top: 32.7px;
+  right: 0;
+}
+
+.dpad-center {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  width: 34px;
+  height: 34px;
+  background: transparent;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.dpad-center::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.35);
+}
+
+.dpad-caption {
+  font-family: "JetBrains Mono", monospace;
+  font-variant-emoji: text;
+  font-size: 0.56rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+  text-align: center;
+}
+
+/* --- Tombol A & B Minimalis (Tanpa Background Gembung) --- */
+.ab-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gb-ab-cluster {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transform: rotate(-16deg);
+  padding: 4px 6px;
+}
+
+.ab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.gb-round-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.38);
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 4px 0 var(--btn-socket),
+    0 8px 14px rgba(0, 0, 0, 0.2),
+    inset 0 2px 3px rgba(255, 255, 255, 0.35);
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.gb-round-btn:focus,
+.gb-round-btn:focus-visible {
+  outline: none;
+}
+
+.btn-glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-size: 1.12rem;
+}
+
+.btn-b {
+  background: var(--btn-b-bg);
+}
+
+.btn-a {
+  background: var(--btn-a-bg);
+}
+
+.gb-round-btn:hover {
+  filter: brightness(1.07);
+}
+
+.gb-round-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--btn-socket);
+}
+
+.ab-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.56rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+/* --- Baris Bawah Minimalis: PANDUAN & SETELAN + Speaker Dots --- */
+.gb-bottom-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
+  margin-top: 18px;
+  padding: 0 6px;
+}
+
+.select-start-cluster {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.pill-btn-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+}
+
+.gb-pill-btn {
+  width: 42px;
+  height: 12px;
+  border-radius: 99px;
+  background: linear-gradient(180deg, var(--pill-top), var(--pill-bottom));
+  border: 1.5px solid var(--pill-border);
+  outline: none;
+  box-shadow:
+    0 2.5px 0 var(--pill-lip),
+    0 4px 6px rgba(0, 0, 0, 0.16);
+  cursor: pointer;
+  transition: transform 0.1s ease, border-color 0.15s ease;
+}
+
+.gb-pill-btn:hover {
+  border-color: var(--accent-rose);
+}
+
+.gb-pill-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 0.5px 0 var(--pill-lip);
+}
+
+.pill-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.56rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+
+.gb-speaker-dots {
+  justify-self: end;
+  display: grid;
+  grid-template-columns: repeat(4, 5px);
+  gap: 5px;
+  padding-bottom: 4px;
+}
+
+.gb-speaker-dots span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--speaker-dot);
+  box-shadow: inset 0 1px 1.5px rgba(0, 0, 0, 0.35);
+}
+
+/* ==========================================================================
+   14. MODAL PANDUAN & MODAL PENGATURAN
+   ========================================================================== */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(12, 13, 20, 0.58);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 416px;
+  max-height: 88dvh;
+  overflow-y: auto;
+  touch-action: pan-y;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  background: var(--modal-bg);
+  border: 2px solid var(--modal-border);
+  border-radius: 24px;
+  padding: 20px;
+  color: var(--text-main);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.35);
+}
+
+@media (max-height: 700px) {
+  .gameboy-shell {
+    padding: 10px 16px 16px;
+    border-radius: 28px;
+  }
+  .gb-top-bar {
+    margin-bottom: 6px;
+  }
+  .gb-controls {
+    margin-top: 12px;
+  }
+  .gb-bottom-row {
+    margin-top: 12px;
+  }
+}
+
+.modal-header-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: rgba(236, 107, 136, 0.16);
+  color: var(--accent-rose);
+  margin-bottom: 6px;
+}
+
+.modal-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  color: var(--text-main);
+}
+
+.info-section {
+  background: var(--modal-sec-bg);
+  border: 1px solid var(--modal-border);
+  border-radius: 14px;
+  padding: 11px 12px;
+  margin-bottom: 10px;
+}
+
+.info-heading {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 7px;
+}
+
+.info-subtext {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 0.74rem;
+  line-height: 1.35;
+}
+
+.info-item p {
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  margin-top: 1px;
+}
+
+.info-icon {
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.icon-legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+
+.legend-chip {
+  background: var(--modal-input-bg);
+  border: 1px solid var(--modal-border);
+  border-radius: 8px;
+  padding: 5px 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.controls-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-variant-emoji: text;
+}
+
+.controls-legend strong {
+  color: var(--text-main);
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.setting-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.setting-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.picker-option.locked-scene {
+  cursor: not-allowed;
+}
+
+.picker-option.locked-scene span {
+  opacity: 0.48;
+  border-style: dashed;
+}
+
+.aurora-input,
+.aurora-select,
+.aurora-input-sm {
+  width: 100%;
+  background: var(--modal-input-bg);
+  border: 1.5px solid var(--modal-border);
+  border-radius: 10px;
+  padding: 8px 12px;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 0.82rem;
+  outline: none;
+}
+
+.aurora-input:focus,
+.aurora-select:focus,
+.aurora-input-sm:focus {
+  border-color: var(--accent-rose);
+}
+
+.picker-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.picker-option {
+  cursor: pointer;
+}
+
+.picker-option input {
+  display: none;
+}
+
+.picker-option span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 7px 5px;
+  border-radius: 10px;
+  background: var(--modal-input-bg);
+  border: 1.5px solid var(--modal-border);
+  font-size: 0.71rem;
+  font-weight: 700;
+  color: var(--text-main);
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.picker-option input:checked + span {
+  border-color: var(--accent-rose);
+  background: rgba(236, 107, 136, 0.16);
+  color: var(--accent-rose);
+}
+
+.custom-url-row {
+  display: flex;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.aurora-input-sm {
+  padding: 7px 10px;
+  font-size: 0.74rem;
+}
+
+.btn-sm {
+  background: rgba(236, 107, 136, 0.16);
+  border: 1.5px solid var(--accent-rose);
+  color: var(--accent-rose);
+  border-radius: 10px;
+  padding: 0 12px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-primary {
+  width: 100%;
+  background: #4f46e5; /* Solid Indigo Modern & Bold */
+  border: 1px solid #6366f1;
+  border-radius: 12px;
+  padding: 10px 14px;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-primary:hover {
+  background: #4338ca;
+  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  width: 100%;
+  background: var(--modal-sec-bg);
+  border: 1px solid var(--modal-border);
+  border-radius: 12px;
+  padding: 8px 14px;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.db-divider {
+  margin: 12px 0 7px;
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.db-actions-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.btn-db {
+  background: var(--modal-input-bg);
+  border: 1.5px solid var(--modal-border);
+  border-radius: 10px;
+  padding: 7px 6px;
+  color: var(--text-main);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+}
+
+.btn-db:hover {
+  border-color: var(--accent-rose);
+}
+
+.btn-db-danger {
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+/* ==========================================================================
+   15. KEYFRAMES ANIMASI INTI
+   ========================================================================== */
+
+@keyframes breathe-and-jump {
+  0% {
+    transform: translateY(0) scaleY(1) scaleX(1);
+  }
+  25% {
+    transform: translateY(-6px) scaleY(1.03) scaleX(0.98);
+  }
+  50% {
+    transform: translateY(0) scaleY(1) scaleX(1);
+  }
+  75% {
+    transform: translateY(0) scaleY(0.94) scaleX(1.05);
+  }
+  100% {
+    transform: translateY(0) scaleY(1) scaleX(1);
+  }
+}
+
+@keyframes bounce-then-breathe {
+  0%,
+  30%,
+  65%,
+  100% {
+    transform: translateY(0) scaleY(1) scaleX(1);
+  }
+  15% {
+    transform: translateY(-10px) scaleY(1.06) scaleX(0.95);
+  }
+  48% {
+    transform: translateY(-7px) scaleY(1.04) scaleX(0.97);
+  }
+  82% {
+    transform: translateY(0) scaleY(0.94) scaleX(1.05);
+  }
+}
+
+@keyframes platform-Float {
+  0%,
+  50%,
+  75%,
+  100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(0.86);
+  }
+}
+
+@keyframes blink {
+  0%,
+  2%,
+  60%,
+  62%,
+  100% {
+    transform: scaleX(1) scaleY(1);
+  }
+  1%,
+  61% {
+    transform: scaleX(1.3) scaleY(0.1);
+  }
+}
+
+@keyframes naturalBlink {
+  0%,
+  46%,
+  50%,
+  96%,
+  100% {
+    transform: scaleY(1);
+  }
+  48%,
+  98% {
+    transform: scaleY(0.08);
+  }
+}
+
+@keyframes idleEarLeft {
+  0%,
+  82%,
+  90%,
+  100% {
+    transform: rotate(-14deg);
+  }
+  85% {
+    transform: rotate(-24deg);
+  }
+  87% {
+    transform: rotate(-10deg);
+  }
+}
+
+@keyframes idleEarRight {
+  0%,
+  55%,
+  65%,
+  100% {
+    transform: rotate(14deg);
+  }
+  58% {
+    transform: rotate(24deg);
+  }
+  61% {
+    transform: rotate(10deg);
+  }
+}
+
+@keyframes idleTailSway {
+  0%,
+  100% {
+    transform: rotate(-6deg);
+  }
+  50% {
+    transform: rotate(14deg);
+  }
+}
+
+@keyframes shake-tips {
+  0%,
+  50%,
+  100% {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  2%,
+  6%,
+  10% {
+    transform: translateX(-50%) rotate(-1.2deg);
+  }
+  4%,
+  8%,
+  12% {
+    transform: translateX(-50%) rotate(1.2deg);
+  }
+}
+
+/* ==========================================================================
+   16. MENU KARAKTER ELEGAN (GAYA MAP BERLABEL + GRID KARTU BERGAMBAR)
+   ========================================================================== */
+
+.char-modal-card {
+  max-width: 400px;
+  padding: 18px 16px 16px;
+}
+
+.char-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* --- Kepala: Nama Karakter --- */
+.char-name-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px 10px 10px;
+  border-radius: 18px;
+  background: var(--modal-sec-bg);
+  border: 1.5px solid var(--modal-border);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.char-name-row:focus-within {
+  border-color: var(--accent-rose);
+  box-shadow: 0 0 0 3px rgba(236, 107, 136, 0.14);
+}
+
+.char-name-avatar {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  background: var(--modal-input-bg);
+  border: 1.5px solid var(--modal-border);
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.05);
+}
+
+.char-name-field {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.char-name-label {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.char-name-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: 800;
+  padding: 0;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.char-name-input::placeholder {
+  color: var(--text-muted);
+  font-weight: 600;
+  opacity: 0.6;
+}
+
+.char-name-pencil {
+  font-size: 1rem;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+/* --- Map Berlabel (Tab + Panel) --- */
+.char-folder {
+  position: relative;
+}
+
+.char-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 0 14px;
+  position: relative;
+  z-index: 2;
+}
+
+.char-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px 10px;
+  border: 2px solid var(--modal-border);
+  border-bottom: none;
+  border-radius: 16px 16px 0 0;
+  background: var(--modal-input-bg);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.74rem;
+  font-weight: 800;
+  cursor: pointer;
+  opacity: 0.75;
+  transform: translateY(4px);
+  filter: saturate(0.6);
+  transition: transform 0.18s ease, opacity 0.18s ease, filter 0.18s ease, color 0.18s ease;
+}
+
+.char-tab:hover {
+  opacity: 0.95;
+  transform: translateY(2px);
+}
+
+.char-tab.active {
+  background: var(--modal-sec-bg);
+  color: var(--text-main);
+  opacity: 1;
+  filter: none;
+  transform: translateY(2px);
+  padding-top: 11px;
+  box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.05);
+}
+
+.char-tab-icon {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.char-panel-wrap {
+  position: relative;
+  z-index: 1;
+  background: var(--modal-sec-bg);
+  border: 2px solid var(--modal-border);
+  border-radius: 22px;
+  padding: 12px 8px 12px 12px;
+  box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.04);
+}
+
+.char-panel {
+  max-height: min(340px, 46dvh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+  padding-right: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-peach) transparent;
+}
+
+.char-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.char-panel::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 99px;
+}
+
+.char-panel::-webkit-scrollbar-thumb {
+  background: var(--accent-peach);
+  border-radius: 99px;
+}
+
+.char-panel-hint {
+  font-size: 0.66rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin: 0 2px 10px;
+}
+
+.char-panel-hint strong {
+  color: var(--accent-rose);
+}
+
+/* --- Grid Kartu Bergambar --- */
+.pick-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.pick-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pick-card input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pick-card-art {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  border-radius: 16px;
+  border: 2.5px solid var(--modal-border);
+  overflow: hidden;
+  background: var(--modal-input-bg);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.06);
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.pick-card:hover .pick-card-art {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.pick-card:active .pick-card-art {
+  transform: scale(0.97);
+}
+
+.pick-card input:checked + .pick-card-art {
+  border-color: var(--accent-rose);
+  box-shadow:
+    0 0 0 3px rgba(236, 107, 136, 0.2),
+    0 6px 14px rgba(236, 107, 136, 0.18);
+}
+
+/* Lencana centang pada kartu terpilih */
+.pick-card input:checked + .pick-card-art::after {
+  content: "✓";
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--cute-gradient);
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 5;
+}
+
+.pick-card-name {
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pick-card input:checked ~ .pick-card-name {
+  color: var(--accent-rose);
+}
+
+/* --- Gambar Kartu Bentuk Karakter --- */
+.art-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.art-form .art-emoji {
+  font-size: 2.3rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.15));
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.pick-card:hover .art-form .art-emoji,
+.pick-card input:checked + .art-form .art-emoji {
+  transform: scale(1.12) translateY(-2px);
+}
+
+.art-form::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 14%;
+  width: 56%;
+  height: 10%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.art-form[data-art="orb"] {
+  background: radial-gradient(circle at 50% 38%, #ffe4ee 0%, #ffd2e1 55%, #f9b9cf 100%);
+}
+.art-form[data-art="cat"] {
+  background: radial-gradient(circle at 50% 38%, #fff4e6 0%, #ffe2c2 55%, #f9c897 100%);
+}
+.art-form[data-art="hamster"] {
+  background: radial-gradient(circle at 50% 38%, #fff7ec 0%, #fbe3c8 55%, #f2c9a0 100%);
+}
+.art-form[data-art="dog"] {
+  background: radial-gradient(circle at 50% 38%, #fff3e0 0%, #fdd9a8 55%, #f5b46b 100%);
+}
+.art-form[data-art="hedgehog"] {
+  background: radial-gradient(circle at 50% 38%, #f7efe7 0%, #e6d3c2 55%, #c9a98d 100%);
+}
+.art-form[data-art="duck"] {
+  background: radial-gradient(circle at 50% 38%, #fef9c3 0%, #fef08a 55%, #fde047 100%);
+}
+.art-form[data-art="sheep"] {
+  background: radial-gradient(circle at 50% 38%, #f8fafc 0%, #f1f5f9 55%, #e2e8f0 100%);
+}
+.art-form[data-art="cow"] {
+  background: radial-gradient(circle at 50% 38%, #fef2f2 0%, #fee2e2 55%, #fecaca 100%);
+}
+.art-form[data-art="rabbit"] {
+  background: radial-gradient(circle at 50% 38%, #fdf2f8 0%, #fce7f3 55%, #fbcfe8 100%);
+}
+.art-form[data-art="pig"] {
+  background: radial-gradient(circle at 50% 38%, #fdf2f8 0%, #fbcfe8 55%, #f472b6 100%);
+}
+.art-form[data-art="penguin"] {
+  background: radial-gradient(circle at 50% 38%, #f8fafc 0%, #cbd5e1 55%, #1e293b 100%);
+}
+.art-form[data-art="live2d"] {
+  background: radial-gradient(circle at 50% 38%, #f1ecff 0%, #ddd3ff 55%, #c3b3f7 100%);
+}
+
+/* --- Gambar Kartu Latar (Mini-Pratinjau Pemandangan) --- */
+.art-scene .thumb-deco {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 0.95rem;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.art-scene .thumb-deco[style*="bottom"] {
+  transform: translate(-50%, 0);
+}
+
+.art-scene .thumb-deco.star {
+  color: #fef08a;
+  font-size: 0.55rem;
+  text-shadow: 0 0 4px rgba(254, 240, 138, 0.8);
+}
+
+.art-scene[data-art="auto"] {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.35), transparent 60%),
+    conic-gradient(from 210deg at 50% 60%, #fbcfe8, #bae6fd, #bbf7d0, #fde68a, #c4b5fd, #fbcfe8);
+}
+
+.art-scene[data-art="default"] {
+  background:
+    linear-gradient(180deg, #fdf3e7 0%, #f6e3cf 62%, #d9b998 62%, #c9a37e 100%);
+}
+
+.art-scene[data-art="sunny_park"] {
+  background: linear-gradient(180deg, #60a5fa 0%, #bae6fd 64%, #86efac 64%, #4ade80 100%);
+}
+
+.art-scene[data-art="rainy_day"] {
+  background: linear-gradient(180deg, #1e293b 0%, #475569 64%, #334155 64%, #1e293b 100%);
+}
+
+.art-scene[data-art="flower_garden"] {
+  background: linear-gradient(180deg, #fbcfe8 0%, #fce7f3 64%, #a7f3d0 64%, #6ee7b7 100%);
+}
+
+.art-scene[data-art="haunted_house"] {
+  background:
+    radial-gradient(circle at 26% 22%, rgba(139, 92, 246, 0.35) 0%, transparent 45%),
+    linear-gradient(180deg, #0b0518 0%, #241040 64%, #160a29 64%, #07030e 100%);
+}
+
+.art-scene[data-art="starry_night"] {
+  background: linear-gradient(180deg, #060919 0%, #1e3a8a 64%, #0f172a 64%, #020617 100%);
+}
+
+.art-scene[data-art="snowy_winter"] {
+  background: linear-gradient(180deg, #93c5fd 0%, #dbeafe 64%, #f1f5f9 64%, #e2e8f0 100%);
+}
+
+.art-scene[data-art="bakery_shop"] {
+  background: linear-gradient(180deg, #fffbeb 0%, #fed7aa 64%, #b45309 64%, #78350f 100%);
+}
+
+.art-scene[data-art="tropical_beach"] {
+  background: linear-gradient(180deg, #38bdf8 0%, #06b6d4 58%, #fef08a 58%, #fde047 100%);
+}
+
+.art-scene[data-art="magic_forest"] {
+  background: linear-gradient(180deg, #064e3b 0%, #047857 64%, #14532d 64%, #052e16 100%);
+}
+
+.thumb-sun {
+  position: absolute;
+  top: 12%;
+  right: 14%;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fef9c3 25%, #facc15 100%);
+  box-shadow: 0 0 10px rgba(250, 204, 21, 0.85);
+}
+
+.thumb-moon {
+  position: absolute;
+  top: 12%;
+  left: 16%;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #f3e8ff 15%, #c084fc 80%);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.8);
+}
+
+.thumb-rain {
+  position: absolute;
+  inset: 34% 0 36% 0;
+  background-image: repeating-linear-gradient(
+    105deg,
+    transparent 0 7px,
+    rgba(147, 197, 253, 0.65) 7px 8.5px
+  );
+  opacity: 0.85;
+}
+
+/* Kartu Bentuk & Latar Terkunci */
+.pick-card-lock {
+  display: none;
+}
+
+.pick-card.locked-scene,
+.pick-card.locked-form {
+  cursor: not-allowed;
+}
+
+.pick-card.locked-scene .pick-card-art,
+.pick-card.locked-form .pick-card-art {
+  filter: grayscale(0.85) brightness(0.8);
+  border-style: dashed;
+}
+
+.pick-card.locked-scene .pick-card-lock,
+.pick-card.locked-form .pick-card-lock {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  background: rgba(15, 15, 25, 0.45);
+  color: #ffffff;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  z-index: 4;
+}
+
+.pick-card.locked-scene .pick-card-name,
+.pick-card.locked-form .pick-card-name {
+  color: var(--text-muted);
+}
+
+.pick-card.locked-scene:hover .pick-card-art,
+.pick-card.locked-form:hover .pick-card-art {
+  transform: none;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* --- Tombol Aksi --- */
+.char-actions {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 8px;
+}
+
+.char-actions .btn-secondary,
+.char-actions .btn-primary {
+  padding: 11px 14px;
+  font-size: 0.82rem;
+  border-radius: 14px;
+}
+
+@media (max-width: 360px) {
+  .pick-grid {
+    gap: 8px;
+  }
+  .char-tab {
+    padding: 8px 12px 9px;
+  }
+  .art-form .art-emoji {
+    font-size: 2rem;
+  }
+}
+
+/* ==========================================================================
+   14. EFEK STATUS TAMAGOTCHI: LAPAR BERGETAR, KELAPARAN/MATI, TIDUR LELAH, MARAH
+   ========================================================================== */
+
+/* 1. Efek Getaran Perut Lapar (Kenyang <= 50%) - Menyatukan Kepala & Badan Tanpa Merusak Anatomi */
+.pet-interactive.stomach-rumble-active .chara-squash,
+.pet-interactive.stomach-rumble-active #live2d-stage-box,
+.pet-interactive.stomach-rumble-active #Aurora-Dia--body {
+  animation: stomachRumbleAnim 1.6s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+@keyframes stomachRumbleAnim {
+  0%, 100% {
+    transform: scale(1, 1) translate3d(0, 0, 0);
+  }
+  15% {
+    transform: scale(1.02, 0.98) translate3d(-1px, 0.6px, 0);
+  }
+  30% {
+    transform: scale(0.98, 1.02) translate3d(1px, -0.6px, 0);
+  }
+  45% {
+    transform: scale(1.02, 0.98) translate3d(-0.8px, 0.4px, 0);
+  }
+  60% {
+    transform: scale(0.99, 1.01) translate3d(0.8px, 0, 0);
+  }
+  75% {
+    transform: scale(1, 1) translate3d(0, 0, 0);
+  }
+}
+
+/* 1B. 3 Tilde (~) Berjejer Vertikal di Samping Perut, Sejajar Tombol B (Kenyang <= 50%) */
+.hunger-rumble-waves {
+  position: absolute;
+  bottom: 22px;
+  left: calc(50% + 42px);
+  transform: translateX(0) scale(0.65) rotate(6deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  z-index: 38;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.pet-interactive.stomach-rumble-active .hunger-rumble-waves {
+  opacity: 1;
+  transform: translateX(0) scale(1) rotate(6deg);
+}
+
+.pet-interactive.state-dead .hunger-rumble-waves,
+.pet-interactive.state-sleep .hunger-rumble-waves {
+  display: none !important;
+}
+
+.hunger-rumble-waves .tilde-wave {
+  display: block;
+  font-family: "Arial Rounded MT Bold", "Comic Sans MS", "Chalkboard", -apple-system, sans-serif;
+  font-size: 1.32rem;
+  font-weight: 900;
+  line-height: 0.52;
+  color: #f59e0b;
+  text-shadow:
+    -1px -1px 0 #ffffff,
+    1px -1px 0 #ffffff,
+    -1px 1px 0 #ffffff,
+    1px 1px 0 #ffffff,
+    0 2px 4px rgba(0, 0, 0, 0.42);
+  filter: drop-shadow(0 1px 2px rgba(245, 158, 11, 0.45));
+  animation: hungerTildeVibrate 0.8s ease-in-out infinite alternate;
+}
+
+.hunger-rumble-waves .tilde-wave:nth-child(1) {
+  animation-delay: 0s;
+  transform: scale(0.88);
+}
+
+.hunger-rumble-waves .tilde-wave:nth-child(2) {
+  animation-delay: 0.16s;
+  transform: scale(1.12);
+  color: #f97316;
+}
+
+.hunger-rumble-waves .tilde-wave:nth-child(3) {
+  animation-delay: 0.32s;
+  transform: scale(0.92);
+}
+
+@keyframes hungerTildeVibrate {
+  0% {
+    transform: translateX(-2.5px) scale(0.92);
+    opacity: 0.78;
+  }
+  50% {
+    transform: translateX(2.5px) scale(1.12);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-1.5px) scale(0.98);
+    opacity: 0.88;
+  }
+}
+
+/* 2. Efek Tertidur Mengantuk Lelah (Micro-sleep saat Energi <= 25%) */
+.pet-interactive.drowsy-sleep {
+  opacity: 0.94;
+}
+
+.pet-interactive.drowsy-sleep .lifelike-actor,
+.pet-interactive.drowsy-sleep .Aurora-Dia {
+  transform: translateY(3px) scale(0.98, 0.96);
+  transition: transform 0.6s ease;
+}
+
+.pet-interactive.drowsy-sleep .eye-socket {
+  transform: scaleY(0.14) !important;
+  opacity: 0.75;
+}
+
+.pet-interactive.drowsy-sleep::before {
+  content: "💤";
+  position: absolute;
+  top: -12px;
+  right: 28px;
+  font-size: 1.25rem;
+  animation: drowsyZzzFloat 2.4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 25;
+}
+
+@keyframes drowsyZzzFloat {
+  0% {
+    transform: translate(0, 0) scale(0.6);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.95;
+  }
+  80% {
+    transform: translate(12px, -22px) scale(1.15);
+    opacity: 0.75;
+  }
+  100% {
+    transform: translate(18px, -30px) scale(1.3);
+    opacity: 0;
+  }
+}
+
+/* 3. Efek Ngambek Berat saat Kebahagiaan 0% (Hingga Minimal 10%) */
+.pet-interactive.unhappy-tantrum .angry-mark {
+  opacity: 1 !important;
+  transform: scale(1.15) !important;
+  animation: angryMarkPulse 0.8s ease-in-out infinite alternate !important;
+}
+
+.pet-interactive.unhappy-tantrum .mouth-svg,
+.pet-interactive.unhappy-tantrum .orb-mouth {
+  transform: scaleY(-0.9) scaleX(0.85) translateY(2px) !important;
+}
+
+.pet-interactive.unhappy-tantrum .eye-socket {
+  transform: scaleY(0.82) rotate(4deg) !important;
+}
+
+/* 4. Efek Karakter Mati Kelaparan (Kenyang 0%) */
+.pet-interactive.state-dead {
+  cursor: not-allowed;
+}
+
+.pet-interactive.state-dead .pet-form {
+  filter: grayscale(0.85) opacity(0.5);
+}
+
+.pet-interactive.state-dead::after {
+  content: "🪦";
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3.4rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.45));
+  z-index: 30;
+}
+
+.pet-interactive.state-dead::before {
+  content: "👻";
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.2rem;
+  line-height: 1;
+  animation: deadGhostFloatAnim 2.6s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.75));
+  z-index: 31;
+}
+
+@keyframes deadGhostFloatAnim {
+  0% { transform: translate(-50%, 0) scale(0.95); opacity: 0.65; }
+  100% { transform: translate(-50%, -12px) scale(1.08); opacity: 0.95; }
+}
+
+/* 5. Modal Kematian & Stempel Kelalaian Generasi */
+.death-modal-card {
+  max-width: 360px;
+  border: 2px solid #ef4444;
+  background: var(--card-bg, #1e1b2e);
+  box-shadow: 0 16px 36px rgba(239, 68, 68, 0.28);
+  animation: modalPopIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.death-header {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), transparent);
+  border-bottom: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 12px 16px;
+  text-align: center;
+}
+
+.death-title {
+  color: #f87171;
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.death-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.death-tomb-avatar {
+  font-size: 3.6rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.4));
+  animation: deadGhostFloatAnim 2.6s ease-in-out infinite alternate;
+}
+
+.death-message {
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--text-primary, #f3f4f6);
+  margin: 0;
+}
+
+.death-message strong {
+  color: #f87171;
+}
+
+.death-consequence-card {
+  width: 100%;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1.5px dashed rgba(239, 68, 68, 0.4);
+  border-radius: 10px;
+  padding: 12px;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+.consequence-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #f87171;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.consequence-desc {
+  font-size: 0.76rem;
+  line-height: 1.35;
+  color: var(--text-secondary, #cbd5e1);
+  margin: 0 0 10px;
+}
+
+.death-name-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.death-input-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-primary, #f3f4f6);
+}
+
+.death-name-field-row {
+  display: flex;
+  align-items: center;
+  background: var(--input-bg, rgba(0, 0, 0, 0.3));
+  border: 1.5px solid var(--input-border, #475569);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.death-base-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 8px 10px;
+  font-size: 0.88rem;
+  color: var(--text-primary, #ffffff);
+  outline: none;
+}
+
+.death-suffix-tag {
+  background: #ef4444;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.78rem;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-right: 4px;
+  user-select: none;
+}
+
+.death-name-error {
+  color: #ef4444;
+  font-size: 0.72rem;
+  margin: 2px 0 0;
+  text-align: left;
+}
+
+.death-adopt-btn {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #059669; /* Solid Emerald */
+  border: 1px solid #10b981;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.death-adopt-btn:hover {
+  transform: translateY(-1px);
+  background: #047857;
+}
+
+/* ==========================================================================
+   16. EKSTENSI BROWSER (BAR PENDEK BAWAH & MODAL POP-UP SOLID MODERN)
+   ========================================================================== */
+
+/* 16A. Bar Pendek & Ramping Tepat di Bawah Konsol (Solid, Terpusat) */
+.console-ext-bar {
+  width: 100%;
+  max-width: 412px;
+  margin: 10px 0 0;
+  box-sizing: border-box;
+}
+
+.btn-console-ext-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 14px;
+  background: #181524;
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.btn-console-ext-bar:hover {
+  transform: translateY(-1.5px);
+  border-color: #6366f1;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+  background: #201b33;
+}
+
+.btn-console-ext-bar:active {
+  transform: translateY(0);
+}
+
+.ext-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+
+.ext-bar-icon {
+  font-size: 1.15rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.ext-bar-title {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ext-bar-sub {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+.ext-bar-pill {
+  flex-shrink: 0;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 3.5px 9px;
+  border-radius: 99px;
+  background: #312e81;
+  border: 1px solid #4f46e5;
+  color: #c7d2fe;
+  line-height: 1.2;
+}
+
+/* 16C. Modal Pop-up Ekstensi Browser */
+.ext-modal-card {
+  position: relative;
+  max-width: 440px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 22px 20px;
+  box-sizing: border-box;
+}
+
+.ext-modal-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.modal-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #94a3b8;
+  font-size: 1.35rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.modal-close-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #f87171;
+  transform: scale(1.08);
+}
+
+.modal-close-btn:active {
+  transform: scale(0.95);
+}
+
+.ext-features-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.ext-feature-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 14px;
+  text-align: left;
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.ext-feature-card:hover {
+  background: rgba(255, 255, 255, 0.065);
+  border-color: rgba(99, 102, 241, 0.35);
+  transform: translateY(-1px);
+}
+
+.ext-feat-icon-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(79, 70, 229, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.ext-feat-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.ext-feat-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+
+.ext-feat-title-row strong {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.feat-tag {
+  font-size: 0.58rem;
+  font-weight: 800;
+  padding: 1.5px 6px;
+  border-radius: 6px;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+}
+
+.feat-tag-sync {
+  background: rgba(16, 185, 129, 0.16);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #34d399;
+}
+
+.feat-tag-timer {
+  background: rgba(245, 158, 11, 0.16);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #fbbf24;
+}
+
+.feat-tag-mod {
+  background: rgba(168, 85, 247, 0.16);
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  color: #c084fc;
+}
+
+.ext-feat-info p {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  line-height: 1.38;
+  margin: 0;
+}
+
+.ext-download-cta {
+  margin: 16px 0 16px;
+  text-align: center;
+}
+
+/* Tombol Unduh: SOLID COLOR TANPA GRADASI */
+.btn-download-ext-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 18px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  background: #4f46e5; /* Solid Indigo yang bersih & berani */
+  border: 1px solid #6366f1;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  box-sizing: border-box;
+}
+
+.btn-download-ext-primary:hover {
+  background: #4338ca; /* Solid darker hover */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.45);
+}
+
+.btn-download-ext-primary:active {
+  transform: translateY(0);
+}
+
+.btn-download-ext-primary .btn-icon {
+  font-size: 1.15rem;
+}
+
+.ext-file-info {
+  display: block;
+  font-size: 0.64rem;
+  color: #94a3b8;
+  margin-top: 6px;
+}
+
+/* Kotak Panduan Pasang Berstruktur */
+.ext-install-guide {
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 3px solid #f59e0b;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.install-heading {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #fbbf24;
+  margin: 0 0 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.install-steps {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 0.7rem;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+.install-steps li {
+  margin-bottom: 4px;
+}
+
+.install-steps code {
+  background: rgba(79, 70, 229, 0.2);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  padding: 1.5px 5px;
+  border-radius: 5px;
+  color: #a5b4fc;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   17. PENGATURAN GLOBAL ELEGAN (TEMA SWATCH, MOD SDK & TOMBOL SOLID)
+   ========================================================================== */
+
+/* Lencana Badge Kustom di Kartu Karakter & Latar */
+.custom-badge-pill {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #4f46e5;
+  color: #ffffff;
+  font-size: 0.52rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 2.5px 6px;
+  border-radius: 6px;
+  z-index: 6;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  line-height: 1;
+}
+
+.pick-card-custom {
+  border: 1.5px dashed rgba(99, 102, 241, 0.55) !important;
+  border-radius: 18px;
+  padding: 2px;
+}
+
+.pick-card-custom:hover {
+  border-color: #6366f1 !important;
+}
+
+/* Grid Pemilih Tema Konsol (Elegan & Swatch Nyata) */
+.theme-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.theme-card {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+.theme-card input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.theme-card-body {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--modal-input-bg);
+  border: 2px solid var(--modal-border);
+  border-radius: 12px;
+  transition: all 0.16s ease;
+}
+
+.theme-card:hover .theme-card-body {
+  border-color: #6366f1;
+  transform: translateY(-1px);
+}
+
+.theme-card input:checked + .theme-card-body {
+  border-color: #6366f1;
+  background: rgba(99, 102, 241, 0.15);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+}
+
+.theme-swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+}
+
+.swatch-obsidian { background: #181a24; border-color: #4f46e5; }
+.swatch-twilight { background: #2b1f3d; border-color: #c084fc; }
+.swatch-slate    { background: #334155; border-color: #94a3b8; }
+.swatch-matcha   { background: #1e3a2f; border-color: #4ade80; }
+.swatch-cream    { background: #fdf6ec; border-color: #f59e0b; }
+.swatch-sakura   { background: #fdf2f8; border-color: #f472b6; }
+
+.theme-name {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+}
+
+/* Mod Buttons & Texts */
+.mod-desc-text {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin: 4px 0 10px;
+}
+
+.mod-buttons-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+/* Tombol Unggah Mod Kustom: SOLID EMERALD */
+.btn-upload-mod-solid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 14px;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #ffffff;
+  background: #059669; /* Solid Emerald */
+  border: 1px solid #10b981;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  box-sizing: border-box;
+}
+
+.btn-upload-mod-solid:hover {
+  background: #047857;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(5, 150, 105, 0.45);
+}
+
+.btn-upload-mod-solid:active {
+  transform: translateY(0);
+}

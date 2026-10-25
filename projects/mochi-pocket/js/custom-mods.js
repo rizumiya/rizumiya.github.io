@@ -234,6 +234,30 @@ function registerCustomPet(petMod) {
     petInteractive.appendChild(formEl);
     formElements[petMod.id] = formEl;
   }
+
+  // 3. Tambahkan kartu pilihan ke modal karakter jika belum ada di HTML
+  const formPicker = document.getElementById("form-picker-options");
+  if (formPicker && !document.getElementById(`card-form-${petMod.id}`)) {
+    const card = document.createElement("label");
+    card.className = "pick-card pick-card-custom";
+    card.id = `card-form-${petMod.id}`;
+    card.innerHTML = `
+      <input type="radio" name="starter-form" value="${petMod.id}">
+      <span class="pick-card-art art-form" data-art="${petMod.id}">
+        <span class="art-emoji">${petMod.icon || "🐾"}</span>
+        <span class="custom-badge-pill">CUSTOM</span>
+      </span>
+      <span class="pick-card-name">${petMod.name}</span>
+    `;
+    formPicker.appendChild(card);
+    card.addEventListener("click", () => {
+      const radio = card.querySelector('input[type="radio"]');
+      if (radio) {
+        radio.checked = true;
+        radio.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    });
+  }
 }
 
 function registerCustomScene(sceneMod) {
@@ -266,6 +290,30 @@ function registerCustomScene(sceneMod) {
         background: ${sceneMod.backgroundCSS} !important;
       }
     `;
+  }
+
+  // Tambahkan kartu pilihan latar ke modal jika belum ada
+  const scenePicker = document.getElementById("scene-picker-options");
+  if (scenePicker && !document.getElementById(`card-scene-${sceneMod.id}`)) {
+    const card = document.createElement("label");
+    card.className = "pick-card pick-card-custom";
+    card.id = `card-scene-${sceneMod.id}`;
+    card.innerHTML = `
+      <input type="radio" name="scene-bg" value="${sceneMod.id}">
+      <span class="pick-card-art art-scene" data-art="${sceneMod.id}">
+        <span class="thumb-deco" style="top: 24%; left: 50%; font-size: 1.4rem;">${sceneMod.icon || "🏙️"}</span>
+        <span class="custom-badge-pill">CUSTOM</span>
+      </span>
+      <span class="pick-card-name" data-scene-label="${sceneMod.id}">${sceneMod.name}</span>
+    `;
+    scenePicker.appendChild(card);
+    card.addEventListener("click", () => {
+      const radio = card.querySelector('input[type="radio"]');
+      if (radio) {
+        radio.checked = true;
+        radio.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    });
   }
 }
 
@@ -332,8 +380,10 @@ function importCustomMod(rawContent, filename = "") {
       registerCustomPet(modObj);
       saveCustomModsToStorage();
 
-      // Otomatis aktifkan karakter baru jika diinginkan
-      setPetForm(modObj.id);
+      // Otomatis aktifkan karakter baru jika diimpor
+      if (typeof setForm === "function") {
+        setForm(modObj.id, true);
+      }
       renderDashboard();
       say(`🎉 Karakter kustom <span>${modObj.icon || "🐱"} ${modObj.name}</span> berhasil diimpor dan hidup! Selamat datang~ 💖`, 5000);
       spawnBurstParticles(["✨", "🐾", "💖"]);
@@ -366,6 +416,17 @@ function downloadSdkFile(type = "pet") {
 
 function initCustomMods() {
   loadCustomModsFromStorage();
+
+  // Daftarkan sampel naga dan vulkano secara default jika belum ada
+  try {
+    const dragonMod = parseModCode(SDK_TEMPLATES.dragon);
+    if (!FORM_META[dragonMod.id]) registerCustomPet(dragonMod);
+
+    const volcanoMod = parseModCode(SDK_TEMPLATES.volcano);
+    if (!SCENE_META[volcanoMod.id]) registerCustomScene(volcanoMod);
+  } catch (sampleErr) {
+    console.warn("[Mochi Modding] Gagal inisialisasi modul sampel default:", sampleErr);
+  }
 
   // Daftarkan semua pet kustom yang tersimpan
   customMods.pets.forEach((p) => registerCustomPet(p));

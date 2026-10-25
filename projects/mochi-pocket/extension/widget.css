@@ -1,0 +1,115 @@
+/**
+ * Mochi Pocket Extension — widget.css
+ * Styling Layar Mochi Pocket Asli saat Mengambang di Pojok Browser
+ */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent !important;
+  user-select: none;
+}
+
+body.widget-mode {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.widget-viewport-wrap {
+  position: relative;
+  width: 236px;
+  height: 246px;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.42),
+    0 0 0 1.5px rgba(255, 255, 255, 0.14);
+  background: #0f172a;
+}
+
+/* Penyesuaian Ukuran Layar Konsol di Mode Widget */
+.widget-viewport-wrap .gb-screen {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  border-radius: 22px !important;
+  border: none !important;
+  box-shadow: none !important;
+  cursor: grab;
+}
+
+.widget-viewport-wrap .gb-screen:active {
+  cursor: grabbing;
+}
+
+/* Skala Karakter agar Pas Cantik di Resolusi Kompak */
+.widget-viewport-wrap .pet-interactive {
+  transform: scale(0.82);
+  transform-origin: center 88%;
+}
+
+/* Quick Action Bar Melayang di Atas Layar */
+.widget-action-bar {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 99px;
+  padding: 3px 6px;
+  z-index: 50;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+.widget-viewport-wrap:hover .widget-action-bar {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.w-btn {
+  background: transparent;
+  border: none;
+  font-size: 0.82rem;
+  line-height: 1;
+  padding: 4px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e2e8f0;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.w-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.15);
+}
+
+.w-btn:active {
+  transform: scale(0.95);
+}
+
+.w-btn-close {
+  color: #f87171;
+  font-weight: 800;
+  font-size: 0.72rem;
+}
+
+.w-btn-close:hover {
+  background: rgba(239, 68, 68, 0.25);
+  color: #ffffff;
+}

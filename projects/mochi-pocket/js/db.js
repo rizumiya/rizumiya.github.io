@@ -66,6 +66,15 @@ class PetDatabase {
       // Ignore quota errors
     }
 
+    // Sinkronisasi Realtime dengan Ekstensi Browser jika tersedia
+    if (typeof chrome !== "undefined" && chrome.storage && chrome.storage.local) {
+      try {
+        chrome.storage.local.set({ mochi_pet: payload });
+      } catch (e) {
+        // Abaikan jika tidak di extension context
+      }
+    }
+
     const database = await this.dbPromise;
     if (!database) return payload;
 
@@ -84,6 +93,11 @@ class PetDatabase {
     } catch {
       // Ignore
     }
+    if (typeof chrome !== "undefined" && chrome.storage && chrome.storage.local) {
+      try {
+        chrome.storage.local.remove(["mochi_pet"]);
+      } catch (e) {}
+    }
     const database = await this.dbPromise;
     if (!database) return;
     return new Promise((resolve) => {
@@ -97,3 +111,23 @@ class PetDatabase {
 
 const db = new PetDatabase();
 let pet = { ...DEFAULT_PET_STATE };
+
+// Sinkronisasi Dua Arah Realtime Lintas Tab Browser via Chrome Storage
+if (typeof chrome !== "undefined" && chrome.storage && chrome.storage.onChanged) {
+  try {
+    chrome.storage.onChanged.addListener((changes, area) => {
+      if (area === "local" && changes.mochi_pet && changes.mochi_pet.newValue) {
+        const incoming = changes.mochi_pet.newValue;
+        // Hindari menimpa jika state kita lebih baru
+        if (!incoming.lastUpdatedAt || incoming.lastUpdatedAt >= (pet.lastUpdatedAt || 0)) {
+          Object.assign(pet, incoming);
+          if (typeof renderDashboard === "function") {
+            renderDashboard();
+          }
+        }
+      }
+    });
+  } catch (syncErr) {
+    // Non-extension context
+  }
+}

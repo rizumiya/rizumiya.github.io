@@ -9,6 +9,12 @@ function switchState(newState, duration = null) {
     stateTimeout = null;
   }
 
+  // Jika dipanggil kembali ke idle namun pet sedang ngambek (Bahagia < 15%),
+  // pertahankan wujud dan ekspresi ngambek (marah/cemberut) sampai bahagia >= 15%!
+  if (newState === "idle" && pet.isUnhappyTantrum && !pet.isSleeping && !pet.isDead) {
+    newState = "angry";
+  }
+
   currentState = newState;
   const hasHeadbutt = petInteractive.classList.contains("headbutt-pop");
   const isTantrum = Boolean(pet.isUnhappyTantrum);
@@ -23,7 +29,7 @@ function switchState(newState, duration = null) {
   petInteractive.className = classes.join(" ");
 
   let ledInfo = STATE_LED[newState] || STATE_LED.idle;
-  if (isTantrum && newState === "idle") {
+  if (isTantrum) {
     ledInfo = { led: "led-angry", text: "NGAMBEK" };
   }
   if (statusDot) {
@@ -229,6 +235,8 @@ function handlePettingMove(clientX, clientY) {
       addExpAndStats({ exp: 5, happiness: 5 });
 
       if (wasTantrum && !pet.isUnhappyTantrum) {
+        switchState("happy", 2000);
+        spawnBurstParticles(["💖", "✨", "🎉"]);
         say(`Wah, elusanmu bikin ${petNameTag()} baikan lagi! Aku nggak ngambek lagi deh~ 🥰💖`, 4200);
       } else {
         const happyLines = [

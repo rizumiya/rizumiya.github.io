@@ -1411,7 +1411,6 @@
           <span></span><span></span><span></span><span></span>
         </div>
       </div>
-    </div>
 
       <!-- =========================================================
            BARIS EKSTENSI BROWSER RAMPING DI BAWAH KONSOL
@@ -1534,7 +1533,7 @@
           <div class="char-panel-wrap">
             <!-- Panel 1: Bentuk Karakter -->
             <div class="char-panel active" data-panel="form" role="tabpanel">
-              <div class="pick-grid">
+              <div class="pick-grid" id="form-picker-options">
                 <label class="pick-card">
                   <input type="radio" name="starter-form" value="orb" checked>
                   <span class="pick-card-art art-form" data-art="orb"><span class="art-emoji">🫧</span></span>
@@ -1612,6 +1611,15 @@
                   <input type="radio" name="starter-form" value="live2d">
                   <span class="pick-card-art art-form" data-art="live2d"><span class="art-emoji">✨</span></span>
                   <span class="pick-card-name">Live2D</span>
+                </label>
+                <!-- Karakter Kustom Contoh: Ryuu (Naga Api) -->
+                <label class="pick-card pick-card-custom" id="card-form-custom_baby_dragon">
+                  <input type="radio" name="starter-form" value="custom_baby_dragon">
+                  <span class="pick-card-art art-form" data-art="custom_baby_dragon">
+                    <span class="art-emoji">🐲</span>
+                    <span class="custom-badge-pill">CUSTOM</span>
+                  </span>
+                  <span class="pick-card-name">Ryuu</span>
                 </label>
               </div>
             </div>
@@ -1733,6 +1741,15 @@
                   </span>
                   <span class="pick-card-name" data-scene-label="magic_forest">Hutan</span>
                 </label>
+                <!-- Latar Kustom Contoh: Pulau Vulkano -->
+                <label class="pick-card pick-card-custom" id="card-scene-custom_volcano_island">
+                  <input type="radio" name="scene-bg" value="custom_volcano_island">
+                  <span class="pick-card-art art-scene" data-art="custom_volcano_island">
+                    <span class="thumb-deco" style="top: 24%; left: 50%; font-size: 1.4rem;">🌋</span>
+                    <span class="custom-badge-pill">CUSTOM</span>
+                  </span>
+                  <span class="pick-card-name" data-scene-label="custom_volcano_island">Vulkano</span>
+                </label>
               </div>
             </div>
           </div>
@@ -1748,108 +1765,149 @@
 
   <!-- =========================================================
        MODAL 3: PENGATURAN GLOBAL (TEMA KONSOL, PRESET LIVE2D, & DATABASE)
+       Gaya Map Berlabel Elegan Harmonis dengan Modal Karakter
        ========================================================= -->
   <div id="settings-modal" class="modal-backdrop" hidden>
-    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="settings-modal-title">
-      <div class="modal-header-badge">⚙️ SETELAN GLOBAL &amp; DATABASE</div>
+    <div class="modal-card char-modal-card" role="dialog" aria-modal="true" aria-labelledby="settings-modal-title">
+      <div class="ext-modal-top-bar">
+        <span class="modal-header-badge">⚙️ SETELAN HANDHELD</span>
+        <button type="button" class="modal-close-btn" id="btn-close-settings-x" aria-label="Tutup Pengaturan" title="Tutup">&times;</button>
+      </div>
+
       <h2 id="settings-modal-title" class="modal-title">Pengaturan Global</h2>
 
-      <form id="settings-form" class="modal-form">
-        <!-- Pilihan Tema Konsol & Background (Gelap, Teduh, Cerah) -->
-        <div class="setting-group">
-          <span class="setting-label">Tema Konsol &amp; Latar (Gelap / Teduh / Cerah):</span>
-          <div class="picker-options">
-            <label class="picker-option">
-              <input type="radio" name="console-theme" value="obsidian" checked>
-              <span>🌑 Hitam Matte</span>
-            </label>
-            <label class="picker-option">
-              <input type="radio" name="console-theme" value="twilight">
-              <span>🌆 Senja Teduh</span>
-            </label>
-            <label class="picker-option">
-              <input type="radio" name="console-theme" value="slate">
-              <span>☁️ Abu Teduh</span>
-            </label>
-            <label class="picker-option">
-              <input type="radio" name="console-theme" value="matcha">
-              <span>🍵 Matcha Teduh</span>
-            </label>
-            <label class="picker-option">
-              <input type="radio" name="console-theme" value="cream">
-              <span>🥛 Krim Cerah</span>
-            </label>
-            <label class="picker-option">
-              <input type="radio" name="console-theme" value="sakura">
-              <span>🌸 Sakura Cerah</span>
-            </label>
+      <!-- Map Berlabel: Tab Tema & Live2D vs Tab Mod & Data -->
+      <div class="char-folder settings-folder">
+        <div class="char-tabs" role="tablist">
+          <button type="button" class="char-tab settings-tab active" data-tab="theme" role="tab" aria-selected="true" title="Tema & Live2D">
+            <span class="char-tab-icon">🎨</span>
+            <span class="char-tab-text">Tema &amp; Live2D</span>
+          </button>
+          <button type="button" class="char-tab settings-tab" data-tab="mods" role="tab" aria-selected="false" title="Studio Mod & Data">
+            <span class="char-tab-icon">🛠️</span>
+            <span class="char-tab-text">Mod &amp; Data</span>
+          </button>
+        </div>
+
+        <div class="char-panel-wrap">
+          <!-- Panel 1: Tema Casing Konsol & Karakter Live2D -->
+          <div class="char-panel settings-panel active" data-panel="theme" role="tabpanel">
+            <form id="settings-form" class="modal-form">
+              <div class="setting-group">
+                <span class="setting-label">Tema Casing Konsol:</span>
+                <div class="picker-options theme-picker-grid">
+                  <label class="picker-option theme-card">
+                    <input type="radio" name="console-theme" value="obsidian" checked>
+                    <span class="theme-card-body">
+                      <span class="theme-swatch swatch-obsidian"></span>
+                      <span class="theme-name">Hitam Matte</span>
+                    </span>
+                  </label>
+                  <label class="picker-option theme-card">
+                    <input type="radio" name="console-theme" value="twilight">
+                    <span class="theme-card-body">
+                      <span class="theme-swatch swatch-twilight"></span>
+                      <span class="theme-name">Senja Teduh</span>
+                    </span>
+                  </label>
+                  <label class="picker-option theme-card">
+                    <input type="radio" name="console-theme" value="slate">
+                    <span class="theme-card-body">
+                      <span class="theme-swatch swatch-slate"></span>
+                      <span class="theme-name">Abu Teduh</span>
+                    </span>
+                  </label>
+                  <label class="picker-option theme-card">
+                    <input type="radio" name="console-theme" value="matcha">
+                    <span class="theme-card-body">
+                      <span class="theme-swatch swatch-matcha"></span>
+                      <span class="theme-name">Matcha Teduh</span>
+                    </span>
+                  </label>
+                  <label class="picker-option theme-card">
+                    <input type="radio" name="console-theme" value="cream">
+                    <span class="theme-card-body">
+                      <span class="theme-swatch swatch-cream"></span>
+                      <span class="theme-name">Krim Cerah</span>
+                    </span>
+                  </label>
+                  <label class="picker-option theme-card">
+                    <input type="radio" name="console-theme" value="sakura">
+                    <span class="theme-card-body">
+                      <span class="theme-swatch swatch-sakura"></span>
+                      <span class="theme-name">Sakura Cerah</span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Pengaturan Khusus Live2D -->
+              <div class="setting-group" style="margin-top: 10px;">
+                <label for="live2d-model-select" class="setting-label">Preset Model Live2D WebGL:</label>
+                <select id="live2d-model-select" class="aurora-select">
+                  <option value="koharu">Koharu (Chibi Anime Girl)</option>
+                  <option value="wanko">Wanko (Anjing Mangkuk Live2D)</option>
+                  <option value="shizuku">Shizuku (Meja Belajar)</option>
+                  <option value="z16">Z16 (Gadis Anime)</option>
+                  <option value="haruto">Haruto (Chibi Boy)</option>
+                  <option value="chitose">Chitose (Karakter Anime)</option>
+                </select>
+                <div class="custom-url-row">
+                  <input
+                    type="url"
+                    id="live2d-custom-url"
+                    class="aurora-input-sm"
+                    placeholder="Atau tempel URL .model.json kustom..."
+                  >
+                  <button type="button" id="btn-load-custom-live2d" class="btn-sm">Muat</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Panel 2: Studio Mod SDK & Data Database -->
+          <div class="char-panel settings-panel" data-panel="mods" role="tabpanel" hidden>
+            <!-- Bagian Studio Mod Kustom (Karakter & Latar Kustom) -->
+            <div class="setting-group">
+              <span class="setting-label">🎨 Studio Mod &amp; Template SDK V2:</span>
+              <p class="mod-desc-text">
+                Koding karakter dan latar panggungmu sendiri! Unduh berkas template di bawah, modifikasi kodenya, lalu pasang kembali ke dalam konsol.
+              </p>
+              <div class="mod-buttons-row">
+                <button type="button" id="btn-download-pet-template" class="btn-db" style="flex: 1;">📄 Template Pet (.js)</button>
+                <button type="button" id="btn-download-scene-template" class="btn-db" style="flex: 1;">🏙️ Template Latar (.js)</button>
+              </div>
+              <div class="mod-buttons-row">
+                <button type="button" id="btn-download-dragon-sample" class="btn-db" style="flex: 1;">🐲 Sampel Naga (.js)</button>
+                <button type="button" id="btn-download-volcano-sample" class="btn-db" style="flex: 1;">🌋 Sampel Vulkano (.js)</button>
+              </div>
+              <div style="margin-top: 6px;">
+                <label class="btn-upload-mod-solid">
+                  <span>📤</span> Unggah &amp; Pasang Mod (.js / .json)
+                  <input type="file" id="input-upload-mod" accept=".js,.json" hidden>
+                </label>
+              </div>
+            </div>
+
+            <!-- Bagian Database Browser (IndexedDB) -->
+            <div class="setting-group" style="margin-top: 14px;">
+              <span class="setting-label">💾 Database Browser (IndexedDB):</span>
+              <div class="db-actions-row">
+                <button type="button" id="btn-export-save" class="btn-db">📥 Ekspor</button>
+                <label class="btn-db file-label">
+                  📤 Impor
+                  <input type="file" id="input-import-save" accept="application/json" hidden>
+                </label>
+                <button type="button" id="btn-reset-save" class="btn-db btn-db-danger">🗑️ Reset</button>
+              </div>
+            </div>
           </div>
         </div>
-
-        <!-- Pengaturan Khusus Live2D -->
-        <div class="setting-group">
-          <label for="live2d-model-select" class="setting-label">Karakter Preset Live2D:</label>
-          <select id="live2d-model-select" class="aurora-select">
-            <option value="koharu">Koharu (Chibi Anime Girl)</option>
-            <option value="wanko">Wanko (Anjing Mangkuk Live2D)</option>
-            <option value="shizuku">Shizuku (Meja Belajar)</option>
-            <option value="z16">Z16 (Gadis Anime)</option>
-            <option value="haruto">Haruto (Chibi Boy)</option>
-            <option value="chitose">Chitose (Karakter Anime)</option>
-          </select>
-          <div class="custom-url-row">
-            <input
-              type="url"
-              id="live2d-custom-url"
-              class="aurora-input-sm"
-              placeholder="Atau tempel URL .model.json kustom..."
-            >
-            <button type="button" id="btn-load-custom-live2d" class="btn-sm">Muat</button>
-          </div>
-        </div>
-
-        <button type="submit" class="btn-primary">Simpan Pengaturan Global</button>
-      </form>
-
-      <!-- Bagian Database Browser (IndexedDB) -->
-      <div class="db-divider">
-        <span>💾 Database Browser (IndexedDB)</span>
-      </div>
-      <div class="db-actions-row">
-        <button type="button" id="btn-export-save" class="btn-db">📥 Ekspor JSON</button>
-        <label class="btn-db file-label">
-          📤 Impor JSON
-          <input type="file" id="input-import-save" accept="application/json" hidden>
-        </label>
-        <button type="button" id="btn-reset-save" class="btn-db btn-db-danger">🗑️ Reset</button>
       </div>
 
-      <!-- Bagian Studio Mod Kustom (Karakter & Latar Kustom) -->
-      <div class="db-divider" style="margin-top: 1.1rem;">
-        <span>🎨 Studio Mod &amp; Template SDK</span>
-      </div>
-      <div class="mod-studio-section">
-        <p class="mod-desc-text" style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 8px; line-height: 1.4;">
-          Koding karakter dan latar panggungmu sendiri! Unduh berkas template JavaScript di bawah, modifikasi kodenya, lalu pasang kembali ke dalam konsol.
-        </p>
-        <div class="mod-buttons-row" style="display: flex; gap: 8px; margin-bottom: 8px;">
-          <button type="button" id="btn-download-pet-template" class="btn-db" style="flex: 1;">📄 Template Pet (.js)</button>
-          <button type="button" id="btn-download-scene-template" class="btn-db" style="flex: 1;">🏙️ Template Latar (.js)</button>
-        </div>
-        <div class="mod-buttons-row" style="display: flex; gap: 8px; margin-bottom: 8px;">
-          <button type="button" id="btn-download-dragon-sample" class="btn-db" style="flex: 1;">🐲 Sampel Naga (.js)</button>
-          <button type="button" id="btn-download-volcano-sample" class="btn-db" style="flex: 1;">🌋 Sampel Vulkano (.js)</button>
-        </div>
-        <div>
-          <label class="btn-primary" style="display: flex; align-items: center; justify-content: center; gap: 7px; cursor: pointer; text-align: center; width: 100%;">
-            <span>📤</span> Unggah &amp; Pasang Mod (.js / .json)
-            <input type="file" id="input-upload-mod" accept=".js,.json" hidden>
-          </label>
-        </div>
-      </div>
-
-      <div class="modal-actions" style="margin-top: 0.6rem;">
+      <div class="char-actions" style="margin-top: 14px;">
         <button type="button" id="btn-close-settings" class="btn-secondary">Tutup</button>
+        <button type="submit" form="settings-form" class="btn-primary">Simpan Pengaturan</button>
       </div>
     </div>
   </div>

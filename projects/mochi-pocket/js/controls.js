@@ -256,6 +256,31 @@ if (btnCloseSettings) {
     if (settingsModal) settingsModal.hidden = true;
   });
 }
+const btnCloseSettingsX = document.getElementById("btn-close-settings-x");
+if (btnCloseSettingsX) {
+  btnCloseSettingsX.addEventListener("click", () => {
+    if (settingsModal) settingsModal.hidden = true;
+  });
+}
+
+// Tab Switcher pada Pengaturan Global (Tema & Live2D vs Mod & Data)
+const settingsTabs = document.querySelectorAll(".settings-tab");
+const settingsPanels = document.querySelectorAll(".settings-panel");
+settingsTabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    const targetKey = tab.dataset.tab;
+    settingsTabs.forEach((t) => {
+      const isTarget = t === tab;
+      t.classList.toggle("active", isTarget);
+      t.setAttribute("aria-selected", isTarget ? "true" : "false");
+    });
+    settingsPanels.forEach((p) => {
+      const match = p.dataset.panel === targetKey;
+      p.hidden = !match;
+      p.classList.toggle("active", match);
+    });
+  });
+});
 
 if (characterForm) {
   characterForm.addEventListener("submit", async (e) => {

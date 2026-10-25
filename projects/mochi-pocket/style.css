@@ -4619,8 +4619,8 @@ body {
 
 .btn-primary {
   width: 100%;
-  background: var(--cute-gradient);
-  border: none;
+  background: #4f46e5; /* Solid Indigo Modern & Bold */
+  border: 1px solid #6366f1;
   border-radius: 12px;
   padding: 10px 14px;
   color: #ffffff;
@@ -4628,7 +4628,18 @@ body {
   font-size: 0.84rem;
   font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(236, 107, 136, 0.28);
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-primary:hover {
+  background: #4338ca;
+  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
 }
 
 .btn-secondary {
@@ -5667,16 +5678,16 @@ body {
   font-weight: 700;
   border-radius: 8px;
   cursor: pointer;
-  background: linear-gradient(135deg, #10b981, #059669);
+  background: #059669; /* Solid Emerald */
+  border: 1px solid #10b981;
   color: #ffffff;
-  border: none;
   box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
-  transition: transform 0.15s ease, filter 0.15s ease;
+  transition: transform 0.15s ease, background 0.15s ease;
 }
 
 .death-adopt-btn:hover {
   transform: translateY(-1px);
-  filter: brightness(1.1);
+  background: #047857;
 }
 
 /* ==========================================================================
@@ -5985,4 +5996,146 @@ body {
   color: #a5b4fc;
   font-size: 0.65rem;
   font-weight: 700;
+}
+
+/* ==========================================================================
+   17. PENGATURAN GLOBAL ELEGAN (TEMA SWATCH, MOD SDK & TOMBOL SOLID)
+   ========================================================================== */
+
+/* Lencana Badge Kustom di Kartu Karakter & Latar */
+.custom-badge-pill {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #4f46e5;
+  color: #ffffff;
+  font-size: 0.52rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 2.5px 6px;
+  border-radius: 6px;
+  z-index: 6;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  line-height: 1;
+}
+
+.pick-card-custom {
+  border: 1.5px dashed rgba(99, 102, 241, 0.55) !important;
+  border-radius: 18px;
+  padding: 2px;
+}
+
+.pick-card-custom:hover {
+  border-color: #6366f1 !important;
+}
+
+/* Grid Pemilih Tema Konsol (Elegan & Swatch Nyata) */
+.theme-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.theme-card {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+.theme-card input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.theme-card-body {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--modal-input-bg);
+  border: 2px solid var(--modal-border);
+  border-radius: 12px;
+  transition: all 0.16s ease;
+}
+
+.theme-card:hover .theme-card-body {
+  border-color: #6366f1;
+  transform: translateY(-1px);
+}
+
+.theme-card input:checked + .theme-card-body {
+  border-color: #6366f1;
+  background: rgba(99, 102, 241, 0.15);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+}
+
+.theme-swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+}
+
+.swatch-obsidian { background: #181a24; border-color: #4f46e5; }
+.swatch-twilight { background: #2b1f3d; border-color: #c084fc; }
+.swatch-slate    { background: #334155; border-color: #94a3b8; }
+.swatch-matcha   { background: #1e3a2f; border-color: #4ade80; }
+.swatch-cream    { background: #fdf6ec; border-color: #f59e0b; }
+.swatch-sakura   { background: #fdf2f8; border-color: #f472b6; }
+
+.theme-name {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+}
+
+/* Mod Buttons & Texts */
+.mod-desc-text {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin: 4px 0 10px;
+}
+
+.mod-buttons-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+/* Tombol Unggah Mod Kustom: SOLID EMERALD */
+.btn-upload-mod-solid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 14px;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #ffffff;
+  background: #059669; /* Solid Emerald */
+  border: 1px solid #10b981;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  box-sizing: border-box;
+}
+
+.btn-upload-mod-solid:hover {
+  background: #047857;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(5, 150, 105, 0.45);
+}
+
+.btn-upload-mod-solid:active {
+  transform: translateY(0);
 }
