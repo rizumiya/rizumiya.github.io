@@ -3,15 +3,30 @@
  * Mendukung 6 Wujud Hidup (Puni Mochi, Neko, Hamster, Anjing Shiba, Landak, Live2D) & IndexedDB
  */
 
-const FORM_ORDER = ["orb", "cat", "hamster", "dog", "hedgehog", "live2d"];
+const FORM_ORDER = [
+  "orb",
+  "cat",
+  "hamster",
+  "dog",
+  "hedgehog",
+  "duck",
+  "sheep",
+  "cow",
+  "rabbit",
+  "live2d"
+];
 
 const FORM_META = {
-  orb: { tag: "PUNI", name: "Puni Mochi", icon: "🫧" },
-  cat: { tag: "NEKO", name: "Kucing Neko", icon: "🐱" },
-  hamster: { tag: "MOCHI", name: "Hamster Mochi", icon: "🐹" },
-  dog: { tag: "SHIBA", name: "Anjing Shiba", icon: "🐶" },
-  hedgehog: { tag: "UNI", name: "Landak Mini", icon: "🦔" },
-  live2d: { tag: "L2D", name: "Avatar Live2D", icon: "✨" }
+  orb: { tag: "PUNI", name: "Puni Mochi", icon: "🫧", unlockLevel: 1 },
+  cat: { tag: "NEKO", name: "Kucing Neko", icon: "🐱", unlockLevel: 1 },
+  hamster: { tag: "MOCHI", name: "Hamster Mochi", icon: "🐹", unlockLevel: 1 },
+  dog: { tag: "SHIBA", name: "Anjing Shiba", icon: "🐶", unlockLevel: 1 },
+  hedgehog: { tag: "UNI", name: "Landak Mini", icon: "🦔", unlockLevel: 1 },
+  duck: { tag: "PIYO", name: "Bebek Piyo", icon: "🐥", unlockLevel: 5 },
+  sheep: { tag: "MOFU", name: "Domba Mofu", icon: "🐑", unlockLevel: 7 },
+  cow: { tag: "USHI", name: "Sapi Chibi", icon: "🐮", unlockLevel: 9 },
+  rabbit: { tag: "USAGI", name: "Kelinci Usagi", icon: "🐰", unlockLevel: 11 },
+  live2d: { tag: "L2D", name: "Avatar Live2D", icon: "✨", unlockLevel: 1 }
 };
 
 const LIVE2D_PRESETS = {
@@ -68,7 +83,11 @@ const SCENE_ORDER = [
   "rainy_day",
   "flower_garden",
   "haunted_house",
-  "starry_night"
+  "starry_night",
+  "snowy_winter",
+  "bakery_shop",
+  "tropical_beach",
+  "magic_forest"
 ];
 
 const SCENE_META = {
@@ -113,6 +132,34 @@ const SCENE_META = {
     icon: "🌌",
     name: "Bintang",
     label: "🌌 Bintang (Lv.12)"
+  },
+  snowy_winter: {
+    id: "snowy_winter",
+    unlockLevel: 14,
+    icon: "❄️",
+    name: "Salju",
+    label: "❄️ Salju (Lv.14)"
+  },
+  bakery_shop: {
+    id: "bakery_shop",
+    unlockLevel: 16,
+    icon: "🥖",
+    name: "Roti",
+    label: "🥖 Roti (Lv.16)"
+  },
+  tropical_beach: {
+    id: "tropical_beach",
+    unlockLevel: 18,
+    icon: "🏖️",
+    name: "Pantai",
+    label: "🏖️ Pantai (Lv.18)"
+  },
+  magic_forest: {
+    id: "magic_forest",
+    unlockLevel: 20,
+    icon: "🍄",
+    name: "Hutan",
+    label: "🍄 Hutan (Lv.20)"
   }
 };
 
@@ -230,6 +277,10 @@ const formElements = {
   hamster: document.getElementById("form-hamster"),
   dog: document.getElementById("form-dog"),
   hedgehog: document.getElementById("form-hedgehog"),
+  duck: document.getElementById("form-duck"),
+  sheep: document.getElementById("form-sheep"),
+  cow: document.getElementById("form-cow"),
+  rabbit: document.getElementById("form-rabbit"),
   live2d: document.getElementById("form-live2d")
 };
 
@@ -423,6 +474,55 @@ function renderSceneBackground(sceneKey) {
         <span>✨</span><span>🌾</span><span>🌟</span><span>🌾</span><span>✨</span>
       </div>
     `;
+  } else if (safeScene === "snowy_winter") {
+    let flakesHtml = "";
+    for (let i = 0; i < 14; i += 1) {
+      const leftPct = 6 + i * 6.8;
+      const dur = (3.4 + (i % 5) * 0.7).toFixed(2);
+      const delay = ((i * 0.35) % 1.8).toFixed(2);
+      flakesHtml += `<div class="scene-snowflake" style="left:${leftPct.toFixed(1)}%; --snow-dur:${dur}s; --snow-delay:${delay}s;">❄️</div>`;
+    }
+    sceneBgLayer.innerHTML = `
+      <div class="scene-cloud" style="top: 38px; left: 16%; --drift-dur: 16s; opacity: 0.85;">🌨️</div>
+      <div class="scene-pine">🌲</div>
+      <div class="scene-snowman">☃️</div>
+      ${flakesHtml}
+      <div class="scene-horizon-deco" style="bottom: 24%; opacity: 0.75;">
+        <span>❄️</span><span>🏔️</span><span>❄️</span>
+      </div>
+    `;
+  } else if (safeScene === "bakery_shop") {
+    sceneBgLayer.innerHTML = `
+      <div class="scene-bakery-shelf">
+        <span>🥐</span><span>🥖</span><span>🍞</span>
+      </div>
+      <div class="scene-coffee">☕</div>
+      <div class="scene-cake">🍰</div>
+      <div class="scene-horizon-deco" style="bottom: 25%; opacity: 0.8;">
+        <span>🧁</span><span>🍩</span><span>🍪</span><span>🥞</span>
+      </div>
+    `;
+  } else if (safeScene === "tropical_beach") {
+    sceneBgLayer.innerHTML = `
+      <div class="scene-sun" style="background: radial-gradient(circle, #ffe066 30%, #ff922b 100%);"></div>
+      <div class="scene-cloud" style="top: 40px; left: 24%; --drift-dur: 15s;">☁️</div>
+      <div class="scene-palm">🌴</div>
+      <div class="scene-umbrella">🏖️</div>
+      <div class="scene-crab">🦀</div>
+      <div class="scene-horizon-deco" style="bottom: 22%; opacity: 0.7;">
+        <span>🐚</span><span>🌊</span><span>🐚</span>
+      </div>
+    `;
+  } else if (safeScene === "magic_forest") {
+    sceneBgLayer.innerHTML = `
+      <div class="scene-big-tree">🌳</div>
+      <div class="scene-mushroom">🍄</div>
+      <div class="scene-butterfly" style="top: 72px; right: 28%; font-size: 2.2rem;">🦋</div>
+      <div class="scene-butterfly" style="top: 110px; left: 26%; font-size: 1.6rem; animation-delay: 1.2s;">✨</div>
+      <div class="scene-horizon-deco" style="bottom: 24%; opacity: 0.85;">
+        <span>🌿</span><span>🍀</span><span>🍄</span><span>🌱</span><span>🌿</span>
+      </div>
+    `;
   }
 }
 
@@ -469,6 +569,46 @@ function updateScenePickerLocks() {
     const spanEl = cardWrap.querySelector("span[data-scene-label]");
     if (spanEl) {
       spanEl.textContent = meta.name;
+    }
+  });
+}
+
+function updateFormPickerLocks() {
+  const currentLevel = pet.level || 1;
+  const currentMeta = FORM_META[pet.activeForm];
+  if (currentMeta && currentLevel < (currentMeta.unlockLevel || 1)) {
+    pet.activeForm = "orb";
+    petInteractive.dataset.activeForm = "orb";
+  }
+
+  document.querySelectorAll('input[name="starter-form"]').forEach((radioEl) => {
+    const val = radioEl.value;
+    const cardWrap = radioEl.closest(".pick-card");
+    if (!cardWrap) return;
+
+    const meta = FORM_META[val];
+    if (!meta) return;
+
+    const reqLevel = meta.unlockLevel || 1;
+    const isUnlocked = currentLevel >= reqLevel;
+
+    radioEl.disabled = !isUnlocked;
+    if (!isUnlocked && radioEl.checked) {
+      radioEl.checked = false;
+      const orbRadio = document.querySelector('input[name="starter-form"][value="orb"]');
+      if (orbRadio) orbRadio.checked = true;
+    }
+
+    cardWrap.classList.toggle("locked-form", !isUnlocked);
+
+    const lockEl = cardWrap.querySelector(".pick-card-lock");
+    if (lockEl) {
+      lockEl.textContent = isUnlocked ? "" : `🔒 Lv.${reqLevel}`;
+    }
+
+    const spanEl = cardWrap.querySelector("span[data-form-label]");
+    if (spanEl) {
+      spanEl.textContent = meta.name.split(" ")[0];
     }
   });
 }
@@ -601,6 +741,7 @@ function renderDashboard() {
   const nextScene = resolveActiveScene();
   renderSceneBackground(nextScene);
   updateScenePickerLocks();
+  updateFormPickerLocks();
 
   const difficultyMultiplier = Math.pow(1.5, Math.max(0, (pet.level || 1) - 1));
   updateIconGauge(gaugeHunger, pet.hunger, "Kenyang");
@@ -637,6 +778,18 @@ function getSceneUnlockDialogue(sceneKey) {
   if (sceneKey === "starry_night") {
     return `🌌 Latar Baru Terbuka: <span>Bintang</span>! Langit malamnya indah sekali bersama ${n}~ ✨`;
   }
+  if (sceneKey === "snowy_winter") {
+    return `❄️ Latar Baru Terbuka: <span>Salju</span>! Dingin tapi seru, ayo buat manusia salju bareng ${n}~ ☃️`;
+  }
+  if (sceneKey === "bakery_shop") {
+    return `🥖 Latar Baru Terbuka: <span>Roti</span>! Wangi roti hangat dan kue manis bikin ${n} lapar lagi nih~ 🥐🍰`;
+  }
+  if (sceneKey === "tropical_beach") {
+    return `🏖️ Latar Baru Terbuka: <span>Pantai</span>! Deburan ombak dan pohon kelapanya asyik banget~ 🌴🦀`;
+  }
+  if (sceneKey === "magic_forest") {
+    return `🍄 Latar Baru Terbuka: <span>Hutan</span>! Udara pohon rindang dan kupu-kupunya ajaib sekali~ 🌳✨`;
+  }
   return "";
 }
 
@@ -653,15 +806,23 @@ function addExpAndStats({ exp = 0, hunger = 0, happiness = 0, energy = 0 }) {
 
   let leveledUp = false;
   let newlyUnlockedScene = null;
+  const newlyUnlockedForms = [];
 
   while (pet.exp >= 100) {
     pet.exp = Number((pet.exp - 100).toFixed(2));
     pet.level += 1;
     leveledUp = true;
 
-    const unlocked = SCENE_ORDER.find((k) => SCENE_META[k].unlockLevel === pet.level);
-    if (unlocked) {
-      newlyUnlockedScene = unlocked;
+    const unlockedScene = SCENE_ORDER.find((k) => SCENE_META[k].unlockLevel === pet.level);
+    if (unlockedScene) {
+      newlyUnlockedScene = unlockedScene;
+    }
+
+    const unlockedForms = FORM_ORDER.filter(
+      (k) => FORM_META[k] && FORM_META[k].unlockLevel === pet.level
+    );
+    if (unlockedForms.length) {
+      newlyUnlockedForms.push(...unlockedForms);
     }
   }
 
@@ -669,10 +830,25 @@ function addExpAndStats({ exp = 0, hunger = 0, happiness = 0, energy = 0 }) {
   db.save(pet);
 
   if (leveledUp) {
+    const announcements = [];
     if (newlyUnlockedScene) {
-      const unlockMsg = getSceneUnlockDialogue(newlyUnlockedScene);
-      spawnBurstParticles([SCENE_META[newlyUnlockedScene].icon, "🎉", "⭐", "✨"]);
-      say(`🎉 Naik ke <span>Level ${pet.level}</span>! ${unlockMsg}`, 6500);
+      announcements.push(getSceneUnlockDialogue(newlyUnlockedScene));
+    }
+    if (newlyUnlockedForms.length) {
+      newlyUnlockedForms.forEach((fk) => {
+        const meta = FORM_META[fk];
+        announcements.push(
+          `✨ Wujud Baru Terbuka: <span>${meta.icon} ${meta.name}</span>! Sekarang bisa dipilih di Menu Karakter atau lewat D-Pad!`
+        );
+      });
+    }
+
+    if (announcements.length) {
+      const burstIcons = ["🎉", "⭐", "✨"];
+      if (newlyUnlockedScene) burstIcons.push(SCENE_META[newlyUnlockedScene].icon);
+      newlyUnlockedForms.forEach((fk) => burstIcons.push(FORM_META[fk].icon));
+      spawnBurstParticles(burstIcons);
+      say(`🎉 Naik ke <span>Level ${pet.level}</span>!<br>${announcements.join("<br>")}`, 7000);
     } else {
       spawnBurstParticles(["🎉", "⭐", "✨", "💖"]);
       say(
@@ -822,6 +998,34 @@ function getSceneHoverLines(sceneKey) {
       `Ssst~ Langit malamnya tenang banget, ${n} senang ditemani kamu di bawah bintang! 🌌`
     ];
   }
+  if (sceneKey === "snowy_winter") {
+    return [
+      `Brrr! Tanganmu dingin kayak salju! Hangatkan ${n} dong~ ❄️`,
+      `Ayo lempar bola salju bareng ${n}! Tapi pelan-pelan ya~ ☃️`,
+      `Dingin tapi seru! Hidung ${n} sampai merah nih~ 🧣`
+    ];
+  }
+  if (sceneKey === "bakery_shop") {
+    return [
+      `Nyam! Wangi rotinya bikin ${n} mau nyemil lagi~ 🥐`,
+      `Kamu mau pesankan kue cokelat hangat buat ${n}? 🍰✨`,
+      `Toko roti ini nyaman sekali, ${n} betah di sini bersamamu~ ☕`
+    ];
+  }
+  if (sceneKey === "tropical_beach") {
+    return [
+      `Awas kepiting kecilnya mencubit! Duduk santai di bawah payung yuk~ 🏖️🦀`,
+      `Angin pantainya sejuk banget! ${n} mau main pasir pantai~ 🐚🌴`,
+      `Lihat ada ombak datang! Jangan sampai basah kuyup ya~ 🌊`
+    ];
+  }
+  if (sceneKey === "magic_forest") {
+    return [
+      `Ssst! Kupu-kupu ajaib hinggap di atas kepala ${n}~ 🦋✨`,
+      `Jamur di hutan ini bercahaya indah sekali! ${n} takjub~ 🍄`,
+      `Hutan ini penuh keajaiban! Ayo jelajahi bersama ${n}~ 🌳`
+    ];
+  }
   return [
     `Waaaa... sedang apa kamu? ${n} kaget tahu! O.O`,
     `Pelan-pelan dong, ${n} ini mungil dan menggemaskan~ O.O`,
@@ -866,11 +1070,36 @@ function getSceneIdleLines(sceneKey) {
       `Di bawah cahaya bulan, ${n} berdoa semoga harimu selalu menyenangkan~ 🌙💖`
     ];
   }
+  if (sceneKey === "snowy_winter") {
+    return [
+      `Salju turun perlahan menutupi pohon cemara... Enaknya minum cokelat hangat bareng ${n}~ ❄️☕`,
+      `Lihat manusia saljunya tersenyum! Hari bersalju ini sangat syahdu ya~ ☃️`,
+      `Pakai syal tebal ya kalau main salju, biar tidak kedinginan bersama ${n}~ 🧣`
+    ];
+  }
+  if (sceneKey === "bakery_shop") {
+    return [
+      `Harum roti panggang dan kopi segar memenuhi ruangan... Bikin hati ${n} hangat! 🥖🥐`,
+      `Etalase toko roti ini penuh kue lezat~ Favoritmu yang mana? 🍰🍩`
+    ];
+  }
+  if (sceneKey === "tropical_beach") {
+    return [
+      `Suara desir ombak pantai dan angin nyiur sungguh menenangkan jiwa~ 🌴🌊`,
+      `Duduk santai di pinggir pantai sambil minum air kelapa bareng ${n} asyik banget! 🥥🏖️`
+    ];
+  }
+  if (sceneKey === "magic_forest") {
+    return [
+      `Hutan lebat ini damai sekali, suara kicau burung dan semilir angin bikin ${n} rileks~ 🌳🍃`,
+      `Di balik pohon besar ada jamur warna-warni yang memancarkan cahaya peri~ 🍄✨`
+    ];
+  }
   return [
     `Hai, aku ${n}, aku di sini untuk membantumu~`,
     getGreetingByHour(),
     `Elus kepala ${n} atau tekan <span>Tombol B</span> untuk memilih 3 Mini-Game seru! 🎮`,
-    `Tekan <span>D-Pad &#x25C0;&#xFE0E; / &#x25B6;&#xFE0E;</span> untuk mengubah wujudku jadi Kucing, Hamster, Anjing, Landak, atau Live2D~ ✨`
+    `Tekan <span>D-Pad &#x25C0;&#xFE0E; / &#x25B6;&#xFE0E;</span> untuk mengganti wujud temanmu! ✨`
   ];
 }
 
@@ -1239,7 +1468,12 @@ async function loadLive2dModel(modelUrl) {
 }
 
 function setForm(newForm, announce = true) {
-  const targetForm = FORM_ORDER.includes(newForm) ? newForm : "orb";
+  const currentLevel = pet.level || 1;
+  let targetForm = FORM_ORDER.includes(newForm) ? newForm : "orb";
+  const targetMeta = FORM_META[targetForm];
+  if (targetMeta && currentLevel < (targetMeta.unlockLevel || 1)) {
+    targetForm = "orb";
+  }
 
   pet.activeForm = targetForm;
   petInteractive.dataset.activeForm = targetForm;
@@ -1274,9 +1508,17 @@ function setForm(newForm, announce = true) {
 }
 
 function stepForm(delta = 1) {
-  const idx = FORM_ORDER.indexOf(pet.activeForm);
-  const nextIdx = (idx + delta + FORM_ORDER.length) % FORM_ORDER.length;
-  setForm(FORM_ORDER[nextIdx], true);
+  const currentLevel = pet.level || 1;
+  const unlockedForms = FORM_ORDER.filter((key) => {
+    const meta = FORM_META[key];
+    return !meta || (meta.unlockLevel || 1) <= currentLevel;
+  });
+  if (!unlockedForms.length) return;
+
+  const idx = unlockedForms.indexOf(pet.activeForm);
+  const safeIdx = idx >= 0 ? idx : 0;
+  const nextIdx = (safeIdx + delta + unlockedForms.length) % unlockedForms.length;
+  setForm(unlockedForms[nextIdx], true);
 }
 
 /* ==========================================================================
@@ -1960,8 +2202,14 @@ function openCharacterModal() {
   if (avatarEl && FORM_META[pet.activeForm]) {
     avatarEl.textContent = FORM_META[pet.activeForm].icon;
   }
+  updateFormPickerLocks();
   const radio = document.querySelector(`input[name="starter-form"][value="${pet.activeForm}"]`);
-  if (radio) radio.checked = true;
+  if (radio && !radio.disabled) {
+    radio.checked = true;
+  } else {
+    const orbRadio = document.querySelector('input[name="starter-form"][value="orb"]');
+    if (orbRadio) orbRadio.checked = true;
+  }
   updateScenePickerLocks();
   const scenePref = pet.scenePreference || "auto";
   const sceneRadio = document.querySelector(`input[name="scene-bg"][value="${scenePref}"]`);
@@ -2016,8 +2264,32 @@ document.querySelectorAll('input[name="console-theme"]').forEach((radioEl) => {
 
 // Pratinjau langsung Bentuk/Wujud Karakter saat diklik di modal karakter
 document.querySelectorAll('input[name="starter-form"]').forEach((radioEl) => {
+  const cardWrap = radioEl.closest(".pick-card");
+  if (cardWrap) {
+    cardWrap.addEventListener("click", (e) => {
+      const val = radioEl.value;
+      const meta = FORM_META[val];
+      const reqLevel = meta ? (meta.unlockLevel || 1) : 1;
+      if ((pet.level || 1) < reqLevel) {
+        e.preventDefault();
+        e.stopPropagation();
+        say(
+          `🔒 Wujud <span>${meta.name}</span> masih terkunci! Rawat ${petNameTag()} sampai <span>Level ${reqLevel}</span> untuk membukanya~`
+        );
+      }
+    });
+  }
+
   radioEl.addEventListener("change", (e) => {
     const chosenVal = e.target.value;
+    const meta = FORM_META[chosenVal];
+    const reqLevel = meta ? (meta.unlockLevel || 1) : 1;
+    if ((pet.level || 1) < reqLevel) {
+      e.target.checked = false;
+      const activeRadio = document.querySelector(`input[name="starter-form"][value="${pet.activeForm}"]`);
+      if (activeRadio) activeRadio.checked = true;
+      return;
+    }
     setForm(chosenVal, false);
     const avatarEl = document.getElementById("char-name-avatar");
     if (avatarEl && FORM_META[chosenVal]) {
@@ -2082,9 +2354,17 @@ if (characterForm) {
     const selectedRadio = document.querySelector('input[name="starter-form"]:checked');
     const chosenForm = selectedRadio ? selectedRadio.value : pet.activeForm;
     const selectedSceneRadio = document.querySelector('input[name="scene-bg"]:checked');
-    const chosenScenePref = selectedSceneRadio
+    let chosenScenePref = selectedSceneRadio
       ? selectedSceneRadio.value
       : pet.scenePreference || "auto";
+
+    if (
+      chosenScenePref !== "auto" &&
+      SCENE_META[chosenScenePref] &&
+      (pet.level || 1) < SCENE_META[chosenScenePref].unlockLevel
+    ) {
+      chosenScenePref = "auto";
+    }
 
     pet.name = newName;
     pet.scenePreference = chosenScenePref;

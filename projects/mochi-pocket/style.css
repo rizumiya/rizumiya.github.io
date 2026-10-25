@@ -709,97 +709,134 @@ body {
     linear-gradient(180deg, #060919 0%, #172554 66%, #0f172a 66%, #020617 100%);
 }
 
+/* 6. Lv.14: Musim Salju (Snowy Winter) */
+.gb-screen[data-scene="snowy_winter"] {
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.65) 0%, transparent 60%),
+    linear-gradient(180deg, #93c5fd 0%, #dbeafe 64%, #f1f5f9 64%, #e2e8f0 100%);
+}
+
+/* 7. Lv.16: Toko Roti Manis (Bakery Shop) */
+.gb-screen[data-scene="bakery_shop"] {
+  background:
+    radial-gradient(circle at 50% 26%, rgba(254, 243, 199, 0.85) 0%, transparent 58%),
+    linear-gradient(180deg, #fffbeb 0%, #fed7aa 62%, #b45309 62%, #78350f 100%);
+}
+
+/* 8. Lv.18: Pantai Tropis (Tropical Beach) */
+.gb-screen[data-scene="tropical_beach"] {
+  background:
+    radial-gradient(circle at 80% 18%, rgba(254, 240, 138, 0.8) 0%, transparent 45%),
+    linear-gradient(180deg, #38bdf8 0%, #06b6d4 58%, #fef08a 58%, #fde047 100%);
+}
+
+/* 9. Lv.20: Hutan Ajaib (Magic Forest) */
+.gb-screen[data-scene="magic_forest"] {
+  background:
+    radial-gradient(circle at 50% 22%, rgba(52, 211, 153, 0.35) 0%, transparent 60%),
+    linear-gradient(180deg, #064e3b 0%, #047857 62%, #14532d 62%, #052e16 100%);
+}
+
 /* Elemen Dekorasi di Dalam #scene-bg-layer */
 
-/* Dekorasi Latar Kamar (Lv.2) */
+/* Dekorasi Latar Kamar (Lv.2) - Proporsional, Lega & Tidak Menabrak HUD */
 .scene-room-window {
   position: absolute;
-  top: 36px;
-  left: 18px;
-  font-size: 1.55rem;
+  top: 68px;
+  left: 22px;
+  font-size: 3.4rem;
   line-height: 1;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.12));
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.14));
 }
 
 .scene-room-frame {
   position: absolute;
-  top: 40px;
-  right: 22px;
-  font-size: 1.4rem;
+  top: 72px;
+  right: 24px;
+  font-size: 2.8rem;
   line-height: 1;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.12));
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.14));
 }
 
 .scene-room-clock {
   position: absolute;
-  top: 24px;
+  top: 62px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 1.1rem;
+  font-size: 2.2rem;
   line-height: 1;
-  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.12));
 }
 
 .scene-room-lamp {
   position: absolute;
-  top: 14px;
-  left: 28%;
-  font-size: 1.15rem;
+  top: 40px;
+  left: 30%;
+  font-size: 2rem;
   line-height: 1;
-  filter: drop-shadow(0 0 10px rgba(254, 240, 138, 0.85));
+  filter: drop-shadow(0 0 16px rgba(254, 240, 138, 0.95));
 }
 
 .scene-room-plant {
   position: absolute;
-  bottom: 22px;
-  right: 18px;
-  font-size: 1.55rem;
+  bottom: 20px;
+  right: 20px;
+  font-size: 3.4rem;
   line-height: 1;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.16));
+}
+
+.scene-room-books {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  font-size: 2.2rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.14));
 }
 
 .scene-room-rug {
   position: absolute;
-  bottom: 12px;
+  bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
-  width: 140px;
-  height: 38px;
+  width: 220px;
+  height: 56px;
   border-radius: 50%;
   background: radial-gradient(ellipse at center, #fed7aa 0%, #fdba74 65%, #fb923c 100%);
-  border: 2px dashed rgba(234, 88, 12, 0.45);
-  box-shadow: 0 4px 10px rgba(194, 65, 12, 0.15);
-  opacity: 0.85;
+  border: 2.5px dashed rgba(234, 88, 12, 0.45);
+  box-shadow: 0 6px 14px rgba(194, 65, 12, 0.18);
+  opacity: 0.9;
 }
 
 .scene-sun {
   position: absolute;
-  top: 38px;
+  top: 46px;
   right: 22px;
-  width: 36px;
-  height: 36px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background: radial-gradient(circle, #fef9c3 25%, #facc15 100%);
-  box-shadow: 0 0 22px rgba(250, 204, 21, 0.85);
+  box-shadow: 0 0 30px rgba(250, 204, 21, 0.92);
   animation: sceneSunPulse 3.2s ease-in-out infinite alternate;
 }
 
 @keyframes sceneSunPulse {
   0% {
-    transform: scale(0.94);
-    box-shadow: 0 0 16px rgba(250, 204, 21, 0.7);
+    transform: scale(0.95);
+    box-shadow: 0 0 18px rgba(250, 204, 21, 0.75);
   }
   100% {
     transform: scale(1.08);
-    box-shadow: 0 0 28px rgba(250, 204, 21, 0.95);
+    box-shadow: 0 0 36px rgba(250, 204, 21, 0.98);
   }
 }
 
 .scene-cloud {
   position: absolute;
-  font-size: 1.45rem;
-  opacity: 0.86;
-  filter: drop-shadow(0 3px 6px rgba(255, 255, 255, 0.35));
+  font-size: 2.6rem;
+  opacity: 0.88;
+  filter: drop-shadow(0 4px 8px rgba(255, 255, 255, 0.35));
   animation: sceneCloudDrift var(--drift-dur, 14s) ease-in-out infinite alternate;
 }
 
@@ -814,14 +851,151 @@ body {
 
 .scene-horizon-deco {
   position: absolute;
-  bottom: 31%;
+  bottom: 27%;
   left: 0;
   right: 0;
   display: flex;
   justify-content: space-around;
   padding: 0 14px;
-  font-size: 0.95rem;
-  opacity: 0.9;
+  font-size: 1.65rem;
+  opacity: 0.95;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
+}
+
+/* Dekorasi Khusus Salju, Roti, Pantai, & Hutan */
+.scene-snowman {
+  position: absolute;
+  bottom: 22px;
+  right: 22px;
+  font-size: 3rem;
+  line-height: 1;
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.15));
+}
+
+.scene-pine {
+  position: absolute;
+  bottom: 22px;
+  left: 20px;
+  font-size: 3.2rem;
+  line-height: 1;
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.15));
+}
+
+.scene-snowflake {
+  position: absolute;
+  top: -20px;
+  font-size: 1.25rem;
+  color: #ffffff;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.95);
+  animation: sceneSnowFall var(--snow-dur, 4.5s) linear infinite;
+  animation-delay: var(--snow-delay, 0s);
+  pointer-events: none;
+}
+
+@keyframes sceneSnowFall {
+  0% {
+    transform: translate3d(0, -10px, 0) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.95;
+  }
+  90% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate3d(24px, 320px, 0) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.scene-bakery-shelf {
+  position: absolute;
+  top: 70px;
+  left: 18px;
+  right: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 2.6rem;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+}
+
+.scene-coffee {
+  position: absolute;
+  bottom: 20px;
+  left: 22px;
+  font-size: 2.6rem;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
+}
+
+.scene-cake {
+  position: absolute;
+  bottom: 20px;
+  right: 22px;
+  font-size: 2.6rem;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
+}
+
+.scene-palm {
+  position: absolute;
+  bottom: 20px;
+  left: 16px;
+  font-size: 3.6rem;
+  line-height: 1;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.15));
+}
+
+.scene-umbrella {
+  position: absolute;
+  bottom: 20px;
+  right: 18px;
+  font-size: 3.2rem;
+  line-height: 1;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.15));
+}
+
+.scene-crab {
+  position: absolute;
+  bottom: 12px;
+  left: 36%;
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.scene-big-tree {
+  position: absolute;
+  bottom: 18px;
+  left: 14px;
+  font-size: 3.6rem;
+  line-height: 1;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.18));
+}
+
+.scene-mushroom {
+  position: absolute;
+  bottom: 18px;
+  right: 20px;
+  font-size: 2.8rem;
+  line-height: 1;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.18));
+}
+
+.scene-butterfly {
+  position: absolute;
+  top: 76px;
+  right: 28px;
+  font-size: 2rem;
+  animation: butterflyFlutter 3s ease-in-out infinite alternate;
+}
+
+@keyframes butterflyFlutter {
+  0% {
+    transform: translate(0, 0) rotate(-6deg);
+  }
+  100% {
+    transform: translate(-15px, -12px) rotate(8deg);
+  }
 }
 
 .scene-raindrop {
@@ -2044,7 +2218,7 @@ body {
 }
 
 .hamster-hands-group {
-  transform-origin: 120px 70px;
+  transform-origin: 120px 105px;
   animation: hamsterNibbleHands 1.6s ease-in-out infinite alternate;
 }
 
@@ -3044,7 +3218,7 @@ body {
 
 /* Koreksi optik vertikal presisi agar ikon Gamepad (🎮) tepat di tengah lingkaran sejajar Onigiri (🍙) */
 .btn-b .btn-glyph {
-  transform: rotate(16deg) translateY(0.5px);
+  transform: rotate(16deg) translateY(2px);
 }
 
 .btn-a .btn-glyph {
@@ -3914,6 +4088,18 @@ body {
 .art-form[data-art="hedgehog"] {
   background: radial-gradient(circle at 50% 38%, #f7efe7 0%, #e6d3c2 55%, #c9a98d 100%);
 }
+.art-form[data-art="duck"] {
+  background: radial-gradient(circle at 50% 38%, #fef9c3 0%, #fef08a 55%, #fde047 100%);
+}
+.art-form[data-art="sheep"] {
+  background: radial-gradient(circle at 50% 38%, #f8fafc 0%, #f1f5f9 55%, #e2e8f0 100%);
+}
+.art-form[data-art="cow"] {
+  background: radial-gradient(circle at 50% 38%, #fef2f2 0%, #fee2e2 55%, #fecaca 100%);
+}
+.art-form[data-art="rabbit"] {
+  background: radial-gradient(circle at 50% 38%, #fdf2f8 0%, #fce7f3 55%, #fbcfe8 100%);
+}
 .art-form[data-art="live2d"] {
   background: radial-gradient(circle at 50% 38%, #f1ecff 0%, #ddd3ff 55%, #c3b3f7 100%);
 }
@@ -3970,6 +4156,22 @@ body {
   background: linear-gradient(180deg, #060919 0%, #1e3a8a 64%, #0f172a 64%, #020617 100%);
 }
 
+.art-scene[data-art="snowy_winter"] {
+  background: linear-gradient(180deg, #93c5fd 0%, #dbeafe 64%, #f1f5f9 64%, #e2e8f0 100%);
+}
+
+.art-scene[data-art="bakery_shop"] {
+  background: linear-gradient(180deg, #fffbeb 0%, #fed7aa 64%, #b45309 64%, #78350f 100%);
+}
+
+.art-scene[data-art="tropical_beach"] {
+  background: linear-gradient(180deg, #38bdf8 0%, #06b6d4 58%, #fef08a 58%, #fde047 100%);
+}
+
+.art-scene[data-art="magic_forest"] {
+  background: linear-gradient(180deg, #064e3b 0%, #047857 64%, #14532d 64%, #052e16 100%);
+}
+
 .thumb-sun {
   position: absolute;
   top: 12%;
@@ -4003,21 +4205,24 @@ body {
   opacity: 0.85;
 }
 
-/* Kartu Latar Terkunci */
+/* Kartu Bentuk & Latar Terkunci */
 .pick-card-lock {
   display: none;
 }
 
-.pick-card.locked-scene {
+.pick-card.locked-scene,
+.pick-card.locked-form {
   cursor: not-allowed;
 }
 
-.pick-card.locked-scene .pick-card-art {
+.pick-card.locked-scene .pick-card-art,
+.pick-card.locked-form .pick-card-art {
   filter: grayscale(0.85) brightness(0.8);
   border-style: dashed;
 }
 
-.pick-card.locked-scene .pick-card-lock {
+.pick-card.locked-scene .pick-card-lock,
+.pick-card.locked-form .pick-card-lock {
   position: absolute;
   inset: 0;
   display: flex;
@@ -4025,20 +4230,22 @@ body {
   align-items: center;
   justify-content: center;
   gap: 2px;
-  background: rgba(15, 15, 25, 0.38);
+  background: rgba(15, 15, 25, 0.45);
   color: #ffffff;
   font-size: 0.66rem;
   font-weight: 800;
   letter-spacing: 0.03em;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
   z-index: 4;
 }
 
-.pick-card.locked-scene .pick-card-name {
+.pick-card.locked-scene .pick-card-name,
+.pick-card.locked-form .pick-card-name {
   color: var(--text-muted);
 }
 
-.pick-card.locked-scene:hover .pick-card-art {
+.pick-card.locked-scene:hover .pick-card-art,
+.pick-card.locked-form:hover .pick-card-art {
   transform: none;
   box-shadow: 0 3px 0 rgba(0, 0, 0, 0.06);
 }
