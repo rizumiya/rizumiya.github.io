@@ -5735,27 +5735,38 @@ body {
 .ext-bar-left {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   min-width: 0;
+  flex: 1;
 }
 
 .ext-bar-icon {
-  font-size: 1.15rem;
+  font-size: 1.35rem;
   line-height: 1;
   flex-shrink: 0;
 }
 
+.ext-bar-text-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5px;
+  min-width: 0;
+  text-align: left;
+}
+
 .ext-bar-title {
-  font-size: 0.76rem;
+  font-size: 0.78rem;
   font-weight: 800;
   color: #ffffff;
+  line-height: 1.2;
   white-space: nowrap;
 }
 
 .ext-bar-sub {
-  font-size: 0.66rem;
+  font-size: 0.65rem;
   font-weight: 600;
   color: #94a3b8;
+  line-height: 1.2;
   white-space: nowrap;
 }
 
@@ -5763,7 +5774,7 @@ body {
   flex-shrink: 0;
   font-size: 0.65rem;
   font-weight: 800;
-  padding: 3.5px 9px;
+  padding: 4px 11px;
   border-radius: 99px;
   background: #312e81;
   border: 1px solid #4f46e5;

@@ -31,10 +31,89 @@
   });
 
   /**
+   * Baca data pet langsung dari Web Storage tab ini (IndexedDB & localStorage)
+   * Berfungsi 100% bahkan jika website belum di-redeploy!
+   */
+  async function readWebStoragePet() {
+    let candidate = null;
+
+    // 1. Baca langsung dari localStorage origin ini
+    try {
+      const raw = window.localStorage.getItem("__ERI_BOT_PET_STATE__");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === "object" && (parsed.level || parsed.name)) {
+          candidate = parsed;
+        }
+      }
+    } catch (err) {}
+
+    // 2. Baca langsung dari IndexedDB origin ini (EriBotPetDB -> petStore -> main)
+    try {
+      const idbPet = await new Promise((resolve) => {
+        if (!("indexedDB" in window)) return resolve(null);
+        const req = window.indexedDB.open("EriBotPetDB", 1);
+        req.onerror = () => resolve(null);
+        req.onupgradeneeded = () => resolve(null);
+        req.onsuccess = (e) => {
+          const database = e.target.result;
+          if (!database || !database.objectStoreNames.contains("petStore")) {
+            return resolve(null);
+          }
+          try {
+            const tx = database.transaction("petStore", "readonly");
+            const store = tx.objectStore("petStore");
+            const getReq = store.get("main");
+            getReq.onsuccess = () => resolve(getReq.result || null);
+            getReq.onerror = () => resolve(null);
+          } catch (e2) {
+            resolve(null);
+          }
+        };
+      });
+
+      if (idbPet && typeof idbPet === "object" && (idbPet.level || idbPet.name)) {
+        if (!candidate || (idbPet.level || 1) >= (candidate.level || 1)) {
+          candidate = idbPet;
+        }
+      }
+    } catch (err) {}
+
+    return candidate;
+  }
+
+  /**
    * Jembatan Sinkronisasi 1 Database antara Web Console & Ekstensi Browser
    */
   function initWebConsoleSyncBridge() {
     console.log("[Mochi Sync Bridge] Terhubung dengan Web Console Mochi Pocket!");
+
+    // Fungsi sinkronisasi langsung dari web storage ke chrome.storage.local
+    async function doDirectWebSync() {
+      const webPet = await readWebStoragePet();
+      if (!webPet || !webPet.level) return;
+
+      chrome.storage.local.get(["mochi_pet"], (data) => {
+        const extPet = data ? data.mochi_pet : null;
+        const extLevel = extPet ? (extPet.level || 1) : 1;
+        const webLevel = webPet.level || 1;
+        const extTime = extPet ? (extPet.lastUpdatedAt || extPet.lastUpdated || 0) : 0;
+        const webTime = webPet.lastUpdatedAt || webPet.lastUpdated || 0;
+
+        // Jika data di Web lebih maju (misal di Web Lv.6 sedangkan di ekstensi Lv.1):
+        if (!extPet || webLevel > extLevel || (webLevel === extLevel && webTime >= extTime)) {
+          chrome.storage.local.set({ mochi_pet: webPet, lastSyncedWeb: Date.now() }, () => {
+            console.log(`[Mochi Sync Bridge] ✅ Sukses sinkronkan karakter dari Web ke Ekstensi: ${webPet.name} (Lv.${webLevel}, Wujud: ${webPet.activeForm || 'orb'})`);
+          });
+        }
+      });
+    }
+
+    // Jalankan segera dan secara berkala
+    doDirectWebSync();
+    setTimeout(doDirectWebSync, 500);
+    setTimeout(doDirectWebSync, 1500);
+    setInterval(doDirectWebSync, 3000);
 
     // A. Saat web console pertama kali dibuka, kirimkan data dari extension storage (jika ada)
     chrome.storage.local.get(["mochi_pet"], (data) => {
