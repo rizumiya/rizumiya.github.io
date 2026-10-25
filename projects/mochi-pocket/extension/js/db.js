@@ -75,6 +75,11 @@ class PetDatabase {
       }
     }
 
+    // Jika berjalan di Web Console (halaman web), kirimkan ke content script ekstensi via postMessage
+    if (typeof window !== "undefined") {
+      window.postMessage({ type: "MOCHI_WEB_SYNC_SAVE", pet: payload }, "*");
+    }
+
     const database = await this.dbPromise;
     if (!database) return payload;
 
@@ -130,4 +135,51 @@ if (typeof chrome !== "undefined" && chrome.storage && chrome.storage.onChanged)
   } catch (syncErr) {
     // Non-extension context
   }
+}
+
+// Sinkronisasi Realtime antara Web Console (halaman web) & Ekstensi Browser via Content Script Bridge
+if (typeof window !== "undefined") {
+  // Minta data dari ekstensi saat web dibuka
+  setTimeout(() => {
+    window.postMessage({ type: "MOCHI_WEB_REQUEST_LOAD" }, "*");
+  }, 100);
+
+  window.addEventListener("message", (event) => {
+    if (!event.data || typeof event.data !== "object") return;
+
+    if (event.data.type === "MOCHI_EXT_SYNC_LOAD" || event.data.type === "MOCHI_EXT_SYNC_UPDATE") {
+      const incoming = event.data.pet;
+      if (!incoming || typeof incoming !== "object") {
+        // Jika ekstensi belum memiliki data pet, segera kirim data lokal web ke ekstensi!
+        if (pet && pet.level && pet.level >= 1) {
+          window.postMessage({ type: "MOCHI_WEB_SYNC_SAVE", pet: pet }, "*");
+        }
+        return;
+      }
+
+      const currentLevel = pet.level || 1;
+      const incomingLevel = incoming.level || 1;
+      const currentTime = pet.lastUpdatedAt || 0;
+      const incomingTime = incoming.lastUpdatedAt || 0;
+
+      // Jika data web lokal lebih maju (misal di web sudah Lv.6, sedangkan ekstensi baru Lv.1 bawaan):
+      // Sinkronkan data web kita ke ekstensi agar ekstensi otomatis naik ke Lv.6!
+      if (currentLevel > incomingLevel || (currentLevel === incomingLevel && currentTime > incomingTime)) {
+        window.postMessage({ type: "MOCHI_WEB_SYNC_SAVE", pet: pet }, "*");
+        return;
+      }
+
+      // Sebaliknya, jika data ekstensi sama atau lebih tinggi / lebih baru:
+      Object.assign(pet, incoming);
+      if (typeof applyConsoleTheme === "function" && pet.theme) {
+        applyConsoleTheme(pet.theme);
+      }
+      if (typeof setForm === "function" && pet.activeForm) {
+        setForm(pet.activeForm, false);
+      }
+      if (typeof renderDashboard === "function") {
+        renderDashboard();
+      }
+    }
+  });
 }

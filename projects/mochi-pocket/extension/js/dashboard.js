@@ -316,6 +316,57 @@ function renderSceneBackground(sceneKey) {
       <div class="scene-butterfly" style="top: 68px; right: 26%; font-size: 2.1rem;">🦋</div>
       <div class="scene-butterfly" style="top: 96px; left: 28%; font-size: 1.6rem; animation-delay: 1.2s;">✨</div>
     `;
+  } else if (safeScene === "custom_volcano_island" || safeScene.includes("volcano")) {
+    // 10. Latar Kustom Spesial: Pulau Vulkano (Gunung Berapi Megah, Kawah Lahar, Asap, Pepohonan & Bara Api)
+    sceneBgLayer.innerHTML = `
+      <!-- 1. Gunung Berapi Megah di Kejauhan dengan Kawah Lahar Mengalir -->
+      <div class="volcano-mountain-wrap">
+        <svg class="volcano-mountain-svg" viewBox="0 0 320 180" fill="none">
+          <!-- Siluet Badan Gunung Berapi -->
+          <path d="M 10 180 L 115 52 L 205 52 L 310 180 Z" fill="#2d1209" stroke="#180804" stroke-width="3" stroke-linejoin="round"/>
+          <!-- Lereng Batuan Terjal & Bayangan Sisi Kiri-Kanan -->
+          <path d="M 115 52 L 160 180 L 205 52 Z" fill="#3f1a0e"/>
+          <path d="M 65 180 L 128 52 L 160 180 Z" fill="#230d07"/>
+          <path d="M 255 180 L 192 52 L 160 180 Z" fill="#1f0a05"/>
+          <!-- Danau Magma Merah Menyala di Kawah Puncak Gunung -->
+          <ellipse cx="160" cy="52" rx="45" ry="12" fill="#ea580c" stroke="#dc2626" stroke-width="2.5"/>
+          <ellipse cx="160" cy="53" rx="34" ry="7.5" fill="#fef08a"/>
+          <!-- Aliran Magma Lahar Pijar Bercabang Mengalir ke Bawah -->
+          <path d="M 148 62 Q 138 95 146 125 Q 152 145 142 180" stroke="#f97316" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <path d="M 150 62 Q 140 95 148 125" stroke="#fde047" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+          <path d="M 172 62 Q 182 105 174 140 Q 168 160 174 180" stroke="#ef4444" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+          <path d="M 170 62 Q 180 105 172 135" stroke="#f97316" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
+
+      <!-- 2. Kepulan Asap Vulkanik Membumbung ke Langit Senja -->
+      <div class="volcano-smoke-puff puff-1">☁️</div>
+      <div class="volcano-smoke-puff puff-2">💨</div>
+      <div class="volcano-smoke-puff puff-3">☁️</div>
+
+      <!-- 3. Pepohonan Tropis & Pinus di Lereng Kawah (Tahan Panas) -->
+      <div class="volcano-tree tree-left" title="Pohon Palem Tropis">🌴</div>
+      <div class="volcano-tree tree-left-sub" title="Pohon Tropis">🌳</div>
+      <div class="volcano-tree tree-right" title="Pohon Pinus Hutan Vulkanik">🌲</div>
+      <div class="volcano-tree tree-right-sub" title="Pohon Cemara">🌲</div>
+
+      <!-- 4. Percikan Bara Api & Kilau Magma Melayang di Udara -->
+      <div class="volcano-ember ember-1">🔥</div>
+      <div class="volcano-ember ember-2">✨</div>
+      <div class="volcano-ember ember-3">🔥</div>
+      <div class="volcano-ember ember-4">✨</div>
+
+      <!-- 5. Batuan Basaltik Lava di Sekitar Karakter -->
+      <div class="volcano-rock-left">🪨</div>
+      <div class="volcano-rock-right">🪨</div>
+    `;
+  } else if (SCENE_META[safeScene] && Array.isArray(SCENE_META[safeScene].decorations)) {
+    // Dekorasi Latar Kustom Generic dari Modul SDK
+    let decoHtml = "";
+    SCENE_META[safeScene].decorations.forEach((d) => {
+      decoHtml += `<div class="scene-custom-deco ${d.className || ''}" style="${d.style || ''}">${d.emoji || d.html || ''}</div>`;
+    });
+    sceneBgLayer.innerHTML = decoHtml;
   }
 }
 

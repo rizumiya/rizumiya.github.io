@@ -5999,11 +5999,12 @@ body {
    17. PENGATURAN GLOBAL ELEGAN (TEMA SWATCH, MOD SDK & TOMBOL SOLID)
    ========================================================================== */
 
-/* Lencana Badge Kustom di Kartu Karakter & Latar */
+/* Lencana Badge Kustom di Kartu Karakter & Latar (Pojok Kiri Atas agar tidak menutupi centang di pojok kanan) */
 .custom-badge-pill {
   position: absolute;
   top: 5px;
-  right: 5px;
+  left: 5px;
+  right: auto;
   background: #4f46e5;
   color: #ffffff;
   font-size: 0.52rem;
@@ -6136,3 +6137,82 @@ body {
 .btn-upload-mod-solid:active {
   transform: translateY(0);
 }
+
+/* ==========================================================================
+   18. LATAR KUSTOM SPESIAL: PULAU VULKANO (GUNUNG BERAPI MEGAH & DEKORASI)
+   ========================================================================== */
+
+/* Gunung Berapi Megah di Latar Belakang */
+.volcano-mountain-wrap {
+  position: absolute;
+  bottom: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 94%;
+  max-width: 320px;
+  height: 155px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.volcano-mountain-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 18px rgba(249, 115, 22, 0.45));
+}
+
+/* Kepulan Asap Vulkanik Membumbung */
+.volcano-smoke-puff {
+  position: absolute;
+  z-index: 2;
+  font-size: 1.6rem;
+  opacity: 0.72;
+  filter: blur(0.5px) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+  animation: smokeRiseAnim 4.5s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.volcano-smoke-puff.puff-1 { top: 38px; left: 44%; animation-duration: 4.2s; }
+.volcano-smoke-puff.puff-2 { top: 22px; left: 49%; font-size: 1.3rem; animation-duration: 5.2s; animation-delay: 0.6s; }
+.volcano-smoke-puff.puff-3 { top: 42px; left: 52%; font-size: 1.8rem; animation-duration: 4.6s; animation-delay: 1.2s; }
+
+@keyframes smokeRiseAnim {
+  0% { transform: translate(0, 0) scale(0.92); opacity: 0.55; }
+  100% { transform: translate(8px, -14px) scale(1.18); opacity: 0.85; }
+}
+
+/* Pepohonan Tropis & Pinus di Lereng Kawah */
+.volcano-tree {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.65));
+}
+
+.volcano-tree.tree-left      { bottom: 31%; left: 8px; font-size: 2.6rem; }
+.volcano-tree.tree-left-sub  { bottom: 33%; left: 24%; font-size: 1.8rem; opacity: 0.9; }
+.volcano-tree.tree-right     { bottom: 31%; right: 10px; font-size: 2.7rem; }
+.volcano-tree.tree-right-sub { bottom: 34%; right: 26%; font-size: 1.7rem; opacity: 0.9; }
+
+/* Percikan Bara Api Melayang */
+.volcano-ember {
+  position: absolute;
+  z-index: 4;
+  pointer-events: none;
+  filter: drop-shadow(0 0 8px #f59e0b);
+  animation: emberFloatAnim 3.2s ease-in-out infinite alternate;
+}
+
+.volcano-ember.ember-1 { top: 82px; left: 16%; font-size: 1.15rem; animation-duration: 3.2s; }
+.volcano-ember.ember-2 { top: 68px; right: 20%; font-size: 1.2rem; filter: drop-shadow(0 0 10px #ef4444); animation-duration: 4s; animation-delay: 0.8s; }
+.volcano-ember.ember-3 { top: 120px; left: 32%; font-size: 1rem; animation-duration: 2.8s; animation-delay: 0.4s; }
+.volcano-ember.ember-4 { top: 105px; right: 35%; font-size: 0.95rem; animation-duration: 3.6s; animation-delay: 1.2s; }
+
+@keyframes emberFloatAnim {
+  0%   { transform: translateY(0) scale(0.9); opacity: 0.7; }
+  100% { transform: translateY(-14px) scale(1.2); opacity: 1; }
+}
+
+/* Batuan Basaltik */
+.volcano-rock-left  { position: absolute; bottom: 8px; left: 12px; font-size: 1.5rem; z-index: 2; pointer-events: none; }
+.volcano-rock-right { position: absolute; bottom: 8px; right: 14px; font-size: 1.5rem; z-index: 2; pointer-events: none; }

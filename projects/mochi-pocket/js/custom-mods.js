@@ -205,17 +205,38 @@ function registerCustomPet(petMod) {
     FORM_ORDER.push(petMod.id);
   }
 
-  // 2. Buat Panggung DOM jika belum ada
+  // 2. Buat Panggung DOM jika belum ada (atau perbarui jika belum memiliki mata pelacak kursor)
   let formEl = document.getElementById(`form-${petMod.id}`);
+  const headContent = petMod.anatomy?.headSvg || `<div class="custom-avatar-head">${petMod.icon || "🐾"}</div>`;
+  const bodyContent = petMod.anatomy?.bodySvg || `<div class="custom-avatar-body"></div>`;
+  const tailContent = petMod.anatomy?.tailSvg ? `<div class="tail-wrap">${petMod.anatomy.tailSvg}</div>` : "";
+
+  const eyesMarkup = `
+    <div class="eyes-row custom-eyes-row" style="position: absolute; top: 68px; left: 0; width: 100%; display: flex; justify-content: center; gap: 58px; z-index: 10; pointer-events: none;">
+      <div class="eye-socket">
+        <div class="eye-ball tracking-eye">
+          <div class="eye-iris tracking-iris">
+            <div class="shine-large"></div>
+            <div class="shine-small"></div>
+          </div>
+        </div>
+      </div>
+      <div class="eye-socket">
+        <div class="eye-ball tracking-eye">
+          <div class="eye-iris tracking-iris">
+            <div class="shine-large"></div>
+            <div class="shine-small"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
   if (!formEl && petInteractive) {
     formEl = document.createElement("div");
     formEl.id = `form-${petMod.id}`;
     formEl.className = "pet-form form-animal custom-mod-actor";
     formEl.hidden = true;
-
-    const headContent = petMod.anatomy?.headSvg || `<div class="custom-avatar-head">${petMod.icon || "🐾"}</div>`;
-    const bodyContent = petMod.anatomy?.bodySvg || `<div class="custom-avatar-body"></div>`;
-    const tailContent = petMod.anatomy?.tailSvg ? `<div class="tail-wrap">${petMod.anatomy.tailSvg}</div>` : "";
 
     formEl.innerHTML = `
       <div class="animal-stage">
@@ -224,7 +245,10 @@ function registerCustomPet(petMod) {
             <div class="chara-squash">
               ${tailContent}
               <div class="lower-body-group">${bodyContent}</div>
-              <div class="head-group parallax-head">${headContent}</div>
+              <div class="head-group parallax-head">
+                ${headContent}
+                ${eyesMarkup}
+              </div>
             </div>
           </div>
         </div>
@@ -233,6 +257,12 @@ function registerCustomPet(petMod) {
 
     petInteractive.appendChild(formEl);
     formElements[petMod.id] = formEl;
+  } else if (formEl) {
+    // Jika elemen sudah ada tapi belum memiliki mata pelacak kursor, sisipkan
+    const headGroup = formEl.querySelector(".parallax-head");
+    if (headGroup && !headGroup.querySelector(".tracking-eye")) {
+      headGroup.insertAdjacentHTML("beforeend", eyesMarkup);
+    }
   }
 
   // 3. Tambahkan kartu pilihan ke modal karakter jika belum ada di HTML
