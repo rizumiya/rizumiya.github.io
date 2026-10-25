@@ -3598,8 +3598,6 @@ body {
 .pet-interactive.unhappy-tantrum .ear.right {
   transform: rotate(48deg) translate(6px, 10px) !important;
 }
-  transform: rotate(48deg) translate(6px, 10px) !important;
-}
 
 @keyframes angryTremble {
   0%,
