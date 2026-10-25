@@ -140,16 +140,32 @@ function renderSceneBackground(sceneKey) {
       </div>
     `;
   } else if (safeScene === "haunted_house") {
-    // 4. Rumah Kuburan (Bulan Ungu, Jaring Laba-laba, Lilin, Hantu, Nisan, & Kabut Menjalar)
+    // 4. Kuburan Angker (Bulan Ungu, Kelelawar Terbang di Langit, Banyak Nisan Tertata, Lilin, Hantu, Jaring Laba-laba Setengah di Pojok Bawah, & Kabut Menjalar)
     sceneBgLayer.innerHTML = `
       <div class="scene-spooky-moon"></div>
-      <div class="scene-cobweb">🕸️</div>
-      <div class="scene-wisp" style="top: 84px; left: 14%; --wisp-dur: 2.7s;">👻</div>
-      <div class="scene-wisp" style="top: 114px; right: 14%; --wisp-dur: 3.4s;">🕯️</div>
-      <div class="scene-wisp" style="top: 62px; right: 28%; --wisp-dur: 3.9s;">🟣</div>
-      <div class="scene-horizon-deco" style="opacity: 0.48; bottom: 29%;">
-        <span>🪦</span><span>🥀</span><span>🪦</span><span>🦇</span>
+      <div class="scene-bat bat-left">🦇</div>
+      <div class="scene-bat bat-right">🦇</div>
+      <div class="scene-ghost-float">👻</div>
+
+      <!-- Kompleks Makam Kiri (Nisan Bertingkat Depan & Belakang) -->
+      <div class="graveyard-cluster left">
+        <span class="graveyard-tombstone back" title="Nisan Tua">🪦</span>
+        <span class="graveyard-tombstone front" title="Nisan Kuno">🪦</span>
+        <span class="graveyard-grass">🌾</span>
       </div>
+
+      <!-- Kompleks Makam Kanan (Nisan Bertingkat Depan & Belakang + Lilin Makam) -->
+      <div class="graveyard-cluster right">
+        <span class="graveyard-tombstone back" title="Nisan Tua">🪦</span>
+        <span class="graveyard-tombstone front" title="Nisan Kuno">🪦</span>
+        <span class="graveyard-candle">🕯️</span>
+      </div>
+
+      <!-- Jaring Laba-laba Setengah di Pojok Bawah -->
+      <div class="scene-cobweb-corner bottom-right">🕸️</div>
+      <div class="scene-cobweb-corner bottom-left">🕸️</div>
+
+      <!-- Kabut Menjalar di Tanah Kuburan -->
       <div class="scene-fog"></div>
     `;
   } else if (safeScene === "starry_night") {
