@@ -3435,85 +3435,103 @@ body {
   animation: angryTremble 0.42s linear infinite !important;
 }
 
-/* Wajah & Mata Puni Mochi Saat Marah: Merah Padam & Mata Menukik Tajam */
-.state-angry .Aurora-Dia {
+/* Wajah & Mata Puni Mochi Saat Marah / Ngambek (< 15% Bahagia): Merah Padam & Mata Menukik Tajam */
+.state-angry .Aurora-Dia,
+.pet-interactive.unhappy-tantrum .Aurora-Dia {
   background: linear-gradient(165deg, #7f1d1d 0%, #dc2626 52%, #991b1b 100%) !important;
   box-shadow:
     inset 0 10px 14px rgba(45, 6, 12, 0.72),
     inset 0 -8px 0 rgba(69, 10, 10, 0.5) !important;
 }
 
-.state-angry .Aurora-Dia--eye {
+.state-angry .Aurora-Dia--eye,
+.pet-interactive.unhappy-tantrum .Aurora-Dia--eye {
   animation: none !important;
   background-color: #26080c !important;
 }
 
-.state-angry .Aurora-Dia--eye.left {
+.state-angry .Aurora-Dia--eye.left,
+.pet-interactive.unhappy-tantrum .Aurora-Dia--eye.left {
   transform: rotate(24deg) scaleY(0.76) !important;
   border-radius: 2px 9px 12px 12px;
 }
 
-.state-angry .Aurora-Dia--eye.right {
+.state-angry .Aurora-Dia--eye.right,
+.pet-interactive.unhappy-tantrum .Aurora-Dia--eye.right {
   transform: rotate(-24deg) scaleY(0.76) !important;
   border-radius: 9px 2px 12px 12px;
 }
 
-.state-angry .Aurora-Dia--eye::after {
+.state-angry .Aurora-Dia--eye::after,
+.pet-interactive.unhappy-tantrum .Aurora-Dia--eye::after {
   opacity: 0 !important;
 }
 
-.state-angry .orb-blush {
+.state-angry .orb-blush,
+.pet-interactive.unhappy-tantrum .orb-blush {
   background: #450a0a !important;
   opacity: 0.75 !important;
   transform: scale(1.18);
 }
 
-/* Wajah & Mata Hewan (Neko, Hamster, Shiba, Landak) Saat Marah:
+/* Wajah & Mata Hewan (Neko, Hamster, Shiba, Babi, Naga) Saat Marah / Ngambek:
    - Bayangan dahi merah tua/suram agar tidak tampak berseri
    - Mata terpotong miring tajam (\ /) tanpa kilau imut bawah
    - Mulut terbalik cemberut (︵) */
-.state-angry .chara-rig {
+.state-angry .chara-rig,
+.pet-interactive.unhappy-tantrum .chara-rig {
   filter: saturate(1.16) brightness(0.9) contrast(1.06);
 }
 
 .state-angry .head-shape::after,
-.state-angry .hamster-angry-shade {
+.state-angry .hamster-angry-shade,
+.pet-interactive.unhappy-tantrum .head-shape::after,
+.pet-interactive.unhappy-tantrum .hamster-angry-shade {
   opacity: 1;
 }
 
-.state-angry .eye-socket {
+.state-angry .eye-socket,
+.pet-interactive.unhappy-tantrum .eye-socket {
   animation: none !important;
 }
 
-.state-angry .eye-socket:first-child::after {
+.state-angry .eye-socket:first-child::after,
+.pet-interactive.unhappy-tantrum .eye-socket:first-child::after {
   opacity: 1;
   transform: translateY(1px) rotate(22deg);
 }
 
-.state-angry .eye-socket:last-child::after {
+.state-angry .eye-socket:last-child::after,
+.pet-interactive.unhappy-tantrum .eye-socket:last-child::after {
   opacity: 1;
   transform: translateY(1px) rotate(-22deg);
 }
 
-.state-angry .eye-socket:first-child .eye-ball {
+.state-angry .eye-socket:first-child .eye-ball,
+.pet-interactive.unhappy-tantrum .eye-socket:first-child .eye-ball {
   clip-path: polygon(0% 8%, 100% 42%, 100% 100%, 0% 100%);
 }
 
-.state-angry .eye-socket:last-child .eye-ball {
+.state-angry .eye-socket:last-child .eye-ball,
+.pet-interactive.unhappy-tantrum .eye-socket:last-child .eye-ball {
   clip-path: polygon(0% 42%, 100% 8%, 100% 100%, 0% 100%);
 }
 
-.state-angry .shine-small {
+.state-angry .shine-small,
+.pet-interactive.unhappy-tantrum .shine-small {
   opacity: 0 !important;
 }
 
-.state-angry .shine-large {
+.state-angry .shine-large,
+.pet-interactive.unhappy-tantrum .shine-large {
   transform: scale(0.55) translate(4px, 8px);
   opacity: 0.82;
 }
 
 .state-angry .blush,
-.state-angry .hamster-cheek {
+.state-angry .hamster-cheek,
+.pet-interactive.unhappy-tantrum .blush,
+.pet-interactive.unhappy-tantrum .hamster-cheek {
   background: #991b1b !important;
   opacity: 0.78 !important;
   transform: scale(1.16);
@@ -3521,38 +3539,48 @@ body {
   box-shadow: 0 0 8px rgba(185, 28, 28, 0.45);
 }
 
-.state-angry .hamster-cheek::after {
+.state-angry .hamster-cheek::after,
+.pet-interactive.unhappy-tantrum .hamster-cheek::after {
   opacity: 0 !important;
 }
 
-.state-angry .hamster-hands-svg {
+.state-angry .hamster-hands-svg,
+.pet-interactive.unhappy-tantrum .hamster-hands-svg {
   animation: none !important;
 }
 
-.state-angry .mouth-svg {
-  transform: scaleY(-1) translateY(3px);
+.state-angry .mouth-svg,
+.pet-interactive.unhappy-tantrum .mouth-svg {
+  transform: scaleY(-1) translateY(3px) !important;
 }
 
-.state-angry .shiba-tongue-svg {
+.state-angry .shiba-tongue-svg,
+.pet-interactive.unhappy-tantrum .shiba-tongue-svg {
   opacity: 0 !important;
   animation: none !important;
 }
 
-.state-angry .shiba-brow:first-child {
+.state-angry .shiba-brow:first-child,
+.pet-interactive.unhappy-tantrum .shiba-brow:first-child {
   transform: rotate(25deg) translateY(6px);
   background: #fca5a5;
 }
 
-.state-angry .shiba-brow:last-child {
+.state-angry .shiba-brow:last-child,
+.pet-interactive.unhappy-tantrum .shiba-brow:last-child {
   transform: rotate(-25deg) translateY(6px);
   background: #fca5a5;
 }
 
-.state-angry .ear.left {
+.state-angry .ear.left,
+.pet-interactive.unhappy-tantrum .ear.left {
   transform: rotate(-48deg) translate(-6px, 10px) !important;
 }
 
-.state-angry .ear.right {
+.state-angry .ear.right,
+.pet-interactive.unhappy-tantrum .ear.right {
+  transform: rotate(48deg) translate(6px, 10px) !important;
+}
   transform: rotate(48deg) translate(6px, 10px) !important;
 }
 
@@ -5319,11 +5347,11 @@ body {
   }
 }
 
-/* 1B. 3 Tilde (~) Berjejer Vertikal di Sebelah Samping Badan Saat Kelaparan (Kenyang <= 50%) */
+/* 1B. 3 Tilde (~) Berjejer Vertikal di Sebelah Samping Luar Badan Saat Kelaparan (Kenyang <= 50%) */
 .hunger-rumble-waves {
   position: absolute;
-  bottom: 28px;
-  left: calc(50% + 36px);
+  bottom: 36px;
+  left: calc(50% + 68px);
   transform: translateX(0) scale(0.65) rotate(6deg);
   display: flex;
   flex-direction: column;
@@ -5638,106 +5666,233 @@ body {
 }
 
 /* ==========================================================================
-   16. KARTU PROMOSI EKSTENSI BROWSER (VERSI 2: BAWA AKU BERSAMAMU DI MANA SAJA)
+   16. EKSTENSI BROWSER (CHIP ATAS, BAR PENDEK BAWAH, & MODAL POP-UP)
    ========================================================================== */
 
-.extension-promo-card {
+/* 16A. Chip Mini di Bezel Atas */
+.bezel-ext-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(236, 72, 153, 0.12);
+  border: 1px solid rgba(236, 72, 153, 0.35);
+  border-radius: 99px;
+  padding: 2px 7px;
+  font-family: inherit;
+  font-size: 0.58rem;
+  font-weight: 800;
+  color: var(--accent-rose, #ec4899);
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  line-height: 1;
+}
+
+.bezel-ext-chip:hover {
+  background: rgba(236, 72, 153, 0.22);
+  border-color: rgba(236, 72, 153, 0.65);
+  transform: translateY(-1px);
+}
+
+.bezel-ext-chip:active {
+  transform: translateY(0);
+}
+
+/* 16B. Bar Pendek & Ramping Tepat di Bawah Konsol */
+.console-ext-bar {
   width: 100%;
   max-width: 412px;
-  margin: 18px auto 26px;
-  background: var(--modal-bg, #1e1b2e);
-  border: 1.5px solid var(--modal-border, rgba(255, 255, 255, 0.12));
-  border-radius: 24px;
-  padding: 16px 18px 18px;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+  margin: 10px auto 20px;
+  box-sizing: border-box;
+}
+
+.btn-console-ext-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 14px;
+  background: var(--modal-bg, #1a1726);
+  border: 1.2px solid var(--modal-border, rgba(255, 255, 255, 0.1));
+  border-radius: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
   box-sizing: border-box;
   text-align: left;
 }
 
-.promo-badge {
-  display: inline-block;
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  padding: 2.5px 8px;
-  border-radius: 99px;
-  background: rgba(236, 72, 153, 0.16);
-  color: var(--accent-rose, #ec4899);
-  margin-bottom: 8px;
+.btn-console-ext-bar:hover {
+  transform: translateY(-1.5px);
+  border-color: rgba(236, 72, 153, 0.45);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  background: var(--modal-sec-bg, #221e33);
 }
 
-.promo-header {
+.btn-console-ext-bar:active {
+  transform: translateY(0);
+}
+
+.ext-bar-left {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 10px;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
 }
 
-.promo-avatar {
-  font-size: 2.2rem;
+.ext-bar-icon {
+  font-size: 1.15rem;
   line-height: 1;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.2));
+  flex-shrink: 0;
 }
 
-.promo-info {
-  flex: 1;
-}
-
-.promo-title {
-  font-size: 0.98rem;
+.ext-bar-title {
+  font-size: 0.76rem;
   font-weight: 800;
   color: var(--text-main, #ffffff);
-  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.promo-desc {
-  font-size: 0.74rem;
+.ext-bar-sub {
+  font-size: 0.68rem;
+  font-weight: 600;
   color: var(--text-muted, #94a3b8);
-  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.ext-bar-pill {
+  flex-shrink: 0;
+  font-size: 0.64rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 99px;
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.18), rgba(139, 92, 246, 0.18));
+  border: 1px solid rgba(236, 72, 153, 0.35);
+  color: var(--accent-rose, #ec4899);
+  line-height: 1.2;
+}
+
+/* 16C. Modal Pop-up Ekstensi Browser */
+.ext-modal-card {
+  max-width: 440px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.ext-features-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.ext-feature-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--modal-sec-bg, rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--modal-border, rgba(255, 255, 255, 0.08));
+  border-radius: 12px;
+  text-align: left;
+}
+
+.ext-feat-icon {
+  font-size: 1.3rem;
+  line-height: 1.2;
+  flex-shrink: 0;
+}
+
+.ext-feat-info strong {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--text-main, #ffffff);
+  margin-bottom: 2px;
+}
+
+.ext-feat-info p {
+  font-size: 0.68rem;
+  color: var(--text-muted, #94a3b8);
+  line-height: 1.35;
   margin: 0;
 }
 
-.promo-features {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 10px;
-  margin-bottom: 14px;
-  padding: 8px 10px;
-  background: var(--modal-sec-bg, rgba(255, 255, 255, 0.04));
-  border-radius: 12px;
-  border: 1px dashed var(--modal-border, rgba(255, 255, 255, 0.08));
+.ext-download-cta {
+  margin: 14px 0 16px;
+  text-align: center;
 }
 
-.promo-features span {
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: var(--text-main, #e2e8f0);
-}
-
-.btn-download-ext {
-  display: flex;
+.btn-download-ext-primary {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   width: 100%;
-  padding: 10px 16px;
+  padding: 12px 18px;
   font-family: inherit;
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   font-weight: 800;
   color: #ffffff !important;
   text-decoration: none !important;
   background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
   border-radius: 14px;
-  box-shadow: 0 4px 14px rgba(236, 72, 153, 0.35);
+  box-shadow: 0 4px 16px rgba(236, 72, 153, 0.4);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   box-sizing: border-box;
 }
 
-.btn-download-ext:hover {
+.btn-download-ext-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(236, 72, 153, 0.5);
+  box-shadow: 0 6px 22px rgba(236, 72, 153, 0.55);
 }
 
-.btn-download-ext:active {
+.btn-download-ext-primary:active {
   transform: translateY(1px);
+}
+
+.ext-file-info {
+  display: block;
+  font-size: 0.62rem;
+  color: var(--text-muted, #94a3b8);
+  margin-top: 6px;
+}
+
+.ext-install-guide {
+  background: var(--modal-sec-bg, rgba(255, 255, 255, 0.03));
+  border: 1px dashed var(--modal-border, rgba(255, 255, 255, 0.1));
+  border-radius: 14px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.install-heading {
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--text-main, #ffffff);
+  margin: 0 0 6px 0;
+}
+
+.install-steps {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.68rem;
+  color: var(--text-muted, #94a3b8);
+  line-height: 1.45;
+}
+
+.install-steps li {
+  margin-bottom: 3px;
+}
+
+.install-steps code {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 1px 4px;
+  border-radius: 4px;
+  color: var(--accent-cyan, #06b6d4);
+  font-size: 0.64rem;
 }

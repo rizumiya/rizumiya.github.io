@@ -403,6 +403,49 @@ if (btnDownloadSceneTemplate) {
   });
 }
 
+const btnDownloadDragonSample = document.getElementById("btn-download-dragon-sample");
+if (btnDownloadDragonSample) {
+  btnDownloadDragonSample.addEventListener("click", () => {
+    if (typeof downloadSdkFile === "function") downloadSdkFile("dragon");
+  });
+}
+
+const btnDownloadVolcanoSample = document.getElementById("btn-download-volcano-sample");
+if (btnDownloadVolcanoSample) {
+  btnDownloadVolcanoSample.addEventListener("click", () => {
+    if (typeof downloadSdkFile === "function") downloadSdkFile("volcano");
+  });
+}
+
+// ==========================================================================
+// MODAL EKSTENSI BROWSER (Bawa Aku Bersamamu di Mana Saja)
+// ==========================================================================
+
+const extensionModal = document.getElementById("extension-modal");
+const btnOpenExtTop = document.getElementById("btn-open-ext-top");
+const btnOpenExtBottom = document.getElementById("btn-open-ext-bottom");
+const btnCloseExtModal = document.getElementById("btn-close-ext-modal");
+const btnCloseExtModalX = document.getElementById("btn-close-ext-modal-x");
+
+function openExtensionModal() {
+  if (extensionModal) extensionModal.hidden = false;
+}
+
+function closeExtensionModal() {
+  if (extensionModal) extensionModal.hidden = true;
+}
+
+if (btnOpenExtTop) btnOpenExtTop.addEventListener("click", openExtensionModal);
+if (btnOpenExtBottom) btnOpenExtBottom.addEventListener("click", openExtensionModal);
+if (btnCloseExtModal) btnCloseExtModal.addEventListener("click", closeExtensionModal);
+if (btnCloseExtModalX) btnCloseExtModalX.addEventListener("click", closeExtensionModal);
+
+if (extensionModal) {
+  extensionModal.addEventListener("click", (e) => {
+    if (e.target === extensionModal) closeExtensionModal();
+  });
+}
+
 const inputUploadMod = document.getElementById("input-upload-mod");
 if (inputUploadMod) {
   inputUploadMod.addEventListener("change", async (e) => {
@@ -507,12 +550,14 @@ window.addEventListener("keydown", (e) => {
   if (
     (guideModal && !guideModal.hidden) ||
     (settingsModal && !settingsModal.hidden) ||
-    (characterModal && !characterModal.hidden)
+    (characterModal && !characterModal.hidden) ||
+    (extensionModal && !extensionModal.hidden)
   ) {
     if (e.key === "Escape") {
       if (guideModal) guideModal.hidden = true;
       if (settingsModal) settingsModal.hidden = true;
       if (characterModal) characterModal.hidden = true;
+      if (extensionModal) extensionModal.hidden = true;
     }
     return;
   }

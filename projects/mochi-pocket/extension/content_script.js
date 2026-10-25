@@ -171,7 +171,11 @@
     chrome.storage.local.get(["mochi_pet"], (data) => {
       const pet = data.mochi_pet;
       if (pet) {
-        showBubble(`Hai! Aku ${pet.name}! Kenyang: ${Math.round(pet.hunger)}%, Bahagia: ${Math.round(pet.happiness)}%~ ✨`);
+        if (pet.happiness < 15) {
+          showBubble(`Hmph! ${pet.name} lagi ngambek nih! Bahagiaku di bawah 15%! Elus aku dong... 😤💢`);
+        } else {
+          showBubble(`Hai! Aku ${pet.name}! Kenyang: ${Math.round(pet.hunger)}%, Bahagia: ${Math.round(pet.happiness)}%~ ✨`);
+        }
       }
     });
   });

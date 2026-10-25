@@ -95,7 +95,7 @@ setInterval(() => {
   }
 
   if (pet.isUnhappyTantrum) {
-    say(`Hmph! ${petNameTag()} lagi ngambek berat nih! Bahagiaku 0%! Elus aku dong sampai minimal 10%... 😤💢`);
+    say(`Hmph! ${petNameTag()} lagi ngambek berat nih! Bahagiaku di bawah 15%! Elus aku dong sampai minimal 15%... 😤💢`);
     return;
   }
 

@@ -43,6 +43,9 @@
             <span id="status-dot" class="battery-led led-idle"></span>
             <span id="status-label" class="battery-text">SANTAI</span>
           </div>
+          <button type="button" class="bezel-ext-chip" id="btn-open-ext-top" title="Bawa Aku Bersamamu di Mana Saja (Ekstensi Browser)">
+            <span>🧩</span> EKSTENSI
+          </button>
           <div class="bezel-brand">
             <span class="brand-accent">MOCHI</span> POCKET <span class="brand-dot">&bull;</span> ERI
           </div>
@@ -1143,20 +1146,42 @@
                 <div class="lifelike-actor">
                   <div class="chara-rig pig-rig">
                     <div class="chara-squash">
-                      <!-- 1. Badan Bawah Babi (Ekor Melingkar, Kaki Kecil Pink) -->
+                      <!-- 1. Badan Bawah Babi (Ekor Melingkar, Kaki Belakang & 2 Tangan Depan Seperti Kucing/Shiba) -->
                       <div class="lower-body-group pig-lower-body">
-                        <svg class="svg-full" viewBox="0 0 240 160" fill="none">
+                        <svg class="svg-full" viewBox="0 0 200 145" fill="none">
                           <!-- Ekor Melingkar Lucu di Belakang Kanan -->
-                          <path d="M 196 110 C 215 105, 222 120, 212 130 C 205 138, 195 125, 208 120" stroke="#f472b6" stroke-width="4.5" stroke-linecap="round" fill="none" />
-                          <!-- 2 Kaki Babi Bawah dengan Kuku Kecil -->
-                          <rect x="70" y="130" width="22" height="20" rx="8" fill="#fbcfe8" stroke="#3b2322" stroke-width="4.5" />
-                          <line x1="81" y1="138" x2="81" y2="150" stroke="#3b2322" stroke-width="3" stroke-linecap="round" />
-                          <rect x="148" y="130" width="22" height="20" rx="8" fill="#fbcfe8" stroke="#3b2322" stroke-width="4.5" />
-                          <line x1="159" y1="138" x2="159" y2="150" stroke="#3b2322" stroke-width="3" stroke-linecap="round" />
+                          <path d="M 166 94 C 184 88, 194 102, 185 114 C 176 122, 166 110, 178 104" stroke="#f472b6" stroke-width="4.5" stroke-linecap="round" fill="none" />
+                          
+                          <!-- 2 Kaki Bawah / Belakang Babi dengan Kuku Kecil -->
+                          <rect x="36" y="118" width="22" height="18" rx="7" fill="#fbcfe8" stroke="#3b2322" stroke-width="4.2" />
+                          <line x1="47" y1="126" x2="47" y2="136" stroke="#3b2322" stroke-width="2.6" stroke-linecap="round" />
+                          <rect x="142" y="118" width="22" height="18" rx="7" fill="#fbcfe8" stroke="#3b2322" stroke-width="4.2" />
+                          <line x1="153" y1="126" x2="153" y2="136" stroke="#3b2322" stroke-width="2.6" stroke-linecap="round" />
+                          
                           <!-- Badan Bulat Pink Lembut Babi -->
-                          <path d="M 46 28 C 22 55, 18 102, 30 128 C 42 150, 72 154, 120 154 C 168 154, 198 150, 210 128 C 222 102, 218 55, 194 28 Z" fill="#fbcfe8" stroke="#3b2322" stroke-width="5.5" stroke-linejoin="round" />
+                          <path
+                            d="M 48 15 C 24 45, 18 92, 30 116 C 40 132, 65 135, 100 135 C 135 135, 160 132, 170 116 C 182 92, 176 45, 152 15 Z"
+                            fill="#fbcfe8"
+                            stroke="#3b2322"
+                            stroke-width="5.5"
+                            stroke-linejoin="round"
+                          />
                           <!-- Perut Pink Lebih Terang -->
-                          <ellipse cx="120" cy="100" rx="56" ry="38" fill="#fdf2f8" />
+                          <path d="M 58 32 C 50 65, 56 126, 100 126 C 144 126, 150 65, 142 32 Z" fill="#fdf2f8" />
+                          
+                          <!-- 2 Tangan / Kaki Depan Babi (Sama Persis Kucing & Shiba Inu) -->
+                          <g class="paw-left-group pig-paw-left">
+                            <path d="M 55 64 C 55 102, 62 138, 80 138 C 94 138, 95 112, 91 84" fill="#fbcfe8" />
+                            <path d="M 60 122 C 66 135, 76 136, 86 131 C 91 126, 92 115, 91 108 C 86 122, 70 125, 60 122 Z" fill="#f472b6" opacity="0.4" />
+                            <path d="M 55 64 C 55 102, 62 138, 80 138 C 94 138, 95 112, 91 84" stroke="#3b2322" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <line x1="78" y1="124" x2="78" y2="138" stroke="#3b2322" stroke-width="3.2" stroke-linecap="round" />
+                          </g>
+                          <g class="paw-right-group pig-paw-right">
+                            <path d="M 145 64 C 145 102, 138 138, 120 138 C 106 138, 105 112, 109 84" fill="#fbcfe8" />
+                            <path d="M 140 122 C 134 135, 124 136, 114 131 C 109 126, 108 115, 109 108 C 114 122, 130 125, 140 122 Z" fill="#f472b6" opacity="0.4" />
+                            <path d="M 145 64 C 145 102, 138 138, 120 138 C 106 138, 105 112, 109 84" stroke="#3b2322" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <line x1="122" y1="124" x2="122" y2="138" stroke="#3b2322" stroke-width="3.2" stroke-linecap="round" />
+                          </g>
                         </svg>
                       </div>
 
@@ -1391,25 +1416,17 @@
     </div>
 
     <!-- =========================================================
-         BANNER EKSTENSI BROWSER: BAWA AKU BERSAMAMU DI MANA SAJA
+         BARIS EKSTENSI BROWSER RAMPING DI BAWAH KONSOL
          ========================================================= -->
-    <div class="extension-promo-card">
-      <div class="promo-badge">✨ EKSTENSI BROWSER RESMI</div>
-      <div class="promo-header">
-        <span class="promo-avatar" aria-hidden="true">🐾</span>
-        <div class="promo-info">
-          <h3 class="promo-title">Bawa Aku Bersamamu di Mana Saja!</h3>
-          <p class="promo-desc">Temani aktivitas harianmu di tab browser apa pun dengan layar peliharaan mungil melayang di pojok kiri bawah.</p>
-        </div>
-      </div>
-      <div class="promo-features">
-        <span>✨ Status Sinkron Realtime</span>
-        <span>🍙 Auto-Feeder Otomatis</span>
-        <span>🎨 Dukungan Mod Kustom</span>
-      </div>
-      <a href="mochi-pocket-extension.zip" download="mochi-pocket-extension.zip" class="btn-download-ext">
-        <span>📥</span> Unduh Ekstensi Browser (.zip)
-      </a>
+    <div class="console-ext-bar">
+      <button type="button" class="btn-console-ext-bar" id="btn-open-ext-bottom" title="Buka Detail Ekstensi Browser Mochi Pocket">
+        <span class="ext-bar-left">
+          <span class="ext-bar-icon">🧩</span>
+          <span class="ext-bar-title">Bawa Aku Bersamamu di Mana Saja!</span>
+          <span class="ext-bar-sub">(Ekstensi Browser)</span>
+        </span>
+        <span class="ext-bar-pill">Unduh / Info ↗</span>
+      </button>
     </div>
   </main>
 
@@ -1820,6 +1837,10 @@
           <button type="button" id="btn-download-pet-template" class="btn-db" style="flex: 1;">📄 Template Pet (.js)</button>
           <button type="button" id="btn-download-scene-template" class="btn-db" style="flex: 1;">🏙️ Template Latar (.js)</button>
         </div>
+        <div class="mod-buttons-row" style="display: flex; gap: 8px; margin-bottom: 8px;">
+          <button type="button" id="btn-download-dragon-sample" class="btn-db" style="flex: 1;">🐲 Sampel Naga (.js)</button>
+          <button type="button" id="btn-download-volcano-sample" class="btn-db" style="flex: 1;">🌋 Sampel Vulkano (.js)</button>
+        </div>
         <div>
           <label class="btn-primary" style="display: flex; align-items: center; justify-content: center; gap: 7px; cursor: pointer; text-align: center; width: 100%;">
             <span>📤</span> Unggah &amp; Pasang Mod (.js / .json)
@@ -1864,6 +1885,65 @@
         <button type="button" id="btn-adopt-new-generation" class="death-adopt-btn">
           🌱 Adopsi Karakter Baru (<span id="adopt-gen-label">Eri #2</span>)
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL 5: EKSTENSI BROWSER (Bawa Aku Bersamamu di Mana Saja)
+       ========================================================= -->
+  <div id="extension-modal" class="modal-backdrop" hidden>
+    <div class="modal-card ext-modal-card" role="dialog" aria-modal="true" aria-labelledby="ext-modal-title">
+      <div class="modal-header-badge">🧩 EKSTENSI BROWSER RESMI</div>
+      <button type="button" class="modal-close-btn" id="btn-close-ext-modal-x" aria-label="Tutup Modal">&times;</button>
+      <h2 id="ext-modal-title" class="modal-title">Bawa Aku Bersamamu di Mana Saja! 🐾</h2>
+      <p class="modal-intro">
+        Temani aktivitas browsing dan kerjamu di tab mana pun dengan layar peliharaan mungil melayang di pojok kiri bawah layar tanpa mengganggu tab yang sedang kamu buka.
+      </p>
+
+      <div class="ext-features-grid">
+        <div class="ext-feature-card">
+          <span class="ext-feat-icon">🔄</span>
+          <div class="ext-feat-info">
+            <strong>Status Sinkron Realtime</strong>
+            <p>Level, EXP, rasa lapar, energi, dan mood pet tersinkron otomatis dengan konsol web ini.</p>
+          </div>
+        </div>
+        <div class="ext-feature-card">
+          <span class="ext-feat-icon">🍙</span>
+          <div class="ext-feat-info">
+            <strong>Auto-Feeder Otomatis</strong>
+            <p>Fitur timer beri makan otomatis agar sahabat kecilmu tetap kenyang dan tidak mati saat kamu sibuk.</p>
+          </div>
+        </div>
+        <div class="ext-feature-card">
+          <span class="ext-feat-icon">🎨</span>
+          <div class="ext-feat-info">
+            <strong>Dukungan Mod Kustom</strong>
+            <p>Bisa impor wujud naga imut, latar kawah vulkano, atau karakter buatanmu sendiri ke widget browser.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ext-download-cta">
+        <a href="mochi-pocket-extension.zip" download="mochi-pocket-extension.zip" class="btn-download-ext-primary">
+          <span>📥</span> Unduh Ekstensi Browser (.zip)
+        </a>
+        <span class="ext-file-info">Versi 2.0.0 &bull; Manifest V3 &bull; Kompatibel Chrome, Edge, Brave</span>
+      </div>
+
+      <div class="ext-install-guide">
+        <h4 class="install-heading">⚡ Panduan Pasang Cepat di Browser:</h4>
+        <ol class="install-steps">
+          <li>Ekstrak berkas <code>mochi-pocket-extension.zip</code> ke folder komputermu.</li>
+          <li>Buka menu ekstensi di browser: ketik <code>chrome://extensions</code> atau <code>edge://extensions</code> di bilah URL.</li>
+          <li>Nyalakan tombol <strong>Developer mode</strong> (Mode Pengembang) di sudut kanan atas.</li>
+          <li>Klik tombol <strong>Load unpacked</strong> (Muat yang belum dibongkar) lalu pilih folder hasil ekstrak tadi. Selesai! 🎉</li>
+        </ol>
+      </div>
+
+      <div class="modal-footer-actions">
+        <button type="button" class="btn-action-secondary" id="btn-close-ext-modal">Tutup</button>
       </div>
     </div>
   </div>

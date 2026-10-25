@@ -64,6 +64,106 @@ const SDK_TEMPLATES = {
   dialogues: [
     "Pemandangan malam kota neon indah sekali ya! ✨"
   ]
+};`,
+  dragon: `export default {
+  id: "custom_baby_dragon",
+  name: "Ryuu",
+  author: "Mochi Pocket SDK",
+  version: "1.0.0",
+  tag: "🐲 RYUU",
+  icon: "🐲",
+  unlockLevel: 1,
+  palette: {
+    primary: "#10b981",
+    belly: "#fef08a",
+    horns: "#f59e0b",
+    wings: "#f97316"
+  },
+  anatomy: {
+    headSvg: \`<svg class="svg-full" viewBox="0 0 264 205" fill="none">
+      <path d="M 96 46 C 88 18, 72 6, 62 10 C 56 14, 62 30, 80 54 Z" fill="#f59e0b" stroke="#3b2322" stroke-width="4.5" stroke-linejoin="round"/>
+      <path d="M 168 46 C 176 18, 192 6, 202 10 C 208 14, 202 30, 184 54 Z" fill="#f59e0b" stroke="#3b2322" stroke-width="4.5" stroke-linejoin="round"/>
+      <path d="M 38 90 C 16 70, 18 42, 32 38 C 44 34, 66 60, 78 84 Z" fill="#34d399" stroke="#3b2322" stroke-width="4.5" stroke-linejoin="round"/>
+      <path d="M 226 90 C 248 70, 246 42, 232 38 C 220 34, 198 60, 186 84 Z" fill="#34d399" stroke="#3b2322" stroke-width="4.5" stroke-linejoin="round"/>
+      <path d="M 52 48 C 82 22, 182 22, 212 48 C 246 78, 252 142, 218 174 C 182 204, 82 204, 46 174 C 12 142, 18 78, 52 48 Z" fill="#10b981" stroke="#3b2322" stroke-width="5.5" stroke-linejoin="round"/>
+      <circle cx="56" cy="134" r="14" fill="#f43f5e" opacity="0.78"/>
+      <circle cx="208" cy="134" r="14" fill="#f43f5e" opacity="0.78"/>
+      <ellipse cx="125" cy="116" rx="3.5" ry="2.5" fill="#065f46"/>
+      <ellipse cx="139" cy="116" rx="3.5" ry="2.5" fill="#065f46"/>
+      <path d="M 118 126 Q 132 138 146 126" stroke="#3b2322" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+      <polygon points="124,126 128,126 126,131" fill="#ffffff" stroke="#3b2322" stroke-width="1.2"/>
+      <polygon points="136,126 140,126 138,131" fill="#ffffff" stroke="#3b2322" stroke-width="1.2"/>
+      <path d="M 152 128 C 158 120, 164 125, 160 133 C 155 131, 150 132, 152 128 Z" fill="#f97316"/>
+    </svg>\`,
+    bodySvg: \`<svg class="svg-full" viewBox="0 0 200 145" fill="none">
+      <path d="M 36 28 C 10 18, -4 44, 18 64 C 28 50, 42 42, 48 38 Z" fill="#f97316" stroke="#3b2322" stroke-width="4.5" stroke-linejoin="round"/>
+      <path d="M 164 28 C 190 18, 204 44, 182 64 C 172 50, 158 42, 152 38 Z" fill="#f97316" stroke="#3b2322" stroke-width="4.5" stroke-linejoin="round"/>
+      <path d="M 48 15 C 24 45, 18 92, 30 116 C 40 132, 65 135, 100 135 C 135 135, 160 132, 170 116 C 182 92, 176 45, 152 15 Z" fill="#10b981" stroke="#3b2322" stroke-width="5.5" stroke-linejoin="round"/>
+      <path d="M 58 32 C 50 65, 56 126, 100 126 C 144 126, 150 65, 142 32 Z" fill="#fef08a"/>
+      <line x1="72" y1="56" x2="128" y2="56" stroke="#eab308" stroke-width="3" stroke-linecap="round"/>
+      <line x1="68" y1="78" x2="132" y2="78" stroke="#eab308" stroke-width="3" stroke-linecap="round"/>
+      <line x1="74" y1="100" x2="126" y2="100" stroke="#eab308" stroke-width="3" stroke-linecap="round"/>
+      <g class="paw-left-group">
+        <path d="M 55 64 C 55 102, 62 138, 80 138 C 94 138, 95 112, 91 84" fill="#10b981" stroke="#3b2322" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="72" y1="126" x2="72" y2="138" stroke="#3b2322" stroke-width="3" stroke-linecap="round"/>
+      </g>
+      <g class="paw-right-group">
+        <path d="M 145 64 C 145 102, 138 138, 120 138 C 106 138, 105 112, 109 84" fill="#10b981" stroke="#3b2322" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="128" y1="126" x2="128" y2="138" stroke="#3b2322" stroke-width="3" stroke-linecap="round"/>
+      </g>
+    </svg>\`,
+    tailSvg: \`<svg class="svg-full" viewBox="0 0 120 150" fill="none">
+      <path d="M 98 112 C 46 112, 22 76, 40 46 C 52 26, 78 30, 84 56 C 88 74, 70 82, 60 70" fill="#10b981" stroke="#3b2322" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M 40 46 C 24 30, 28 8, 48 4 C 54 22, 62 26, 40 46 Z" fill="#ef4444"/>
+      <path d="M 42 38 C 30 26, 34 14, 48 10 C 52 22, 56 24, 42 38 Z" fill="#f97316"/>
+    </svg>\`
+  },
+  dialogues: {
+    greetings: ["Rawr! Aku Ryuu, naga api mungil penjaga semangatmu! 🔥✨"],
+    idle: ["Hembusan nafasku hangat lho! Mau kupanggangkan marshmallow? 🍢🔥"],
+    feed: ["Nyam nyam! Daging panggang lezat sekali! Apinya berkobar gembira~ 🍖🔥"],
+    sleep: ["Zzz... sayapku melipat hangat... istirahat dulu ya manusia baik~ 💤🐲"]
+  }
+};`,
+  volcano: `export default {
+  id: "custom_volcano_island",
+  name: "Pulau Vulkano",
+  icon: "🌋",
+  unlockLevel: 1,
+  backgroundCSS: "radial-gradient(circle at 50% 32%, rgba(249, 115, 22, 0.42) 0%, transparent 68%), linear-gradient(180deg, #18090a 0%, #3b1114 42%, #6c230e 62%, #451508 62%, #1a0804 100%)",
+  ambientColor: "rgba(249, 115, 22, 0.24)",
+  decorations: [
+    {
+      id: "distant_volcano",
+      emoji: "🌋",
+      style: "position: absolute; bottom: 35%; left: 50%; transform: translateX(-50%); font-size: 3.8rem; filter: drop-shadow(0 0 16px rgba(249, 115, 22, 0.7)); z-index: 1;"
+    },
+    {
+      id: "volcano_smoke",
+      emoji: "☁️",
+      style: "position: absolute; top: 38px; left: 47%; font-size: 1.8rem; opacity: 0.65; filter: blur(1px); animation: smokeRise 5s ease-in-out infinite alternate; z-index: 1;"
+    },
+    {
+      id: "tropical_palm_left",
+      emoji: "🌴",
+      style: "position: absolute; bottom: 34%; left: 14px; font-size: 2.4rem; z-index: 2;"
+    },
+    {
+      id: "pine_tree_right",
+      emoji: "🌲",
+      style: "position: absolute; bottom: 34%; right: 18px; font-size: 2.5rem; z-index: 2;"
+    },
+    {
+      id: "fire_spark_left",
+      emoji: "🔥",
+      style: "position: absolute; top: 88px; left: 20%; font-size: 1.1rem; filter: drop-shadow(0 0 8px #f59e0b); z-index: 3;"
+    }
+  ],
+  dialogues: [
+    "Wah, udara di Pulau Vulkano ini hangat dan penuh energi! Laharnya berkilauan! 🌋🔥",
+    "Lihat pohon-pohon palem dan pinus di lereng itu! Tetap tegak berdiri di dekat kawah! 🌴🌲",
+    "Percikan bara api keemasan beterbangan seperti kembang api alami! Indah sekali~ ✨🔥"
+  ]
 };`
 };
 
@@ -248,7 +348,11 @@ function importCustomMod(rawContent, filename = "") {
 
 function downloadSdkFile(type = "pet") {
   const content = SDK_TEMPLATES[type] || SDK_TEMPLATES.pet;
-  const filename = type === "scene" ? "custom-scene-template.js" : "custom-pet-template.js";
+  let filename = "custom-pet-template.js";
+  if (type === "scene") filename = "custom-scene-template.js";
+  else if (type === "dragon") filename = "custom-pet-dragon.js";
+  else if (type === "volcano") filename = "custom-scene-volcano.js";
+
   const blob = new Blob([content], { type: "application/javascript;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");

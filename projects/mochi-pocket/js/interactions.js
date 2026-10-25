@@ -11,9 +11,21 @@ function switchState(newState, duration = null) {
 
   currentState = newState;
   const hasHeadbutt = petInteractive.classList.contains("headbutt-pop");
-  petInteractive.className = `pet-interactive state-${newState}${hasHeadbutt ? " headbutt-pop" : ""}`;
+  const isTantrum = Boolean(pet.isUnhappyTantrum);
+  const isRumble = petInteractive.classList.contains("stomach-rumble-active");
+  const isDrowsy = petInteractive.classList.contains("drowsy-sleep");
 
-  const ledInfo = STATE_LED[newState] || STATE_LED.idle;
+  let classes = [`pet-interactive`, `state-${newState}`];
+  if (hasHeadbutt) classes.push("headbutt-pop");
+  if (isTantrum) classes.push("unhappy-tantrum");
+  if (isRumble) classes.push("stomach-rumble-active");
+  if (isDrowsy) classes.push("drowsy-sleep");
+  petInteractive.className = classes.join(" ");
+
+  let ledInfo = STATE_LED[newState] || STATE_LED.idle;
+  if (isTantrum && newState === "idle") {
+    ledInfo = { led: "led-angry", text: "NGAMBEK" };
+  }
   if (statusDot) {
     statusDot.className = `status-led ${ledInfo.led}`;
   }
@@ -277,7 +289,7 @@ petInteractive.addEventListener("mouseenter", () => {
 
   if (pet.isUnhappyTantrum) {
     switchState("angry", 1200);
-    say(`Hmph! ${petNameTag()} lagi ngambek berat nih! Bahagiaku 0%! Elus aku atau ajak main dong sampai minimal 10%... 😤💢`, 3500);
+    say(`Hmph! ${petNameTag()} lagi ngambek berat nih! Bahagiaku di bawah 15%! Elus aku dong sampai minimal 15%... 😤💢`, 3500);
     return;
   }
 
@@ -310,7 +322,7 @@ petInteractive.addEventListener("click", () => {
 
   if (pet.isUnhappyTantrum) {
     switchState("angry", 2200);
-    say(`Hmph! ${petNameTag()} lagi ngambek berat nih! Bahagiaku 0%! Elus aku atau ajak main dong sampai minimal 10%... 😤💢`, 3500);
+    say(`Hmph! ${petNameTag()} lagi ngambek berat nih! Bahagiaku di bawah 15%! Elus aku dong sampai minimal 15%... 😤💢`, 3500);
     return;
   }
 

@@ -426,10 +426,10 @@ function checkPetCondition() {
     return;
   }
 
-  // 2. Cek Marah Kebahagiaan 0% (Karakter ngambek sampai minimal 10%)
-  if (pet.happiness <= 0) {
+  // 2. Cek Marah/Ngambek Kebahagiaan < 15% (Karakter ngambek saat < 15%, dan berhenti di >= 15%)
+  if (pet.happiness < 15) {
     pet.isUnhappyTantrum = true;
-  } else if (pet.isUnhappyTantrum && pet.happiness >= 10) {
+  } else {
     pet.isUnhappyTantrum = false;
   }
 
@@ -437,8 +437,20 @@ function checkPetCondition() {
     // Efek getaran di perut jika kenyang <= 50%
     petInteractive.classList.toggle("stomach-rumble-active", pet.hunger <= 50);
 
-    // Efek ngambek berat jika kebahagiaan 0%
+    // Efek ngambek berat jika kebahagiaan < 15%
     petInteractive.classList.toggle("unhappy-tantrum", Boolean(pet.isUnhappyTantrum));
+
+    // Perbarui lampu LED mood ngambek jika sedang idle
+    if (statusDot && statusLabel && currentState === "idle") {
+      if (pet.isUnhappyTantrum) {
+        statusDot.className = "status-led led-angry";
+        statusLabel.textContent = "NGAMBEK";
+      } else {
+        const defaultLed = STATE_LED.idle;
+        statusDot.className = `status-led ${defaultLed.led}`;
+        statusLabel.textContent = defaultLed.text;
+      }
+    }
 
     // Efek tertidur mengantuk lelah jika energi <= 25% dan tidak sedang tidur resmi
     if (pet.energy <= 25 && !pet.isSleeping && currentState === "idle") {
