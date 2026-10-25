@@ -203,6 +203,9 @@ function getSceneIdleLines(sceneKey) {
   ];
 }
 
+let lastTalkRewardTime = 0;
+const TALK_REWARD_COOLDOWN_MS = 5000;
+
 function talkToPet() {
   if (pet.isSleeping) {
     say(`Zzz... *${petNameTag()} mengigau pelan dalam tidurnya* 💤`);
@@ -221,6 +224,14 @@ function talkToPet() {
 
   const chosen = talkPool[talkIndex % talkPool.length];
   talkIndex += 1;
-  addExpAndStats({ exp: 6, happiness: 4 });
+
+  // Anti-spam EXP & Happiness: teks obrolan tetap berganti mulus setiap klik,
+  // namun reward EXP dan kebahagiaan hanya diberikan maksimal sekali tiap 5 detik
+  const now = Date.now();
+  if (now - lastTalkRewardTime >= TALK_REWARD_COOLDOWN_MS) {
+    lastTalkRewardTime = now;
+    addExpAndStats({ exp: 3, happiness: 3 });
+  }
+
   say(chosen);
 }

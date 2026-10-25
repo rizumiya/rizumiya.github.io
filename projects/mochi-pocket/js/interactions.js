@@ -373,7 +373,15 @@ window.addEventListener(
   { passive: false }
 );
 
-window.addEventListener("touchend", () => endPetting());
+window.addEventListener("touchend", () => {
+  resetCursorTrackingTarget();
+  endPetting();
+});
+
+window.addEventListener("touchcancel", () => {
+  resetCursorTrackingTarget();
+  endPetting();
+});
 
 document.addEventListener("mouseleave", () => {
   resetCursorTrackingTarget();
