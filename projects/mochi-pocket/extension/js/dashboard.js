@@ -84,10 +84,10 @@ function renderSceneBackground(sceneKey) {
   } else if (safeScene === "rainy_day") {
     // 2. Hari Hujan (Efek Kilatan Petir Halus, Awan Mendung, Tetesan Hujan, Genangan Air, & Percikan Air Memercik ke Tanah)
     let dropsHtml = "";
-    for (let i = 0; i < 14; i += 1) {
-      const leftPct = 6 + i * 6.6;
-      const dur = (0.62 + (i % 4) * 0.11).toFixed(2);
-      const delay = ((i * 0.17) % 0.9).toFixed(2);
+    for (let i = 0; i < 22; i += 1) {
+      const leftPct = 3 + i * 4.4;
+      const dur = (0.52 + (i % 5) * 0.08).toFixed(2);
+      const delay = ((i * 0.11) % 0.85).toFixed(2);
       dropsHtml += `<div class="scene-raindrop" style="left:${leftPct.toFixed(1)}%; --rain-dur:${dur}s; --rain-delay:${delay}s;"></div>`;
     }
 

@@ -1328,13 +1328,16 @@ body {
 
 .scene-raindrop {
   position: absolute;
-  top: -24px;
-  width: 2px;
-  height: 18px;
+  top: -28px;
+  width: 2.5px;
+  height: 24px;
   border-radius: 99px;
-  background: linear-gradient(180deg, transparent, rgba(147, 197, 253, 0.82));
-  animation: sceneRainFall var(--rain-dur, 0.75s) linear infinite;
+  background: linear-gradient(180deg, transparent 0%, rgba(147, 197, 253, 0.45) 30%, rgba(224, 242, 254, 0.95) 100%);
+  filter: drop-shadow(0 0 2px rgba(186, 230, 253, 0.65));
+  animation: sceneRainFall var(--rain-dur, 0.7s) linear infinite;
   animation-delay: var(--rain-delay, 0s);
+  z-index: 4;
+  pointer-events: none;
 }
 
 @keyframes sceneRainFall {

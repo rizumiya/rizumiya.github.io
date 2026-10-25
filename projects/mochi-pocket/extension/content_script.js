@@ -109,62 +109,20 @@
       });
     }
 
-    // Jalankan segera dan secara berkala
+    // Ekstraksi sinkronisasi satu kali saat tab web console dibuka
     doDirectWebSync();
-    setTimeout(doDirectWebSync, 500);
-    setTimeout(doDirectWebSync, 1500);
-    setInterval(doDirectWebSync, 3000);
+    setTimeout(doDirectWebSync, 800);
 
-    // A. Saat web console pertama kali dibuka, kirimkan data dari extension storage (jika ada)
-    chrome.storage.local.get(["mochi_pet"], (data) => {
-      if (data && data.mochi_pet) {
-        window.postMessage({
-          type: "MOCHI_EXT_SYNC_LOAD",
-          pet: data.mochi_pet
-        }, "*");
-      }
-    });
-
-    // B. Dengarkan pesan simpan / minta muat dari Web Console
+    // Dengarkan pesan simpan dari Web Console (Satu Arah: Web Console -> Extension Storage)
+    // JANGAN kirim event balik ke Web Console agar TIDAK terjadi feedback loop berkedip!
     window.addEventListener("message", (event) => {
       if (!event.data || typeof event.data !== "object") return;
 
       if (event.data.type === "MOCHI_WEB_SYNC_SAVE") {
         const incomingPet = event.data.pet;
-        if (incomingPet && typeof incomingPet === "object") {
-          chrome.storage.local.get(["mochi_pet"], (data) => {
-            const currentExtPet = data ? data.mochi_pet : null;
-            const extLevel = currentExtPet ? (currentExtPet.level || 1) : 1;
-            const incLevel = incomingPet.level || 1;
-            const extTime = currentExtPet ? (currentExtPet.lastUpdatedAt || currentExtPet.lastUpdated || 0) : 0;
-            const incTime = incomingPet.lastUpdatedAt || 0;
-
-            if (!currentExtPet || incLevel >= extLevel || incTime >= extTime) {
-              chrome.storage.local.set({ mochi_pet: incomingPet, lastSyncedWeb: Date.now() }, () => {
-                console.log(`[Mochi Sync Bridge] Data pet disinkronkan dari Web ke Ekstensi (Lv.${incLevel})`);
-              });
-            }
-          });
+        if (incomingPet && typeof incomingPet === "object" && incomingPet.level) {
+          chrome.storage.local.set({ mochi_pet: incomingPet, lastSyncedWeb: Date.now() });
         }
-      }
-
-      if (event.data.type === "MOCHI_WEB_REQUEST_LOAD") {
-        chrome.storage.local.get(["mochi_pet"], (data) => {
-          window.postMessage({
-            type: "MOCHI_EXT_SYNC_LOAD",
-            pet: data.mochi_pet || null
-          }, "*");
-        });
-      }
-    });
-
-    // C. Dengarkan pembaruan data dari background / tab lain dan teruskan ke Web Console
-    chrome.storage.onChanged.addListener((changes, area) => {
-      if (area === "local" && changes.mochi_pet && changes.mochi_pet.newValue) {
-        window.postMessage({
-          type: "MOCHI_EXT_SYNC_UPDATE",
-          pet: changes.mochi_pet.newValue
-        }, "*");
       }
     });
   }
