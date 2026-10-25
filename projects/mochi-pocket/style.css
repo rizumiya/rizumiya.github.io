@@ -5636,3 +5636,108 @@ body {
   transform: translateY(-1px);
   filter: brightness(1.1);
 }
+
+/* ==========================================================================
+   16. KARTU PROMOSI EKSTENSI BROWSER (VERSI 2: BAWA AKU BERSAMAMU DI MANA SAJA)
+   ========================================================================== */
+
+.extension-promo-card {
+  width: 100%;
+  max-width: 412px;
+  margin: 18px auto 26px;
+  background: var(--modal-bg, #1e1b2e);
+  border: 1.5px solid var(--modal-border, rgba(255, 255, 255, 0.12));
+  border-radius: 24px;
+  padding: 16px 18px 18px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.promo-badge {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 2.5px 8px;
+  border-radius: 99px;
+  background: rgba(236, 72, 153, 0.16);
+  color: var(--accent-rose, #ec4899);
+  margin-bottom: 8px;
+}
+
+.promo-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.promo-avatar {
+  font-size: 2.2rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.2));
+}
+
+.promo-info {
+  flex: 1;
+}
+
+.promo-title {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: var(--text-main, #ffffff);
+  margin-bottom: 4px;
+}
+
+.promo-desc {
+  font-size: 0.74rem;
+  color: var(--text-muted, #94a3b8);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.promo-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  margin-bottom: 14px;
+  padding: 8px 10px;
+  background: var(--modal-sec-bg, rgba(255, 255, 255, 0.04));
+  border-radius: 12px;
+  border: 1px dashed var(--modal-border, rgba(255, 255, 255, 0.08));
+}
+
+.promo-features span {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-main, #e2e8f0);
+}
+
+.btn-download-ext {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 16px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(236, 72, 153, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-sizing: border-box;
+}
+
+.btn-download-ext:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(236, 72, 153, 0.5);
+}
+
+.btn-download-ext:active {
+  transform: translateY(1px);
+}

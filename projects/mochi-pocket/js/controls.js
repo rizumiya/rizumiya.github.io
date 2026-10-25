@@ -386,6 +386,41 @@ if (btnResetSave) {
 }
 
 // ==========================================================================
+// STUDIO MOD: UNDUH TEMPLATE SDK & UNGGAH MOD KUSTOM (.JS / .JSON)
+// ==========================================================================
+
+const btnDownloadPetTemplate = document.getElementById("btn-download-pet-template");
+if (btnDownloadPetTemplate) {
+  btnDownloadPetTemplate.addEventListener("click", () => {
+    if (typeof downloadSdkFile === "function") downloadSdkFile("pet");
+  });
+}
+
+const btnDownloadSceneTemplate = document.getElementById("btn-download-scene-template");
+if (btnDownloadSceneTemplate) {
+  btnDownloadSceneTemplate.addEventListener("click", () => {
+    if (typeof downloadSdkFile === "function") downloadSdkFile("scene");
+  });
+}
+
+const inputUploadMod = document.getElementById("input-upload-mod");
+if (inputUploadMod) {
+  inputUploadMod.addEventListener("change", async (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    try {
+      const text = await file.text();
+      if (typeof importCustomMod === "function") {
+        importCustomMod(text, file.name);
+      }
+      if (settingsModal) settingsModal.hidden = true;
+    } catch (err) {
+      say(`❌ Gagal membaca berkas mod: ${err.message}`);
+    }
+  });
+}
+
+// ==========================================================================
 // DEV MODE LOKAL: BUKA SEMUA LEVEL UNTUK TESTING
 // Aktif HANYA di lingkungan lokal (localhost / 127.0.0.1 / file://)
 // Di GitHub Pages / produksi otomatis dinonaktifkan

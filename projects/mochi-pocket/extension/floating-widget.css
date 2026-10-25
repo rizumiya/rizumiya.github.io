@@ -1,0 +1,236 @@
+/* Mochi Pocket — Floating Screen-Only Overlay Widget CSS (Shadow DOM) */
+
+:host {
+  all: initial;
+  display: block;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  z-index: 2147483647;
+  pointer-events: auto;
+}
+
+.mochi-floating-container {
+  position: fixed;
+  bottom: 18px;
+  left: 18px;
+  width: 142px;
+  height: 136px;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 50% 28%, rgba(255, 247, 237, 0.95) 0%, transparent 60%),
+    linear-gradient(180deg, #fdf6ec 0%, #f7e6d4 62%, #dfc3a5 62%, #c9a580 100%);
+  border: 3px solid #3b2322;
+  box-shadow:
+    0 4px 0 #201413,
+    0 12px 28px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  user-select: none;
+  cursor: grab;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+  z-index: 2147483647;
+  box-sizing: border-box;
+}
+
+.mochi-floating-container:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.mochi-floating-container:active {
+  cursor: grabbing;
+}
+
+/* Header Mini Status / Badge Nama */
+.mochi-mini-hud {
+  position: absolute;
+  top: 5px;
+  left: 6px;
+  right: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.mini-name-badge {
+  font-size: 0.62rem;
+  font-weight: 800;
+  color: #3b2322;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 1px 6px;
+  border-radius: 99px;
+  border: 1px solid rgba(59, 35, 34, 0.25);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.mini-stats-icons {
+  display: flex;
+  gap: 3px;
+  font-size: 0.65rem;
+}
+
+/* Panggung Karakter */
+.mochi-character-stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 8px;
+}
+
+.mochi-bouncy-actor {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  transform-origin: center bottom;
+  animation: breathe-and-jump 3s linear infinite;
+}
+
+@keyframes breathe-and-jump {
+  0% { transform: translateY(0) scaleY(1) scaleX(1); }
+  25% { transform: translateY(-4px) scaleY(1.03) scaleX(0.98); }
+  50% { transform: translateY(0) scaleY(1) scaleX(1); }
+  75% { transform: translateY(0) scaleY(0.94) scaleX(1.05); }
+  100% { transform: translateY(0) scaleY(1) scaleX(1); }
+}
+
+/* Balon Pesan Singkat (Muncul saat diklik) */
+.mochi-mini-bubble {
+  position: absolute;
+  top: 24px;
+  left: 6px;
+  right: 6px;
+  background: #ffffff;
+  border: 1.5px solid #3b2322;
+  border-radius: 8px;
+  padding: 3px 6px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #3b2322;
+  text-align: center;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transform: translateY(-4px) scale(0.9);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+  z-index: 30;
+}
+
+.mochi-mini-bubble.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* 3 Tilde ~ Kelaparan di Sebelah Kanan Pinggang */
+.mini-hunger-waves {
+  position: absolute;
+  bottom: 20px;
+  right: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0px;
+  z-index: 25;
+  opacity: 0;
+  pointer-events: none;
+  transform: rotate(6deg);
+}
+
+.mini-hunger-waves.active {
+  opacity: 1;
+}
+
+.mini-hunger-waves span {
+  font-family: "Arial Rounded MT Bold", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 900;
+  line-height: 0.5;
+  color: #f59e0b;
+  text-shadow:
+    -1px -1px 0 #ffffff,
+    1px -1px 0 #ffffff,
+    -1px 1px 0 #ffffff,
+    1px 1px 0 #ffffff;
+  animation: miniTildeWave 0.8s ease-in-out infinite alternate;
+}
+
+.mini-hunger-waves span:nth-child(2) {
+  color: #f97316;
+  animation-delay: 0.16s;
+}
+
+.mini-hunger-waves span:nth-child(3) {
+  animation-delay: 0.32s;
+}
+
+@keyframes miniTildeWave {
+  0% { transform: translateX(-1.5px) scale(0.92); }
+  100% { transform: translateX(1.5px) scale(1.08); }
+}
+
+/* Bilah Aksi Cepat Melayang Saat Hover (Beri Makan & Elus) */
+.mochi-hover-actions {
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  z-index: 35;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: all 0.2s ease;
+}
+
+.mochi-floating-container:hover .mochi-hover-actions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mini-action-btn {
+  background: #ffffff;
+  border: 1.5px solid #3b2322;
+  border-radius: 99px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.1s ease;
+}
+
+.mini-action-btn:hover {
+  transform: scale(1.18);
+  border-color: #ec4899;
+}
+
+.mini-action-btn:active {
+  transform: scale(0.92);
+}
+
+.btn-close-widget {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: transparent;
+  border: none;
+  font-size: 0.65rem;
+  cursor: pointer;
+  color: #64748b;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  z-index: 40;
+}
+
+.mochi-floating-container:hover .btn-close-widget {
+  opacity: 0.8;
+}
+
+.btn-close-widget:hover {
+  opacity: 1;
+  color: #ef4444;
+}

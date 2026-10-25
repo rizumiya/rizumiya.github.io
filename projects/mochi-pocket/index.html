@@ -14,6 +14,7 @@
   <script src="js/db.js" defer></script>
   <script src="js/elements.js" defer></script>
   <script src="js/dialogue.js" defer></script>
+  <script src="js/custom-mods.js" defer></script>
   <script src="js/dashboard.js" defer></script>
   <script src="js/interactions.js" defer></script>
   <script src="js/forms.js" defer></script>
@@ -1388,6 +1389,28 @@
         </div>
       </div>
     </div>
+
+    <!-- =========================================================
+         BANNER EKSTENSI BROWSER: BAWA AKU BERSAMAMU DI MANA SAJA
+         ========================================================= -->
+    <div class="extension-promo-card">
+      <div class="promo-badge">✨ EKSTENSI BROWSER RESMI</div>
+      <div class="promo-header">
+        <span class="promo-avatar" aria-hidden="true">🐾</span>
+        <div class="promo-info">
+          <h3 class="promo-title">Bawa Aku Bersamamu di Mana Saja!</h3>
+          <p class="promo-desc">Temani aktivitas harianmu di tab browser apa pun dengan layar peliharaan mungil melayang di pojok kiri bawah.</p>
+        </div>
+      </div>
+      <div class="promo-features">
+        <span>✨ Status Sinkron Realtime</span>
+        <span>🍙 Auto-Feeder Otomatis</span>
+        <span>🎨 Dukungan Mod Kustom</span>
+      </div>
+      <a href="mochi-pocket-extension.zip" download="mochi-pocket-extension.zip" class="btn-download-ext">
+        <span>📥</span> Unduh Ekstensi Browser (.zip)
+      </a>
+    </div>
   </main>
 
   <!-- =========================================================
@@ -1783,6 +1806,26 @@
           <input type="file" id="input-import-save" accept="application/json" hidden>
         </label>
         <button type="button" id="btn-reset-save" class="btn-db btn-db-danger">🗑️ Reset</button>
+      </div>
+
+      <!-- Bagian Studio Mod Kustom (Karakter & Latar Kustom) -->
+      <div class="db-divider" style="margin-top: 1.1rem;">
+        <span>🎨 Studio Mod &amp; Template SDK</span>
+      </div>
+      <div class="mod-studio-section">
+        <p class="mod-desc-text" style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 8px; line-height: 1.4;">
+          Koding karakter dan latar panggungmu sendiri! Unduh berkas template JavaScript di bawah, modifikasi kodenya, lalu pasang kembali ke dalam konsol.
+        </p>
+        <div class="mod-buttons-row" style="display: flex; gap: 8px; margin-bottom: 8px;">
+          <button type="button" id="btn-download-pet-template" class="btn-db" style="flex: 1;">📄 Template Pet (.js)</button>
+          <button type="button" id="btn-download-scene-template" class="btn-db" style="flex: 1;">🏙️ Template Latar (.js)</button>
+        </div>
+        <div>
+          <label class="btn-primary" style="display: flex; align-items: center; justify-content: center; gap: 7px; cursor: pointer; text-align: center; width: 100%;">
+            <span>📤</span> Unggah &amp; Pasang Mod (.js / .json)
+            <input type="file" id="input-upload-mod" accept=".js,.json" hidden>
+          </label>
+        </div>
       </div>
 
       <div class="modal-actions" style="margin-top: 0.6rem;">
