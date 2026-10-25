@@ -422,7 +422,6 @@ if (btnDownloadVolcanoSample) {
 // ==========================================================================
 
 const extensionModal = document.getElementById("extension-modal");
-const btnOpenExtTop = document.getElementById("btn-open-ext-top");
 const btnOpenExtBottom = document.getElementById("btn-open-ext-bottom");
 const btnCloseExtModal = document.getElementById("btn-close-ext-modal");
 const btnCloseExtModalX = document.getElementById("btn-close-ext-modal-x");
@@ -435,7 +434,6 @@ function closeExtensionModal() {
   if (extensionModal) extensionModal.hidden = true;
 }
 
-if (btnOpenExtTop) btnOpenExtTop.addEventListener("click", openExtensionModal);
 if (btnOpenExtBottom) btnOpenExtBottom.addEventListener("click", openExtensionModal);
 if (btnCloseExtModal) btnCloseExtModal.addEventListener("click", closeExtensionModal);
 if (btnCloseExtModalX) btnCloseExtModalX.addEventListener("click", closeExtensionModal);

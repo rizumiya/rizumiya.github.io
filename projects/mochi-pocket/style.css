@@ -420,14 +420,28 @@ body {
 
 .console-page {
   width: 100%;
-  height: 100%;
-  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 10px 12px;
-  overflow: hidden;
+  padding: 14px 12px;
+  overflow-y: auto;
+  overflow-x: hidden;
   overscroll-behavior: none;
+  box-sizing: border-box;
+}
+
+.console-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 412px;
+  margin: auto;
+  flex-shrink: 0;
 }
 
 /* ==========================================================================
@@ -5347,11 +5361,11 @@ body {
   }
 }
 
-/* 1B. 3 Tilde (~) Berjejer Vertikal di Sebelah Samping Luar Badan Saat Kelaparan (Kenyang <= 50%) */
+/* 1B. 3 Tilde (~) Berjejer Vertikal di Samping Perut, Sejajar Tombol B (Kenyang <= 50%) */
 .hunger-rumble-waves {
   position: absolute;
-  bottom: 36px;
-  left: calc(50% + 68px);
+  bottom: 22px;
+  left: calc(50% + 42px);
   transform: translateX(0) scale(0.65) rotate(6deg);
   display: flex;
   flex-direction: column;
@@ -5666,43 +5680,14 @@ body {
 }
 
 /* ==========================================================================
-   16. EKSTENSI BROWSER (CHIP ATAS, BAR PENDEK BAWAH, & MODAL POP-UP)
+   16. EKSTENSI BROWSER (BAR PENDEK BAWAH & MODAL POP-UP SOLID MODERN)
    ========================================================================== */
 
-/* 16A. Chip Mini di Bezel Atas */
-.bezel-ext-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: rgba(236, 72, 153, 0.12);
-  border: 1px solid rgba(236, 72, 153, 0.35);
-  border-radius: 99px;
-  padding: 2px 7px;
-  font-family: inherit;
-  font-size: 0.58rem;
-  font-weight: 800;
-  color: var(--accent-rose, #ec4899);
-  cursor: pointer;
-  letter-spacing: 0.04em;
-  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
-  line-height: 1;
-}
-
-.bezel-ext-chip:hover {
-  background: rgba(236, 72, 153, 0.22);
-  border-color: rgba(236, 72, 153, 0.65);
-  transform: translateY(-1px);
-}
-
-.bezel-ext-chip:active {
-  transform: translateY(0);
-}
-
-/* 16B. Bar Pendek & Ramping Tepat di Bawah Konsol */
+/* 16A. Bar Pendek & Ramping Tepat di Bawah Konsol (Solid, Terpusat) */
 .console-ext-bar {
   width: 100%;
   max-width: 412px;
-  margin: 10px auto 20px;
+  margin: 10px 0 0;
   box-sizing: border-box;
 }
 
@@ -5712,12 +5697,12 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding: 8px 14px;
-  background: var(--modal-bg, #1a1726);
-  border: 1.2px solid var(--modal-border, rgba(255, 255, 255, 0.1));
+  padding: 9px 14px;
+  background: #181524;
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
   border-radius: 16px;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
   transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
   box-sizing: border-box;
   text-align: left;
@@ -5725,9 +5710,9 @@ body {
 
 .btn-console-ext-bar:hover {
   transform: translateY(-1.5px);
-  border-color: rgba(236, 72, 153, 0.45);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-  background: var(--modal-sec-bg, #221e33);
+  border-color: #6366f1;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+  background: #201b33;
 }
 
 .btn-console-ext-bar:active {
@@ -5737,7 +5722,7 @@ body {
 .ext-bar-left {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
   min-width: 0;
 }
 
@@ -5748,9 +5733,9 @@ body {
 }
 
 .ext-bar-title {
-  font-size: 0.76rem;
+  font-size: 0.78rem;
   font-weight: 800;
-  color: var(--text-main, #ffffff);
+  color: #ffffff;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -5759,73 +5744,165 @@ body {
 .ext-bar-sub {
   font-size: 0.68rem;
   font-weight: 600;
-  color: var(--text-muted, #94a3b8);
+  color: #94a3b8;
   white-space: nowrap;
 }
 
 .ext-bar-pill {
   flex-shrink: 0;
-  font-size: 0.64rem;
+  font-size: 0.65rem;
   font-weight: 800;
-  padding: 3px 8px;
+  padding: 3.5px 9px;
   border-radius: 99px;
-  background: linear-gradient(135deg, rgba(236, 72, 153, 0.18), rgba(139, 92, 246, 0.18));
-  border: 1px solid rgba(236, 72, 153, 0.35);
-  color: var(--accent-rose, #ec4899);
+  background: #312e81;
+  border: 1px solid #4f46e5;
+  color: #c7d2fe;
   line-height: 1.2;
 }
 
 /* 16C. Modal Pop-up Ekstensi Browser */
 .ext-modal-card {
+  position: relative;
   max-width: 440px;
   max-height: 90vh;
   overflow-y: auto;
+  padding: 22px 20px;
+  box-sizing: border-box;
+}
+
+.ext-modal-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.modal-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #94a3b8;
+  font-size: 1.35rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.modal-close-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #f87171;
+  transform: scale(1.08);
+}
+
+.modal-close-btn:active {
+  transform: scale(0.95);
 }
 
 .ext-features-grid {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin: 14px 0;
+  gap: 10px;
+  margin: 16px 0;
 }
 
 .ext-feature-card {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding: 8px 10px;
-  background: var(--modal-sec-bg, rgba(255, 255, 255, 0.04));
-  border: 1px solid var(--modal-border, rgba(255, 255, 255, 0.08));
-  border-radius: 12px;
+  gap: 12px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 14px;
   text-align: left;
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
 }
 
-.ext-feat-icon {
-  font-size: 1.3rem;
-  line-height: 1.2;
+.ext-feature-card:hover {
+  background: rgba(255, 255, 255, 0.065);
+  border-color: rgba(99, 102, 241, 0.35);
+  transform: translateY(-1px);
+}
+
+.ext-feat-icon-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(79, 70, 229, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  line-height: 1;
   flex-shrink: 0;
 }
 
-.ext-feat-info strong {
-  display: block;
-  font-size: 0.78rem;
+.ext-feat-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.ext-feat-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+
+.ext-feat-title-row strong {
+  font-size: 0.8rem;
   font-weight: 800;
-  color: var(--text-main, #ffffff);
-  margin-bottom: 2px;
+  color: #ffffff;
+}
+
+.feat-tag {
+  font-size: 0.58rem;
+  font-weight: 800;
+  padding: 1.5px 6px;
+  border-radius: 6px;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+}
+
+.feat-tag-sync {
+  background: rgba(16, 185, 129, 0.16);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #34d399;
+}
+
+.feat-tag-timer {
+  background: rgba(245, 158, 11, 0.16);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #fbbf24;
+}
+
+.feat-tag-mod {
+  background: rgba(168, 85, 247, 0.16);
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  color: #c084fc;
 }
 
 .ext-feat-info p {
-  font-size: 0.68rem;
-  color: var(--text-muted, #94a3b8);
-  line-height: 1.35;
+  font-size: 0.7rem;
+  color: #94a3b8;
+  line-height: 1.38;
   margin: 0;
 }
 
 .ext-download-cta {
-  margin: 14px 0 16px;
+  margin: 16px 0 16px;
   text-align: center;
 }
 
+/* Tombol Unduh: SOLID COLOR TANPA GRADASI */
 .btn-download-ext-primary {
   display: inline-flex;
   align-items: center;
@@ -5838,61 +5915,74 @@ body {
   font-weight: 800;
   color: #ffffff !important;
   text-decoration: none !important;
-  background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+  background: #4f46e5; /* Solid Indigo yang bersih & berani */
+  border: 1px solid #6366f1;
   border-radius: 14px;
-  box-shadow: 0 4px 16px rgba(236, 72, 153, 0.4);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
   box-sizing: border-box;
 }
 
 .btn-download-ext-primary:hover {
+  background: #4338ca; /* Solid darker hover */
   transform: translateY(-2px);
-  box-shadow: 0 6px 22px rgba(236, 72, 153, 0.55);
+  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.45);
 }
 
 .btn-download-ext-primary:active {
-  transform: translateY(1px);
+  transform: translateY(0);
+}
+
+.btn-download-ext-primary .btn-icon {
+  font-size: 1.15rem;
 }
 
 .ext-file-info {
   display: block;
-  font-size: 0.62rem;
-  color: var(--text-muted, #94a3b8);
+  font-size: 0.64rem;
+  color: #94a3b8;
   margin-top: 6px;
 }
 
+/* Kotak Panduan Pasang Berstruktur */
 .ext-install-guide {
-  background: var(--modal-sec-bg, rgba(255, 255, 255, 0.03));
-  border: 1px dashed var(--modal-border, rgba(255, 255, 255, 0.1));
-  border-radius: 14px;
-  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 3px solid #f59e0b;
+  border-radius: 12px;
+  padding: 12px 14px;
   margin-bottom: 12px;
   text-align: left;
 }
 
 .install-heading {
-  font-size: 0.74rem;
+  font-size: 0.76rem;
   font-weight: 800;
-  color: var(--text-main, #ffffff);
-  margin: 0 0 6px 0;
+  color: #fbbf24;
+  margin: 0 0 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .install-steps {
   margin: 0;
-  padding-left: 18px;
-  font-size: 0.68rem;
-  color: var(--text-muted, #94a3b8);
-  line-height: 1.45;
+  padding-left: 20px;
+  font-size: 0.7rem;
+  color: #cbd5e1;
+  line-height: 1.5;
 }
 
 .install-steps li {
-  margin-bottom: 3px;
+  margin-bottom: 4px;
 }
 
 .install-steps code {
-  background: rgba(255, 255, 255, 0.08);
-  padding: 1px 4px;
-  border-radius: 4px;
-  color: var(--accent-cyan, #06b6d4);
-  font-size: 0.64rem;
+  background: rgba(79, 70, 229, 0.2);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  padding: 1.5px 5px;
+  border-radius: 5px;
+  color: #a5b4fc;
+  font-size: 0.65rem;
+  font-weight: 700;
 }

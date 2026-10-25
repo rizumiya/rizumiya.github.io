@@ -25,10 +25,11 @@
 </head>
 <body class="theme-minimal">
   <main class="console-page">
-    <!-- =========================================================
-         KONSOL HANDHELD ELEGAN MINIMALIS (MOCHI POCKET)
-         ========================================================= -->
-    <div class="gameboy-shell" id="gameboy-shell">
+    <div class="console-wrapper">
+      <!-- =========================================================
+           KONSOL HANDHELD ELEGAN MINIMALIS (MOCHI POCKET)
+           ========================================================= -->
+      <div class="gameboy-shell" id="gameboy-shell">
       <!-- Detail Minimalis Casing Atas (Earphone/Speaker Slot Halus) -->
       <div class="gb-top-bar" aria-hidden="true">
         <span class="gb-top-pill"></span>
@@ -43,9 +44,6 @@
             <span id="status-dot" class="battery-led led-idle"></span>
             <span id="status-label" class="battery-text">SANTAI</span>
           </div>
-          <button type="button" class="bezel-ext-chip" id="btn-open-ext-top" title="Bawa Aku Bersamamu di Mana Saja (Ekstensi Browser)">
-            <span>🧩</span> EKSTENSI
-          </button>
           <div class="bezel-brand">
             <span class="brand-accent">MOCHI</span> POCKET <span class="brand-dot">&bull;</span> ERI
           </div>
@@ -1415,18 +1413,19 @@
       </div>
     </div>
 
-    <!-- =========================================================
-         BARIS EKSTENSI BROWSER RAMPING DI BAWAH KONSOL
-         ========================================================= -->
-    <div class="console-ext-bar">
-      <button type="button" class="btn-console-ext-bar" id="btn-open-ext-bottom" title="Buka Detail Ekstensi Browser Mochi Pocket">
-        <span class="ext-bar-left">
-          <span class="ext-bar-icon">🧩</span>
-          <span class="ext-bar-title">Bawa Aku Bersamamu di Mana Saja!</span>
-          <span class="ext-bar-sub">(Ekstensi Browser)</span>
-        </span>
-        <span class="ext-bar-pill">Unduh / Info ↗</span>
-      </button>
+      <!-- =========================================================
+           BARIS EKSTENSI BROWSER RAMPING DI BAWAH KONSOL
+           ========================================================= -->
+      <div class="console-ext-bar">
+        <button type="button" class="btn-console-ext-bar" id="btn-open-ext-bottom" title="Buka Detail Ekstensi Browser Mochi Pocket">
+          <span class="ext-bar-left">
+            <span class="ext-bar-icon">🧩</span>
+            <span class="ext-bar-title">Bawa Aku Bersamamu di Mana Saja!</span>
+            <span class="ext-bar-sub">(Ekstensi Browser)</span>
+          </span>
+          <span class="ext-bar-pill">Unduh / Info ↗</span>
+        </button>
+      </div>
     </div>
   </main>
 
@@ -1894,8 +1893,11 @@
        ========================================================= -->
   <div id="extension-modal" class="modal-backdrop" hidden>
     <div class="modal-card ext-modal-card" role="dialog" aria-modal="true" aria-labelledby="ext-modal-title">
-      <div class="modal-header-badge">🧩 EKSTENSI BROWSER RESMI</div>
-      <button type="button" class="modal-close-btn" id="btn-close-ext-modal-x" aria-label="Tutup Modal">&times;</button>
+      <div class="ext-modal-top-bar">
+        <span class="modal-header-badge">🧩 EKSTENSI BROWSER RESMI</span>
+        <button type="button" class="modal-close-btn" id="btn-close-ext-modal-x" aria-label="Tutup Modal" title="Tutup">&times;</button>
+      </div>
+
       <h2 id="ext-modal-title" class="modal-title">Bawa Aku Bersamamu di Mana Saja! 🐾</h2>
       <p class="modal-intro">
         Temani aktivitas browsing dan kerjamu di tab mana pun dengan layar peliharaan mungil melayang di pojok kiri bawah layar tanpa mengganggu tab yang sedang kamu buka.
@@ -1903,23 +1905,34 @@
 
       <div class="ext-features-grid">
         <div class="ext-feature-card">
-          <span class="ext-feat-icon">🔄</span>
+          <div class="ext-feat-icon-badge" aria-hidden="true">🔄</div>
           <div class="ext-feat-info">
-            <strong>Status Sinkron Realtime</strong>
+            <div class="ext-feat-title-row">
+              <strong>Status Sinkron Realtime</strong>
+              <span class="feat-tag feat-tag-sync">Realtime</span>
+            </div>
             <p>Level, EXP, rasa lapar, energi, dan mood pet tersinkron otomatis dengan konsol web ini.</p>
           </div>
         </div>
+
         <div class="ext-feature-card">
-          <span class="ext-feat-icon">🍙</span>
+          <div class="ext-feat-icon-badge" aria-hidden="true">🍙</div>
           <div class="ext-feat-info">
-            <strong>Auto-Feeder Otomatis</strong>
+            <div class="ext-feat-title-row">
+              <strong>Auto-Feeder Otomatis</strong>
+              <span class="feat-tag feat-tag-timer">Anti Lapar</span>
+            </div>
             <p>Fitur timer beri makan otomatis agar sahabat kecilmu tetap kenyang dan tidak mati saat kamu sibuk.</p>
           </div>
         </div>
+
         <div class="ext-feature-card">
-          <span class="ext-feat-icon">🎨</span>
+          <div class="ext-feat-icon-badge" aria-hidden="true">🎨</div>
           <div class="ext-feat-info">
-            <strong>Dukungan Mod Kustom</strong>
+            <div class="ext-feat-title-row">
+              <strong>Dukungan Mod Kustom</strong>
+              <span class="feat-tag feat-tag-mod">SDK V2</span>
+            </div>
             <p>Bisa impor wujud naga imut, latar kawah vulkano, atau karakter buatanmu sendiri ke widget browser.</p>
           </div>
         </div>
@@ -1927,7 +1940,7 @@
 
       <div class="ext-download-cta">
         <a href="mochi-pocket-extension.zip" download="mochi-pocket-extension.zip" class="btn-download-ext-primary">
-          <span>📥</span> Unduh Ekstensi Browser (.zip)
+          <span class="btn-icon">📥</span> Unduh Ekstensi Browser (.zip)
         </a>
         <span class="ext-file-info">Versi 2.0.0 &bull; Manifest V3 &bull; Kompatibel Chrome, Edge, Brave</span>
       </div>
@@ -1942,8 +1955,8 @@
         </ol>
       </div>
 
-      <div class="modal-footer-actions">
-        <button type="button" class="btn-action-secondary" id="btn-close-ext-modal">Tutup</button>
+      <div class="modal-actions" style="margin-top: 14px;">
+        <button type="button" class="btn-secondary" id="btn-close-ext-modal">Tutup</button>
       </div>
     </div>
   </div>
