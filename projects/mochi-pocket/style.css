@@ -553,6 +553,13 @@ body {
   border: 1px solid var(--hud-border);
   min-width: 64px;
   text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.12s ease;
+}
+
+.bezel-form-tag:hover {
+  border-color: var(--accent-rose);
+  transform: translateY(-1px);
 }
 
 /* Layar Utama Konsol */
@@ -640,6 +647,391 @@ body {
   border-radius: 99px;
   background: var(--cute-gradient);
   color: #ffffff;
+}
+
+.hud-scene-icon {
+  font-size: 0.78rem;
+  line-height: 1;
+  margin-left: 1px;
+}
+
+/* ==========================================================================
+   3B. LATAR DUNIA KARAKTER BERDASARKAN LEVEL (TAMAN, HUJAN, BUNGA, ANGKER, BINTANG)
+   ========================================================================== */
+
+.scene-bg-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* 1. Lv.2: Taman Cerah (Sunny Park) */
+.gb-screen[data-scene="sunny_park"] {
+  background:
+    radial-gradient(circle at 84% 18%, rgba(254, 240, 138, 0.85) 0%, rgba(253, 224, 71, 0.25) 28%, transparent 54%),
+    linear-gradient(180deg, #60a5fa 0%, #bae6fd 66%, #86efac 66%, #4ade80 100%);
+}
+
+/* 2. Lv.3: Hari Hujan (Rainy Day) */
+.gb-screen[data-scene="rainy_day"] {
+  background:
+    radial-gradient(circle at 50% 12%, rgba(148, 163, 184, 0.22), transparent 55%),
+    linear-gradient(180deg, #1e293b 0%, #334155 66%, #1e293b 66%, #0f172a 100%);
+}
+
+/* 3. Lv.5: Taman Bunga (Flower Garden) */
+.gb-screen[data-scene="flower_garden"] {
+  background:
+    radial-gradient(circle at 50% 24%, rgba(255, 255, 255, 0.6), transparent 60%),
+    linear-gradient(180deg, #fbcfe8 0%, #fce7f3 65%, #a7f3d0 65%, #6ee7b7 100%);
+}
+
+/* 4. Lv.7: Rumah Angker (Haunted House) */
+.gb-screen[data-scene="haunted_house"] {
+  background:
+    radial-gradient(circle at 22% 22%, rgba(139, 92, 246, 0.25) 0%, transparent 45%),
+    linear-gradient(180deg, #090414 0%, #1b0c30 66%, #120721 66%, #07030e 100%);
+}
+
+/* 5. Lv.11: Malam Berbintang (Starry Night) */
+.gb-screen[data-scene="starry_night"] {
+  background:
+    radial-gradient(circle at 82% 20%, rgba(254, 249, 195, 0.24), transparent 42%),
+    linear-gradient(180deg, #060919 0%, #172554 66%, #0f172a 66%, #020617 100%);
+}
+
+/* Elemen Dekorasi di Dalam #scene-bg-layer */
+.scene-sun {
+  position: absolute;
+  top: 38px;
+  right: 22px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fef9c3 25%, #facc15 100%);
+  box-shadow: 0 0 22px rgba(250, 204, 21, 0.85);
+  animation: sceneSunPulse 3.2s ease-in-out infinite alternate;
+}
+
+@keyframes sceneSunPulse {
+  0% {
+    transform: scale(0.94);
+    box-shadow: 0 0 16px rgba(250, 204, 21, 0.7);
+  }
+  100% {
+    transform: scale(1.08);
+    box-shadow: 0 0 28px rgba(250, 204, 21, 0.95);
+  }
+}
+
+.scene-cloud {
+  position: absolute;
+  font-size: 1.45rem;
+  opacity: 0.86;
+  filter: drop-shadow(0 3px 6px rgba(255, 255, 255, 0.35));
+  animation: sceneCloudDrift var(--drift-dur, 14s) ease-in-out infinite alternate;
+}
+
+@keyframes sceneCloudDrift {
+  0% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(18px);
+  }
+}
+
+.scene-horizon-deco {
+  position: absolute;
+  bottom: 31%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  padding: 0 14px;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.scene-raindrop {
+  position: absolute;
+  top: -24px;
+  width: 2px;
+  height: 18px;
+  border-radius: 99px;
+  background: linear-gradient(180deg, transparent, rgba(147, 197, 253, 0.82));
+  animation: sceneRainFall var(--rain-dur, 0.75s) linear infinite;
+  animation-delay: var(--rain-delay, 0s);
+}
+
+@keyframes sceneRainFall {
+  0% {
+    transform: translate3d(8px, -10px, 0) rotate(12deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate3d(-24px, 340px, 0) rotate(12deg);
+    opacity: 0.15;
+  }
+}
+
+.scene-puddle {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  width: 136px;
+  height: 22px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  border: 1.5px solid rgba(147, 197, 253, 0.42);
+  animation: scenePuddleRipple 2.2s ease-out infinite;
+}
+
+@keyframes scenePuddleRipple {
+  0% {
+    transform: translateX(-50%) scale(0.75);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateX(-50%) scale(1.22);
+    opacity: 0;
+  }
+}
+
+.scene-petal {
+  position: absolute;
+  top: -20px;
+  font-size: 0.88rem;
+  animation: scenePetalFall var(--petal-dur, 5.5s) linear infinite;
+  animation-delay: var(--petal-delay, 0s);
+}
+
+@keyframes scenePetalFall {
+  0% {
+    transform: translate3d(0, -10px, 0) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.92;
+  }
+  50% {
+    transform: translate3d(18px, 160px, 0) rotate(140deg);
+  }
+  100% {
+    transform: translate3d(-12px, 330px, 0) rotate(290deg);
+    opacity: 0;
+  }
+}
+
+/* Dekorasi Khusus Rumah Angker (Bulan Ungu, Jaring Laba-laba, Roh Melayang, Kabut) */
+.scene-spooky-moon {
+  position: absolute;
+  top: 40px;
+  left: 20px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #f3e8ff 10%, #c084fc 65%, rgba(126, 34, 206, 0) 100%);
+  box-shadow: 0 0 22px rgba(168, 85, 247, 0.72);
+  opacity: 0.88;
+}
+
+.scene-cobweb {
+  position: absolute;
+  top: 34px;
+  right: 8px;
+  font-size: 1.5rem;
+  opacity: 0.42;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.25));
+}
+
+.scene-wisp {
+  position: absolute;
+  font-size: 1.05rem;
+  filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.85));
+  animation: sceneWispFloat var(--wisp-dur, 3.2s) ease-in-out infinite alternate;
+}
+
+@keyframes sceneWispFloat {
+  0% {
+    transform: translate3d(-6px, 6px, 0) scale(0.9);
+    opacity: 0.45;
+  }
+  100% {
+    transform: translate3d(8px, -12px, 0) scale(1.1);
+    opacity: 0.92;
+  }
+}
+
+.scene-fog {
+  position: absolute;
+  bottom: 0;
+  left: -15%;
+  right: -15%;
+  height: 68px;
+  background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.26) 0%, rgba(15, 7, 30, 0) 72%);
+  animation: sceneFogCreep 5s ease-in-out infinite alternate;
+}
+
+@keyframes sceneFogCreep {
+  0% {
+    transform: translateX(-14px) scaleY(0.92);
+    opacity: 0.55;
+  }
+  100% {
+    transform: translateX(14px) scaleY(1.12);
+    opacity: 0.9;
+  }
+}
+
+.scene-star {
+  position: absolute;
+  color: #fef08a;
+  font-size: 0.72rem;
+  animation: sceneStarTwinkle var(--star-dur, 2s) ease-in-out infinite alternate;
+}
+
+@keyframes sceneStarTwinkle {
+  0% {
+    opacity: 0.25;
+    transform: scale(0.75);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Reaksi Khusus Karakter di Rumah Angker:
+   - Saat Idle: Alih-alih melompat ceria, karakter menggigil ketakutan (hauntedShiverIdle)!
+   - Saat Hover (Kaget): Terkejut ketakutan & menciut gemetar! */
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .Aurora-Dia,
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .lifelike-actor {
+  animation: hauntedShiverIdle 0.46s ease-in-out infinite !important;
+}
+
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .head-shape::after {
+  background: linear-gradient(
+    180deg,
+    rgba(49, 46, 129, 0.58) 0%,
+    rgba(88, 28, 135, 0.22) 52%,
+    transparent 85%
+  );
+  opacity: 0.85;
+}
+
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .hamster-angry-shade {
+  opacity: 0.48;
+  filter: hue-rotate(245deg);
+}
+
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .hamster-hands-svg {
+  animation: none;
+}
+
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .ear.left {
+  transform: rotate(-36deg) translate(-3px, 6px);
+}
+
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .ear.right {
+  transform: rotate(36deg) translate(3px, 6px);
+}
+
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .mouth-svg {
+  transform: scaleY(-0.8) scaleX(0.86) translateY(2px);
+}
+
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-idle .shiba-tongue-svg {
+  opacity: 0;
+}
+
+@keyframes hauntedShiverIdle {
+  0%,
+  100% {
+    transform: translate3d(0, 4px, 0) scale(0.96, 0.94);
+  }
+  25% {
+    transform: translate3d(-2.2px, 5px, 0) scale(0.95, 0.94) rotate(-1.2deg);
+  }
+  50% {
+    transform: translate3d(2.2px, 4px, 0) scale(0.97, 0.93) rotate(1.2deg);
+  }
+  75% {
+    transform: translate3d(-1.8px, 5px, 0) scale(0.96, 0.94) rotate(-0.8deg);
+  }
+}
+
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-surprised .Aurora-Dia,
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-surprised .lifelike-actor {
+  animation: hauntedTerrifiedShock 0.85s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards !important;
+}
+
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-surprised .eye-ball {
+  transform: scale(0.84) !important;
+}
+
+.gb-screen[data-scene="haunted_house"] .pet-interactive.state-surprised .mouth-svg {
+  transform: scaleY(-1.1) scaleX(0.82) translateY(3px);
+}
+
+@keyframes hauntedTerrifiedShock {
+  0% {
+    transform: translateY(4px) scale(0.96, 0.94);
+  }
+  20% {
+    transform: translateY(-9px) scale(0.88, 1.12);
+  }
+  38% {
+    transform: translate(-3.5px, 5px) scale(1.06, 0.88);
+  }
+  52% {
+    transform: translate(3.5px, 6px) scale(0.93, 0.92);
+  }
+  68% {
+    transform: translate(-3px, 5px) scale(0.95, 0.93);
+  }
+  84% {
+    transform: translate(2.5px, 5px) scale(0.96, 0.94);
+  }
+  100% {
+    transform: translateY(4px) scale(0.96, 0.94);
+  }
+}
+
+/* Reaksi Idle Lembut Saat Hujan & Taman Bunga */
+.gb-screen[data-scene="rainy_day"] .pet-interactive.state-idle .Aurora-Dia,
+.gb-screen[data-scene="rainy_day"] .pet-interactive.state-idle .lifelike-actor {
+  animation: rainChillyIdle 3.2s ease-in-out infinite;
+}
+
+@keyframes rainChillyIdle {
+  0%,
+  100% {
+    transform: translateY(2px) scale(1.02, 0.96);
+  }
+  50% {
+    transform: translateY(0) scale(0.99, 1.01);
+  }
+}
+
+.gb-screen[data-scene="flower_garden"] .pet-interactive.state-idle .Aurora-Dia,
+.gb-screen[data-scene="flower_garden"] .pet-interactive.state-idle .lifelike-actor {
+  animation: flowerSwayIdle 2.8s ease-in-out infinite;
+}
+
+@keyframes flowerSwayIdle {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2.5deg) scale(1.01, 0.99);
+  }
+  50% {
+    transform: translateY(-5px) rotate(2.5deg) scale(0.99, 1.02);
+  }
 }
 
 .hud-gauges {
@@ -1227,6 +1619,29 @@ body {
   z-index: 10;
 }
 
+/* Bayangan Dahi Merah Padam / Suram Saat Marah (Agar Wajah Tidak Terlihat Berseri) */
+.head-shape::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(105, 14, 24, 0.76) 0%,
+    rgba(185, 28, 28, 0.36) 50%,
+    rgba(185, 28, 28, 0) 88%
+  );
+  opacity: 0;
+  pointer-events: none;
+  z-index: 12;
+  transition: opacity 0.2s ease;
+}
+
+.hamster-angry-shade {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
 .forehead-stripes {
   position: absolute;
   top: -8px;
@@ -1280,6 +1695,30 @@ body {
   position: relative;
   transform-origin: center center;
   animation: naturalBlink 5.2s infinite;
+}
+
+/* Garis Kelopak / Alis Menukik Tajam Saat Marah (\ /) */
+.eye-socket::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: -5px;
+  right: -5px;
+  height: 6px;
+  border-radius: 99px;
+  background: var(--outline);
+  z-index: 26;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.18s ease;
+}
+
+.eye-socket:first-child::after {
+  transform: translateY(-6px) rotate(22deg);
+}
+
+.eye-socket:last-child::after {
+  transform: translateY(-6px) rotate(-22deg);
 }
 
 .eye-ball {
@@ -1705,20 +2144,128 @@ body {
 
 .state-angry .Aurora-Dia,
 .state-angry .lifelike-actor {
-  animation: angryTremble 0.45s linear infinite !important;
+  animation: angryTremble 0.42s linear infinite !important;
 }
 
-.state-angry .blush {
-  background-color: #ef4444 !important;
-  transform: scale(1.22);
+/* Wajah & Mata Puni Mochi Saat Marah: Merah Padam & Mata Menukik Tajam */
+.state-angry .Aurora-Dia {
+  background: linear-gradient(165deg, #7f1d1d 0%, #dc2626 52%, #991b1b 100%) !important;
+  box-shadow:
+    inset 0 10px 14px rgba(45, 6, 12, 0.72),
+    inset 0 -8px 0 rgba(69, 10, 10, 0.5) !important;
+}
+
+.state-angry .Aurora-Dia--eye {
+  animation: none !important;
+  background-color: #26080c !important;
+}
+
+.state-angry .Aurora-Dia--eye.left {
+  transform: rotate(24deg) scaleY(0.76) !important;
+  border-radius: 2px 9px 12px 12px;
+}
+
+.state-angry .Aurora-Dia--eye.right {
+  transform: rotate(-24deg) scaleY(0.76) !important;
+  border-radius: 9px 2px 12px 12px;
+}
+
+.state-angry .Aurora-Dia--eye::after {
+  opacity: 0 !important;
+}
+
+.state-angry .orb-blush {
+  background: #450a0a !important;
+  opacity: 0.75 !important;
+  transform: scale(1.18);
+}
+
+/* Wajah & Mata Hewan (Neko, Hamster, Shiba, Landak) Saat Marah:
+   - Bayangan dahi merah tua/suram agar tidak tampak berseri
+   - Mata terpotong miring tajam (\ /) tanpa kilau imut bawah
+   - Mulut terbalik cemberut (︵) */
+.state-angry .chara-rig {
+  filter: saturate(1.16) brightness(0.9) contrast(1.06);
+}
+
+.state-angry .head-shape::after,
+.state-angry .hamster-angry-shade {
+  opacity: 1;
+}
+
+.state-angry .eye-socket {
+  animation: none !important;
+}
+
+.state-angry .eye-socket:first-child::after {
+  opacity: 1;
+  transform: translateY(1px) rotate(22deg);
+}
+
+.state-angry .eye-socket:last-child::after {
+  opacity: 1;
+  transform: translateY(1px) rotate(-22deg);
+}
+
+.state-angry .eye-socket:first-child .eye-ball {
+  clip-path: polygon(0% 8%, 100% 42%, 100% 100%, 0% 100%);
+}
+
+.state-angry .eye-socket:last-child .eye-ball {
+  clip-path: polygon(0% 42%, 100% 8%, 100% 100%, 0% 100%);
+}
+
+.state-angry .shine-small {
+  opacity: 0 !important;
+}
+
+.state-angry .shine-large {
+  transform: scale(0.55) translate(4px, 8px);
+  opacity: 0.82;
+}
+
+.state-angry .blush,
+.state-angry .hamster-cheek {
+  background: #991b1b !important;
+  opacity: 0.78 !important;
+  transform: scale(1.16);
+  animation: none !important;
+  box-shadow: 0 0 8px rgba(185, 28, 28, 0.45);
+}
+
+.state-angry .hamster-cheek::after {
+  opacity: 0 !important;
+}
+
+.state-angry .hamster-hands-svg {
+  animation: none !important;
+}
+
+.state-angry .mouth-svg {
+  transform: scaleY(-1) translateY(3px);
+}
+
+.state-angry .shiba-tongue-svg {
+  opacity: 0 !important;
+  animation: none !important;
+}
+
+.state-angry .shiba-brow:first-child {
+  transform: rotate(25deg) translateY(6px);
+  background: #fca5a5;
+}
+
+.state-angry .shiba-brow:last-child {
+  transform: rotate(-25deg) translateY(6px);
+  background: #fca5a5;
 }
 
 .state-angry .ear.left {
-  transform: rotate(-52deg) translate(-6px, 12px) !important;
+  transform: rotate(-48deg) translate(-6px, 10px) !important;
 }
 
 .state-angry .ear.right {
-  transform: rotate(52deg) translate(6px, 12px) !important;
+  transform: rotate(48deg) translate(6px, 10px) !important;
 }
 
 @keyframes angryTremble {
@@ -1819,9 +2366,179 @@ body {
 }
 
 /* ==========================================================================
-   12. MINI-GAME TANGKAP BINTANG DI DALAM LAYAR
+   12. LACI PILIHAN GAME (SCROLL KANAN-KIRI) & 3 MINI-GAME DI DALAM LAYAR
    ========================================================================== */
 
+/* Saat Laci Pilihan Game terbuka, naikkan sedikit posisi karakter agar tidak tertutup */
+.gb-screen.game-selector-open .pet-interactive {
+  bottom: 92px;
+  transform: translateX(-50%) scale(0.74);
+  transform-origin: center bottom;
+  transition: bottom 0.25s cubic-bezier(0.22, 1, 0.36, 1), transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gb-screen.game-selector-open #Aurora-Dia--tips-wrapper {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Laci Pilihan Game di Bawah Karakter */
+.game-selector-drawer {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 7px;
+  z-index: 48;
+  background: var(--hud-bg);
+  backdrop-filter: blur(8px);
+  border: 1.5px solid var(--bubble-border);
+  border-radius: 14px;
+  padding: 6px 7px 7px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24);
+  animation: drawerSlideUp 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes drawerSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.game-selector-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  padding: 0 3px;
+}
+
+.game-selector-title {
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--text-main);
+}
+
+.game-selector-title small {
+  font-weight: 700;
+  color: var(--accent-rose);
+  margin-left: 3px;
+}
+
+.game-carousel-wrap {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.game-nav-arrow {
+  width: 22px;
+  height: 46px;
+  border-radius: 9px;
+  border: 1.5px solid var(--bubble-border);
+  background: var(--bubble-bg);
+  color: var(--text-main);
+  font-size: 0.68rem;
+  font-family: "JetBrains Mono", monospace;
+  font-variant-emoji: text;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+.game-nav-arrow:hover {
+  border-color: var(--accent-rose);
+  color: var(--accent-rose);
+}
+
+.game-nav-arrow:active {
+  transform: scale(0.92);
+}
+
+.game-cards-track {
+  display: flex;
+  align-items: stretch;
+  gap: 7px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  touch-action: pan-x;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 2px;
+  flex: 1;
+  cursor: grab;
+}
+
+.game-cards-track::-webkit-scrollbar {
+  display: none;
+}
+
+.game-card-option {
+  flex: 0 0 136px;
+  scroll-snap-align: center;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 9px;
+  border-radius: 11px;
+  background: var(--bubble-bg);
+  border: 1.5px solid var(--bubble-border);
+  color: var(--bubble-text);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.16s ease, background-color 0.16s ease, transform 0.12s ease;
+}
+
+.game-card-option:hover,
+.game-card-option.active {
+  border-color: var(--accent-rose);
+  background: rgba(236, 107, 136, 0.15);
+}
+
+.game-card-option:active {
+  transform: scale(0.96);
+}
+
+.game-card-icon {
+  font-size: 1.32rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.game-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.game-card-info strong {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--text-main);
+  white-space: nowrap;
+}
+
+.game-card-info span {
+  font-size: 0.59rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* HUD Mini-Game */
 .minigame-hud {
   position: absolute;
   top: 42px;
@@ -1863,6 +2580,72 @@ body {
   overflow: hidden;
 }
 
+/* Mode Karakter Bergerak Kiri-Kanan (Game Tangkap Makan & Sundul Bola) */
+.gb-screen.minigame-player-mode .pet-interactive {
+  bottom: 6px;
+  left: var(--player-x, 50%);
+  transform: translateX(-50%) scale(0.66);
+  transform-origin: center bottom;
+  transition: none;
+  z-index: 43;
+}
+
+.gb-screen.minigame-player-mode .pet-interactive.headbutt-pop {
+  animation: headbuttBounce 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes headbuttBounce {
+  0% {
+    transform: translateX(-50%) translateY(0) scale(0.66, 0.66);
+  }
+  45% {
+    transform: translateX(-50%) translateY(-14px) scale(0.63, 0.72);
+  }
+  100% {
+    transform: translateX(-50%) translateY(0) scale(0.66, 0.66);
+  }
+}
+
+/* Tombol Sentuh Kiri/Kanan Transparan di Sudut Bawah Layar saat Game Gerak Karakter */
+.minigame-move-btn {
+  position: absolute;
+  bottom: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--hud-bg);
+  border: 1.5px solid var(--hud-border);
+  color: var(--text-main);
+  font-family: "JetBrains Mono", monospace;
+  font-variant-emoji: text;
+  font-size: 0.75rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 45;
+  opacity: 0.72;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.16);
+  transition: opacity 0.15s ease, transform 0.1s ease;
+}
+
+.minigame-move-btn:hover,
+.minigame-move-btn:active {
+  opacity: 1;
+  border-color: var(--accent-rose);
+  transform: scale(0.92);
+}
+
+.minigame-move-btn.left {
+  left: 8px;
+}
+
+.minigame-move-btn.right {
+  right: 8px;
+}
+
+/* Game 1: Koin & Bintang Jatuh */
 .falling-star {
   position: absolute;
   top: -42px;
@@ -1870,15 +2653,15 @@ body {
   height: 44px;
   border-radius: 50%;
   border: 2px solid #ffffff;
-  background: linear-gradient(135deg, #ffd166 0%, #f48fb1 100%);
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 55%, #ec6b88 100%);
   color: #ffffff;
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   cursor: pointer;
   touch-action: manipulation;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(236, 107, 136, 0.35);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.38);
   animation: fallDownStar var(--fall-duration, 3.8s) linear forwards;
 }
 
@@ -1909,6 +2692,59 @@ body {
     transform: scale(1.8);
     opacity: 0;
   }
+}
+
+/* Game 2: Item Makanan vs Racun */
+.catcher-item {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  will-change: left, top;
+}
+
+.catcher-item.food-item {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.94) 0%, rgba(254, 215, 170, 0.88) 100%);
+  border: 2px solid #f59e6c;
+  box-shadow: 0 4px 10px rgba(245, 158, 108, 0.32);
+}
+
+.catcher-item.poison-item {
+  background: radial-gradient(circle, #4c1d95 0%, #7f1d1d 100%);
+  border: 2px solid #ef4444;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.65);
+  animation: poisonPulse 0.45s ease-in-out infinite alternate;
+}
+
+@keyframes poisonPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.94);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+}
+
+/* Game 3: Bola Sundul */
+.soccer-ball-el {
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.55rem;
+  line-height: 1;
+  filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.3));
+  pointer-events: none;
+  will-change: left, top, transform;
 }
 
 /* ==========================================================================
@@ -2098,9 +2934,21 @@ body {
 }
 
 .btn-glyph {
-  display: inline-block;
-  font-size: 1.08rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-size: 1.12rem;
   transform: rotate(16deg);
+}
+
+/* Koreksi optik vertikal halus agar ikon Gamepad (🎮) tepat di tengah lingkaran seperti Onigiri (🍙) */
+.btn-b .btn-glyph {
+  transform: rotate(16deg) translateY(-1.2px);
+}
+
+.btn-a .btn-glyph {
+  transform: rotate(16deg) translateY(-0.5px);
 }
 
 .btn-b {
@@ -2142,7 +2990,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 22px;
+  gap: 15px;
 }
 
 .pill-btn-wrap {
@@ -2360,6 +3208,15 @@ body {
   font-size: 0.74rem;
   font-weight: 700;
   color: var(--text-main);
+}
+
+.picker-option.locked-scene {
+  cursor: not-allowed;
+}
+
+.picker-option.locked-scene span {
+  opacity: 0.48;
+  border-style: dashed;
 }
 
 .aurora-input,

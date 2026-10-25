@@ -47,6 +47,7 @@ const DEFAULT_PET_STATE = {
   isInitialized: false,
   activeForm: "orb",
   theme: "obsidian",
+  scenePreference: "auto",
   live2dPreset: "koharu",
   customLive2dUrl: "",
   level: 1,
@@ -60,6 +61,60 @@ const DEFAULT_PET_STATE = {
 };
 
 const VALID_THEMES = ["obsidian", "twilight", "slate", "matcha", "cream", "sakura"];
+
+const SCENE_ORDER = [
+  "default",
+  "sunny_park",
+  "rainy_day",
+  "flower_garden",
+  "haunted_house",
+  "starry_night"
+];
+
+const SCENE_META = {
+  default: {
+    id: "default",
+    unlockLevel: 1,
+    icon: "🏠",
+    name: "Kamar",
+    label: "🏠 Kamar (Lv.1)"
+  },
+  sunny_park: {
+    id: "sunny_park",
+    unlockLevel: 2,
+    icon: "🌤️",
+    name: "Taman",
+    label: "🌤️ Taman (Lv.2)"
+  },
+  rainy_day: {
+    id: "rainy_day",
+    unlockLevel: 3,
+    icon: "🌧️",
+    name: "Hujan",
+    label: "🌧️ Hujan (Lv.3)"
+  },
+  flower_garden: {
+    id: "flower_garden",
+    unlockLevel: 5,
+    icon: "🌸",
+    name: "Bunga",
+    label: "🌸 Bunga (Lv.5)"
+  },
+  haunted_house: {
+    id: "haunted_house",
+    unlockLevel: 7,
+    icon: "🪦",
+    name: "Kuburan",
+    label: "🪦 Kuburan (Lv.7)"
+  },
+  starry_night: {
+    id: "starry_night",
+    unlockLevel: 11,
+    icon: "🌌",
+    name: "Bintang",
+    label: "🌌 Bintang (Lv.11)"
+  }
+};
 
 function applyConsoleTheme(themeKey) {
   const safeTheme = VALID_THEMES.includes(themeKey) ? themeKey : "obsidian";
@@ -187,6 +242,8 @@ const tipsTextEl = document.getElementById("Aurora-Dia--tips");
 
 const petNameDisplay = document.getElementById("pet-name-display");
 const petLevelBadge = document.getElementById("pet-level-badge");
+const petSceneBadge = document.getElementById("pet-scene-badge");
+const sceneBgLayer = document.getElementById("scene-bg-layer");
 const bezelFormName = document.getElementById("bezel-form-name");
 const statusDot = document.getElementById("status-dot");
 const statusLabel = document.getElementById("status-label");
@@ -205,14 +262,24 @@ const live2dModelSelect = document.getElementById("live2d-model-select");
 const live2dCustomUrl = document.getElementById("live2d-custom-url");
 
 const guideModal = document.getElementById("guide-modal");
+const characterModal = document.getElementById("character-modal");
+const characterForm = document.getElementById("character-form");
 const settingsModal = document.getElementById("settings-modal");
 const settingsForm = document.getElementById("settings-form");
 const petNameInput = document.getElementById("pet-name-input");
 
 const minigameHud = document.getElementById("minigame-hud");
 const minigameLayer = document.getElementById("minigame-layer");
+const minigameIconEl = document.getElementById("minigame-icon");
 const minigameScoreEl = document.getElementById("minigame-score");
 const minigameTimerEl = document.getElementById("minigame-timer");
+
+const gameSelectorDrawer = document.getElementById("game-selector-drawer");
+const gameCardsTrack = document.getElementById("game-cards-track");
+const gameCardButtons = Array.from(document.querySelectorAll(".game-card-option"));
+const btnCloseGameSelector = document.getElementById("btn-close-game-selector");
+const btnGameScrollLeft = document.getElementById("game-scroll-left");
+const btnGameScrollRight = document.getElementById("game-scroll-right");
 
 /* ==========================================================================
    3. STATE UTAMA & HELPER
@@ -236,12 +303,172 @@ let lastPetRewardTime = 0;
 
 let loadedLive2dUrl = "";
 let talkIndex = 0;
+let activeSceneKey = "default";
+let renderedSceneKey = "";
+
+function getHighestUnlockedScene(level = 1) {
+  let best = "default";
+  SCENE_ORDER.forEach((key) => {
+    if (level >= SCENE_META[key].unlockLevel) {
+      best = key;
+    }
+  });
+  return best;
+}
+
+function resolveActiveScene() {
+  const pref = pet.scenePreference || "auto";
+  if (pref !== "auto" && SCENE_META[pref] && (pet.level || 1) >= SCENE_META[pref].unlockLevel) {
+    return pref;
+  }
+  return getHighestUnlockedScene(pet.level || 1);
+}
+
+function renderSceneBackground(sceneKey) {
+  const safeScene = SCENE_META[sceneKey] ? sceneKey : "default";
+  activeSceneKey = safeScene;
+
+  if (petStageEl) {
+    petStageEl.dataset.scene = safeScene;
+  }
+
+  const meta = SCENE_META[safeScene];
+  if (petSceneBadge) {
+    petSceneBadge.textContent = meta.icon;
+    petSceneBadge.title = `Latar: ${meta.name} (Terbuka Lv.${meta.unlockLevel})`;
+  }
+
+  if (!sceneBgLayer || renderedSceneKey === safeScene) return;
+  renderedSceneKey = safeScene;
+  sceneBgLayer.innerHTML = "";
+
+  if (safeScene === "sunny_park") {
+    sceneBgLayer.innerHTML = `
+      <div class="scene-sun"></div>
+      <div class="scene-cloud" style="top: 42px; left: 12%; --drift-dur: 11s;">☁️</div>
+      <div class="scene-cloud" style="top: 66px; left: 56%; --drift-dur: 15s;">⛅</div>
+      <div class="scene-horizon-deco">
+        <span>🌼</span><span>🌱</span><span>🌷</span><span>🍀</span><span>🌻</span>
+      </div>
+    `;
+  } else if (safeScene === "rainy_day") {
+    let dropsHtml = "";
+    for (let i = 0; i < 14; i += 1) {
+      const leftPct = 6 + i * 6.6;
+      const dur = (0.62 + (i % 4) * 0.11).toFixed(2);
+      const delay = ((i * 0.17) % 0.9).toFixed(2);
+      dropsHtml += `<div class="scene-raindrop" style="left:${leftPct.toFixed(1)}%; --rain-dur:${dur}s; --rain-delay:${delay}s;"></div>`;
+    }
+    sceneBgLayer.innerHTML = `
+      <div class="scene-cloud" style="top: 36px; left: 14%; --drift-dur: 10s; opacity: 0.55;">🌧️</div>
+      <div class="scene-cloud" style="top: 40px; right: 16%; --drift-dur: 13s; opacity: 0.55;">⛈️</div>
+      ${dropsHtml}
+      <div class="scene-puddle"></div>
+    `;
+  } else if (safeScene === "flower_garden") {
+    const petals = ["🌸", "💮", "🌼", "🌸", "🌷", "💮", "🌸", "🌼"];
+    let petalsHtml = "";
+    petals.forEach((sym, idx) => {
+      const leftPct = 8 + idx * 11.5;
+      const dur = (4.6 + (idx % 3) * 0.9).toFixed(2);
+      const delay = (idx * 0.55).toFixed(2);
+      petalsHtml += `<div class="scene-petal" style="left:${leftPct.toFixed(1)}%; --petal-dur:${dur}s; --petal-delay:${delay}s;">${sym}</div>`;
+    });
+    sceneBgLayer.innerHTML = `
+      ${petalsHtml}
+      <div class="scene-horizon-deco">
+        <span>🌸</span><span>🌷</span><span>🌺</span><span>🌼</span><span>🌻</span><span>🌷</span>
+      </div>
+    `;
+  } else if (safeScene === "haunted_house") {
+    sceneBgLayer.innerHTML = `
+      <div class="scene-spooky-moon"></div>
+      <div class="scene-cobweb">🕸️</div>
+      <div class="scene-wisp" style="top: 84px; left: 14%; --wisp-dur: 2.7s;">👻</div>
+      <div class="scene-wisp" style="top: 114px; right: 14%; --wisp-dur: 3.4s;">🕯️</div>
+      <div class="scene-wisp" style="top: 62px; right: 28%; --wisp-dur: 3.9s;">🟣</div>
+      <div class="scene-horizon-deco" style="opacity: 0.48; bottom: 29%;">
+        <span>🪦</span><span>🥀</span><span>🪦</span><span>🦇</span>
+      </div>
+      <div class="scene-fog"></div>
+    `;
+  } else if (safeScene === "starry_night") {
+    let starsHtml = "";
+    for (let i = 0; i < 12; i += 1) {
+      const leftPct = 8 + ((i * 19) % 84);
+      const topPct = 14 + ((i * 13) % 44);
+      const dur = (1.5 + (i % 4) * 0.45).toFixed(2);
+      starsHtml += `<div class="scene-star" style="left:${leftPct}%; top:${topPct}%; --star-dur:${dur}s;">✦</div>`;
+    }
+    sceneBgLayer.innerHTML = `
+      <div class="scene-cloud" style="top: 38px; right: 20px; font-size: 1.45rem; --drift-dur: 18s;">🌙</div>
+      ${starsHtml}
+      <div class="scene-horizon-deco" style="opacity: 0.65;">
+        <span>✨</span><span>🌾</span><span>🌟</span><span>🌾</span><span>✨</span>
+      </div>
+    `;
+  }
+}
+
+function updateScenePickerLocks() {
+  const currentLevel = pet.level || 1;
+  if (
+    pet.scenePreference &&
+    pet.scenePreference !== "auto" &&
+    SCENE_META[pet.scenePreference] &&
+    currentLevel < SCENE_META[pet.scenePreference].unlockLevel
+  ) {
+    pet.scenePreference = "auto";
+  }
+
+  document.querySelectorAll('input[name="scene-bg"]').forEach((radioEl) => {
+    const val = radioEl.value;
+    const labelWrap = radioEl.closest(".picker-option");
+    const spanEl = labelWrap && labelWrap.querySelector("span[data-scene-label]");
+    if (!spanEl || val === "auto") return;
+
+    const meta = SCENE_META[val];
+    if (!meta) return;
+    const isUnlocked = currentLevel >= meta.unlockLevel;
+    radioEl.disabled = !isUnlocked;
+    if (!isUnlocked && radioEl.checked) {
+      radioEl.checked = false;
+      const autoRadio = document.querySelector('input[name="scene-bg"][value="auto"]');
+      if (autoRadio) autoRadio.checked = true;
+    }
+    labelWrap.classList.toggle("locked-scene", !isUnlocked);
+    spanEl.textContent = isUnlocked
+      ? `${meta.icon} ${meta.name} (Lv.${meta.unlockLevel})`
+      : `🔒 Lv.${meta.unlockLevel} ${meta.name}`;
+  });
+}
+
+const GAME_MODES = ["coin", "catcher", "header"];
+const GAME_META = {
+  coin: { icon: "🪙", title: "Koin Hoki", duration: 15, unit: "koin" },
+  catcher: { icon: "🍙", title: "Tangkap Makan", duration: 20, unit: "poin" },
+  header: { icon: "⚽", title: "Sundul Bola", duration: 25, unit: "sundulan" }
+};
+
+let isGameSelectorOpen = false;
+let selectedGameIndex = 0;
 
 let isPlayingMinigame = false;
+let activeMinigameType = "coin"; // "coin" | "catcher" | "header"
 let minigameScore = 0;
 let minigameSeconds = 15;
 let minigameSpawnTimer = null;
 let minigameCountdownTimer = null;
+let minigameRafId = null;
+let lastFrameTime = 0;
+
+// Kontrol Gerak Karakter Kiri-Kanan untuk Game 2 (Tangkap Makan) & Game 3 (Sundul Bola)
+let playerX = 50; // Persentase posisi horizontal (16% s/d 84%)
+let moveLeftHeld = false;
+let moveRightHeld = false;
+let isDraggingStagePlayer = false;
+let catcherItems = [];
+let soccerBall = null;
 
 function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, (ch) => {
@@ -267,6 +494,14 @@ function clampStat(val) {
    ========================================================================== */
 
 function setActorsTalking(isTalking) {
+  // Saat berada di Rumah Angker dalam keadaan idle, pertahankan efek menggigil ketakutan
+  if (activeSceneKey === "haunted_house" && currentState === "idle") {
+    auroraDiaEl.classList.remove("active");
+    document.querySelectorAll(".lifelike-actor").forEach((actor) => {
+      actor.classList.remove("talking");
+    });
+    return;
+  }
   auroraDiaEl.classList.toggle("active", isTalking);
   document.querySelectorAll(".lifelike-actor").forEach((actor) => {
     actor.classList.toggle("talking", isTalking);
@@ -333,35 +568,84 @@ function renderDashboard() {
   const meta = FORM_META[pet.activeForm] || FORM_META.orb;
   bezelFormName.textContent = `${meta.icon} ${meta.tag}`;
 
+  const nextScene = resolveActiveScene();
+  renderSceneBackground(nextScene);
+  updateScenePickerLocks();
+
+  const difficultyMultiplier = Math.pow(1.5, Math.max(0, (pet.level || 1) - 1));
   updateIconGauge(gaugeHunger, pet.hunger, "Kenyang");
   updateIconGauge(gaugeHappy, pet.happiness, "Bahagia");
   updateIconGauge(gaugeEnergy, pet.energy, "Energi");
-  updateIconGauge(gaugeExp, pet.exp, `EXP Lv.${pet.level}`);
+  updateIconGauge(
+    gaugeExp,
+    pet.exp,
+    `EXP Lv.${pet.level} (Usaha x${difficultyMultiplier.toFixed(1)})`
+  );
 
   if (live2dModelSelect && pet.live2dPreset) {
     live2dModelSelect.value = pet.live2dPreset;
   }
 }
 
+function getSceneUnlockDialogue(sceneKey) {
+  const n = petNameTag();
+  if (sceneKey === "sunny_park") {
+    return `🌤️ Latar Baru Terbuka: <span>Taman</span>! Wah udaranya segar banget, ayo jalan-jalan bareng ${n}~`;
+  }
+  if (sceneKey === "rainy_day") {
+    return `🌧️ Latar Baru Terbuka: <span>Hujan</span>! Brrr... rintik hujannya dingin, jangan lupa hangatkan ${n} ya~ ☔`;
+  }
+  if (sceneKey === "flower_garden") {
+    return `🌸 Latar Baru Terbuka: <span>Bunga</span>! Kelopak bunganya harum dan indah sekali~ 💐`;
+  }
+  if (sceneKey === "haunted_house") {
+    return `🪦 Latar Baru Terbuka: <span>Kuburan</span>! Hiii... tempat apa ini?! Gelap dan seram, jangan tinggalkan ${n} sendirian!! 😱👻`;
+  }
+  if (sceneKey === "starry_night") {
+    return `🌌 Latar Baru Terbuka: <span>Bintang</span>! Langit malamnya indah sekali bersama ${n}~ ✨`;
+  }
+  return "";
+}
+
 function addExpAndStats({ exp = 0, hunger = 0, happiness = 0, energy = 0 }) {
   pet.hunger = clampStat(pet.hunger + hunger);
   pet.happiness = clampStat(pet.happiness + happiness);
   pet.energy = clampStat(pet.energy + energy);
-  pet.exp = Math.max(0, pet.exp + exp);
+
+  // Penambahan EXP dipersulit 1.5x (+50% usaha lebih banyak) di setiap kenaikan level!
+  const prevLevel = pet.level || 1;
+  const difficultyMultiplier = Math.pow(1.5, Math.max(0, prevLevel - 1));
+  const scaledExp = exp > 0 ? exp / difficultyMultiplier : exp;
+  pet.exp = Math.max(0, Number((pet.exp + scaledExp).toFixed(2)));
 
   let leveledUp = false;
+  let newlyUnlockedScene = null;
+
   while (pet.exp >= 100) {
-    pet.exp -= 100;
+    pet.exp = Number((pet.exp - 100).toFixed(2));
     pet.level += 1;
     leveledUp = true;
+
+    const unlocked = SCENE_ORDER.find((k) => SCENE_META[k].unlockLevel === pet.level);
+    if (unlocked) {
+      newlyUnlockedScene = unlocked;
+    }
   }
 
   renderDashboard();
   db.save(pet);
 
   if (leveledUp) {
-    spawnBurstParticles(["🎉", "⭐", "✨", "💖"]);
-    say(`🎉 Hore! ${petNameTag()} naik ke <span>Level ${pet.level}</span>! Makasih sudah merawatku~`);
+    if (newlyUnlockedScene) {
+      const unlockMsg = getSceneUnlockDialogue(newlyUnlockedScene);
+      spawnBurstParticles([SCENE_META[newlyUnlockedScene].icon, "🎉", "⭐", "✨"]);
+      say(`🎉 Naik ke <span>Level ${pet.level}</span>! ${unlockMsg}`, 6500);
+    } else {
+      spawnBurstParticles(["🎉", "⭐", "✨", "💖"]);
+      say(
+        `🎉 Hore! ${petNameTag()} naik ke <span>Level ${pet.level}</span>! Makasih sudah merawatku~`
+      );
+    }
   }
 }
 
@@ -384,7 +668,8 @@ function switchState(newState, duration = null) {
   }
 
   currentState = newState;
-  petInteractive.className = `pet-interactive state-${newState}`;
+  const hasHeadbutt = petInteractive.classList.contains("headbutt-pop");
+  petInteractive.className = `pet-interactive state-${newState}${hasHeadbutt ? " headbutt-pop" : ""}`;
 
   const info = STATE_LED[newState] || STATE_LED.idle;
   statusDot.className = `battery-led ${info.led}`;
@@ -467,22 +752,111 @@ function spawnBurstParticles(symbols = ["✨", "💕", "⭐"]) {
   }
 }
 
-// 1. Interaksi Hover: Terkejut 1x Saja
+// 1. Interaksi Hover: Terkejut 1x Saja (Menyesuaikan Latar Dunia Karakter!)
+function getSceneHoverLines(sceneKey) {
+  const n = petNameTag();
+  if (sceneKey === "haunted_house") {
+    return [
+      `Hiii!! K-kamu bikin ${n} jantungan! Kirain hantu tadi!! 😱👻`,
+      `Waaaa!! Jangan ngagetin di Kuburan dong, bulu kuduk ${n} merinding semua! 😭`,
+      `Kyaaa! Tadi ada bayangan lewat di belakangmu!! Peluk ${n} cepat! 🥶`
+    ];
+  }
+  if (sceneKey === "rainy_day") {
+    return [
+      `Brrr! Tetesan hujannya dingin tahu! Payungi ${n} dong~ ☔`,
+      `Kyaa! Suara gemuruh petirnya bikin ${n} kaget! ⚡🌧️`,
+      `Wah! Hati-hati lantainya licin kena air hujan, nanti ${n} terpeleset~ 💧`
+    ];
+  }
+  if (sceneKey === "flower_garden") {
+    return [
+      `Wah! Ada kelopak bunga mendarat di hidung ${n}~ Harum sekali! 🌸`,
+      `Hehe, kamu mau ngajak ${n} memetik bunga bersama di taman ya? 💐`,
+      `Kupu-kupunya sampai ikut kaget waktu kamu menyapa ${n}~ 🦋✨`
+    ];
+  }
+  if (sceneKey === "sunny_park") {
+    return [
+      `Yuhu! Cuaca di Taman Cerah hangat banget, ayo kejar ${n}! 🌤️`,
+      `Wah! Kamu ngajak ${n} main petak umpet di taman ya? 😆🌻`,
+      `Mataharinya cerah! ${n} siap bermain seharian bareng kamu~ ✨`
+    ];
+  }
+  if (sceneKey === "starry_night") {
+    return [
+      `Wah! Barusan ada bintang jatuh lewat di atas kepala ${n}! Cepat buat permohonan~ 🌠`,
+      `Ssst~ Langit malamnya tenang banget, ${n} senang ditemani kamu di bawah bintang! 🌌`
+    ];
+  }
+  return [
+    `Waaaa... sedang apa kamu? ${n} kaget tahu! O.O`,
+    `Pelan-pelan dong, ${n} ini mungil dan menggemaskan~ O.O`,
+    `<span>Siap kapten!</span> Ada yang bisa ${n} bantu? ✨`
+  ];
+}
+
+function getSceneIdleLines(sceneKey) {
+  const n = petNameTag();
+  if (sceneKey === "haunted_house") {
+    return [
+      `Huuu... tempat ini gelap dan seram sekali... Jangan tinggalkan ${n} di sini sendirian ya... 🥺🕯️`,
+      `S-suara derit apa itu barusan?! Pegang tangan ${n} jangan dilepas ya... 👻`,
+      `${n} takut hantu... Ayo elus kepala ${n} biar lebih berani... 😭`,
+      `Jangan jauh-jauh dari ${n} ya, di pojok sana kayak ada yang mengintip... 🥶`
+    ];
+  }
+  if (sceneKey === "rainy_day") {
+    return [
+      `Hujannya belum reda ya... Enaknya makan onigiri hangat sambil ditemani kamu~ 🌧️🍙`,
+      `Suara rintik hujan bikin suasana teduh, tapi ${n} agak kedinginan nih~ ☔`,
+      `Jangan lupa pakai jaket kalau keluar ya, ${n} tidak mau kamu masuk angin~ 💕`
+    ];
+  }
+  if (sceneKey === "flower_garden") {
+    return [
+      `Lihat! Banyak kelopak bunga berterbangan mengelilingi ${n}~ Indah banget! 🌸`,
+      `Wangi bunga di taman ini bikin hati ${n} tenang dan bahagia sekali~ 🌷✨`,
+      `Kalau ${n} selipkan bunga di telinga, kelihatan makin imut tidak? 🌺`
+    ];
+  }
+  if (sceneKey === "sunny_park") {
+    return [
+      `Angin sepoi-sepoi di Taman Cerah bikin ${n} semangat seharian! 🌤️🌻`,
+      `Rumputnya hijau dan hangat~ Ayo main Sundul Bola bareng ${n}! ⚽`,
+      `Senangnya bisa piknik di Taman Cerah bareng sahabat terbaik ${n}~ 🍙✨`
+    ];
+  }
+  if (sceneKey === "starry_night") {
+    return [
+      `Langit malamnya penuh bintang berkilauan~ Terima kasih sudah merawat ${n} sampai sejauh ini! 🌌✨`,
+      `Di bawah cahaya bulan, ${n} berdoa semoga harimu selalu menyenangkan~ 🌙💖`
+    ];
+  }
+  return [
+    `Hai, aku ${n}, aku di sini untuk membantumu~`,
+    getGreetingByHour(),
+    `Elus kepala ${n} atau tekan <span>Tombol B</span> untuk memilih 3 Mini-Game seru! 🎮`,
+    `Tekan <span>D-Pad &#x25C0;&#xFE0E; / &#x25B6;&#xFE0E;</span> untuk mengubah wujudku jadi Kucing, Hamster, Anjing, Landak, atau Live2D~ ✨`
+  ];
+}
+
 petInteractive.addEventListener("mouseenter", () => {
   if (pet.isSleeping || isPlayingMinigame) return;
   if (currentState === "idle" && !isPointerDown) {
-    switchState("surprised", 820);
-    const lines = [
-      `Waaaa... sedang apa kamu? ${petNameTag()} kaget tahu! O.O`,
-      `Pelan-pelan dong, ${petNameTag()} ini mungil dan menggemaskan~ O.O`,
-      `<span>Siap kapten!</span> Ada yang bisa ${petNameTag()} bantu? ✨`
-    ];
-    say(randomPick(lines), 4200);
+    const duration = activeSceneKey === "haunted_house" ? 920 : 820;
+    switchState("surprised", duration);
+    if (activeSceneKey === "haunted_house") {
+      spawnBurstParticles(["😱", "👻", "💦"]);
+    }
+    const lines = getSceneHoverLines(activeSceneKey);
+    say(randomPick(lines), 4500);
   }
 });
 
 // 2. Interaksi Klik 3x Cepat: Marah / Ngambek
 petInteractive.addEventListener("click", () => {
+  if (isPlayingMinigame) return;
   if (pet.isSleeping) {
     say(`Zzz... ${petNameTag()} masih tidur, tekan <span>D-Pad &#x25BC;&#xFE0E;</span> untuk membangunkanku~ 💤`);
     return;
@@ -507,14 +881,14 @@ petInteractive.addEventListener("click", () => {
 
 // 3. Interaksi Tahan & Geser Kiri-Kanan: Senang (Dielus)
 function startPetting(clientX) {
-  if (currentState === "angry" || pet.isSleeping) return;
+  if (isPlayingMinigame || currentState === "angry" || pet.isSleeping) return;
   isPointerDown = true;
   lastDragX = clientX;
   rubDistanceAccumulated = 0;
 }
 
 function movePetting(clientX, clientY) {
-  if (!isPointerDown || currentState === "angry" || pet.isSleeping) return;
+  if (isPlayingMinigame || !isPointerDown || currentState === "angry" || pet.isSleeping) return;
 
   const deltaX = clientX - lastDragX;
   lastDragX = clientX;
@@ -583,6 +957,17 @@ let targetX = 0;
 let targetY = 0;
 let currentX = 0;
 let currentY = 0;
+let animalEyesResetTimer = null;
+
+function resetCursorTrackingTarget() {
+  targetX = 0;
+  targetY = 0;
+  if (auroraLeftEye && auroraRightEye && auroraEyesEl) {
+    auroraLeftEye.style.transform = "translateY(0) translateX(0)";
+    auroraRightEye.style.transform = "translateY(0) translateX(0)";
+    auroraEyesEl.classList.remove("moving");
+  }
+}
 
 function handlePointerMove(clientX, clientY) {
   if (pet.isSleeping) return;
@@ -601,7 +986,7 @@ function handlePointerMove(clientX, clientY) {
       auroraLeftEye.style.transform = "translateY(0) translateX(0)";
       auroraRightEye.style.transform = "translateY(0) translateX(0)";
       auroraEyesEl.classList.remove("moving");
-    }, 2000);
+    }, 1800);
     return;
   }
 
@@ -619,10 +1004,23 @@ function handlePointerMove(clientX, clientY) {
 
   targetX = Math.cos(angle) * factor;
   targetY = Math.sin(angle) * factor;
+
+  // Kembalikan mata & kepala ke titik semula setelah 1.8 detik kursor diam / keluar
+  clearTimeout(animalEyesResetTimer);
+  animalEyesResetTimer = setTimeout(() => {
+    targetX = 0;
+    targetY = 0;
+  }, 1800);
 }
 
 window.addEventListener("mousemove", (e) => {
   handlePointerMove(e.clientX, e.clientY);
+  if (isPlayingMinigame && (activeMinigameType === "catcher" || activeMinigameType === "header")) {
+    if (isDraggingStagePlayer) {
+      updatePlayerXFromClientX(e.clientX);
+    }
+    return;
+  }
   movePetting(e.clientX, e.clientY);
 });
 
@@ -630,10 +1028,17 @@ window.addEventListener(
   "touchmove",
   (e) => {
     if (e.touches.length > 0) {
+      const t = e.touches[0];
+      if (isPlayingMinigame && (activeMinigameType === "catcher" || activeMinigameType === "header")) {
+        if (isDraggingStagePlayer) {
+          if (e.cancelable) e.preventDefault();
+          updatePlayerXFromClientX(t.clientX);
+        }
+        return;
+      }
       if (isPointerDown && e.cancelable) {
         e.preventDefault();
       }
-      const t = e.touches[0];
       handlePointerMove(t.clientX, t.clientY);
       movePetting(t.clientX, t.clientY);
     }
@@ -641,9 +1046,19 @@ window.addEventListener(
   { passive: false }
 );
 
-window.addEventListener("mouseleave", () => {
-  targetX = 0;
-  targetY = 0;
+document.addEventListener("mouseleave", () => {
+  resetCursorTrackingTarget();
+  endPetting();
+});
+
+window.addEventListener("mouseout", (e) => {
+  if (!e.relatedTarget && !e.toElement) {
+    resetCursorTrackingTarget();
+  }
+});
+
+window.addEventListener("blur", () => {
+  resetCursorTrackingTarget();
   endPetting();
 });
 
@@ -849,12 +1264,11 @@ function talkToPet() {
 
   const n = petNameTag();
   const meta = FORM_META[pet.activeForm] || FORM_META.orb;
+  const sceneMeta = SCENE_META[activeSceneKey] || SCENE_META.default;
+  const sceneLines = getSceneIdleLines(activeSceneKey);
   const talkPool = [
-    `Hai, aku ${n}, aku di sini untuk membantumu~`,
-    `Sekarang ${n} sudah <span>Level ${pet.level}</span> dalam wujud <span>${meta.name}</span>!`,
-    `Tekan <span>D-Pad &#x25C0;&#xFE0E; / &#x25B6;&#xFE0E;</span> kalau ingin melihat ${n} berubah wujud jadi hewan lain ya~ ✨`,
-    `Lama tidak bertemu, waktu berlalu begitu cepat saat bersama ${n}...`,
-    `Jangan lupa istirahat dan minum air putih ya! ${n} selalu peduli padamu~ 💕`,
+    ...sceneLines,
+    `Sekarang ${n} sudah <span>Level ${pet.level}</span> di <span>${sceneMeta.icon} ${sceneMeta.name}</span> dalam wujud <span>${meta.name}</span>!`,
     `Status ${n}: Kenyang <span>${pet.hunger}%</span>, Bahagia <span>${pet.happiness}%</span>, Energi <span>${pet.energy}%</span>!`
   ];
 
@@ -866,6 +1280,7 @@ function talkToPet() {
 
 function toggleSleep() {
   if (isPlayingMinigame) stopMinigame(false);
+  if (isGameSelectorOpen) closeGameSelector();
 
   pet.isSleeping = !pet.isSleeping;
   renderDashboard();
@@ -883,10 +1298,26 @@ function toggleSleep() {
 }
 
 /* ==========================================================================
-   10. MINI-GAME: TANGKAP BINTANG
+   10. LACI PILIHAN 3 MINI-GAME (SCROLL KANAN-KIRI) & ENGINE PERMAINAN
    ========================================================================== */
 
-function startMinigame() {
+function highlightGameCard(index, scrollIntoView = true) {
+  selectedGameIndex = (index + GAME_MODES.length) % GAME_MODES.length;
+  gameCardButtons.forEach((btn, idx) => {
+    const isActive = idx === selectedGameIndex;
+    btn.classList.toggle("active", isActive);
+    btn.setAttribute("aria-selected", isActive ? "true" : "false");
+    if (isActive && scrollIntoView && gameCardsTrack) {
+      const trackRect = gameCardsTrack.getBoundingClientRect();
+      const btnRect = btn.getBoundingClientRect();
+      const offset =
+        btnRect.left - trackRect.left - trackRect.width / 2 + btnRect.width / 2;
+      gameCardsTrack.scrollBy({ left: offset, behavior: "smooth" });
+    }
+  });
+}
+
+function openGameSelector() {
   if (isPlayingMinigame) {
     stopMinigame(false);
     return;
@@ -900,26 +1331,244 @@ function startMinigame() {
     return;
   }
 
+  isGameSelectorOpen = true;
+  if (gameSelectorDrawer) gameSelectorDrawer.hidden = false;
+  if (petStageEl) petStageEl.classList.add("game-selector-open");
+  highlightGameCard(selectedGameIndex, true);
+}
+
+function closeGameSelector() {
+  isGameSelectorOpen = false;
+  if (gameSelectorDrawer) gameSelectorDrawer.hidden = true;
+  if (petStageEl) petStageEl.classList.remove("game-selector-open");
+}
+
+function toggleGameSelector() {
+  if (isPlayingMinigame) {
+    stopMinigame(false);
+    return;
+  }
+  if (isGameSelectorOpen) {
+    closeGameSelector();
+  } else {
+    openGameSelector();
+  }
+}
+
+// Drag-to-scroll horizontal dengan mouse pada daftar kartu game
+if (gameCardsTrack) {
+  let isTrackDown = false;
+  let startTrackX = 0;
+  let scrollLeftStart = 0;
+
+  gameCardsTrack.addEventListener("mousedown", (e) => {
+    isTrackDown = true;
+    startTrackX = e.pageX - gameCardsTrack.offsetLeft;
+    scrollLeftStart = gameCardsTrack.scrollLeft;
+  });
+  window.addEventListener("mouseup", () => {
+    isTrackDown = false;
+  });
+  gameCardsTrack.addEventListener("mousemove", (e) => {
+    if (!isTrackDown) return;
+    e.preventDefault();
+    const x = e.pageX - gameCardsTrack.offsetLeft;
+    const walk = (x - startTrackX) * 1.4;
+    gameCardsTrack.scrollLeft = scrollLeftStart - walk;
+  });
+}
+
+if (btnCloseGameSelector) {
+  btnCloseGameSelector.addEventListener("click", (e) => {
+    e.stopPropagation();
+    closeGameSelector();
+  });
+}
+
+if (btnGameScrollLeft) {
+  btnGameScrollLeft.addEventListener("click", (e) => {
+    e.stopPropagation();
+    highlightGameCard(selectedGameIndex - 1, true);
+  });
+}
+
+if (btnGameScrollRight) {
+  btnGameScrollRight.addEventListener("click", (e) => {
+    e.stopPropagation();
+    highlightGameCard(selectedGameIndex + 1, true);
+  });
+}
+
+gameCardButtons.forEach((btn, idx) => {
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    selectedGameIndex = idx;
+    const mode = btn.dataset.game || "coin";
+    startMinigame(mode);
+  });
+});
+
+function setPlayerX(nextPct) {
+  playerX = Math.max(16, Math.min(84, nextPct));
+  if (petStageEl) {
+    petStageEl.style.setProperty("--player-x", `${playerX.toFixed(2)}%`);
+  }
+}
+
+function updatePlayerXFromClientX(clientX) {
+  if (!petStageEl) return;
+  const rect = petStageEl.getBoundingClientRect();
+  if (rect.width <= 0) return;
+  const pct = ((clientX - rect.left) / rect.width) * 100;
+  setPlayerX(pct);
+}
+
+// Drag/sentuh langsung di layar konsol untuk menggerakkan karakter saat Game 2 & 3
+if (petStageEl) {
+  petStageEl.addEventListener("mousedown", (e) => {
+    if (!isPlayingMinigame || activeMinigameType === "coin") return;
+    if (e.target.closest("button")) return;
+    isDraggingStagePlayer = true;
+    updatePlayerXFromClientX(e.clientX);
+  });
+
+  petStageEl.addEventListener("mousemove", (e) => {
+    if (!isPlayingMinigame || activeMinigameType === "coin") return;
+    if (e.target.closest("button")) return;
+    updatePlayerXFromClientX(e.clientX);
+  });
+
+  petStageEl.addEventListener(
+    "touchstart",
+    (e) => {
+      if (!isPlayingMinigame || activeMinigameType === "coin") return;
+      if (e.target.closest("button")) return;
+      if (e.touches.length > 0) {
+        isDraggingStagePlayer = true;
+        updatePlayerXFromClientX(e.touches[0].clientX);
+      }
+    },
+    { passive: true }
+  );
+}
+
+window.addEventListener("mouseup", () => {
+  isDraggingStagePlayer = false;
+  moveLeftHeld = false;
+  moveRightHeld = false;
+});
+
+window.addEventListener("touchend", () => {
+  isDraggingStagePlayer = false;
+  moveLeftHeld = false;
+  moveRightHeld = false;
+});
+
+function createOnScreenMoveButtons() {
+  const leftBtn = document.createElement("button");
+  leftBtn.type = "button";
+  leftBtn.className = "minigame-move-btn left";
+  leftBtn.innerHTML = "&#x25C0;&#xFE0E;";
+  leftBtn.title = "Geser Kiri";
+
+  const rightBtn = document.createElement("button");
+  rightBtn.type = "button";
+  rightBtn.className = "minigame-move-btn right";
+  rightBtn.innerHTML = "&#x25B6;&#xFE0E;";
+  rightBtn.title = "Geser Kanan";
+
+  const bindHold = (btn, dir) => {
+    const start = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (dir < 0) {
+        moveLeftHeld = true;
+        setPlayerX(playerX - 6);
+      } else {
+        moveRightHeld = true;
+        setPlayerX(playerX + 6);
+      }
+    };
+    const end = () => {
+      if (dir < 0) moveLeftHeld = false;
+      else moveRightHeld = false;
+    };
+    btn.addEventListener("pointerdown", start);
+    btn.addEventListener("pointerup", end);
+    btn.addEventListener("pointercancel", end);
+    btn.addEventListener("pointerleave", end);
+  };
+
+  bindHold(leftBtn, -1);
+  bindHold(rightBtn, 1);
+
+  minigameLayer.appendChild(leftBtn);
+  minigameLayer.appendChild(rightBtn);
+}
+
+function startMinigame(gameType = "coin") {
+  if (isPlayingMinigame) {
+    stopMinigame(false);
+    return;
+  }
+  if (pet.isSleeping) {
+    say(`Bangunkan ${petNameTag()} dulu dengan <span>D-Pad &#x25BC;&#xFE0E;</span> sebelum bermain ya~ 💤`);
+    return;
+  }
+  if (pet.energy < 15) {
+    say(`Energi ${petNameTag()} tinggal sedikit (${pet.energy}%)... Tidur atau makan dulu yuk! ⚡`);
+    return;
+  }
+
+  closeGameSelector();
+
+  activeMinigameType = GAME_MODES.includes(gameType) ? gameType : "coin";
+  const meta = GAME_META[activeMinigameType];
+
   isPlayingMinigame = true;
   minigameScore = 0;
-  minigameSeconds = 15;
+  minigameSeconds = meta.duration;
+  if (minigameIconEl) minigameIconEl.textContent = meta.icon;
   minigameScoreEl.textContent = "0";
-  minigameTimerEl.textContent = "15";
+  minigameTimerEl.textContent = String(minigameSeconds);
 
-  // Sembunyikan balon percakapan selama mini-game agar layar lega untuk klik bintang
   if (messageTimeout) {
     clearTimeout(messageTimeout);
     messageTimeout = null;
   }
   tipsWrapperEl.classList.remove("active");
 
-  if (petStageEl) petStageEl.classList.add("minigame-active");
+  if (petStageEl) {
+    petStageEl.classList.add("minigame-active");
+    petStageEl.classList.toggle("minigame-player-mode", activeMinigameType !== "coin");
+  }
+
+  setPlayerX(50);
+  moveLeftHeld = false;
+  moveRightHeld = false;
+  catcherItems = [];
+  soccerBall = null;
+
   minigameHud.hidden = false;
   minigameLayer.hidden = false;
   minigameLayer.innerHTML = "";
 
-  spawnFallingStar();
-  minigameSpawnTimer = setInterval(spawnFallingStar, 720);
+  if (activeMinigameType === "coin") {
+    spawnFallingCoin();
+    minigameSpawnTimer = setInterval(spawnFallingCoin, 680);
+  } else if (activeMinigameType === "catcher") {
+    createOnScreenMoveButtons();
+    spawnCatcherItem();
+    minigameSpawnTimer = setInterval(spawnCatcherItem, 620);
+    lastFrameTime = performance.now();
+    minigameRafId = requestAnimationFrame(updateMinigameFrame);
+  } else if (activeMinigameType === "header") {
+    createOnScreenMoveButtons();
+    initSoccerBall();
+    lastFrameTime = performance.now();
+    minigameRafId = requestAnimationFrame(updateMinigameFrame);
+  }
+
   minigameCountdownTimer = setInterval(() => {
     minigameSeconds -= 1;
     minigameTimerEl.textContent = String(minigameSeconds);
@@ -929,67 +1578,257 @@ function startMinigame() {
   }, 1000);
 }
 
-function spawnFallingStar() {
-  if (!isPlayingMinigame) return;
-  const star = document.createElement("button");
-  star.type = "button";
-  star.className = "falling-star";
-  star.textContent = randomPick(["✦", "⭐", "💎", "🌟"]);
-  star.style.left = `${8 + Math.random() * 76}%`;
+// --- GAME 1: KOIN HOKI (Ketuk Koin & Permata Jatuh) ---
+function spawnFallingCoin() {
+  if (!isPlayingMinigame || activeMinigameType !== "coin") return;
+  const coin = document.createElement("button");
+  coin.type = "button";
+  coin.className = "falling-star";
+  const symbol = randomPick(["🪙", "🪙", "🌟", "💎"]);
+  coin.textContent = symbol;
+  coin.style.left = `${8 + Math.random() * 76}%`;
 
-  const fallSeconds = (3.6 + Math.random() * 0.7).toFixed(2);
-  star.style.setProperty("--fall-duration", `${fallSeconds}s`);
+  const fallSeconds = (3.4 + Math.random() * 0.7).toFixed(2);
+  coin.style.setProperty("--fall-duration", `${fallSeconds}s`);
 
-  const catchStar = (e) => {
+  const catchCoin = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (star.dataset.caught === "1") return;
-    star.dataset.caught = "1";
+    if (coin.dataset.caught === "1") return;
+    coin.dataset.caught = "1";
 
-    minigameScore += 1;
+    const bonus = symbol === "💎" ? 2 : 1;
+    minigameScore += bonus;
     minigameScoreEl.textContent = String(minigameScore);
 
-    const rect = star.getBoundingClientRect();
+    const rect = coin.getBoundingClientRect();
     const cx = e.clientX || rect.left + rect.width / 2;
     const cy = e.clientY || rect.top + rect.height / 2;
-    spawnParticleAt(cx, cy, ["✨", "⭐", "💖"]);
+    spawnParticleAt(cx, cy, ["🪙", "✨", "⭐"]);
 
-    star.classList.add("star-caught");
+    coin.classList.add("star-caught");
     setTimeout(() => {
-      if (star.parentNode) star.remove();
+      if (coin.parentNode) coin.remove();
     }, 200);
   };
 
-  // Gunakan pointerdown agar bintang yang bergerak langsung tertangkap begitu disentuh/diklik!
-  star.addEventListener("pointerdown", catchStar);
-  star.addEventListener("click", catchStar);
+  coin.addEventListener("pointerdown", catchCoin);
+  coin.addEventListener("click", catchCoin);
 
-  minigameLayer.appendChild(star);
+  minigameLayer.appendChild(coin);
   setTimeout(() => {
-    if (star.parentNode && star.dataset.caught !== "1") {
-      star.remove();
+    if (coin.parentNode && coin.dataset.caught !== "1") {
+      coin.remove();
     }
-  }, 4500);
+  }, 4400);
+}
+
+// --- GAME 2: TANGKAP MAKANAN & HINDARI RACUN ---
+function spawnCatcherItem() {
+  if (!isPlayingMinigame || activeMinigameType !== "catcher") return;
+  const isPoison = Math.random() < 0.28;
+  const el = document.createElement("div");
+  el.className = `catcher-item ${isPoison ? "poison-item" : "food-item"}`;
+  el.textContent = isPoison
+    ? randomPick(["☠️", "🧪", "🍄", "💣"])
+    : randomPick(["🍙", "🍓", "🍰", "🍩", "🌻", "🍣"]);
+
+  const xPct = 14 + Math.random() * 72;
+  const yPx = -24;
+  const speedY = 2.0 + Math.random() * 1.15;
+
+  el.style.left = `${xPct}%`;
+  el.style.top = `${yPx}px`;
+  minigameLayer.appendChild(el);
+
+  catcherItems.push({ el, xPct, yPx, speedY, isPoison });
+}
+
+// --- GAME 3: SUNDUL BOLA (Keepie-Uppie Physics) ---
+function initSoccerBall() {
+  const el = document.createElement("div");
+  el.className = "soccer-ball-el";
+  el.textContent = "⚽";
+  minigameLayer.appendChild(el);
+
+  soccerBall = {
+    el,
+    xPct: 50,
+    yPx: 58,
+    vxPct: (Math.random() < 0.5 ? -1 : 1) * 0.48,
+    vyPx: 1.6,
+    gravity: 0.145,
+    angle: 0,
+    cooldown: 0
+  };
+}
+
+function triggerHeadbuttBounce() {
+  petInteractive.classList.remove("headbutt-pop");
+  void petInteractive.offsetWidth;
+  petInteractive.classList.add("headbutt-pop");
+}
+
+function updateMinigameFrame(now) {
+  if (!isPlayingMinigame) return;
+  const dt = Math.min(32, Math.max(8, now - (lastFrameTime || now)));
+  lastFrameTime = now;
+  const dtScale = dt / 16.67;
+
+  // Perbarui posisi horizontal pet jika tombol kiri/kanan ditahan
+  if (moveLeftHeld) {
+    setPlayerX(playerX - 1.75 * dtScale);
+  }
+  if (moveRightHeld) {
+    setPlayerX(playerX + 1.75 * dtScale);
+  }
+
+  const stageH = petStageEl ? petStageEl.clientHeight : 300;
+  const petRect = petInteractive.getBoundingClientRect();
+  const petCenterX = petRect.left + petRect.width / 2;
+  const petTopY = petRect.top + 18;
+
+  if (activeMinigameType === "catcher") {
+    const catchTopY = pet.activeForm === "orb" ? stageH - 76 : stageH - 106;
+    const catchBottomY = stageH - 14;
+
+    for (let i = catcherItems.length - 1; i >= 0; i -= 1) {
+      const item = catcherItems[i];
+      item.yPx += item.speedY * dtScale;
+      item.el.style.top = `${item.yPx.toFixed(1)}px`;
+
+      const hitVertical = item.yPx >= catchTopY && item.yPx <= catchBottomY;
+      const hitHorizontal = Math.abs(item.xPct - playerX) <= 13.8;
+
+      if (hitVertical && hitHorizontal) {
+        if (item.isPoison) {
+          minigameScore = Math.max(0, minigameScore - 2);
+          minigameScoreEl.textContent = String(minigameScore);
+          switchState("angry", 680);
+          spawnParticleAt(petCenterX, petTopY, ["💥", "☠️", "💢"]);
+        } else {
+          minigameScore += 1;
+          minigameScoreEl.textContent = String(minigameScore);
+          switchState("happy", 380);
+          spawnParticleAt(petCenterX, petTopY, ["🍙", "💖", "✨"]);
+        }
+        item.el.remove();
+        catcherItems.splice(i, 1);
+      } else if (item.yPx > stageH + 28) {
+        item.el.remove();
+        catcherItems.splice(i, 1);
+      }
+    }
+  } else if (activeMinigameType === "header" && soccerBall) {
+    if (soccerBall.cooldown > 0) {
+      soccerBall.cooldown -= dtScale;
+    }
+
+    soccerBall.vyPx += soccerBall.gravity * dtScale;
+    soccerBall.xPct += soccerBall.vxPct * dtScale;
+    soccerBall.yPx += soccerBall.vyPx * dtScale;
+    soccerBall.angle += soccerBall.vxPct * 9 * dtScale;
+
+    // Pantulan dinding kiri & kanan
+    if (soccerBall.xPct <= 8) {
+      soccerBall.xPct = 8;
+      soccerBall.vxPct = Math.abs(soccerBall.vxPct);
+    } else if (soccerBall.xPct >= 92) {
+      soccerBall.xPct = 92;
+      soccerBall.vxPct = -Math.abs(soccerBall.vxPct);
+    }
+
+    // Pantulan atap layar
+    if (soccerBall.yPx <= 42) {
+      soccerBall.yPx = 42;
+      soccerBall.vyPx = Math.abs(soccerBall.vyPx) * 0.85;
+    }
+
+    // Deteksi sundulan kepala karakter
+    const headHitY = pet.activeForm === "orb" ? stageH - 72 : stageH - 102;
+    const dxPct = soccerBall.xPct - playerX;
+
+    if (
+      soccerBall.cooldown <= 0 &&
+      soccerBall.vyPx > 0 &&
+      soccerBall.yPx >= headHitY - 14 &&
+      soccerBall.yPx <= headHitY + 28 &&
+      Math.abs(dxPct) <= 15.8
+    ) {
+      soccerBall.cooldown = 10;
+      soccerBall.yPx = headHitY - 15;
+      const speedBoost = Math.min(1.5, minigameScore * 0.05);
+      soccerBall.vyPx = -(5.35 + speedBoost);
+
+      const normOffset = dxPct / 15.8;
+      soccerBall.vxPct =
+        normOffset * 1.15 + (Math.random() * 0.24 - 0.12);
+      soccerBall.vxPct = Math.max(-1.45, Math.min(1.45, soccerBall.vxPct));
+
+      minigameScore += 1;
+      minigameScoreEl.textContent = String(minigameScore);
+
+      triggerHeadbuttBounce();
+      switchState("happy", 360);
+      spawnParticleAt(petCenterX, petTopY, ["⚽", "✨", "⭐"]);
+    } else if (soccerBall.yPx > stageH - 8) {
+      // Bola jatuh ke tanah: karakter cemberut sebentar lalu bola di-serve ulang dari atas
+      switchState("angry", 560);
+      spawnParticleAt(petCenterX, petTopY, ["💢", "💨"]);
+      soccerBall.xPct = 24 + Math.random() * 52;
+      soccerBall.yPx = 56;
+      soccerBall.vyPx = 1.35;
+      soccerBall.vxPct = (Math.random() < 0.5 ? -1 : 1) * 0.45;
+      soccerBall.cooldown = 12;
+    }
+
+    soccerBall.el.style.left = `${soccerBall.xPct.toFixed(2)}%`;
+    soccerBall.el.style.top = `${soccerBall.yPx.toFixed(1)}px`;
+    soccerBall.el.style.transform = `translate(-50%, -50%) rotate(${soccerBall.angle.toFixed(1)}deg)`;
+  }
+
+  minigameRafId = requestAnimationFrame(updateMinigameFrame);
 }
 
 function stopMinigame(completed = true) {
   isPlayingMinigame = false;
+  moveLeftHeld = false;
+  moveRightHeld = false;
+  isDraggingStagePlayer = false;
+
   clearInterval(minigameSpawnTimer);
   clearInterval(minigameCountdownTimer);
-  if (petStageEl) petStageEl.classList.remove("minigame-active");
+  if (minigameRafId) {
+    cancelAnimationFrame(minigameRafId);
+    minigameRafId = null;
+  }
+
+  catcherItems = [];
+  soccerBall = null;
+
+  if (petStageEl) {
+    petStageEl.classList.remove("minigame-active", "minigame-player-mode");
+    petStageEl.style.removeProperty("--player-x");
+  }
+  petInteractive.classList.remove("headbutt-pop");
+
   minigameHud.hidden = true;
   minigameLayer.hidden = true;
   minigameLayer.innerHTML = "";
 
+  const meta = GAME_META[activeMinigameType] || GAME_META.coin;
+
   if (completed) {
     const expGain = Math.max(12, minigameScore * 6);
     const happyGain = Math.min(25, 6 + minigameScore * 2);
-    addExpAndStats({ exp: expGain, happiness: happyGain, energy: -10, hunger: -5 });
+    const hungerBonus = activeMinigameType === "catcher" ? Math.min(14, minigameScore * 2) : -5;
+    addExpAndStats({ exp: expGain, happiness: happyGain, energy: -10, hunger: hungerBonus });
     switchState("happy", 1400);
     say(
-      `🎉 Skor <span>${minigameScore} bintang</span>! ${petNameTag()} dapat <span>+${expGain} EXP</span> &amp; <span>+${happyGain}% Bahagia</span>!`
+      `🎉 Skor <span>${meta.title}: ${minigameScore} ${meta.unit}</span>! ${petNameTag()} dapat <span>+${expGain} EXP</span> &amp; <span>+${happyGain}% Bahagia</span>!`
     );
   } else {
+    switchState(pet.isSleeping ? "sleep" : "idle");
     say(`Permainan dihentikan. Kapan-kapan main lagi bareng ${petNameTag()} ya~`);
   }
 }
@@ -998,12 +1837,63 @@ function stopMinigame(completed = true) {
    11. KONTROL TOMBOL GAMEBOY, KEYBOARD, & MODAL PENGATURAN
    ========================================================================== */
 
-document.getElementById("btn-prev-form").addEventListener("click", () => stepForm(-1));
-document.getElementById("btn-next-form").addEventListener("click", () => stepForm(1));
+const btnPrevForm = document.getElementById("btn-prev-form");
+const btnNextForm = document.getElementById("btn-next-form");
+
+function handleDpadLeft() {
+  if (isPlayingMinigame && activeMinigameType !== "coin") {
+    setPlayerX(playerX - 8);
+    return;
+  }
+  if (isGameSelectorOpen) {
+    highlightGameCard(selectedGameIndex - 1, true);
+    return;
+  }
+  stepForm(-1);
+}
+
+function handleDpadRight() {
+  if (isPlayingMinigame && activeMinigameType !== "coin") {
+    setPlayerX(playerX + 8);
+    return;
+  }
+  if (isGameSelectorOpen) {
+    highlightGameCard(selectedGameIndex + 1, true);
+    return;
+  }
+  stepForm(1);
+}
+
+btnPrevForm.addEventListener("click", handleDpadLeft);
+btnNextForm.addEventListener("click", handleDpadRight);
+
+// Dukungan tahan tombol D-Pad Kiri/Kanan untuk menggerakkan karakter dengan mulus saat Mini-Game
+btnPrevForm.addEventListener("pointerdown", () => {
+  if (isPlayingMinigame && activeMinigameType !== "coin") moveLeftHeld = true;
+});
+btnNextForm.addEventListener("pointerdown", () => {
+  if (isPlayingMinigame && activeMinigameType !== "coin") moveRightHeld = true;
+});
+["pointerup", "pointercancel", "pointerleave"].forEach((evt) => {
+  btnPrevForm.addEventListener(evt, () => {
+    moveLeftHeld = false;
+  });
+  btnNextForm.addEventListener(evt, () => {
+    moveRightHeld = false;
+  });
+});
+
 document.getElementById("btn-talk").addEventListener("click", talkToPet);
 document.getElementById("btn-sleep").addEventListener("click", toggleSleep);
-document.getElementById("btn-feed").addEventListener("click", feedPet);
-document.getElementById("btn-play").addEventListener("click", startMinigame);
+document.getElementById("btn-feed").addEventListener("click", () => {
+  if (isGameSelectorOpen) {
+    const chosenMode = GAME_MODES[selectedGameIndex] || "coin";
+    startMinigame(chosenMode);
+    return;
+  }
+  feedPet();
+});
+document.getElementById("btn-play").addEventListener("click", toggleGameSelector);
 document.getElementById("btn-stop-minigame").addEventListener("click", () => stopMinigame(false));
 
 // Modal Panduan (SELECT)
@@ -1014,11 +1904,28 @@ document.getElementById("btn-close-guide").addEventListener("click", () => {
   guideModal.hidden = true;
 });
 
-// Modal Pengaturan & Database (START / Klik Badge Nama)
-function openSettingsModal() {
+// Modal Karakter (Nama, Bentuk Wujud, & Latar Dunia Karakter)
+function openCharacterModal() {
   petNameInput.value = pet.name || "Eri";
   const radio = document.querySelector(`input[name="starter-form"][value="${pet.activeForm}"]`);
   if (radio) radio.checked = true;
+  updateScenePickerLocks();
+  const scenePref = pet.scenePreference || "auto";
+  const sceneRadio = document.querySelector(`input[name="scene-bg"][value="${scenePref}"]`);
+  if (sceneRadio && !sceneRadio.disabled) {
+    sceneRadio.checked = true;
+  } else {
+    const autoRadio = document.querySelector('input[name="scene-bg"][value="auto"]');
+    if (autoRadio) autoRadio.checked = true;
+  }
+  if (characterModal) {
+    characterModal.hidden = false;
+    setTimeout(() => petNameInput.focus(), 50);
+  }
+}
+
+// Modal Pengaturan Global (Tema Konsol, Preset Live2D, & Database IndexedDB)
+function openSettingsModal() {
   const themeRadio = document.querySelector(
     `input[name="console-theme"][value="${pet.theme || "obsidian"}"]`
   );
@@ -1026,10 +1933,9 @@ function openSettingsModal() {
   if (live2dModelSelect) live2dModelSelect.value = pet.live2dPreset || "koharu";
   live2dCustomUrl.value = pet.customLive2dUrl || "";
   settingsModal.hidden = false;
-  setTimeout(() => petNameInput.focus(), 50);
 }
 
-// Pratinjau langsung tema saat diklik di modal pengaturan
+// Pratinjau langsung tema konsol saat diklik di modal pengaturan global
 document.querySelectorAll('input[name="console-theme"]').forEach((radioEl) => {
   radioEl.addEventListener("change", (e) => {
     const chosenTheme = applyConsoleTheme(e.target.value);
@@ -1038,21 +1944,91 @@ document.querySelectorAll('input[name="console-theme"]').forEach((radioEl) => {
   });
 });
 
+// Pratinjau langsung Bentuk/Wujud Karakter saat diklik di modal karakter
+document.querySelectorAll('input[name="starter-form"]').forEach((radioEl) => {
+  radioEl.addEventListener("change", (e) => {
+    setForm(e.target.value, false);
+  });
+});
+
+// Pratinjau langsung Latar Karakter saat diklik di modal karakter (Hanya yang sudah terbuka!)
+document.querySelectorAll('input[name="scene-bg"]').forEach((radioEl) => {
+  const labelWrap = radioEl.closest(".picker-option");
+  if (labelWrap) {
+    labelWrap.addEventListener("click", (e) => {
+      const val = radioEl.value;
+      const meta = SCENE_META[val];
+      if (meta && (pet.level || 1) < meta.unlockLevel) {
+        e.preventDefault();
+        say(
+          `🔒 Latar <span>${meta.icon} ${meta.name}</span> masih terkunci! Rawat ${petNameTag()} sampai <span>Level ${meta.unlockLevel}</span> untuk membukanya~`
+        );
+      }
+    });
+  }
+
+  radioEl.addEventListener("change", (e) => {
+    const val = e.target.value || "auto";
+    const meta = SCENE_META[val];
+    if (meta && (pet.level || 1) < meta.unlockLevel) {
+      e.target.checked = false;
+      const autoRadio = document.querySelector('input[name="scene-bg"][value="auto"]');
+      if (autoRadio) autoRadio.checked = true;
+      return;
+    }
+    pet.scenePreference = val;
+    renderDashboard();
+    db.save(pet);
+    const activeScene = resolveActiveScene();
+    const lines = getSceneIdleLines(activeScene);
+    say(randomPick(lines), 5200);
+  });
+});
+
+document.getElementById("btn-open-character").addEventListener("click", openCharacterModal);
+document.getElementById("btn-quick-rename").addEventListener("click", openCharacterModal);
+if (bezelFormName) {
+  bezelFormName.addEventListener("click", openCharacterModal);
+}
+document.getElementById("btn-close-character").addEventListener("click", () => {
+  if (characterModal) characterModal.hidden = true;
+});
+
 document.getElementById("btn-open-settings").addEventListener("click", openSettingsModal);
-document.getElementById("btn-quick-rename").addEventListener("click", openSettingsModal);
 document.getElementById("btn-close-settings").addEventListener("click", () => {
   settingsModal.hidden = true;
 });
 
+if (characterForm) {
+  characterForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const newName = petNameInput.value.trim() || "Eri";
+    const selectedRadio = document.querySelector('input[name="starter-form"]:checked');
+    const chosenForm = selectedRadio ? selectedRadio.value : pet.activeForm;
+    const selectedSceneRadio = document.querySelector('input[name="scene-bg"]:checked');
+    const chosenScenePref = selectedSceneRadio
+      ? selectedSceneRadio.value
+      : pet.scenePreference || "auto";
+
+    pet.name = newName;
+    pet.scenePreference = chosenScenePref;
+    pet.isInitialized = true;
+    if (characterModal) characterModal.hidden = true;
+
+    setForm(chosenForm, false);
+    renderDashboard();
+    await db.save(pet);
+    spawnBurstParticles(["🎉", "💖", "✨"]);
+    const activeScene = resolveActiveScene();
+    say(randomPick(getSceneIdleLines(activeScene)), 5200);
+  });
+}
+
 settingsForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const newName = petNameInput.value.trim() || "Eri";
-  const selectedRadio = document.querySelector('input[name="starter-form"]:checked');
-  const chosenForm = selectedRadio ? selectedRadio.value : pet.activeForm;
   const selectedThemeRadio = document.querySelector('input[name="console-theme"]:checked');
   const chosenTheme = selectedThemeRadio ? selectedThemeRadio.value : pet.theme || "obsidian";
 
-  pet.name = newName;
   pet.theme = applyConsoleTheme(chosenTheme);
   pet.live2dPreset = live2dModelSelect.value || "koharu";
   pet.customLive2dUrl = live2dCustomUrl.value.trim();
@@ -1060,10 +2036,13 @@ settingsForm.addEventListener("submit", async (e) => {
   settingsModal.hidden = true;
 
   loadedLive2dUrl = ""; // Paksa muat ulang jika preset Live2D berubah
-  setForm(chosenForm, false);
+  if (pet.activeForm === "live2d") {
+    setForm("live2d", false);
+  }
+  renderDashboard();
   await db.save(pet);
-  spawnBurstParticles(["🎉", "💖", "✨"]);
-  say(`Hai! Aku ${petNameTag()}, senang bertemu denganmu! Rawat dan ajak aku bermain ya~`);
+  spawnBurstParticles(["✨", "💖"]);
+  say(`⚙️ Pengaturan global &amp; Live2D untuk ${petNameTag()} berhasil disimpan!`);
 });
 
 document.getElementById("btn-load-custom-live2d").addEventListener("click", () => {
@@ -1116,38 +2095,67 @@ document.getElementById("btn-reset-save").addEventListener("click", async () => 
   settingsModal.hidden = true;
   setForm("orb", false);
   switchState("idle");
-  openSettingsModal();
+  renderDashboard();
+  openCharacterModal();
 });
 
 // Dukungan Keyboard Layaknya Konsol GameBoy Asli
 window.addEventListener("keydown", (e) => {
-  if (!guideModal.hidden || !settingsModal.hidden) {
+  if (!guideModal.hidden || !settingsModal.hidden || (characterModal && !characterModal.hidden)) {
     if (e.key === "Escape") {
       guideModal.hidden = true;
       settingsModal.hidden = true;
+      if (characterModal) characterModal.hidden = true;
     }
     return;
   }
   if (["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement?.tagName)) return;
 
-  if (e.key === "ArrowLeft") {
+  if (e.key === "Escape") {
+    if (isPlayingMinigame) stopMinigame(false);
+    else if (isGameSelectorOpen) closeGameSelector();
+    return;
+  }
+
+  if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") {
     e.preventDefault();
-    stepForm(-1);
-  } else if (e.key === "ArrowRight") {
+    if (isPlayingMinigame && activeMinigameType !== "coin") {
+      moveLeftHeld = true;
+      return;
+    }
+    handleDpadLeft();
+  } else if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") {
     e.preventDefault();
-    stepForm(1);
+    if (isPlayingMinigame && activeMinigameType !== "coin") {
+      moveRightHeld = true;
+      return;
+    }
+    handleDpadRight();
   } else if (e.key === "ArrowUp") {
     e.preventDefault();
     talkToPet();
   } else if (e.key === "ArrowDown") {
     e.preventDefault();
     toggleSleep();
-  } else if (e.key === "z" || e.key === "Z") {
+  } else if (e.key === "z" || e.key === "Z" || e.key === "Enter") {
     e.preventDefault();
+    if (isGameSelectorOpen) {
+      const chosenMode = GAME_MODES[selectedGameIndex] || "coin";
+      startMinigame(chosenMode);
+      return;
+    }
     feedPet();
   } else if (e.key === "x" || e.key === "X") {
     e.preventDefault();
-    startMinigame();
+    toggleGameSelector();
+  }
+});
+
+window.addEventListener("keyup", (e) => {
+  if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") {
+    moveLeftHeld = false;
+  } else if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") {
+    moveRightHeld = false;
   }
 });
 
@@ -1188,7 +2196,7 @@ setInterval(() => {
 
 // Pesan Idle Otomatis (Tiap 28 detik)
 setInterval(() => {
-  if (!pet.isInitialized || isPlayingMinigame || document.hidden) return;
+  if (!pet.isInitialized || isPlayingMinigame || isGameSelectorOpen || document.hidden) return;
   if (pet.isSleeping) {
     spawnBurstParticles(["💤"]);
     return;
@@ -1203,12 +2211,7 @@ setInterval(() => {
     return;
   }
 
-  const idleLines = [
-    `Hai, aku ${petNameTag()}, aku di sini untuk membantumu~`,
-    getGreetingByHour(),
-    `Elus kepala ${petNameTag()} atau tekan <span>Tombol B</span> untuk main Tangkap Bintang! ⭐`,
-    `Tekan <span>D-Pad &#x25C0;&#xFE0E; / &#x25B6;&#xFE0E;</span> untuk mengubah wujudku jadi Kucing, Hamster, Anjing, Landak, atau Live2D~ ✨`
-  ];
+  const idleLines = getSceneIdleLines(activeSceneKey);
   say(randomPick(idleLines));
 }, 28000);
 
@@ -1243,11 +2246,12 @@ async function initApp() {
     say(`Zzz... ${petNameTag()} masih tertidur pulas~ 💤`, 0);
   } else {
     switchState("idle");
-    say(`Hai, aku ${petNameTag()}, aku di sini untuk membantumu~`, 0);
+    const initLines = getSceneIdleLines(activeSceneKey);
+    say(initLines[0], 0);
   }
 
   if (!pet.isInitialized) {
-    openSettingsModal();
+    openCharacterModal();
   }
 
   animateCursorTracking();

@@ -34,18 +34,22 @@
           <div class="bezel-brand">
             <span class="brand-accent">MOCHI</span> POCKET <span class="brand-dot">&bull;</span> ERI
           </div>
-          <div class="bezel-form-tag" id="bezel-form-name">🫧 PUNI</div>
+          <div class="bezel-form-tag" id="bezel-form-name" title="Klik untuk membuka Menu Karakter (Nama, Bentuk, Latar)">🫧 PUNI</div>
         </div>
 
         <!-- =====================================================
              LAYAR UTAMA KONSOL (OLED AURORA VIEWPORT)
              ===================================================== -->
-        <div class="gb-screen" id="pet-stage">
+        <div class="gb-screen" id="pet-stage" data-scene="default">
+          <!-- Layer Latar Dunia Karakter (Taman Cerah, Hujan, Taman Bunga, Kuburan, Malam Bintang) -->
+          <div id="scene-bg-layer" class="scene-bg-layer" aria-hidden="true"></div>
+
           <!-- HUD ATAS LAYAR: Nama Pet & 4 Ikon Indikator Memudar (Tanpa Bar) -->
           <div class="screen-hud">
-            <button type="button" class="hud-pet-badge" id="btn-quick-rename" title="Klik untuk ubah nama atau pengaturan">
+            <button type="button" class="hud-pet-badge" id="btn-quick-rename" title="Klik untuk membuka Menu Karakter (Nama, Bentuk, Latar)">
               <span id="pet-name-display" class="hud-pet-name">Eri</span>
               <span id="pet-level-badge" class="hud-pet-lvl">Lv.1</span>
+              <span id="pet-scene-badge" class="hud-scene-icon">🏠</span>
             </button>
 
             <!-- 4 Indikator Ikon Tunggal yang Memudar dari Atas ke Bawah Sesuai Persentase -->
@@ -102,15 +106,50 @@
             </div>
           </div>
 
-          <!-- HUD Mini-Game Tangkap Bintang (Hanya muncul saat bermain) -->
+          <!-- HUD Mini-Game (Hanya muncul saat bermain) -->
           <div id="minigame-hud" class="minigame-hud" hidden>
-            <span>⭐ <strong id="minigame-score">0</strong></span>
+            <span><span id="minigame-icon">🪙</span> <strong id="minigame-score">0</strong></span>
             <span>⏱️ <strong id="minigame-timer">15</strong>d</span>
             <button type="button" id="btn-stop-minigame" class="btn-xs-stop" title="Hentikan Mini-Game">✕</button>
           </div>
 
-          <!-- Layer Bintang Jatuh Mini-Game -->
+          <!-- Layer Arena Mini-Game (Koin, Makanan/Racun, atau Bola) -->
           <div id="minigame-layer" class="minigame-layer" hidden></div>
+
+          <!-- Laci Pilihan Mini-Game (Muncul di Bawah Karakter & Bisa Di-Scroll Kanan-Kiri) -->
+          <div id="game-selector-drawer" class="game-selector-drawer" hidden>
+            <div class="game-selector-header">
+              <span class="game-selector-title">🎮 PILIH PERMAINAN <small>(Geser &#x25C0;&#xFE0E; &#x25B6;&#xFE0E;)</small></span>
+              <button type="button" id="btn-close-game-selector" class="btn-xs-stop" title="Tutup Pilihan Game">✕</button>
+            </div>
+            <div class="game-carousel-wrap">
+              <button type="button" id="game-scroll-left" class="game-nav-arrow left" aria-label="Geser Kiri">&#x25C0;&#xFE0E;</button>
+              <div id="game-cards-track" class="game-cards-track" role="listbox" aria-label="Daftar Mini-Game">
+                <button type="button" class="game-card-option active" data-game="coin" role="option" aria-selected="true">
+                  <span class="game-card-icon">🪙</span>
+                  <div class="game-card-info">
+                    <strong>Koin Hoki</strong>
+                    <span>Ketuk koin jatuh</span>
+                  </div>
+                </button>
+                <button type="button" class="game-card-option" data-game="catcher" role="option" aria-selected="false">
+                  <span class="game-card-icon">🍙</span>
+                  <div class="game-card-info">
+                    <strong>Tangkap Makan</strong>
+                    <span>Geser &amp; hindari racun</span>
+                  </div>
+                </button>
+                <button type="button" class="game-card-option" data-game="header" role="option" aria-selected="false">
+                  <span class="game-card-icon">⚽</span>
+                  <div class="game-card-info">
+                    <strong>Sundul Bola</strong>
+                    <span>Geser &amp; sundul bola</span>
+                  </div>
+                </button>
+              </div>
+              <button type="button" id="game-scroll-right" class="game-nav-arrow right" aria-label="Geser Kanan">&#x25B6;&#xFE0E;</button>
+            </div>
+          </div>
 
           <!-- Layer Partikel Hati / Makanan / Zzz -->
           <div id="particles-container" class="particles-layer" aria-hidden="true"></div>
@@ -346,6 +385,11 @@
                               d="M 92 48 C 122 14, 198 14, 228 48 C 256 76, 264 118, 252 154 C 249 163, 242 170, 238 175 C 258 198, 258 250, 232 278 C 214 294, 182 290, 160 278 C 138 290, 106 294, 88 278 C 62 250, 62 198, 82 175 C 78 170, 71 163, 68 154 C 56 118, 64 76, 92 48 Z"
                             />
                           </clipPath>
+                          <linearGradient id="hamsterAngryGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#6b111b" stop-opacity="0.72" />
+                            <stop offset="52%" stop-color="#b91c1c" stop-opacity="0.34" />
+                            <stop offset="100%" stop-color="#b91c1c" stop-opacity="0" />
+                          </linearGradient>
                         </defs>
 
                         <!-- Ekor Pom-Pom Putih Mungil di Kanan Bawah -->
@@ -399,6 +443,16 @@
                           <path
                             d="M 76 262 C 102 284, 136 284, 160 272 C 184 284, 218 284, 244 262 L 248 295 L 72 295 Z"
                             fill="#f5e6d6"
+                          />
+
+                          <!-- Bayangan Wajah Gelap/Merah Padam Saat Marah -->
+                          <rect
+                            class="hamster-angry-shade"
+                            x="40"
+                            y="10"
+                            width="240"
+                            height="185"
+                            fill="url(#hamsterAngryGrad)"
                           />
                         </g>
 
@@ -776,7 +830,7 @@
         </div>
       </div>
 
-      <!-- Bawah: Tombol Pill SELECT (Panduan) & START (Pengaturan) + Speaker -->
+      <!-- Bawah: Tombol Pill PANDUAN, KARAKTER, & SETELAN + Speaker -->
       <div class="gb-bottom-row">
         <div class="gb-bottom-spacer" aria-hidden="true"></div>
         <div class="select-start-cluster">
@@ -785,7 +839,11 @@
             <span class="pill-label">PANDUAN</span>
           </div>
           <div class="pill-btn-wrap">
-            <button type="button" id="btn-open-settings" class="gb-pill-btn" title="Buka Pengaturan Wujud, Nama, & Database"></button>
+            <button type="button" id="btn-open-character" class="gb-pill-btn" title="Buka Menu Karakter (Nama, Bentuk, & Latar Dunia)"></button>
+            <span class="pill-label">KARAKTER</span>
+          </div>
+          <div class="pill-btn-wrap">
+            <button type="button" id="btn-open-settings" class="gb-pill-btn" title="Buka Pengaturan Global (Tema Konsol, Preset Live2D, & Database)"></button>
             <span class="pill-label">SETELAN</span>
           </div>
         </div>
@@ -848,11 +906,12 @@
       </div>
 
       <div class="info-section">
-        <h3 class="info-heading">🕹️ Kontrol Konsol</h3>
+        <h3 class="info-heading">🕹️ Kontrol Konsol &amp; 3 Mini-Game</h3>
         <div class="controls-legend">
-          <div><strong>D-Pad &#x25C0;&#xFE0E; / &#x25B6;&#xFE0E;</strong>: Berubah Wujud (Puni Mochi, Neko, Hamster, Shiba, Landak, Live2D)</div>
+          <div><strong>D-Pad &#x25C0;&#xFE0E; / &#x25B6;&#xFE0E;</strong>: Ganti Wujud (atau Gerakkan Pet Kiri-Kanan saat Mini-Game!)</div>
           <div><strong>D-Pad &#x25B2;&#xFE0E; / &#x25BC;&#xFE0E;</strong>: Ajak Ngobrol (&#x25B2;&#xFE0E;) &amp; Tidur/Bangun (&#x25BC;&#xFE0E;)</div>
-          <div><strong>Tombol A / B</strong>: Beri Makan (A) &amp; Main Tangkap Bintang (B)</div>
+          <div><strong>Tombol A (🍙)</strong>: Beri Makan Pet</div>
+          <div><strong>Tombol B (🎮)</strong>: Buka Menu 3 Game di Bawah Karakter (<strong>🪙 Koin Hoki</strong>, <strong>🍙 Tangkap Makan &amp; Hindari Racun</strong>, <strong>⚽ Sundul Bola</strong>)</div>
         </div>
       </div>
 
@@ -863,14 +922,14 @@
   </div>
 
   <!-- =========================================================
-       MODAL 2: PENGATURAN, PILIH WUJUD, LIVE2D, & DATABASE (START)
+       MODAL 2: MENU KHUSUS KARAKTER (NAMA, BENTUK, & LATAR DUNIA)
        ========================================================= -->
-  <div id="settings-modal" class="modal-backdrop" hidden>
-    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="settings-modal-title">
-      <div class="modal-header-badge">⚙️ SETELAN &amp; DATABASE</div>
-      <h2 id="settings-modal-title" class="modal-title">Pengaturan Pet</h2>
+  <div id="character-modal" class="modal-backdrop" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="character-modal-title">
+      <div class="modal-header-badge">🐾 PROFIL &amp; DUNIA KARAKTER</div>
+      <h2 id="character-modal-title" class="modal-title">Menu Karakter</h2>
 
-      <form id="settings-form" class="modal-form">
+      <form id="character-form" class="modal-form">
         <!-- Nama Pet -->
         <div class="setting-group">
           <label for="pet-name-input" class="setting-label">Nama Pet Kamu:</label>
@@ -884,9 +943,9 @@
           >
         </div>
 
-        <!-- Pilihan 6 Wujud Pet -->
+        <!-- Pilihan 6 Bentuk / Wujud Pet -->
         <div class="setting-group">
-          <span class="setting-label">Pilih Wujud Pet:</span>
+          <span class="setting-label">Pilih Bentuk Karakter:</span>
           <div class="picker-options">
             <label class="picker-option">
               <input type="radio" name="starter-form" value="orb" checked>
@@ -915,6 +974,59 @@
           </div>
         </div>
 
+        <!-- Pilihan Latar Dunia Karakter Berdasarkan Level -->
+        <div class="setting-group">
+          <span class="setting-label">Latar Karakter (Terbuka Sesuai Level):</span>
+          <div class="picker-options scene-picker-options" id="scene-picker-options">
+            <label class="picker-option">
+              <input type="radio" name="scene-bg" value="auto" checked>
+              <span data-scene-label="auto">✨ Otomatis</span>
+            </label>
+            <label class="picker-option">
+              <input type="radio" name="scene-bg" value="default">
+              <span data-scene-label="default">🏠 Kamar (Lv.1)</span>
+            </label>
+            <label class="picker-option">
+              <input type="radio" name="scene-bg" value="sunny_park">
+              <span data-scene-label="sunny_park">🌤️ Taman (Lv.2)</span>
+            </label>
+            <label class="picker-option">
+              <input type="radio" name="scene-bg" value="rainy_day">
+              <span data-scene-label="rainy_day">🌧️ Hujan (Lv.3)</span>
+            </label>
+            <label class="picker-option">
+              <input type="radio" name="scene-bg" value="flower_garden">
+              <span data-scene-label="flower_garden">🌸 Bunga (Lv.5)</span>
+            </label>
+            <label class="picker-option">
+              <input type="radio" name="scene-bg" value="haunted_house">
+              <span data-scene-label="haunted_house">🪦 Kuburan (Lv.7)</span>
+            </label>
+            <label class="picker-option">
+              <input type="radio" name="scene-bg" value="starry_night">
+              <span data-scene-label="starry_night">🌌 Bintang (Lv.11)</span>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary">Simpan Karakter</button>
+      </form>
+
+      <div class="modal-actions" style="margin-top: 0.6rem;">
+        <button type="button" id="btn-close-character" class="btn-secondary">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL 3: PENGATURAN GLOBAL (TEMA KONSOL, PRESET LIVE2D, & DATABASE)
+       ========================================================= -->
+  <div id="settings-modal" class="modal-backdrop" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="settings-modal-title">
+      <div class="modal-header-badge">⚙️ SETELAN GLOBAL &amp; DATABASE</div>
+      <h2 id="settings-modal-title" class="modal-title">Pengaturan Global</h2>
+
+      <form id="settings-form" class="modal-form">
         <!-- Pilihan Tema Konsol & Background (Gelap, Teduh, Cerah) -->
         <div class="setting-group">
           <span class="setting-label">Tema Konsol &amp; Latar (Gelap / Teduh / Cerah):</span>
@@ -968,7 +1080,7 @@
           </div>
         </div>
 
-        <button type="submit" class="btn-primary">Simpan Pengaturan</button>
+        <button type="submit" class="btn-primary">Simpan Pengaturan Global</button>
       </form>
 
       <!-- Bagian Database Browser (IndexedDB) -->
